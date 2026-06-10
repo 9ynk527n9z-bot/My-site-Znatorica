@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Знаторика — Учись. Тренируйся. Сдавай.</title>
+  <meta name="description" content="Образовательная платформа для школьников и дошкольников. Тренажёры, тесты, рабочие листы, генераторы заданий. Подготовка к ЕГЭ, ОГЭ, ВПР." />
+
+  <style>
+    :root {
+      --violet:       #6B21A8;
+      --violet-mid:   #7C3AED;
+      --violet-light: #A855F7;
+      --orange:       #F97316;
+      --bg:           #0A0812;
+      --bg-card:      #13102000;
+      --bg-card-solid:#16102A;
+      --text:         #FFFFFF;
+      --text-muted:   #B8B0D0;
+      --border:       #2D2350;
+      --radius:       16px;
+      --radius-sm:    10px;
+      --fs-base:      18px;
+      --fs-sm:        16px;
+      --fs-xs:        15px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000000;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: var(--fs-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      line-height: 1.2;
+      color: #FFFFFF;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── НАВИГАЦИЯ ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #FFFFFF;
+    }
+
+    
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+
+    .nav-btn {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      padding: 8px 18px !important;
+      border-radius: 10px !important;
+      color: #fff !important;
+    }
+
+    .nav-btn:hover { background: #ea6a0c !important; }
+
+    /* ── HERO (белый фон) ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+
+    .hero * { color: #000000; }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(#E5E0F0 1px, transparent 1px),
+        linear-gradient(90deg, #E5E0F0 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.6;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      background: var(--violet-mid);
+      top: -100px; left: -100px;
+    }
+
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: var(--orange);
+      bottom: -80px; right: -80px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    /* Логотип на hero */
+    .hero-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      object-fit: cover;
+      margin: 0 auto 24px;
+      display: block;
+      box-shadow: 0 8px 32px rgba(107, 33, 168, 0.25);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(107, 33, 168, 0.08);
+      border: 1px solid rgba(107, 33, 168, 0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: var(--fs-xs);
+      color: var(--violet) !important;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 7vw, 74px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      line-height: 1.05;
+      color: #000000 !important;
+    }
+
+    .hero-title-accent {
+      background: linear-gradient(135deg, var(--violet), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(17px, 2.5vw, 21px);
+      color: #444 !important;
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: var(--fs-base);
+      padding: 15px 30px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(249, 115, 22, 0.45);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #000 !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: var(--fs-base);
+      padding: 15px 30px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #D0C8E8;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(107,33,168,0.06);
+      border-color: var(--violet-mid);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat { text-align: center; }
+
+    .hero-stat-num {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: #000 !important;
+      line-height: 1;
+    }
+
+    .hero-stat-num span { color: var(--orange); }
+
+    .hero-stat-label {
+      font-size: var(--fs-xs);
+      color: #666 !important;
+      margin-top: 4px;
+    }
+
+    /* ── ОСТАЛЬНЫЕ СЕКЦИИ (чёрный фон, белый текст) ── */
+    .section {
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--violet-light);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: var(--fs-base);
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    /* ── КАРТОЧКИ АУДИТОРИИ ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .audience-card {
+      background: #111018;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+      display: block;
+    }
+
+    .audience-card:hover {
+      border-color: var(--violet-mid);
+      transform: translateY(-3px);
+    }
+
+    .audience-card-icon { font-size: 38px; margin-bottom: 16px; }
+
+    .audience-card-title {
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .audience-card-desc {
+      color: var(--text-muted);
+      font-size: var(--fs-xs);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .audience-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .audience-link:hover { background: #1E1535; color: #fff; }
+
+    .audience-link-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--violet-light);
+      flex-shrink: 0;
+    }
+
+    /* ── ПРЕДМЕТЫ ── */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .subject-card {
+      background: #111018;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 22px 16px;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      display: block;
+    }
+
+    .subject-card:hover {
+      border-color: var(--violet-light);
+      background: #1A1430;
+    }
+
+    .subject-icon { font-size: 30px; margin-bottom: 10px; }
+
+    .subject-name {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ── ФОРМАТЫ ── */
+    .funnel-section {
+      background: #0A0812;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 24px;
+    }
+
+    .funnel-inner { max-width: 1100px; margin: 0 auto; }
+
+    .funnel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .funnel-card {
+      background: #111018;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .funnel-card:hover { border-color: var(--orange); }
+    .funnel-card-emoji { font-size: 26px; flex-shrink: 0; }
+    .funnel-card-text { font-size: var(--fs-xs); font-weight: 600; color: #fff; }
+
+    /* ── ГЕНЕРАТОРЫ ── */
+    .generators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .generator-card {
+      background: #111018;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+      display: block;
+    }
+
+    .generator-card:hover { border-color: var(--orange); }
+
+    .generator-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: var(--orange);
+      border-radius: 50%;
+      opacity: 0.05;
+    }
+
+    .generator-badge {
+      display: inline-block;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .generator-title {
+      font-size: 23px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .generator-desc {
+      color: var(--text-muted);
+      font-size: var(--fs-xs);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .generator-limit {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    .generator-limit span { color: var(--orange); }
+
+    /* ── ПОДПИСКА ── */
+    .subscription-section {
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .subscription-card {
+      background: linear-gradient(135deg, #0F0820, #0A1428);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 24px;
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscription-card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: 200px;
+      width: 300px; height: 300px;
+      background: var(--violet-mid);
+      border-radius: 50%;
+      opacity: 0.06;
+      filter: blur(40px);
+    }
+
+    .subscription-title {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 900;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .subscription-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .subscription-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: var(--fs-base);
+      color: var(--text-muted);
+    }
+
+    .subscription-features li::before {
+      content: '✓';
+      color: var(--violet-light);
+      font-weight: 700;
+      font-size: 13px;
+      width: 22px;
+      height: 22px;
+      background: rgba(124, 58, 237, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .subscription-price-box {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .subscription-price {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: 60px;
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .subscription-price-period {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      margin-top: 6px;
+      margin-bottom: 24px;
+    }
+
+    .btn-secondary-dark {
+      background: transparent;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: var(--fs-base);
+      padding: 13px 24px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+      display: inline-block;
+    }
+
+    .btn-secondary-dark:hover { background: rgba(255,255,255,0.06); }
+
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 80px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+
+    .faq-item summary {
+      padding: 22px 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: var(--fs-base);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: #fff;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      color: var(--violet-light);
+      font-size: 22px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+
+    .faq-item p {
+      padding: 0 0 22px;
+      color: var(--text-muted);
+      font-size: var(--fs-base);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+
+    
+
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+
+    .footer-links a {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+
+    .footer-copy {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .subscription-card { grid-template-columns: 1fr; padding: 32px 24px; gap: 32px; }
+      .subscription-price-box { text-align: left; }
+      .hero-stats { gap: 24px; }
+    }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      
+      Знаторика
+    </a>
+    <div class="nav-links">
+      <a href="/1-klass/matematika">Математика</a>
+      <a href="/1-klass/russkiy-yazyk">Русский</a>
+      <a href="/1-klass/angliyskiy-yazyk">Английский</a>
+      <a href="/ege">ЕГЭ</a>
+      <a href="/oge">ОГЭ</a>
+      <a href="/generator/primery">Генераторы</a>
+      <a href="/podpiska" class="nav-btn">Попробовать</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-content">
+      🐿
+      <div class="hero-badge">🐿 Знаторика — образовательная платформа</div>
+      <h1 class="hero-title">Учись.<br/><span class="hero-title-accent">Тренируйся. Сдавай.</span></h1>
+      <p class="hero-subtitle">Тренажёры, тесты и рабочие листы для дошкольников, школьников и подготовки к ЕГЭ и ОГЭ. Всё в одном месте.</p>
+      <div class="hero-cta">
+        <a href="/podpiska"><button class="btn-primary">Начать бесплатно →</button></a>
+        <a href="#subjects"><button class="btn-secondary">Выбрать предмет</button></a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">30<span>+</span></div><div class="hero-stat-label">тренажёров</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">7<span>к+</span></div><div class="hero-stat-label">страниц материалов</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">1<span>–</span>11</div><div class="hero-stat-label">все классы</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">3<span>–</span>8</div><div class="hero-stat-label">лет дошкольники</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Для кого</div>
+    <h2 class="section-title">Найди свой раздел</h2>
+    <p class="section-desc">Материалы подобраны по возрасту, классу и цели.</p>
+    <div class="audience-grid">
+      <a href="/3-goda" class="audience-card">
+        <div class="audience-card-icon">🧸</div>
+        <div class="audience-card-title">Дошкольники</div>
+        <div class="audience-card-desc">Игры и задания для детей 3–8 лет. Счёт, буквы, логика, память.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Счёт до 5 — 3 года</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Логика — 5 лет</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Алфавит — 6 лет</div>
+      </a>
+      <a href="/1-klass" class="audience-card">
+        <div class="audience-card-icon">🎒</div>
+        <div class="audience-card-title">Начальная школа</div>
+        <div class="audience-card-desc">Математика, русский, английский для 1–4 класса.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Сложение до 10 — 1 кл.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Таблица умножения — 3 кл.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Дроби — 4 кл.</div>
+      </a>
+      <a href="/5-klass" class="audience-card">
+        <div class="audience-card-icon">📚</div>
+        <div class="audience-card-title">Средняя школа</div>
+        <div class="audience-card-desc">Все предметы 5–9 класса. Подготовка к ОГЭ.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Дроби и проценты — 5 кл.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Причастие — 6 кл.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Подготовка к ОГЭ</div>
+      </a>
+      <a href="/ege" class="audience-card">
+        <div class="audience-card-icon">🎯</div>
+        <div class="audience-card-title">ЕГЭ и ОГЭ</div>
+        <div class="audience-card-desc">Авторские варианты, разбор типовых заданий, тренировка.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>ЕГЭ Математика</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>ОГЭ Русский язык</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>ЕГЭ Английский</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="subjects">
+    <div class="section-label">Предметы</div>
+    <h2 class="section-title">Все предметы</h2>
+    <p class="section-desc">Выбери предмет и перейди к нужному классу.</p>
+    <div class="subjects-grid">
+      <a href="/1-klass/matematika" class="subject-card"><div class="subject-icon">🔢</div><div class="subject-name">Математика</div></a>
+      <a href="/1-klass/russkiy-yazyk" class="subject-card"><div class="subject-icon">📝</div><div class="subject-name">Русский язык</div></a>
+      <a href="/1-klass/angliyskiy-yazyk" class="subject-card"><div class="subject-icon">🇬🇧</div><div class="subject-name">Английский</div></a>
+      <a href="/1-klass/okruzhayushchiy-mir" class="subject-card"><div class="subject-icon">🌍</div><div class="subject-name">Окружающий мир</div></a>
+      <a href="/5-klass/istoriya" class="subject-card"><div class="subject-icon">🏛</div><div class="subject-name">История</div></a>
+      <a href="/5-klass/biologiya" class="subject-card"><div class="subject-icon">🌱</div><div class="subject-name">Биология</div></a>
+      <a href="/8-klass/himiya" class="subject-card"><div class="subject-icon">⚗️</div><div class="subject-name">Химия</div></a>
+      <a href="/7-klass/fizika" class="subject-card"><div class="subject-icon">⚡</div><div class="subject-name">Физика</div></a>
+      <a href="/5-klass/geografiya" class="subject-card"><div class="subject-icon">🗺</div><div class="subject-name">География</div></a>
+      <a href="/5-klass/literatura" class="subject-card"><div class="subject-icon">📖</div><div class="subject-name">Литература</div></a>
+      <a href="/6-klass/obshchestvoznanie" class="subject-card"><div class="subject-icon">🏛️</div><div class="subject-name">Обществознание</div></a>
+      <a href="/5-klass/informatika" class="subject-card"><div class="subject-icon">💻</div><div class="subject-name">Информатика</div></a>
+    </div>
+  </section>
+
+  <section class="funnel-section">
+    <div class="funnel-inner">
+      <div class="section-label">Форматы</div>
+      <h2 class="section-title">Любой формат для любой задачи</h2>
+      <p class="section-desc">По каждой теме — все форматы от теории до практики.</p>
+      <div class="funnel-grid">
+        <div class="funnel-card"><div class="funnel-card-emoji">📖</div><div class="funnel-card-text">Теория</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">📋</div><div class="funnel-card-text">Шпаргалка</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">🃏</div><div class="funnel-card-text">Карточки</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">🎮</div><div class="funnel-card-text">Тренажёр</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">✅</div><div class="funnel-card-text">Тест</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">📝</div><div class="funnel-card-text">Рабочий лист</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">📄</div><div class="funnel-card-text">PDF</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">⚠️</div><div class="funnel-card-text">Типичные ошибки</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">❓</div><div class="funnel-card-text">FAQ</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">⚙️</div><div class="funnel-card-text">Генератор</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">🎨</div><div class="funnel-card-text">Раскраска</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">📊</div><div class="funnel-card-text">Презентация</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">✏️</div><div class="funnel-card-text">Самостоятельная</div></div>
+        <div class="funnel-card"><div class="funnel-card-emoji">📋</div><div class="funnel-card-text">Контрольная</div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── НАЧАЛЬНАЯ ШКОЛА ── -->
+  <section class="section" id="nachalnaya">
+    <div class="section-label">1–4 класс</div>
+    <h2 class="section-title">Начальная школа</h2>
+    <p class="section-desc">Математика, русский, окружающий мир — всё по классам с полной воронкой материалов.</p>
+    <div class="audience-grid">
+      <a href="/1-klass/matematika/slozhenie-do-10/teoriya" class="audience-card">
+        <div class="audience-card-icon">1️⃣</div>
+        <div class="audience-card-title">1 класс</div>
+        <div class="audience-card-desc">Счёт, сложение и вычитание до 10 и 20, знакомство с числами.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Счёт до 10</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Сложение до 20</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Буквы и звуки</div>
+      </a>
+      <a href="/2-klass/matematika/slozhenie-do-100/teoriya" class="audience-card">
+        <div class="audience-card-icon">2️⃣</div>
+        <div class="audience-card-title">2 класс</div>
+        <div class="audience-card-desc">Сложение и вычитание до 100, знакомство с умножением.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Сложение до 100</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Умножение — введение</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Состав слова</div>
+      </a>
+      <a href="/3-klass/matematika/tablica-umnozheniya/teoriya" class="audience-card">
+        <div class="audience-card-icon">3️⃣</div>
+        <div class="audience-card-title">3 класс</div>
+        <div class="audience-card-desc">Таблица умножения, деление, дроби — введение.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Таблица умножения</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Деление</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Части речи</div>
+      </a>
+      <a href="/4-klass/matematika/drobi/teoriya" class="audience-card">
+        <div class="audience-card-icon">4️⃣</div>
+        <div class="audience-card-title">4 класс</div>
+        <div class="audience-card-desc">Дроби, многозначные числа, подготовка к 5 классу.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Дроби</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Многозначные числа</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Глагол</div>
+      </a>
+    </div>
+
+    <!-- Типы материалов в начальной школе -->
+    <div style="margin-top:40px;">
+      <p class="section-desc" style="margin-bottom:20px;">По каждой теме доступны:</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="/1-klass/matematika/slozhenie-do-10/test" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">✅ Тесты</a>
+        <a href="/1-klass/matematika/slozhenie-do-10/trenazher" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">🎮 Тренажёры</a>
+        <a href="/1-klass/matematika/slozhenie-do-10/rabochiy-list" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">📝 Рабочие листы</a>
+        <a href="/1-klass/matematika/slozhenie-do-10/shpargalka" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">📋 Шпаргалки</a>
+        <a href="/1-klass/matematika/slozhenie-do-10/raskraska" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">🎨 Раскраски</a>
+        <a href="/1-klass/matematika/slozhenie-do-10/pdf" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 18px; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px;">📄 PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ПОДГОТОВКА К ШКОЛЕ ── -->
+  <section style="background:#0A0812; border-top:1px solid #2D2350; border-bottom:1px solid #2D2350; padding:80px 0;">
+    <div class="section" style="padding-top:0; padding-bottom:0;" id="podgotovka">
+      <div class="section-label">3–7 лет</div>
+      <h2 class="section-title">Подготовка к школе</h2>
+      <p class="section-desc">Развиваем навыки до школы — счёт, чтение, письмо, логика, память, внимание.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:16px; margin-bottom:40px;">
+        <a href="/5-let/schet/igra" class="subject-card">
+          <div class="subject-icon">🔢</div>
+          <div class="subject-name">Счёт</div>
+        </a>
+        <a href="/5-let/chtenie/igra" class="subject-card">
+          <div class="subject-icon">📖</div>
+          <div class="subject-name">Чтение</div>
+        </a>
+        <a href="/5-let/pismo/trenazher" class="subject-card">
+          <div class="subject-icon">✏️</div>
+          <div class="subject-name">Письмо</div>
+        </a>
+        <a href="/5-let/logika/igra" class="subject-card">
+          <div class="subject-icon">🧩</div>
+          <div class="subject-name">Логика</div>
+        </a>
+        <a href="/5-let/pamyat/igra" class="subject-card">
+          <div class="subject-icon">🧠</div>
+          <div class="subject-name">Память</div>
+        </a>
+        <a href="/5-let/vnimanie/igra" class="subject-card">
+          <div class="subject-icon">🎯</div>
+          <div class="subject-name">Внимание</div>
+        </a>
+        <a href="/5-let/orfografiya/trenazher" class="subject-card">
+          <div class="subject-icon">🔤</div>
+          <div class="subject-name">Орфография</div>
+        </a>
+        <a href="/5-let/grammatika/teoriya" class="subject-card">
+          <div class="subject-icon">📝</div>
+          <div class="subject-name">Грамматика</div>
+        </a>
+      </div>
+
+      <!-- Возраст -->
+      <p class="section-desc" style="margin-bottom:16px;">Выбери возраст:</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="/3-goda" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 24px; font-size:17px; font-weight:700; color:#fff; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#A855F7'" onmouseout="this.style.borderColor='#2D2350'">3 года</a>
+        <a href="/4-goda" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 24px; font-size:17px; font-weight:700; color:#fff;" onmouseover="this.style.borderColor='#A855F7'" onmouseout="this.style.borderColor='#2D2350'">4 года</a>
+        <a href="/5-let" style="background:#111018; border:1px solid #A855F7; border-radius:10px; padding:12px 24px; font-size:17px; font-weight:700; color:#A855F7;">5 лет</a>
+        <a href="/6-let" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 24px; font-size:17px; font-weight:700; color:#fff;" onmouseover="this.style.borderColor='#A855F7'" onmouseout="this.style.borderColor='#2D2350'">6 лет</a>
+        <a href="/7-let" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:12px 24px; font-size:17px; font-weight:700; color:#fff;" onmouseover="this.style.borderColor='#A855F7'" onmouseout="this.style.borderColor='#2D2350'">7 лет</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── АНГЛИЙСКИЙ ЯЗЫК ── -->
+  <section class="section" id="angliyskiy">
+    <div class="section-label">Английский язык</div>
+    <h2 class="section-title">Английский для детей и школьников</h2>
+    <p class="section-desc">От алфавита до ЕГЭ — все уровни и форматы.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-bottom:40px;">
+
+      <a href="/3-goda/alfavit/igra" class="audience-card">
+        <div class="audience-card-icon">🔤</div>
+        <div class="audience-card-title">Малышам (3–7 лет)</div>
+        <div class="audience-card-desc">Алфавит, цвета, животные, цифры — в игровой форме.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Алфавит — игра</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Цвета на английском</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Животные (animals)</div>
+      </a>
+
+      <a href="/1-klass/angliyskiy-yazyk/alfavit/teoriya" class="audience-card">
+        <div class="audience-card-icon">🎒</div>
+        <div class="audience-card-title">Начальная школа (1–4 кл.)</div>
+        <div class="audience-card-desc">Буквы, цифры, цвета, базовая лексика и грамматика.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Алфавит</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Цифры (numbers)</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Цвета (colours)</div>
+      </a>
+
+      <a href="/5-klass/angliyskiy-yazyk/grammatika/teoriya" class="audience-card">
+        <div class="audience-card-icon">📚</div>
+        <div class="audience-card-title">Средняя школа (5–9 кл.)</div>
+        <div class="audience-card-desc">Грамматика, времена глаголов, лексика, неправильные глаголы.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Неправильные глаголы</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Present Simple / Past</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Словарь по темам</div>
+      </a>
+
+      <a href="/ege/angliyskiy-yazyk/zadanie-1/variant-1" class="audience-card">
+        <div class="audience-card-icon">🎯</div>
+        <div class="audience-card-title">ОГЭ и ЕГЭ</div>
+        <div class="audience-card-desc">Авторские варианты, разбор заданий, тренировка устной и письменной части.</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>ЕГЭ Английский</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>ОГЭ Английский</div>
+        <div class="audience-link"><div class="audience-link-dot"></div>Топики (устная часть)</div>
+      </a>
+
+    </div>
+
+    <!-- Темы по английскому -->
+    <p class="section-desc" style="margin-bottom:16px;">Популярные темы:</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="/1-klass/angliyskiy-yazyk/alfavit/igra" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">🔤 Алфавит</a>
+      <a href="/2-klass/angliyskiy-yazyk/cveta/teoriya" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">🎨 Цвета</a>
+      <a href="/2-klass/angliyskiy-yazyk/cifry/trenazher" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">🔢 Цифры</a>
+      <a href="/3-klass/angliyskiy-yazyk/zhivotnye/kartochki" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">🐾 Животные</a>
+      <a href="/5-klass/angliyskiy-yazyk/nepravilnye-glagoly/kartochki" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">📋 Неправильные глаголы</a>
+      <a href="/5-klass/angliyskiy-yazyk/grammatika/trenazher" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">⚡ Времена глаголов</a>
+      <a href="/angliyskiy/komiksy" style="background:#111018; border:1px solid #2D2350; border-radius:10px; padding:10px 18px; font-size:16px; color:#B8B0D0; display:flex; align-items:center; gap:6px;" onmouseover="this.style.borderColor='#F97316'; this.style.color='#fff'" onmouseout="this.style.borderColor='#2D2350'; this.style.color='#B8B0D0'">🎭 Комиксы</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Инструменты</div>
+    <h2 class="section-title">Генераторы заданий</h2>
+    <p class="section-desc">Создавай уникальные задания за секунды.</p>
+    <div class="generators-grid">
+      <a href="/generator/primery" class="generator-card">
+        <div class="generator-badge">Бесплатно · 3 раза/день</div>
+        <div class="generator-title">⚙️ Генератор примеров</div>
+        <div class="generator-desc">Сложение, вычитание, умножение, деление. Выбери тип и диапазон — получи PDF с заданиями.</div>
+        <span class="btn-primary" style="font-size:15px; padding:11px 22px;">Создать примеры →</span>
+        <div class="generator-limit">Бесплатно: <span>3 раза в день</span>. Без ограничений — по подписке.</div>
+      </a>
+      <a href="/generator/propisi" class="generator-card">
+        <div class="generator-badge">Бесплатно · 3 раза/день</div>
+        <div class="generator-title">✏️ Генератор прописей</div>
+        <div class="generator-desc">Вставь любой текст — получи прописи с линиями для отработки. Для любого возраста.</div>
+        <span class="btn-primary" style="font-size:15px; padding:11px 22px;">Создать прописи →</span>
+        <div class="generator-limit">Бесплатно: <span>3 раза в день</span>. Без ограничений — по подписке.</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="subscription-section">
+    <div class="subscription-card">
+      <div>
+        <div class="section-label">Подписка</div>
+        <h2 class="subscription-title">Все материалы без ограничений</h2>
+        <ul class="subscription-features">
+          <li>30 интерактивных тренажёров</li>
+          <li>Все варианты ЕГЭ и ОГЭ по всем предметам</li>
+          <li>Рабочие листы и PDF для распечатки</li>
+          <li>Генераторы примеров и прописей без лимита</li>
+          <li>Карточки, раскраски, презентации</li>
+          <li>Новые материалы каждую неделю</li>
+        </ul>
+        <a href="/podpiska"><span class="btn-primary">Оформить подписку →</span></a>
+      </div>
+      <div class="subscription-price-box">
+        <div class="subscription-price">299 ₽</div>
+        <div class="subscription-price-period">в месяц</div>
+        <a href="https://t.me/znatorika_bot" target="_blank"><span class="btn-secondary-dark">Через Telegram →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="section-label">Вопросы</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Частые вопросы</h2>
+    <details class="faq-item">
+      <summary>Что входит в подписку?</summary>
+      <p>Доступ ко всем 30 тренажёрам, рабочим листам, PDF, генераторам без ограничений, всем вариантам ЕГЭ и ОГЭ. Новые материалы добавляются каждую неделю.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Как оплатить подписку?</summary>
+      <p>Через Telegram-бота @znatorika_bot. Напишите /subscribe — бот покажет кнопку оплаты. После оплаты автоматически открывается доступ ко всем материалам.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Можно ли отменить подписку?</summary>
+      <p>Да, в любой момент через личный кабинет или написав боту /cancel. Доступ сохраняется до конца оплаченного периода.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Сколько бесплатного контента?</summary>
+      <p>Теория, шпаргалки и часть тестов доступны бесплатно. Генераторы — 3 раза в день бесплатно. Тренажёры, рабочие листы и PDF — по подписке.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Для какого возраста подходит платформа?</summary>
+      <p>От 3 лет (дошкольники) до 11 класса включительно. Есть раздел подготовки к ЕГЭ и ОГЭ для старшеклассников.</p>
+    </details>
+  </section>
+
+  <footer style="border-top:1px solid var(--border);">
+    <div class="footer">
+      <div class="footer-logo">🐿 Знаторика</div>
+      <div class="footer-links">
+        <a href="/1-klass/matematika">Математика</a>
+        <a href="/ege">ЕГЭ</a>
+        <a href="/oge">ОГЭ</a>
+        <a href="/generator/primery">Генераторы</a>
+        <a href="/podpiska">Подписка</a>
+        <a href="/kabinet">Кабинет</a>
+      </div>
+      <div class="footer-links">
+        <a href="/politika-konf">Политика</a>
+        <a href="/usloviya">Условия</a>
+        <a href="https://t.me/znatorika_bot" target="_blank">Telegram</a>
+      </div>
+      <div class="footer-copy">© 2024 Знаторика. Все права защищены.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
