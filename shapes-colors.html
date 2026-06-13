@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Формы и Цвета - Знаторика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)) 12px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* МЕНЮ */
+        .menu-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FFC107 0%, #FF6B9D 25%, #1E90FF 50%, #2ECC71 75%, #A855F7 100%);
+            border-radius: 24px;
+            padding: 40px 20px;
+            gap: 24px;
+        }
+
+        .menu-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .menu-subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .modes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .mode-button {
+            padding: 28px 20px;
+            border: none;
+            border-radius: 24px;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mode-button:active {
+            transform: scale(0.95);
+        }
+
+        .mode-button:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .mode-1 {
+            background: linear-gradient(135deg, #FF4757, #FF6B9D);
+        }
+
+        .mode-2 {
+            background: linear-gradient(135deg, #A855F7, #FF6B9D);
+        }
+
+        .mode-3 {
+            background: linear-gradient(135deg, #1E90FF, #00BFFF);
+        }
+
+        .mode-button span:first-child {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .menu-footer {
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* ЭКРАН РЕЖИМА */
+        .game-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .game-screen.mode-colors {
+            background: linear-gradient(135deg, #FFF0E6, white, #FFE6F0);
+        }
+
+        .game-screen.mode-shapes {
+            background: linear-gradient(135deg, #F3E6FF, white, #FFE6F0);
+        }
+
+        .game-screen.mode-matching {
+            background: linear-gradient(135deg, #E6F7FF, white, #E6F0FF);
+        }
+
+        .back-button {
+            align-self: flex-start;
+            padding: 12px 24px;
+            background: #ccc;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .back-button:active {
+            background: #aaa;
+        }
+
+        .game-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .question {
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .shape-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            margin: 20px 0;
+        }
+
+        .shape {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .matching-label {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .options {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .options.grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .option-button {
+            padding: 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            min-height: 60px;
+        }
+
+        .option-button:active {
+            transform: scale(0.95);
+        }
+
+        .matching-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: white;
+            border: 4px solid #ddd;
+            color: #333;
+            padding: 12px;
+            min-height: auto;
+        }
+
+        .matching-shape {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        .matching-color-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .matching-shape-name {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .progress {
+            font-size: 20px;
+            font-weight: bold;
+            color: #666;
+            text-align: center;
+        }
+
+        /* РЕЗУЛЬТАТЫ */
+        .result-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #E6FFED, white, #E6F7FF);
+            border-radius: 24px;
+            padding: 40px 20px;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .result-emoji {
+            font-size: 80px;
+        }
+
+        .result-text {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1E90FF;
+            margin: 20px 0;
+        }
+
+        .result-button {
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #FF8C00, #FF4757);
+            border: none;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .result-button:active {
+            transform: scale(0.95);
+        }
+
+        /* КОНФЕТТИ */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- МЕНЮ -->
+        <div id="menu" class="menu-screen">
+            <div class="menu-header">
+                <div class="menu-title">🎨 Знаторика</div>
+                <div class="menu-subtitle">Формы и Цвета</div>
+            </div>
+            <div class="modes-grid">
+                <button class="mode-button mode-1" onclick="startMode('colors')">
+                    <span>🎯 Угадай цвет</span>
+                    <span>›</span>
+                </button>
+                <button class="mode-button mode-2" onclick="startMode('shapes')">
+                    <span>⬜ Угадай форму</span>
+                    <span>›</span>
+                </button>
+                <button class="mode-button mode-3" onclick="startMode('matching')">
+                    <span>🎨 Найди пару</span>
+                    <span>›</span>
+                </button>
+            </div>
+            <div class="menu-footer">Весело учись различать цвета и формы! 🌈</div>
+        </div>
+
+        <!-- ИГРА -->
+        <div id="game" class="game-screen hidden">
+            <button class="back-button" onclick="backToMenu()">← Назад</button>
+            <div class="game-content">
+                <div class="question">
+                    <div class="question-text" id="questionText"></div>
+                    <div class="shape-display" id="shapeDisplay"></div>
+                    <div class="matching-label" id="matchingLabel" class="hidden"></div>
+                </div>
+                <div class="options" id="options"></div>
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+
+        <!-- РЕЗУЛЬТАТЫ -->
+        <div id="result" class="result-screen hidden">
+            <div class="result-emoji">🎉</div>
+            <div class="result-text">Отлично!</div>
+            <div class="result-score" id="resultScore"></div>
+            <button class="result-button" onclick="backToMenu()">Назад в меню</button>
+        </div>
+    </div>
+
+    <script>
+        const colors = [
+            { name: 'Красный', hex: '#FF4757' },
+            { name: 'Синий', hex: '#1E90FF' },
+            { name: 'Жёлтый', hex: '#FFD700' },
+            { name: 'Зелёный', hex: '#2ECC71' },
+            { name: 'Фиолетовый', hex: '#A855F7' },
+            { name: 'Оранжевый', hex: '#FF8C00' },
+            { name: 'Розовый', hex: '#FF69B4' },
+            { name: 'Голубой', hex: '#00BFFF' },
+            { name: 'Коричневый', hex: '#8B4513' },
+            { name: 'Чёрный', hex: '#2C3E50' },
+            { name: 'Серый', hex: '#95A5A6' },
+            { name: 'Белый', hex: '#FFFFFF' },
+        ];
+
+        const shapes = [
+            { name: 'Круг', type: 'circle' },
+            { name: 'Квадрат', type: 'square' },
+            { name: 'Треугольник', type: 'triangle' },
+            { name: 'Ромб', type: 'diamond' },
+            { name: 'Параллелограмм', type: 'parallelogram' },
+            { name: 'Звёзда', type: 'star' },
+            { name: 'Сердце', type: 'heart' },
+            { name: 'Овал', type: 'oval' },
+            { name: 'Трапеция', type: 'trapezoid' },
+            { name: 'Пятиугольник', type: 'pentagon' },
+            { name: 'Шестиугольник', type: 'hexagon' },
+            { name: 'Куб', type: 'cube' },
+        ];
+
+        let currentMode = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let questions = [];
+
+        function renderShape(type, color, size = 'large') {
+            const sizeSmall = size === 'small';
+            const dim = sizeSmall ? 60 : 130;
+            const div = document.createElement('div');
+            div.className = 'shape';
+
+            switch (type) {
+                case 'circle':
+                    div.style.cssText = `width: ${dim}px; height: ${dim}px; background-color: ${color}; border-radius: 50%;`;
+                    break;
+                case 'oval':
+                    div.style.cssText = `width: ${dim * 1.5}px; height: ${dim}px; background-color: ${color}; border-radius: 50%;`;
+                    break;
+                case 'square':
+                    div.style.cssText = `width: ${dim}px; height: ${dim}px; background-color: ${color};`;
+                    break;
+                case 'triangle':
+                    div.style.cssText = `width: 0; height: 0; border-left: ${dim/2}px solid transparent; border-right: ${dim/2}px solid transparent; border-bottom: ${dim}px solid ${color};`;
+                    break;
+                case 'diamond':
+                    div.style.cssText = `width: ${dim}px; height: ${dim}px; background-color: ${color}; transform: rotate(45deg);`;
+                    break;
+                case 'parallelogram':
+                    div.style.cssText = `width: ${dim}px; height: ${dim * 0.67}px; background-color: ${color}; transform: skewX(-20deg);`;
+                    break;
+                case 'star':
+                    // Звезда SVG
+                    const starSize = sizeSmall ? 20 : 50;
+                    div.style.cssText = `width: ${starSize * 2}px; height: ${starSize * 2}px; position: relative;`;
+                    const starStroke = color === '#FFFFFF' ? ' stroke="#333" stroke-width="2"' : '';
+                    div.innerHTML = `<svg width="${starSize * 2}" height="${starSize * 2}" viewBox="0 0 100 100">
+                        <polygon points="50,10 61,40 92,40 67,60 78,90 50,70 22,90 33,60 8,40 39,40" fill="${color}"${starStroke}/>
+                    </svg>`;
+                    break;
+                case 'heart':
+                    // Сердце SVG
+                    const heartSize = sizeSmall ? 30 : 80;
+                    div.style.cssText = `width: ${heartSize}px; height: ${heartSize}px;`;
+                    const heartStroke = color === '#FFFFFF' ? ' stroke="#333" stroke-width="2"' : '';
+                    div.innerHTML = `<svg width="${heartSize}" height="${heartSize}" viewBox="0 0 100 100">
+                        <path d="M50,85 C25,70 10,55 10,40 C10,25 20,15 30,15 C40,15 50,25 50,25 C50,25 60,15 70,15 C80,15 90,25 90,40 C90,55 75,70 50,85 Z" fill="${color}"${heartStroke}/>
+                    </svg>`;
+                    break;
+                case 'trapezoid':
+                    div.style.cssText = `width: ${dim * 0.67}px; height: ${dim}px; background-color: ${color}; clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);`;
+                    break;
+                case 'pentagon':
+                    // Пятиугольник SVG
+                    const pentSize = sizeSmall ? 30 : 65;
+                    div.style.cssText = `width: ${pentSize * 2}px; height: ${pentSize * 2}px;`;
+                    const pentStroke = color === '#FFFFFF' ? ' stroke="#333" stroke-width="2"' : '';
+                    div.innerHTML = `<svg width="${pentSize * 2}" height="${pentSize * 2}" viewBox="0 0 100 100">
+                        <polygon points="50,10 90,40 73,90 27,90 10,40" fill="${color}"${pentStroke}/>
+                    </svg>`;
+                    break;
+                case 'hexagon':
+                    // Шестиугольник SVG
+                    const hexSize = sizeSmall ? 30 : 65;
+                    div.style.cssText = `width: ${hexSize * 2}px; height: ${hexSize * 2}px;`;
+                    const hexStroke = color === '#FFFFFF' ? ' stroke="#333" stroke-width="2"' : '';
+                    div.innerHTML = `<svg width="${hexSize * 2}" height="${hexSize * 2}" viewBox="0 0 100 100">
+                        <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="${color}"${hexStroke}/>
+                    </svg>`;
+                    break;
+                case 'cube':
+                    // Куб как 3D трансформация
+                    div.style.cssText = `width: ${dim}px; height: ${dim}px; background-color: ${color}; transform: rotateX(20deg) rotateZ(30deg);`;
+                    break;
+            }
+            
+            // Добавляем обводку для белых фигур
+            if (color === '#FFFFFF') {
+                if (type === 'circle' || type === 'oval' || type === 'square' || type === 'diamond' || type === 'parallelogram' || type === 'trapezoid' || type === 'cube') {
+                    div.style.border = '2px solid #333';
+                }
+            }
+            
+            return div;
+        }
+
+        function triggerConfetti() {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                const left = Math.random() * 100;
+                const delay = Math.random() * 0.2;
+                const duration = 1.5 + Math.random() * 0.5;
+                const color = colors[Math.floor(Math.random() * colors.length)].hex;
+                
+                confetti.style.cssText = `
+                    left: ${left}%;
+                    top: -20px;
+                    width: 10px;
+                    height: 10px;
+                    background-color: ${color};
+                    border-radius: 50%;
+                    animation: confetti-fall ${duration}s ease-in forwards;
+                    animation-delay: ${delay}s;
+                `;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function generateColorQuestions() {
+            return Array.from({ length: 12 }, (_, i) => {
+                const correct = colors[i];
+                const options = [
+                    correct,
+                    colors[(i + 2) % colors.length],
+                    colors[(i + 4) % colors.length]
+                ].sort(() => Math.random() - 0.5);
+                return { correct, options };
+            });
+        }
+
+        function generateShapeQuestions() {
+            return Array.from({ length: 12 }, (_, i) => {
+                const shapeIndex = i % shapes.length;
+                const correct = shapes[shapeIndex];
+                
+                // Выбираем 2 другие формы которые не равны правильному ответу
+                let opt2, opt3;
+                do {
+                    opt2 = shapes[Math.floor(Math.random() * shapes.length)];
+                } while (opt2.type === correct.type);
+                do {
+                    opt3 = shapes[Math.floor(Math.random() * shapes.length)];
+                } while (opt3.type === correct.type || opt3.type === opt2.type);
+                
+                const options = [correct, opt2, opt3].sort(() => Math.random() - 0.5);
+                return { correct, options };
+            });
+        }
+
+        function generateMatchingQuestions() {
+            return Array.from({ length: 8 }, (_, i) => {
+                const colorIdx = i % colors.length;
+                const shapeIdx = i % shapes.length;
+                const correctColor = colors[colorIdx];
+                const correctShape = shapes[shapeIdx];
+
+                const options = [
+                    { color: correctColor, shape: correctShape }
+                ];
+
+                for (let j = 0; j < 3; j++) {
+                    options.push({
+                        color: colors[(colorIdx + j + 2) % colors.length],
+                        shape: shapes[(shapeIdx + j + 1) % shapes.length]
+                    });
+                }
+
+                return {
+                    correct: { color: correctColor, shape: correctShape },
+                    options: options.sort(() => Math.random() - 0.5)
+                };
+            });
+        }
+
+        function startMode(mode) {
+            currentMode = mode;
+            currentQuestion = 0;
+            score = 0;
+
+            if (mode === 'colors') {
+                questions = generateColorQuestions();
+            } else if (mode === 'shapes') {
+                questions = []; // Не нужен, генерируем на лету в renderQuestion
+            } else if (mode === 'matching') {
+                questions = generateMatchingQuestions();
+            }
+
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('game').classList.remove('hidden');
+            document.getElementById('game').className = `game-screen mode-${mode}`;
+            
+            renderQuestion();
+        }
+
+        // Функция для согласования прилагательного с существительным
+        function getColorAdjective(colorName, shapeType) {
+            // Средний род: сердце
+            const neuterShapes = ['heart'];
+            // Женский род: звезда, трапеция
+            const femaleShapes = ['star', 'trapezoid'];
+            
+            if (neuterShapes.includes(shapeType)) {
+                // Меняем окончание цвета на средний род
+                const neuterForm = {
+                    'Красный': 'Красное',
+                    'Синий': 'Синее',
+                    'Жёлтый': 'Жёлтое',
+                    'Зелёный': 'Зелёное',
+                    'Фиолетовый': 'Фиолетовое',
+                    'Оранжевый': 'Оранжевое',
+                    'Розовый': 'Розовое',
+                    'Голубой': 'Голубое',
+                    'Коричневый': 'Коричневое',
+                    'Чёрный': 'Чёрное',
+                    'Серый': 'Серое',
+                    'Белый': 'Белое'
+                };
+                return neuterForm[colorName] || colorName;
+            }
+            
+            if (femaleShapes.includes(shapeType)) {
+                // Меняем окончание цвета на женский род
+                const femaleForm = {
+                    'Красный': 'Красная',
+                    'Синий': 'Синяя',
+                    'Жёлтый': 'Жёлтая',
+                    'Зелёный': 'Зелёная',
+                    'Фиолетовый': 'Фиолетовая',
+                    'Оранжевый': 'Оранжевая',
+                    'Розовый': 'Розовая',
+                    'Голубой': 'Голубая',
+                    'Коричневый': 'Коричневая',
+                    'Чёрный': 'Чёрная',
+                    'Серый': 'Серая',
+                    'Белый': 'Белая'
+                };
+                return femaleForm[colorName] || colorName;
+            }
+            return colorName;
+        }
+
+        function renderQuestion() {
+            const optionsDiv = document.getElementById('options');
+            const shapeDisplay = document.getElementById('shapeDisplay');
+            const questionText = document.getElementById('questionText');
+            const matchingLabel = document.getElementById('matchingLabel');
+            const progress = document.getElementById('progress');
+
+            optionsDiv.innerHTML = '';
+            shapeDisplay.innerHTML = '';
+            matchingLabel.classList.add('hidden');
+            currentCorrectAnswer = null;
+
+            if (currentMode === 'colors') {
+                const q = questions[currentQuestion];
+                questionText.textContent = 'Какой это цвет?';
+                const shapeEl = renderShape('circle', q.correct.hex);
+                // Добавляем обводку для видимости белого и светлых цветов
+                if (q.correct.hex === '#FFFFFF' || q.correct.hex === '#FFD700' || q.correct.hex === '#00BFFF') {
+                    shapeEl.style.border = '3px solid #333';
+                }
+                shapeDisplay.appendChild(shapeEl);
+                currentCorrectAnswer = q.correct;
+                optionsDiv.className = 'options';
+
+                q.options.forEach(color => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-button';
+                    btn.style.backgroundColor = color.hex;
+                    btn.textContent = color.name;
+                    // Обводка для белых кнопок и чёрный текст для светлых
+                    if (color.hex === '#FFFFFF') {
+                        btn.style.border = '3px solid #333';
+                        btn.style.color = '#000';
+                    } else if (color.hex === '#FFD700' || color.hex === '#00BFFF' || color.hex === '#95A5A6') {
+                        btn.style.color = '#000';
+                    }
+                    btn.onclick = () => answerColor(color);
+                    optionsDiv.appendChild(btn);
+                });
+            } else if (currentMode === 'shapes') {
+                questionText.textContent = 'Что это за форма?';
+                
+                // Выбираем правильную форму по индексу (гарантирует разнообразие)
+                const correctIndex = currentQuestion % shapes.length;
+                const correctShape = shapes[correctIndex];
+                currentCorrectAnswer = correctShape;
+                shapeDisplay.appendChild(renderShape(correctShape.type, '#FF6B9D'));
+                
+                // Генерируем 2 других варианта которые точно отличаются
+                let opt2Index, opt3Index;
+                do {
+                    opt2Index = Math.floor(Math.random() * shapes.length);
+                } while (opt2Index === correctIndex);
+                
+                do {
+                    opt3Index = Math.floor(Math.random() * shapes.length);
+                } while (opt3Index === correctIndex || opt3Index === opt2Index);
+                
+                // Собираем варианты ответов - ГАРАНТИРОВАННО включает правильный ответ
+                const options = [
+                    shapes[correctIndex],
+                    shapes[opt2Index],
+                    shapes[opt3Index]
+                ].sort(() => Math.random() - 0.5);
+                
+                optionsDiv.className = 'options';
+
+                options.forEach(shape => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-button';
+                    btn.style.background = 'linear-gradient(135deg, #A855F7, #FF6B9D)';
+                    btn.textContent = shape.name;
+                    btn.onclick = () => answerShape(shape);
+                    optionsDiv.appendChild(btn);
+                });
+            } else if (currentMode === 'matching') {
+                const q = questions[currentQuestion];
+                questionText.textContent = 'Найди нужную фигуру';
+                matchingLabel.classList.remove('hidden');
+                matchingLabel.style.color = q.correct.color.hex;
+                const colorAdjective = getColorAdjective(q.correct.color.name, q.correct.shape.type);
+                matchingLabel.textContent = `${colorAdjective} ${q.correct.shape.name.toLowerCase()}`;
+                currentCorrectAnswer = q.correct;
+                optionsDiv.className = 'options grid-2';
+
+                q.options.forEach((option, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-button matching-option';
+                    btn.innerHTML = `
+                        <div class="matching-shape">${renderShape(option.shape.type, option.color.hex, 'small').outerHTML}</div>
+                        <div class="matching-color-name">${option.color.name}</div>
+                        <div class="matching-shape-name">${option.shape.name.toLowerCase()}</div>
+                    `;
+                    btn.onclick = () => answerMatching(option);
+                    optionsDiv.appendChild(btn);
+                });
+            }
+
+            const totalQuestions = currentMode === 'shapes' ? 12 : (currentMode === 'matching' ? 8 : questions.length);
+            progress.textContent = `Ответ ${currentQuestion + 1} из ${totalQuestions} ✓ ${score}`;
+        }
+
+        function answerColor(selected) {
+            if (selected.hex === questions[currentQuestion].correct.hex) {
+                score++;
+                triggerConfetti();
+                nextQuestion();
+            }
+        }
+
+        function answerShape(selected) {
+            if (selected.type === currentCorrectAnswer.type) {
+                score++;
+                triggerConfetti();
+                nextQuestion();
+            }
+        }
+
+        function answerMatching(selected) {
+            if (selected.color.hex === currentCorrectAnswer.color.hex && selected.shape.type === currentCorrectAnswer.shape.type) {
+                score++;
+                triggerConfetti();
+                nextQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            const totalQuestions = currentMode === 'shapes' ? 12 : (currentMode === 'matching' ? 8 : questions.length);
+            setTimeout(() => {
+                if (currentQuestion < totalQuestions - 1) {
+                    currentQuestion++;
+                    renderQuestion();
+                } else {
+                    showResult();
+                }
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('game').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('resultScore').textContent = `Правильных ответов: ${score}`;
+        }
+
+        function backToMenu() {
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('game').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
+            currentQuestion = 0;
+            score = 0;
+        }
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            // VK Mini Apps поддержка
+            if (window.VK && window.VK.init) {
+                window.VK.init({ apiId: 123 });
+            }
+        });
+    </script>
+</body>
+</html>
