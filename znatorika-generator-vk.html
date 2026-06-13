@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Генератор примеров — Знаторика</title>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+<style>
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  background: #F0EEFF;
+  min-height: 100vh;
+  padding-top: var(--safe-top);
+  padding-bottom: calc(var(--safe-bot) + 20px);
+  overscroll-behavior: none;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #7C3AED 0%, #C026D3 55%, #F59E0B 100%);
+  padding: 22px 20px 32px;
+  text-align: center;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 16px;
+}
+.logo { font-size: 11px; font-weight: 800; letter-spacing: 4px; color: rgba(255,255,255,.55); text-transform: uppercase; margin-bottom: 6px; }
+.title { font-size: 26px; font-weight: 900; color: #fff; }
+.subtitle { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 5px; }
+
+/* WRAP */
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 14px; }
+
+/* LABEL */
+.lbl { font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #9CA3AF; text-transform: uppercase; margin-bottom: 10px; }
+
+/* MODES */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 18px; }
+.mode-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 13px 12px; border-radius: 14px;
+  border: 3px solid #E5E7EB;
+  background: #fff; color: #374151;
+  font-family: inherit; font-weight: 800; font-size: 15px;
+  cursor: pointer; text-align: left;
+  transition: all .15s;
+  -webkit-appearance: none;
+}
+.mode-btn .ic { font-size: 18px; flex-shrink: 0; }
+.mode-btn.wide { grid-column: span 2; }
+.mode-btn.active { color: #fff; border-color: transparent; }
+.mode-btn.active.add    { background:#EF4444; box-shadow:0 6px 18px #EF444455; }
+.mode-btn.active.sub    { background:#3B82F6; box-shadow:0 6px 18px #3B82F655; }
+.mode-btn.active.addSub { background:linear-gradient(135deg,#EF4444,#3B82F6); box-shadow:0 6px 18px #EC489955; }
+.mode-btn.active.mul    { background:#F59E0B; box-shadow:0 6px 18px #F59E0B55; }
+.mode-btn.active.div    { background:#8B5CF6; box-shadow:0 6px 18px #8B5CF655; }
+.mode-btn.active.mulDiv { background:linear-gradient(135deg,#F59E0B,#8B5CF6); box-shadow:0 6px 18px #06B6D455; }
+.mode-btn.active.all    { background:linear-gradient(135deg,#7C3AED,#C026D3); box-shadow:0 6px 18px #7C3AED55; }
+
+/* COUNT */
+.counts { display: flex; gap: 8px; margin-bottom: 18px; }
+.cnt-btn {
+  width: 54px; height: 46px; border-radius: 12px;
+  border: 3px solid #E5E7EB; background: #fff; color: #6B7280;
+  font-family: inherit; font-weight: 800; font-size: 17px;
+  cursor: pointer; transition: all .15s;
+  -webkit-appearance: none;
+}
+.cnt-btn.active { background:#7C3AED; border-color:#7C3AED; color:#fff; box-shadow:0 4px 14px rgba(124,58,237,.4); }
+
+/* GEN BUTTON */
+.gen-btn {
+  width: 100%; padding: 17px; border-radius: 18px; border: none;
+  background: linear-gradient(135deg,#7C3AED,#C026D3);
+  color: #fff; font-family: inherit; font-weight: 900; font-size: 19px;
+  cursor: pointer; box-shadow: 0 8px 26px rgba(124,58,237,.45);
+  margin-bottom: 16px; -webkit-appearance: none;
+  transition: transform .1s;
+}
+.gen-btn:active { transform: scale(.97); }
+
+/* TOGGLE ANSWERS */
+.tog-btn {
+  width: 100%; padding: 12px; border-radius: 12px;
+  border: 3px solid #E5E7EB; background: #fff;
+  font-family: inherit; font-weight: 800; font-size: 15px;
+  cursor: pointer; color: #374151; margin-bottom: 14px;
+  -webkit-appearance: none; transition: all .15s;
+}
+.tog-btn:active { background: #F3F4F6; }
+
+/* GRID */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 10px; }
+
+/* CARD */
+.card {
+  background: #fff; border-radius: 16px; padding: 15px 10px 11px;
+  text-align: center; position: relative; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  border: 3px solid transparent;
+  transition: all .15s;
+}
+.card:active { border-color: #A78BFA; transform: scale(.97); }
+.card-bar { position: absolute; top:0; left:0; right:0; height:5px; }
+.card-num { font-size: 10px; font-weight: 800; color: #D1D5DB; margin-bottom: 7px; letter-spacing:1px; }
+.card-expr { font-size: 22px; font-weight: 900; color: #1F2937; line-height: 1.35; }
+.op { font-weight: 900; }
+.op-add { color:#EF4444; } .op-sub { color:#3B82F6; } .op-mul { color:#D97706; } .op-div { color:#7C3AED; } .op-eq { color:#9CA3AF; }
+.card-ans {
+  margin-top: 8px; font-size: 18px; font-weight: 900; color: #6B7280;
+  background: #F3F4F6; border-radius: 8px; padding: 2px 10px;
+  display: inline-block; opacity: 0; transition: opacity .2s;
+}
+.card-ans.show { opacity: 1; }
+
+/* EMPTY */
+.empty { text-align:center; padding:40px 0; color:#D1D5DB; font-weight:700; font-size:16px; }
+.empty-ico { font-size:44px; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Знаторика</div>
+  <div class="title">Генератор примеров</div>
+  <div class="subtitle">Числа до 1000</div>
+</div>
+
+<div class="wrap">
+
+  <div class="lbl">Режим</div>
+  <div class="modes" id="modes">
+    <button class="mode-btn add active" data-mode="add"><span class="ic">➕</span>Сложение</button>
+    <button class="mode-btn sub" data-mode="sub"><span class="ic">➖</span>Вычитание</button>
+    <button class="mode-btn addSub" data-mode="addSub"><span class="ic">±</span>Слож + Вычит</button>
+    <button class="mode-btn mul" data-mode="mul"><span class="ic">✖</span>Умножение</button>
+    <button class="mode-btn div" data-mode="div"><span class="ic">➗</span>Деление</button>
+    <button class="mode-btn mulDiv" data-mode="mulDiv"><span class="ic">🔁</span>Умнож + Делен</button>
+    <button class="mode-btn all wide" data-mode="all"><span class="ic">🔀</span>Все четыре действия</button>
+  </div>
+
+  <div class="lbl">Количество примеров</div>
+  <div class="counts" id="counts">
+    <button class="cnt-btn active" data-n="10">10</button>
+    <button class="cnt-btn" data-n="16">16</button>
+    <button class="cnt-btn" data-n="20">20</button>
+    <button class="cnt-btn" data-n="30">30</button>
+  </div>
+
+  <button class="gen-btn" id="genBtn">🎲 Генерировать</button>
+
+  <button class="tog-btn" id="togBtn" style="display:none">👁 Показать ответы</button>
+
+  <div class="grid" id="grid">
+    <div class="empty" style="grid-column:1/-1">
+      <div class="empty-ico">✏️</div>
+      Нажми «Генерировать»
+    </div>
+  </div>
+
+</div>
+
+<script>
+// VK Bridge init
+if (window.vkBridge) {
+  vkBridge.send('VKWebAppInit');
+  vkBridge.send('VKWebAppSetSwipeSettings', { history: false });
+}
+
+const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+
+function makeAdd(){ const a=rnd(10,990),b=rnd(1,1000-a); return {a,op:'+',b,ans:a+b,type:'add'}; }
+function makeSub(){ const a=rnd(10,999),b=rnd(1,a); return {a,op:'−',b,ans:a-b,type:'sub'}; }
+function makeMul(){ const a=rnd(2,50),b=rnd(2,Math.min(50,Math.floor(999/a))); return {a,op:'×',b,ans:a*b,type:'mul'}; }
+function makeDiv(){ const b=rnd(2,25),ans=rnd(2,Math.floor(999/b)); return {a:b*ans,op:'÷',b,ans,type:'div'}; }
+
+const BAR = {add:'#EF4444',sub:'#3B82F6',mul:'#F59E0B',div:'#8B5CF6'};
+const OPC = {'+':'op-add','−':'op-sub','×':'op-mul','÷':'op-div'};
+const gens = {
+  add:makeAdd, sub:makeSub,
+  addSub:()=>Math.random()<.5?makeAdd():makeSub(),
+  mul:makeMul, div:makeDiv,
+  mulDiv:()=>Math.random()<.5?makeMul():makeDiv(),
+  all:()=>[makeAdd,makeSub,makeMul,makeDiv][rnd(0,3)]()
+};
+
+let mode='add', count=10, showAll=false;
+
+// режимы
+document.getElementById('modes').addEventListener('click', e=>{
+  const btn = e.target.closest('.mode-btn');
+  if(!btn) return;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  mode = btn.dataset.mode;
+});
+
+// количество
+document.getElementById('counts').addEventListener('click', e=>{
+  const btn = e.target.closest('.cnt-btn');
+  if(!btn) return;
+  document.querySelectorAll('.cnt-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  count = +btn.dataset.n;
+});
+
+// генерация
+document.getElementById('genBtn').addEventListener('click', ()=>{
+  showAll = false;
+  document.getElementById('togBtn').textContent = '👁 Показать ответы';
+  document.getElementById('togBtn').style.display = 'block';
+
+  const gen = gens[mode];
+  const items = Array.from({length:count},(_,i)=>{
+    const ex = gen();
+    return `<div class="card" data-i="${i}">
+      <div class="card-bar" style="background:${BAR[ex.type]}"></div>
+      <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="card-expr">
+        ${ex.a} <span class="op ${OPC[ex.op]}">${ex.op}</span> ${ex.b} <span class="op op-eq">=</span>
+      </div>
+      <div class="card-ans">${ex.ans}</div>
+    </div>`;
+  });
+  document.getElementById('grid').innerHTML = items.join('');
+
+  // тап по карточке — показать/скрыть ответ
+  document.getElementById('grid').addEventListener('click', e=>{
+    const card = e.target.closest('.card');
+    if(!card) return;
+    const ans = card.querySelector('.card-ans');
+    ans.classList.toggle('show');
+  }, {once:false});
+});
+
+// показать все ответы
+document.getElementById('togBtn').addEventListener('click', ()=>{
+  showAll = !showAll;
+  document.querySelectorAll('.card-ans').forEach(el=>el.classList.toggle('show', showAll));
+  document.getElementById('togBtn').textContent = showAll ? '🙈 Скрыть ответы' : '👁 Показать ответы';
+});
+</script>
+</body>
+</html>
