@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --violet: #7C3AED;
+  --violet-mid: #6B21A8;
+  --orange: #F97316;
+  --bg: #0A0812;
+  --bg-card: #16102A;
+  --text: #FFFFFF;
+  --text-muted: #B8B0D0;
+  --border: #2D2350;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #000000;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  line-height: 1.2;
+  color: #FFFFFF;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-orange text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-800 text-white px-6 py-3 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors;
+  }
+
+  .card {
+    @apply bg-[#16102A] border border-[#2D2350] rounded-[16px] p-6;
+  }
+
+  .topic-card {
+    @apply card cursor-pointer hover:border-[#7C3AED] transition-colors;
+  }
+}
