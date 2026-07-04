@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colors</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #f093fb 25%, #f5576c 50%, #fda085 75%, #4facfe 100%);
+    background-size: 400% 400%;
+    animation: bgShift 8s ease infinite;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 30px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  @keyframes bgShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* FLOATING SHAPES */
+  .shapes-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .shape {
+    position: absolute;
+    opacity: 0.75;
+    animation: floatUp linear infinite;
+    filter: drop-shadow(0 0 10px rgba(255,215,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.7));
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0px) rotate(0deg) scale(1); }
+    30%  { transform: translateY(-28px) rotate(15deg) scale(1.07); }
+    60%  { transform: translateY(14px) rotate(-10deg) scale(0.95); }
+    100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  }
+
+  /* HEADER */
+  .header {
+    position: relative; z-index: 2;
+    text-align: center; margin-bottom: 18px;
+    animation: dropIn 0.7s cubic-bezier(.23,1.5,.5,1) both;
+  }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-50px) scale(0.8); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.8rem, 10vw, 5.5rem);
+    color: #fff;
+    text-shadow:
+      -2px -2px 0 rgba(0,0,0,0.55),
+       2px -2px 0 rgba(0,0,0,0.55),
+      -2px  2px 0 rgba(0,0,0,0.55),
+       2px  2px 0 rgba(0,0,0,0.55),
+       0 5px 0 rgba(0,0,0,0.25),
+       0 10px 30px rgba(0,0,0,0.2);
+    letter-spacing: 4px;
+  }
+
+  /* NAV */
+  .nav {
+    position: relative; z-index: 2;
+    display: flex; gap: 14px; margin-bottom: 22px;
+    flex-wrap: wrap; justify-content: center;
+    animation: dropIn 0.7s 0.12s cubic-bezier(.23,1.5,.5,1) both;
+  }
+  .nav-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.3rem;
+    padding: 18px 50px;
+    border: none; border-radius: 50px;
+    cursor: pointer; color: #fff;
+    letter-spacing: 1.5px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.22), 0 0 16px rgba(255,255,255,0.25);
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+  }
+  .nav-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+  .nav-btn:active { transform: scale(0.96); }
+  .nav-btn.n1 { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+  .nav-btn.n2 { background: linear-gradient(135deg, #1dd1a1, #00b894); }
+  .nav-btn.n3 { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+  .nav-btn.active {
+    box-shadow: 0 0 0 4px #fff, 0 8px 24px rgba(0,0,0,0.25);
+    transform: scale(1.09); filter: brightness(1.12);
+  }
+
+  /* CARD */
+  .card {
+    position: relative; z-index: 2;
+    background: rgba(255,255,255,0.16);
+    backdrop-filter: blur(18px);
+    border-radius: 32px;
+    border: 2.5px solid rgba(255,255,255,0.45);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    padding: 28px 20px 26px;
+    width: 100%; max-width: 700px;
+    animation: cardIn 0.5s cubic-bezier(.23,1.5,.5,1) both;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.88) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .mode-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.2rem;
+    color: #fff;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    margin-bottom: 18px;
+    text-align: center; letter-spacing: 1px;
+  }
+
+  /* ======== MODE 1 — COLOR GRID ======== */
+  .colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px; width: 100%;
+  }
+
+  .color-tile {
+    border-radius: 22px;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.18);
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 3.5px solid rgba(255,255,255,0.7);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .color-tile:hover { transform: translateY(-6px) scale(1.07); box-shadow: 0 14px 32px rgba(0,0,0,0.25); }
+  .color-tile:active { transform: scale(0.93); }
+
+  .color-swatch {
+    height: 80px;
+    width: 100%;
+  }
+  .color-name {
+    background: rgba(255,255,255,0.95);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15rem;
+    text-align: center;
+    padding: 7px 4px 6px;
+    color: #222;
+    letter-spacing: 0.5px;
+  }
+
+  /* ======== MODE 2 — FLASHCARD ======== */
+  .fc2-wrap {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 20px; width: 100%;
+  }
+  .fc2-progress {
+    font-family: 'Fredoka One', cursive;
+    color: #fff; font-size: 1.3rem;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+  .progress-bar-wrap {
+    width: 100%; background: rgba(255,255,255,0.25);
+    border-radius: 50px; height: 10px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1dd1a1, #54a0ff, #fd79a8);
+    border-radius: 50px; transition: width 0.5s ease;
+  }
+
+  .flashcard2 {
+    width: 280px; height: 240px;
+    perspective: 800px; cursor: pointer;
+  }
+  .flashcard2-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(.4,2,.55,1);
+  }
+  .flashcard2.flipped .flashcard2-inner { transform: rotateY(180deg); }
+
+  .fc2-front, .fc2-back {
+    position: absolute; inset: 0;
+    border-radius: 28px;
+    backface-visibility: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  }
+  .fc2-front {
+    background: rgba(255,255,255,0.95);
+    border: 3px solid rgba(255,255,255,0.8);
+  }
+  .fc2-back { transform: rotateY(180deg); }
+
+  .fc2-swatch {
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    border: 4px solid rgba(255,255,255,0.8);
+    margin-bottom: 14px;
+  }
+  .fc2-hint {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900; font-size: 0.9rem; color: #aaa;
+  }
+  .fc2-word {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.8rem; color: #fff;
+    text-shadow: -2px -2px 0 rgba(0,0,0,0.3), 2px -2px 0 rgba(0,0,0,0.3),
+                 -2px 2px 0 rgba(0,0,0,0.3), 2px 2px 0 rgba(0,0,0,0.3);
+  }
+  .fc2-tr {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: rgba(255,255,255,0.85); margin-top: 6px;
+  }
+  .fc2-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .fc2-btn {
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    padding: 12px 28px; border: none; border-radius: 50px;
+    cursor: pointer; color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    transition: transform 0.15s; text-shadow: -1px -1px 0 rgba(0,0,0,0.3), 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .fc2-btn:hover { transform: translateY(-3px) scale(1.05); }
+  .fc2-btn:active { transform: scale(0.95); }
+  .fc2-prev { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+  .fc2-flip { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+  .fc2-next { background: linear-gradient(135deg, #fd79a8, #e84393); }
+  .fc2-shuffle { background: linear-gradient(135deg, #00cec9, #0984e3); }
+
+  /* ======== MODE 3 — QUIZ ======== */
+  .quiz-c-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+  .qc-score {
+    font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+    color: #fff; display: flex; gap: 18px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+  .qc-badge {
+    background: rgba(255,255,255,0.28);
+    border-radius: 40px; padding: 6px 20px;
+    border: 2px solid rgba(255,255,255,0.45);
+  }
+  .qc-question {
+    background: rgba(255,255,255,0.95);
+    border-radius: 28px; padding: 24px 20px 20px;
+    text-align: center; width: 100%;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+  .qc-label {
+    font-family: 'Nunito', sans-serif; font-weight: 900;
+    font-size: 0.9rem; color: #aaa;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+  }
+  .qc-swatch {
+    width: 120px; height: 120px; border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    border: 4px solid rgba(0,0,0,0.08);
+  }
+  .qc-options {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; width: 100%;
+  }
+  .qc-opt {
+    font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+    padding: 16px 10px; border: none; border-radius: 20px;
+    cursor: pointer; color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.35), 1px -1px 0 rgba(0,0,0,0.35),
+                 -1px 1px 0 rgba(0,0,0,0.35), 1px 1px 0 rgba(0,0,0,0.35);
+  }
+  .qc-opt:nth-child(1) { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+  .qc-opt:nth-child(2) { background: linear-gradient(135deg, #0abde3, #0984e3); }
+  .qc-opt:nth-child(3) { background: linear-gradient(135deg, #1dd1a1, #00b894); }
+  .qc-opt:nth-child(4) { background: linear-gradient(135deg, #fd79a8, #e84393); }
+  .qc-opt:hover:not(:disabled) { transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+  .qc-opt:active:not(:disabled) { transform: scale(0.95); }
+  .qc-opt:disabled { cursor: default; }
+  .qc-opt.correct { box-shadow: 0 0 0 4px #fff, 0 0 0 7px #1dd1a1; animation: correctPop 0.4s cubic-bezier(.23,1.5,.5,1); }
+  .qc-opt.wrong { filter: brightness(0.5) grayscale(0.5); }
+  @keyframes correctPop { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+
+  .qc-feedback {
+    font-family: 'Fredoka One', cursive; font-size: 1.4rem;
+    color: #fff; min-height: 38px; text-align: center;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    animation: feedIn 0.3s cubic-bezier(.23,1.5,.5,1);
+  }
+  @keyframes feedIn { from{transform:scale(0.7);opacity:0} to{transform:scale(1);opacity:1} }
+
+  .qc-next {
+    font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+    padding: 13px 42px; background: linear-gradient(135deg, #fdcb6e, #e17055);
+    color: #fff; border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18); transition: transform 0.15s;
+    display: none; text-shadow: -1px -1px 0 rgba(0,0,0,0.3), 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .qc-next.show { display: block; animation: feedIn 0.3s cubic-bezier(.23,1.5,.5,1); }
+  .qc-next:hover { transform: scale(1.06); }
+
+  /* end screen */
+  .qc-end { text-align: center; animation: cardIn 0.5s cubic-bezier(.23,1.5,.5,1); }
+  .qc-end .end-emoji { font-size: 4rem; display: block; margin-bottom: 8px; }
+  .qc-end .end-score {
+    font-family: 'Fredoka One', cursive; font-size: 3.5rem;
+    color: #fff; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+  }
+  .qc-end .end-msg {
+    font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 1.1rem; color: rgba(255,255,255,0.9); margin: 8px 0 20px;
+  }
+  .qc-restart {
+    font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+    padding: 14px 44px; background: linear-gradient(135deg, #1dd1a1, #00b894);
+    color: #fff; border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(29,209,161,0.4); transition: transform 0.15s;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3), 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .qc-restart:hover { transform: scale(1.06); }
+
+  /* POPUP */
+  .popup-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 200;
+    align-items: center; justify-content: center;
+    animation: fadeIn 0.2s;
+  }
+  .popup-overlay.show { display: flex; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .popup-box {
+    background: linear-gradient(150deg, #fff 55%, #f0f4ff 100%);
+    border-radius: 36px; padding: 34px 44px 30px;
+    text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,0.32);
+    animation: popIn 0.35s cubic-bezier(.23,1.5,.5,1);
+    max-width: 320px; width: 90%;
+  }
+  @keyframes popIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+  .pop-swatch {
+    width: 110px; height: 110px; border-radius: 50%;
+    margin: 0 auto 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    border: 4px solid rgba(0,0,0,0.08);
+  }
+  .pop-word {
+    font-family: 'Fredoka One', cursive; font-size: 2.4rem; color: #222;
+  }
+  .pop-tr {
+    font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 1rem; color: #888; margin: 4px 0 18px;
+  }
+  .pop-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .pop-speak {
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    padding: 13px 28px; background: linear-gradient(135deg, #0abde3, #0984e3);
+    color: #fff; border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(9,132,227,0.38); transition: transform 0.15s;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3), 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .pop-speak:hover { transform: scale(1.06); }
+  .pop-speak.speaking { animation: speakPulse 0.6s ease infinite alternate; }
+  @keyframes speakPulse {
+    from { box-shadow: 0 6px 20px rgba(9,132,227,0.38); }
+    to   { box-shadow: 0 6px 30px rgba(9,132,227,0.85), 0 0 0 7px rgba(9,132,227,0.18); }
+  }
+  .pop-close {
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    padding: 13px 28px; background: linear-gradient(135deg, #fd79a8, #e84393);
+    color: #fff; border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(232,67,147,0.35); transition: transform 0.15s;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3), 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .pop-close:hover { transform: scale(1.06); }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 500px) {
+    .card { padding: 16px 10px; }
+    .colors-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+    .color-swatch { height: 60px; }
+    .nav-btn { font-size: 1.6rem; padding: 14px 28px; }
+    .mode-title { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shapes-layer" id="shapesLayer"></div>
+
+<div class="header"><h1>COLORS</h1></div>
+
+<nav class="nav">
+  <button class="nav-btn n1 active" onclick="switchMode(1)">🎨 Цвета</button>
+  <button class="nav-btn n2" onclick="switchMode(2)">🃏 Карточки</button>
+  <button class="nav-btn n3" onclick="switchMode(3)">🎯 Квиз</button>
+</nav>
+
+<div class="card">
+
+  <!-- MODE 1: color grid -->
+  <div id="mode1">
+    <div class="mode-title">🎓 Нажми на цвет!</div>
+    <div class="colors-grid" id="colorsGrid"></div>
+  </div>
+
+  <!-- MODE 2: flashcards -->
+  <div id="mode2" class="hidden">
+    <div class="mode-title">🃏 Нажми на карточку!</div>
+    <div class="fc2-wrap">
+      <div class="fc2-progress" id="fc2Progress">1 / 12</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="fc2Bar" style="width:8.3%"></div></div>
+      <div class="flashcard2" id="flashcard2" onclick="fc2Flip()">
+        <div class="flashcard2-inner">
+          <div class="fc2-front">
+            <div class="fc2-swatch" id="fc2Swatch"></div>
+            <div class="fc2-hint">Нажми, чтобы узнать</div>
+          </div>
+          <div class="fc2-back" id="fc2Back">
+            <div class="fc2-word" id="fc2Word">Red</div>
+            <div class="fc2-tr" id="fc2Tr">красный</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc2-btns">
+        <button class="fc2-btn fc2-prev" onclick="fc2Nav(-1)">⬅️ Назад</button>
+        <button class="fc2-btn fc2-flip" onclick="fc2Flip()">🔄 Перевернуть</button>
+        <button class="fc2-btn fc2-next" onclick="fc2Nav(1)">Далее ➡️</button>
+      </div>
+      <div class="fc2-btns">
+        <button class="fc2-btn fc2-shuffle" onclick="fc2Shuffle()">🔀 Перемешать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODE 3: quiz -->
+  <div id="mode3" class="hidden">
+    <div class="mode-title">🎯 Угадай цвет!</div>
+    <div class="quiz-c-wrap" id="quizCWrap">
+      <div class="qc-score">
+        <span class="qc-badge">✅ <span id="qcCorrect">0</span></span>
+        <span class="qc-badge">❌ <span id="qcWrong">0</span></span>
+        <span class="qc-badge">📝 <span id="qcNum">1</span>/12</span>
+      </div>
+      <div class="progress-bar-wrap" style="width:100%">
+        <div class="progress-bar-fill" id="qcBar" style="width:0%"></div>
+      </div>
+      <div class="qc-question">
+        <div class="qc-label">Как называется этот цвет?</div>
+        <div class="qc-swatch" id="qcSwatch"></div>
+      </div>
+      <div class="qc-options" id="qcOptions"></div>
+      <div class="qc-feedback" id="qcFeedback"></div>
+      <button class="qc-next" id="qcNext" onclick="qcNextQ()">Следующий ➡️</button>
+    </div>
+    <div class="qc-end hidden" id="qcEnd">
+      <span class="end-emoji" id="qcEndEmoji">🏆</span>
+      <div class="end-score" id="qcEndScore">12/12</div>
+      <div class="end-msg" id="qcEndMsg">Идеально!</div>
+      <button class="qc-restart" onclick="qcRestart()">🔄 Заново</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup" onclick="handleOverlay(event)">
+  <div class="popup-box">
+    <div class="pop-swatch" id="popSwatch"></div>
+    <div class="pop-word" id="popWord">Red</div>
+    <div class="pop-tr" id="popTr">красный</div>
+    <div class="pop-buttons">
+      <button class="pop-speak" id="popSpeakBtn" onclick="speakCurrent()">🔊 Произношение</button>
+      <button class="pop-close" onclick="closePopup()">✕ Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLORS = [
+  { en:'Red',    ru:'красный',    hex:'#e84040' },
+  { en:'Orange', ru:'оранжевый',  hex:'#ff8c00' },
+  { en:'Yellow', ru:'жёлтый',     hex:'#f7d000' },
+  { en:'Green',  ru:'зелёный',    hex:'#27ae60' },
+  { en:'Blue',   ru:'синий',      hex:'#2980e8' },
+  { en:'Purple', ru:'фиолетовый', hex:'#8e44ad' },
+  { en:'Pink',   ru:'розовый',    hex:'#ff69b4' },
+  { en:'White',  ru:'белый',      hex:'#f0f0f0' },
+  { en:'Black',  ru:'чёрный',     hex:'#222222' },
+  { en:'Brown',  ru:'коричневый', hex:'#8b4513' },
+  { en:'Grey',   ru:'серый',      hex:'#888888' },
+  { en:'Gold',   ru:'золотой',    hex:'#FFD700' },
+];
+
+// SHAPES
+const sl = document.getElementById('shapesLayer');
+for (let i = 0; i < 28; i++) {
+  const s = document.createElement('div');
+  s.className = 'shape';
+  s.textContent = i % 2 === 0 ? '⭐' : '⚪';
+  const size = 1.2 + Math.random() * 1.6;
+  s.style.cssText = `font-size:${size}rem;left:${Math.random()*100}%;top:${Math.random()*100}%;
+    animation-duration:${4+Math.random()*5}s;animation-delay:-${Math.random()*6}s;
+    opacity:${0.65+Math.random()*0.3};
+    filter:drop-shadow(0 0 10px rgba(255,215,0,.95)) drop-shadow(0 0 5px rgba(255,255,255,.8));
+    color:#FFD700;`;
+  sl.appendChild(s);
+}
+
+// MODE 1 — grid
+const grid = document.getElementById('colorsGrid');
+COLORS.forEach((c, i) => {
+  const tile = document.createElement('div');
+  tile.className = 'color-tile';
+  tile.innerHTML = `<div class="color-swatch" style="background:${c.hex}"></div><div class="color-name">${c.en}</div>`;
+  tile.onclick = () => openPopup(c);
+  grid.appendChild(tile);
+});
+
+// POPUP
+let currentColor = null;
+function openPopup(c) {
+  currentColor = c;
+  document.getElementById('popSwatch').style.background = c.hex;
+  document.getElementById('popSwatch').style.border = c.hex === '#f0f0f0' ? '4px solid #ccc' : '4px solid rgba(0,0,0,0.08)';
+  document.getElementById('popWord').textContent = c.en;
+  document.getElementById('popTr').textContent = c.ru;
+  document.getElementById('popSpeakBtn').classList.remove('speaking');
+  document.getElementById('popup').classList.add('show');
+  setTimeout(() => speakCurrent(), 320);
+}
+function handleOverlay(e) { if (e.target === document.getElementById('popup')) closePopup(); }
+function closePopup() {
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.getElementById('popup').classList.remove('show');
+  document.getElementById('popSpeakBtn').classList.remove('speaking');
+}
+function speakCurrent() {
+  if (!currentColor) return;
+  speakWord(currentColor.en, true);
+}
+
+// SPEECH
+function getBritVoice() {
+  const vs = window.speechSynthesis.getVoices();
+  return vs.find(v=>v.lang==='en-GB') || vs.find(v=>v.lang.startsWith('en-GB')) ||
+         vs.find(v=>v.name.toLowerCase().includes('british')) || vs.find(v=>v.lang.startsWith('en'));
+}
+function speakWord(text, isPop) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB'; u.rate = 0.85; u.pitch = 1.05;
+  const v = getBritVoice(); if (v) u.voice = v;
+  const btn = document.getElementById('popSpeakBtn');
+  if (isPop) btn.classList.add('speaking');
+  u.onend = () => btn.classList.remove('speaking');
+  u.onerror = () => btn.classList.remove('speaking');
+  window.speechSynthesis.speak(u);
+}
+window.speechSynthesis && window.speechSynthesis.getVoices();
+window.speechSynthesis && (window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices());
+
+// MODE 2 — flashcards
+let fc2Order = [...Array(12).keys()], fc2Idx = 0, fc2Flipped = false;
+function fc2Update() {
+  const c = COLORS[fc2Order[fc2Idx]];
+  document.getElementById('fc2Swatch').style.background = c.hex;
+  document.getElementById('fc2Swatch').style.border = c.hex==='#f0f0f0'?'4px solid #ccc':'4px solid rgba(255,255,255,0.8)';
+  document.getElementById('fc2Word').textContent = c.en;
+  document.getElementById('fc2Tr').textContent = c.ru;
+  document.getElementById('fc2Back').style.background = `linear-gradient(135deg, ${c.hex}cc, ${c.hex})`;
+  document.getElementById('fc2Progress').textContent = `${fc2Idx+1} / 12`;
+  document.getElementById('fc2Bar').style.width = ((fc2Idx+1)/12*100)+'%';
+  document.getElementById('flashcard2').classList.remove('flipped');
+  fc2Flipped = false;
+}
+function fc2Flip() {
+  fc2Flipped = !fc2Flipped;
+  document.getElementById('flashcard2').classList.toggle('flipped', fc2Flipped);
+}
+function fc2Nav(d) { fc2Idx = (fc2Idx+d+12)%12; fc2Update(); }
+function fc2Shuffle() {
+  for (let i=fc2Order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[fc2Order[i],fc2Order[j]]=[fc2Order[j],fc2Order[i]];}
+  fc2Idx=0; fc2Update();
+}
+fc2Update();
+
+// MODE 3 — quiz
+let qcOrder=[], qcCur=0, qcCorrCount=0, qcWrongCount=0, qcAnswered=false;
+function qcShuffle() {
+  qcOrder=[...Array(12).keys()];
+  for(let i=qcOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[qcOrder[i],qcOrder[j]]=[qcOrder[j],qcOrder[i]];}
+}
+function qcBuild() {
+  qcAnswered=false;
+  const idx=qcOrder[qcCur], correct=COLORS[idx];
+  const sw=document.getElementById('qcSwatch');
+  sw.style.background=correct.hex;
+  sw.style.border=correct.hex==='#f0f0f0'?'4px solid #ccc':'4px solid rgba(0,0,0,0.08)';
+  document.getElementById('qcFeedback').textContent='';
+  document.getElementById('qcNext').classList.remove('show');
+  document.getElementById('qcNum').textContent=`${qcCur+1}/12`;
+  document.getElementById('qcBar').style.width=(qcCur/12*100)+'%';
+
+  const opts=[idx];
+  while(opts.length<4){const r=Math.floor(Math.random()*12);if(!opts.includes(r))opts.push(r);}
+  for(let i=opts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+
+  const cont=document.getElementById('qcOptions'); cont.innerHTML='';
+  opts.forEach(oIdx=>{
+    const btn=document.createElement('button');
+    btn.className='qc-opt';
+    btn.textContent=COLORS[oIdx].en;
+    btn.onclick=()=>qcCheck(oIdx,idx,btn,cont);
+    cont.appendChild(btn);
+  });
+}
+function qcCheck(chosen,correct,btn,cont) {
+  if(qcAnswered) return; qcAnswered=true;
+  cont.querySelectorAll('.qc-opt').forEach(b=>b.disabled=true);
+  if(chosen===correct){
+    btn.classList.add('correct'); qcCorrCount++;
+    document.getElementById('qcFeedback').textContent=`✅ Верно! ${COLORS[correct].en} — ${COLORS[correct].ru}`;
+  } else {
+    btn.classList.add('wrong'); qcWrongCount++;
+    cont.querySelectorAll('.qc-opt').forEach(b=>{if(b.textContent===COLORS[correct].en)b.classList.add('correct');});
+    document.getElementById('qcFeedback').textContent=`❌ Нет! Это ${COLORS[correct].en} — ${COLORS[correct].ru}`;
+  }
+  document.getElementById('qcCorrect').textContent=qcCorrCount;
+  document.getElementById('qcWrong').textContent=qcWrongCount;
+  if(qcCur<11) document.getElementById('qcNext').classList.add('show');
+  else setTimeout(qcEnd,700);
+}
+function qcNextQ(){qcCur++;qcBuild();}
+function qcEnd(){
+  document.getElementById('quizCWrap').classList.add('hidden');
+  document.getElementById('qcEnd').classList.remove('hidden');
+  const pct=qcCorrCount/12;
+  document.getElementById('qcEndScore').textContent=`${qcCorrCount} / 12`;
+  const[e,m]=pct===1?['🏆','Идеально! Все цвета знаешь!']:pct>=.8?['🌟','Отлично! Почти идеально!']:pct>=.5?['😊','Неплохо! Ещё немного!']:['💪','Учи цвета дальше!'];
+  document.getElementById('qcEndEmoji').textContent=e; document.getElementById('qcEndMsg').textContent=m;
+  document.getElementById('qcBar').style.width='100%';
+}
+function qcRestart(){
+  qcCur=0;qcCorrCount=0;qcWrongCount=0;
+  document.getElementById('qcCorrect').textContent=0; document.getElementById('qcWrong').textContent=0;
+  document.getElementById('qcEnd').classList.add('hidden'); document.getElementById('quizCWrap').classList.remove('hidden');
+  qcShuffle(); qcBuild();
+}
+
+// SWITCH
+function switchMode(n) {
+  [1,2,3].forEach(i=>document.getElementById('mode'+i).classList.toggle('hidden',i!==n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i+1===n));
+  if(n!==1)closePopup();
+  if(n===3&&qcOrder.length===0){qcShuffle();qcBuild();}
+}
+</script>
+</body>
+</html>

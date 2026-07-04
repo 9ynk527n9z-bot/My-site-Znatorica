@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -12,12 +12,16 @@ model User {
   email         String    @unique
   passwordHash  String
   role          String    @default("user")
+  emailConfirmed Boolean  @default(false)
+  emailConfirmedAt DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   subscriptions Subscription[]
   payments      Payment[]
   generatorUses GeneratorUse[]
+  consents      UserConsent[]
+  verificationCodes EmailVerificationCode[]
 
   @@map("users")
 }
@@ -136,4 +140,40 @@ model PageView {
   createdAt DateTime  @default(now())
 
   @@map("page_views")
+}
+
+model EmailVerificationCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  createdAt DateTime  @default(now())
+
+  @@map("email_verification_codes")
+}
+
+model UserConsent {
+  id                  String    @id @default(cuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  policyVersion       String    @default("1.0")
+  consentedAt         DateTime  @default(now())
+  emailConfirmedAt    DateTime?
+  revokedAt           DateTime?
+
+  ipHashAuth          String?   // Хеш IP при согласии
+  ipHashEmail         String?   // Хеш IP при подтверждении email
+
+  consentType         String    @default("general") // general, payment, marketing
+  isActive            Boolean   @default(false)     // true только после email подтверждения
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("user_consents")
 }

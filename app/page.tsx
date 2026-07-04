@@ -1,9 +1,24 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import SearchBar from '@/components/SearchBar';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+export const metadata: Metadata = {
+  title: 'Знаторика — тренажёры и генераторы заданий для детей 4–11 лет',
+  description:
+    'Интерактивные тренажёры, генератор примеров и заданий, плакаты и материалы для учителей. Для дошкольников 4–7 лет и учеников 1–4 класса. Подписка 299 ₽/месяц.',
+  alternates: { canonical: '/' },
+};
+
+const homeBreadcrumbs = breadcrumbJsonLd([{ name: 'Главная', url: '/' }]);
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeBreadcrumbs) }}
+      />
       {/* Hero Section */}
       <section className="py-20 px-6 bg-gradient-to-b from-[#0A0812] to-black">
         <div className="max-w-4xl mx-auto text-center">
@@ -20,24 +35,42 @@ export default function Home() {
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-6 justify-center flex-wrap">
+          <div className="flex gap-4 justify-center flex-wrap">
             <Link
               href="/4-5-let"
-              className="btn-primary text-lg px-8 py-4"
+              className="btn-primary px-6 py-3"
             >
-              Дошкольники 4–5 лет
+              4–5 лет
             </Link>
             <Link
               href="/6-7-let"
-              className="btn-primary text-lg px-8 py-4"
+              className="btn-primary px-6 py-3"
             >
-              Дошкольники 6–7 лет
+              6–7 лет
             </Link>
             <Link
               href="/1-klass"
-              className="btn-primary text-lg px-8 py-4"
+              className="btn-primary px-6 py-3"
             >
               1 класс
+            </Link>
+            <Link
+              href="/2-klass"
+              className="btn-primary px-6 py-3"
+            >
+              2 класс
+            </Link>
+            <Link
+              href="/3-klass"
+              className="btn-primary px-6 py-3"
+            >
+              3 класс
+            </Link>
+            <Link
+              href="/4-klass"
+              className="btn-primary px-6 py-3"
+            >
+              4 класс
             </Link>
           </div>
         </div>
@@ -50,60 +83,74 @@ export default function Home() {
             Выбери свой уровень
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Дошкольники 4-5 */}
-            <Link
-              href="/4-5-let"
-              className="card hover:border-orange transition-colors group"
-            >
-              <h3 className="text-xl font-bold mb-2 group-hover:text-orange">
-                4–5 лет
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Счёт, буквы, английский, логика
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">
-                  Начало
-                </span>
-              </div>
-            </Link>
+          <div className="space-y-12">
+            {/* Дошкольники */}
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-orange">🎈 Дошкольники</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Link
+                  href="/4-5-let"
+                  className="card hover:border-orange transition-colors group"
+                >
+                  <h4 className="text-xl font-bold mb-2 group-hover:text-orange">
+                    4–5 лет
+                  </h4>
+                  <p className="text-gray-400 text-sm mb-4">
+                    Счёт до 5, буквы, цвета, развитие речи
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">📝 Теория</span>
+                    <span className="text-xs bg-violet/20 text-violet px-2 py-1 rounded">🎮 Тренажер</span>
+                  </div>
+                </Link>
 
-            {/* Дошкольники 6-7 */}
-            <Link
-              href="/6-7-let"
-              className="card hover:border-orange transition-colors group"
-            >
-              <h3 className="text-xl font-bold mb-2 group-hover:text-orange">
-                6–7 лет
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Счёт, поговорки, английский, логика
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">
-                  Подготовка
-                </span>
+                <Link
+                  href="/6-7-let"
+                  className="card hover:border-orange transition-colors group"
+                >
+                  <h4 className="text-xl font-bold mb-2 group-hover:text-orange">
+                    6–7 лет
+                  </h4>
+                  <p className="text-gray-400 text-sm mb-4">
+                    Подготовка к школе, сложение, вычитание, чтение
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">📝 Теория</span>
+                    <span className="text-xs bg-violet/20 text-violet px-2 py-1 rounded">🎮 Тренажер</span>
+                  </div>
+                </Link>
               </div>
-            </Link>
+            </div>
 
             {/* Начальная школа */}
-            <Link
-              href="/1-klass"
-              className="card hover:border-orange transition-colors group"
-            >
-              <h3 className="text-xl font-bold mb-2 group-hover:text-orange">
-                1–4 класс
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Все предметы, ВПР, материалы для учителей
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">
-                  Школа
-                </span>
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-orange">📚 Начальная школа (1–4 класс)</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { href: '/1-klass', title: '1 класс', desc: 'Основы счёта и чтения' },
+                  { href: '/2-klass', title: '2 класс', desc: 'Умножение, деление, окружающий мир' },
+                  { href: '/3-klass', title: '3 класс', desc: 'Сложные примеры, грамматика, английский' },
+                  { href: '/4-klass', title: '4 класс', desc: 'Дроби, геометрия, литература' },
+                ].map((grade) => (
+                  <Link
+                    key={grade.href}
+                    href={grade.href}
+                    className="card hover:border-orange transition-colors group"
+                  >
+                    <h4 className="text-xl font-bold mb-2 group-hover:text-orange">
+                      {grade.title}
+                    </h4>
+                    <p className="text-gray-400 text-sm mb-4">
+                      {grade.desc}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-xs bg-orange/20 text-orange px-2 py-1 rounded">📝 Теория</span>
+                      <span className="text-xs bg-violet/20 text-violet px-2 py-1 rounded">🎮 Тренажер</span>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -183,6 +230,13 @@ export default function Home() {
             >
               <p className="text-3xl mb-2">⚙️</p>
               <p className="font-bold">Генератор</p>
+            </Link>
+            <Link
+              href="/plakaty"
+              className="card text-center hover:border-orange transition-colors"
+            >
+              <p className="text-3xl mb-2">🖼️</p>
+              <p className="font-bold">Плакаты</p>
             </Link>
           </div>
         </div>

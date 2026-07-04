@@ -31,7 +31,7 @@ export default function LoginPage() {
       const data = await res.json();
       localStorage.setItem('token', data.token);
 
-      router.push('/');
+      router.push('/account');
     } catch (err: any) {
       setError(err.message);
     } finally {

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Знаторика: Приставки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a0d35;--surface:#241246;--card:#2e175a;--card2:#3a1e72;
+  --border:rgba(150,100,255,.28);
+  --a1:#7c3aed;--a2:#9d5cf5;--a3:#c4a0fa;
+  --neon:#9d5cf5;--gold:#f59e0b;--green:#22c55e;--red:#ef4444;
+  --text:#ede8ff;--muted:#c4a0fa;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text);}
+::-webkit-scrollbar{width:0;height:0;}
+
+#app{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  max-width:480px;margin:0 auto;
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--bg);
+}
+
+/* BLOBS */
+.blob{position:absolute;border-radius:50%;pointer-events:none;z-index:0;}
+.blob1{top:-100px;left:-80px;width:280px;height:280px;
+  background:radial-gradient(circle,rgba(124,58,237,.35) 0%,transparent 70%);
+  animation:pulse 7s ease-in-out infinite alternate;}
+.blob2{bottom:-80px;right:-60px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(157,92,245,.22) 0%,transparent 70%);
+  animation:pulse 9s ease-in-out infinite alternate-reverse;}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.2)}}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;flex:1;overflow:hidden;position:relative;z-index:1;}
+.screen.active{display:flex;}
+
+/* SCROLL BODY */
+.sb{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px 90px;-webkit-overflow-scrolling:touch;}
+
+/* ANIMATIONS */
+.fade-in{animation:fadeIn .3s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.pop{animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.slide-up{animation:slideUp .35s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* CARD */
+.card{
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:1px solid var(--border);border-radius:18px;
+}
+
+/* BUTTONS */
+.btn{
+  border:none;border-radius:14px;padding:15px 20px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;
+  color:#fff;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;gap:8px;
+  background:linear-gradient(135deg,var(--a1),var(--a2));
+  box-shadow:0 4px 20px rgba(124,58,237,.45);
+  transition:transform .12s,opacity .12s;width:100%;
+}
+.btn:active{transform:scale(.95);opacity:.8;}
+.btn.grn{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 16px rgba(34,197,94,.4);}
+.btn.ghost{background:var(--card);border:1px solid var(--border);box-shadow:none;}
+.btn.gold{background:linear-gradient(135deg,var(--gold),#f97316);box-shadow:0 4px 16px rgba(245,158,11,.4);}
+.btn.disabled{opacity:.35;pointer-events:none;}
+
+/* ANSWER BUTTONS */
+.ans-btn{
+  padding:18px;background:var(--card);
+  border:2px solid var(--border);border-radius:14px;
+  text-align:center;font-size:24px;
+  font-family:'Unbounded',sans-serif;font-weight:900;
+  color:var(--text);cursor:pointer;
+  transition:background .22s,border-color .22s,color .22s;
+  margin-bottom:10px;
+}
+.ans-btn:active{transform:scale(.97);}
+.ans-btn.correct{background:rgba(34,197,94,.18);border-color:var(--green);color:var(--green);}
+.ans-btn.wrong{background:rgba(239,68,68,.15);border-color:var(--red);color:var(--red);}
+
+/* BOTTOM NAV */
+#bnav{
+  display:flex;background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));
+  flex-shrink:0;z-index:100;position:relative;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;gap:3px;cursor:pointer;
+  transition:transform .12s;
+}
+.nav-item:active{transform:scale(.9);}
+.nav-icon{font-size:22px;line-height:1;}
+.nav-label{font-size:12px;font-weight:700;color:var(--text);opacity:.6;}
+.nav-item.active .nav-label{color:var(--a3);opacity:1;}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 7px var(--a2));}
+.nav-dot{width:20px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--a1),var(--a2));margin-top:2px;}
+
+/* BACK HEADER */
+.back-hdr{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px 8px;flex-shrink:0;z-index:10;position:relative;
+}
+.back-btn{
+  width:38px;height:38px;border-radius:11px;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;flex-shrink:0;
+}
+.back-title{flex:1;font-family:'Unbounded',sans-serif;font-size:13px;letter-spacing:.03em;}
+
+/* PROGRESS BAR */
+.prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.prog-bar{flex:1;background:rgba(255,255,255,.1);border-radius:8px;height:8px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--a1),var(--a2));transition:width .5s cubic-bezier(.34,1.56,.64,1);}
+.prog-label{font-size:14px;color:var(--text);font-weight:700;white-space:nowrap;}
+
+/* TIMER BAR */
+.timer-wrap{background:rgba(255,255,255,.08);border-radius:4px;height:7px;margin-bottom:12px;overflow:hidden;}
+.timer-fill{height:100%;border-radius:4px;transition:width .95s linear;background:linear-gradient(90deg,var(--green),#facc15);}
+.timer-fill.danger{background:linear-gradient(90deg,var(--red),#f97316);}
+
+/* RESULT CARD */
+.result-card{
+  padding:14px;margin-bottom:16px;border-radius:14px;
+}
+.result-card.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.4);}
+.result-card.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.4);}
+
+/* XP BAR */
+.xp-bar-wrap{background:rgba(255,255,255,.1);border-radius:6px;height:6px;overflow:hidden;}
+.xp-bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--a1),var(--a2));animation:xpGrow 1.2s cubic-bezier(.22,1,.36,1) both;}
+@keyframes xpGrow{from{width:0}}
+
+/* CONFETTI */
+.conf-item{position:absolute;border-radius:3px;animation:confFall 3s ease-in forwards;opacity:.9;}
+@keyframes confFall{
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1}
+  100%{transform:translateY(110vh) rotate(600deg);opacity:0}
+}
+
+/* TOPIC CHIP */
+.topic-chip{
+  display:inline-block;border-radius:8px;padding:4px 12px;
+  font-size:12px;font-weight:700;color:#fff;margin-bottom:8px;
+}
+
+/* STAT ROW */
+.stat-row{display:flex;gap:10px;margin-bottom:24px;}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:12px 8px;text-align:center;flex:1;}
+.stat-icon{font-size:20px;margin-bottom:3px;}
+.stat-val{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;}
+.stat-lbl{font-size:12px;color:var(--text);margin-top:2px;opacity:.7;}
+
+/* RULE BOX */
+.rule-box{display:flex;gap:10px;padding:10px 14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;margin-bottom:8px;font-size:13px;line-height:1.55;}
+
+/* WORD TAG */
+.word-tag{background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;
+  display:inline-block;margin:4px;}
+
+/* OVERLAY */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.7);
+  display:flex;align-items:flex-end;z-index:500;backdrop-filter:blur(6px);}
+.overlay-sheet{
+  width:100%;background:var(--surface);
+  border-top:1px solid var(--border);
+  border-radius:22px 22px 0 0;padding:24px;
+  padding-bottom:max(24px,env(safe-area-inset-bottom));
+}
+.sheet-handle{width:36px;height:4px;border-radius:2px;
+  background:var(--border);margin:0 auto 20px;}
+
+/* SECTION LABEL */
+.sec-label{
+  font-family:'Unbounded',sans-serif;font-size:11px;
+  color:var(--text);letter-spacing:.1em;
+  margin:18px 0 10px;text-transform:uppercase;opacity:.7;
+}
+
+/* TOGGLE */
+.toggle{
+  width:46px;height:26px;border-radius:13px;
+  background:var(--card2);border:1px solid var(--border);
+  position:relative;cursor:pointer;transition:background .3s;flex-shrink:0;
+}
+.toggle.on{background:linear-gradient(135deg,var(--a1),var(--a2));}
+.toggle-knob{
+  position:absolute;top:3px;left:3px;
+  width:20px;height:20px;border-radius:50%;background:#fff;
+  transition:left .3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.toggle.on .toggle-knob{left:22px;}
+
+/* LEVELS */
+.level-row{display:flex;align-items:center;gap:14px;padding:16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;margin-bottom:10px;cursor:pointer;
+  transition:transform .12s;}
+.level-row:active{transform:scale(.98);}
+
+/* LEADERBOARD */
+.lb-row{display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--border);}
+.lb-row:last-child{border-bottom:none;}
+
+/* ACHIEVEMENT GRID */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ach-card{background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px 10px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:7px;}
+.ach-done{border-color:rgba(34,197,94,.4);}
+.ach-locked{opacity:.45;}
+.ach-pbar{width:100%;background:rgba(255,255,255,.08);border-radius:4px;height:4px;overflow:hidden;}
+.ach-pfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--a1),var(--a2));}
+.ach-done .ach-pfill{background:linear-gradient(90deg,#22c55e,#22d3a5);}
+
+/* TOPIC PROGRESS BARS */
+.tprog-row{margin-bottom:11px;}
+.tprog-bar{background:rgba(255,255,255,.08);border-radius:6px;height:7px;overflow:hidden;margin-top:4px;}
+.tprog-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--a1),var(--a2));transition:width 1s;}
+
+/* CLASS TABS */
+.cls-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;}
+.cls-tab{flex-shrink:0;padding:7px 14px;border-radius:20px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:12px;font-weight:700;cursor:pointer;color:var(--text);opacity:.7;}
+.cls-tab.active{background:linear-gradient(135deg,var(--a1),var(--a2));
+  border-color:transparent;opacity:1;box-shadow:0 4px 14px rgba(124,58,237,.4);}
+
+/* TOPIC LIST ITEM */
+.topic-item{display:flex;align-items:center;gap:14px;padding:13px 16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;margin-bottom:9px;cursor:pointer;
+  transition:transform .12s;}
+.topic-item:active{transform:scale(.98);}
+.topic-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-family:'Unbounded',sans-serif;
+  font-weight:900;color:#fff;flex-shrink:0;}
+
+/* HOME menu item */
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;margin-bottom:9px;cursor:pointer;
+  transition:transform .12s;}
+.menu-item:active{transform:scale(.98);}
+.menu-icon{width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+
+  <!-- ══ HOME ══════════════════════════════════════════════════ -->
+  <div id="s-home" class="screen">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;flex-shrink:0;z-index:10;position:relative;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img id="logo-home" alt="Знаторика" style="width:46px;height:46px;border-radius:12px;object-fit:cover;box-shadow:0 0 16px rgba(124,58,237,.6);">
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:15px;">ЗНАТОРИКА</div>
+          <div style="font-size:16px;font-weight:800;">Приставки · 5–9 класс</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <div style="display:flex;align-items:center;gap:5px;background:var(--card);border-radius:20px;padding:6px 12px;border:1px solid var(--border);">
+          <span>⭐</span><b id="stat-stars">1250</b>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--card);border-radius:20px;padding:6px 12px;border:1px solid var(--border);">
+          <span>💎</span><b id="stat-diamonds">45</b>
+        </div>
+      </div>
+    </div>
+    <div class="sb">
+      <!-- user card -->
+      <div class="card fade-in" style="padding:16px;margin-bottom:14px;box-shadow:0 8px 28px rgba(124,58,237,.2);">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">🐿️</div>
+          <div style="flex:1;">
+            <div style="font-weight:800;font-size:15px;">Максим</div>
+            <div style="font-size:14px;margin-bottom:6px;" id="user-level-txt">⚡ Уровень 2 · Ученик · Серия 15🔥</div>
+            <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xp-fill" style="width:32%;"></div></div>
+            <div style="font-size:12px;margin-top:3px;" id="xp-txt">320 XP</div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--a1),var(--a2));border-radius:10px;padding:8px 10px;text-align:center;">
+            <div style="font-size:20px;">⭐</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;" id="lvl-badge">2</div>
+          </div>
+        </div>
+      </div>
+      <!-- streak -->
+      <div class="fade-in" style="background:linear-gradient(135deg,rgba(245,158,11,.16),rgba(249,115,22,.1));border:1px solid rgba(245,158,11,.3);border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;animation-delay:.05s">
+        <span style="font-size:26px;">🔥</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:14px;">Серия 15 дней!</div><div style="font-size:13px;">Занимайся каждый день</div></div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;color:var(--gold);">15</div>
+      </div>
+      <!-- action buttons -->
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <button class="btn" onclick="goTo('s-pick-topic','train')" style="flex:1;font-size:15px;">🎯 Тренировка</button>
+        <button class="btn grn" onclick="goTo('s-exam')" style="flex:1;font-size:15px;">📝 Экзамен</button>
+      </div>
+      <button class="btn gold" onclick="goTo('s-tournament')" style="margin-bottom:14px;">⚔️ Турнир — Битва со Знатиком</button>
+      <div class="sec-label">Разделы теории</div>
+      <div id="home-topics"></div>
+    </div>
+  </div>
+
+  <!-- ══ PICK TOPIC ═════════════════════════════════════════════ -->
+  <div id="s-pick-topic" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">ВЫБЕРИ ТЕМУ</div>
+    </div>
+    <div class="sb">
+      <div style="font-size:14px;color:var(--text);margin-bottom:14px;opacity:.8;">Выбери раздел для тренировки:</div>
+      <div id="pick-topic-list"></div>
+    </div>
+  </div>
+
+  <!-- ══ TRAINING ═══════════════════════════════════════════════ -->
+  <div id="s-training" class="screen">
+    <div class="back-hdr" style="padding-bottom:10px;">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">ТРЕНИРОВКА</div>
+      <div id="lives-display" style="display:flex;gap:2px;font-size:18px;"></div>
+    </div>
+    <div class="sb" style="padding-top:0;">
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%;"></div></div>
+        <div class="prog-label" id="prog-label">1/10</div>
+        <div id="streak-badge" style="font-size:13px;color:var(--gold);font-weight:800;display:none;"></div>
+      </div>
+      <div class="timer-wrap" id="timer-wrap" style="display:none;">
+        <div class="timer-fill" id="timer-fill" style="width:100%;"></div>
+      </div>
+      <div class="card" id="q-card" style="padding:28px;margin-bottom:16px;text-align:center;box-shadow:0 8px 28px rgba(124,58,237,.2);">
+        <div style="font-size:13px;opacity:.7;margin-bottom:10px;">Выбери правильную приставку</div>
+        <div style="font-size:30px;font-weight:900;word-break:break-all;" id="q-display"></div>
+      </div>
+      <div id="q-answers"></div>
+      <div id="result-card" style="display:none;"></div>
+      <button class="btn disabled" id="next-btn" onclick="nextQuestion()">Дальше →</button>
+    </div>
+  </div>
+
+  <!-- ══ THEORY ═════════════════════════════════════════════════ -->
+  <div id="s-theory" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">ТЕОРИЯ</div>
+    </div>
+    <div class="sb">
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(26,13,53,.8));border:1px solid rgba(34,197,94,.25);border-radius:14px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.65;">
+        📌 Изучи каждую приставку, запомни правило и примеры — потом тренируйся!
+      </div>
+      <div id="theory-list"></div>
+    </div>
+  </div>
+
+  <!-- ══ THEORY TOPIC ═══════════════════════════════════════════ -->
+  <div id="s-theory-topic" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title" id="theory-topic-title">ТЕМА</div>
+      <div style="font-size:22px;cursor:pointer;padding:4px;">🔖</div>
+    </div>
+    <div class="sb" id="theory-topic-body"></div>
+  </div>
+
+  <!-- ══ EXAM ═══════════════════════════════════════════════════ -->
+  <div id="s-exam" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">ЭКЗАМЕН</div>
+    </div>
+    <div class="sb">
+      <div style="text-align:center;padding:32px 0 16px;">
+        <div style="font-size:80px;">🏆</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;margin-top:12px;margin-bottom:8px;">Экзамен</div>
+        <div style="font-size:14px;line-height:1.7;margin-bottom:24px;opacity:.8;">20 вопросов разного уровня<br>Без ошибок — получишь 3 звезды!</div>
+        <div class="card" style="padding:16px;margin-bottom:20px;text-align:left;">
+          <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><span>📝</span>20 вопросов из всех тем</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><span>❤️</span>3 жизни</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><span>🏆</span>100% = особый значок</div>
+          <div style="display:flex;gap:10px;font-size:13px;"><span>⚡</span>Без таймера</div>
+        </div>
+        <button class="btn grn" onclick="startTraining('все',null,20)">Начать экзамен</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOURNAMENT ═════════════════════════════════════════════ -->
+  <div id="s-tournament" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">ТУРНИР</div>
+    </div>
+    <div class="sb">
+      <div style="text-align:center;padding:20px 0 16px;">
+        <div style="font-size:64px;">⚔️</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900;margin-top:10px;margin-bottom:4px;">Битва со Знатиком</div>
+        <div style="font-size:13px;margin-bottom:20px;opacity:.8;">Серия из 20 вопросов · Таймер 6 сек!</div>
+        <div class="card" style="padding:16px;margin-bottom:16px;">
+          <div class="lb-row"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f97316);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🥇</div><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));display:flex;align-items:center;justify-content:center;font-size:18px;">👦</div><div style="flex:1;font-weight:700;">Алексей С.</div><div style="font-weight:900;font-size:14px;">2450</div></div>
+          <div class="lb-row" style="background:rgba(124,58,237,.1);border-radius:8px;padding:10px 6px;border-bottom:none;margin-bottom:4px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#9ca3af,#d1d5db);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🥈</div><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));display:flex;align-items:center;justify-content:center;font-size:18px;">🐿️</div><div style="flex:1;font-weight:900;color:var(--a3);">Ты</div><div style="font-weight:900;font-size:14px;color:var(--gold);">1980</div></div>
+          <div class="lb-row"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#b45309,#d97706);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🥉</div><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));display:flex;align-items:center;justify-content:center;font-size:18px;">👧</div><div style="flex:1;font-weight:700;">Мария И.</div><div style="font-weight:900;font-size:14px;">1760</div></div>
+        </div>
+        <button class="btn gold" onclick="startTraining('все',6,20)">Начать битву ⚔️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RESULT ══════════════════════════════════════════════════ -->
+  <div id="s-result" class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;position:relative;overflow:hidden;" id="result-screen-inner">
+      <div style="font-size:70px;margin-bottom:6px;" class="pop" id="res-emoji">🐿️</div>
+      <div style="font-size:22px;margin-bottom:8px;" id="res-stars"></div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;margin-bottom:6px;background:linear-gradient(135deg,#fff,var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;" id="res-title">ПОБЕДА!</div>
+      <div style="font-size:13px;margin-bottom:20px;opacity:.8;" id="res-topic"></div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-icon">✅</div><div class="stat-val" id="res-correct">-</div><div class="stat-lbl">верных</div></div>
+        <div class="stat-box"><div class="stat-icon">⭐</div><div class="stat-val" id="res-xp">-</div><div class="stat-lbl">XP</div></div>
+        <div class="stat-box"><div class="stat-icon">🔥</div><div class="stat-val" id="res-streak">-</div><div class="stat-lbl">серия</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
+        <button class="btn" id="res-again-btn">🔄 Ещё раз</button>
+        <button class="btn ghost" onclick="goTo('s-home')">🏠 На главную</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ACHIEVEMENTS ═══════════════════════════════════════════ -->
+  <div id="s-achievements" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="navTo('s-home')">←</div>
+      <div class="back-title">ДОСТИЖЕНИЯ</div>
+    </div>
+    <div class="sb">
+      <div class="card" style="padding:16px;margin-bottom:14px;display:flex;gap:16px;flex-wrap:wrap;">
+        <div style="text-align:center;flex:1;min-width:70px;"><div style="font-size:24px;">📚</div><div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;" id="ach-lessons">12</div><div style="font-size:13px;opacity:.7;">уроков</div></div>
+        <div style="text-align:center;flex:1;min-width:70px;"><div style="font-size:24px;">✅</div><div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;" id="ach-correct">256</div><div style="font-size:13px;opacity:.7;">верных</div></div>
+        <div style="text-align:center;flex:1;min-width:70px;"><div style="font-size:24px;">🔥</div><div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;" id="ach-streak">15</div><div style="font-size:13px;opacity:.7;">серия</div></div>
+      </div>
+      <div class="ach-grid" id="ach-grid"></div>
+    </div>
+    <nav id="bnav">
+      <div class="nav-item" onclick="navTo('s-home')"><div class="nav-icon">🏠</div><div class="nav-label">Главная</div></div>
+      <div class="nav-item" onclick="navTo('s-theory')"><div class="nav-icon">📖</div><div class="nav-label">Теория</div></div>
+      <div class="nav-item active"><div class="nav-icon">🏅</div><div class="nav-label">Успехи</div><div class="nav-dot"></div></div>
+      <div class="nav-item" onclick="navTo('s-profile')"><div class="nav-icon">👤</div><div class="nav-label">Профиль</div></div>
+    </nav>
+  </div>
+
+  <!-- ══ PROFILE ════════════════════════════════════════════════ -->
+  <div id="s-profile" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="navTo('s-home')">←</div>
+      <div class="back-title">ПРОФИЛЬ</div>
+    </div>
+    <div class="sb">
+      <div class="card" style="padding:20px;margin-bottom:14px;text-align:center;">
+        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px;">🐿️</div>
+        <div style="font-weight:900;font-size:18px;">Максим</div>
+        <div style="font-size:13px;margin-top:4px;opacity:.8;">⚡ Уровень 2 · Ученик</div>
+        <div style="display:flex;justify-content:center;gap:16px;margin-top:16px;">
+          <div style="text-align:center;"><div style="font-size:20px;">⭐</div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;color:var(--gold);">1250</div><div style="font-size:12px;opacity:.7;">Звёзды</div></div>
+          <div style="text-align:center;"><div style="font-size:20px;">💎</div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;color:var(--a2);">45</div><div style="font-size:12px;opacity:.7;">Алмазы</div></div>
+          <div style="text-align:center;"><div style="font-size:20px;">🔥</div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;color:var(--green);">15</div><div style="font-size:12px;opacity:.7;">Серия</div></div>
+        </div>
+      </div>
+      <div class="card" style="padding:20px;margin-bottom:14px;" id="profile-progress"></div>
+      <button class="btn ghost" onclick="goTo('s-settings')">⚙️ Настройки</button>
+      <div style="height:80px;"></div>
+    </div>
+    <nav id="bnav">
+      <div class="nav-item" onclick="navTo('s-home')"><div class="nav-icon">🏠</div><div class="nav-label">Главная</div></div>
+      <div class="nav-item" onclick="navTo('s-theory')"><div class="nav-icon">📖</div><div class="nav-label">Теория</div></div>
+      <div class="nav-item" onclick="navTo('s-achievements')"><div class="nav-icon">🏅</div><div class="nav-label">Успехи</div></div>
+      <div class="nav-item active"><div class="nav-icon">👤</div><div class="nav-label">Профиль</div><div class="nav-dot"></div></div>
+    </nav>
+  </div>
+
+  <!-- ══ SETTINGS ═══════════════════════════════════════════════ -->
+  <div id="s-settings" class="screen">
+    <div class="back-hdr">
+      <div class="back-btn" onclick="goBack()">←</div>
+      <div class="back-title">НАСТРОЙКИ</div>
+    </div>
+    <div class="sb" id="settings-body"></div>
+  </div>
+
+</div><!-- #app -->
+
+<script>
+// ══ VK Bridge ══════════════════════════════════════════════════
+const vk = window.vkBridge || {send:()=>Promise.resolve({})};
+try {
+  vk.send("VKWebAppInit");
+  vk.send("VKWebAppSetSwipeSettings", {history: false});
+} catch(e) {}
+
+// ══ LOGO ═══════════════════════════════════════════════════════
+const LOGO = "data:image/png;base64,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";
+document.querySelectorAll('[id^="logo"]').forEach(el => el.src = LOGO);
+
+// ══ DATABASE ═══════════════════════════════════════════════════
+const DB = {
+  // ── НЕИЗМЕНЯЕМЫЕ (За-, На-, Под-) ──────────────────────────
+  "ЗА-": {
+    color:["#7c3aed","#9d5cf5"], icon:"ЗА",
+    desc:"Неизменяемая приставка. Пишется всегда одинаково.",
+    rules:["Пишется всегда ЗА-","Не зависит от следующей буквы"],
+    words:["забежать","загнать","загрузить","заклеить","закопать","закрасить",
+           "закрыть","закричать","залить","замазать","заменить","занести",
+           "записать","заплатить","запомнить","запрыгнуть","засыпать",
+           "заставить","застроить","зашить"],
+  },
+  "НА-": {
+    color:["#0891b2","#22d3ee"], icon:"НА",
+    desc:"Неизменяемая приставка. Пишется всегда одинаково.",
+    rules:["Пишется всегда НА-","Не зависит от следующей буквы"],
+    words:["набрать","набросить","навести","нагреть","надеть","надломить",
+           "надрезать","найти","наклеить","накрыть","налить","намазать",
+           "написать","наполнить","направить","нарисовать","насыпать",
+           "натянуть","научить","нахмурить"],
+  },
+  "ПОД-": {
+    color:["#065f46","#22c55e"], icon:"ПОД",
+    desc:"Неизменяемая приставка. Пишется всегда одинаково.",
+    rules:["Пишется всегда ПОД-","Перед гласными — ПОДЪ-"],
+    words:["подбежать","подвести","подвинуть","подготовить","поддержать",
+           "подкопать","подкрасить","подклеить","подлететь","подложить",
+           "поднести","подобрать","подойти","подписать","подтолкнуть",
+           "подтянуть","подъехать","подшить","поднять","подсказать"],
+  },
+  // ── ПРИ- ──────────────────────────────────────────────────
+  "ПРИ-": {
+    color:["#16a34a","#4ade80"], icon:"ПРИ",
+    desc:"Приближение, присоединение, неполное действие, близость.",
+    rules:[
+      "Приближение: приехать, прийти, прилететь",
+      "Присоединение: приклеить, прикрутить, пришить",
+      "Близость: приморский, пришкольный, прибрежный",
+      "Неполное действие: присесть, приоткрыть, притормозить",
+    ],
+    groups:{
+      "Приближение":["приехать","прибежать","прилететь","приплыть","приползти",
+                     "прийти","прибыть","придвинуться","приблизиться","прискакать"],
+      "Присоединение":["приклеить","прикрутить","прицепить","привязать","пришить",
+                       "приколоть","прикрепить","припаять","приделать","присоединить"],
+      "Близость":["приморский","прибрежный","пригородный","придорожный","пришкольный",
+                  "придомовый","привокзальный","приусадебный","приозёрный","придворный"],
+      "Неполное действие":["присесть","привстать","приоткрыть","прикрыть","притормозить",
+                           "приподнять","приглушить","приспустить","придержать","прижать"],
+    },
+    words:["приехать","прибежать","прилететь","приплыть","приползти","прийти",
+           "прибыть","придвинуться","приблизиться","прискакать",
+           "приклеить","прикрутить","прицепить","привязать","пришить",
+           "приколоть","прикрепить","припаять","приделать","присоединить",
+           "приморский","прибрежный","пригородный","придорожный","пришкольный",
+           "придомовый","привокзальный","приусадебный","приозёрный","придворный",
+           "присесть","привстать","приоткрыть","прикрыть","притормозить",
+           "приподнять","приглушить","приспустить","придержать","прижать"],
+  },
+  // ── ПРЕ- ──────────────────────────────────────────────────
+  "ПРЕ-": {
+    color:["#dc2626","#f97316"], icon:"ПРЕ",
+    desc:"Высшая степень (=очень) или близость к ПЕРЕ-.",
+    rules:[
+      "Высшая степень (=очень): прекрасный, премудрый",
+      "Значение ПЕРЕ-: преградить, прервать, преодолеть",
+      "Сомневаешься — ПРЕ? Замени на ОЧЕНЬ или ПЕРЕ-",
+    ],
+    words:["прекрасный","предобрый","премудрый","преважный","преинтересный",
+           "преспокойный","преграда","преградить","прервать","преодолеть",
+           "преобразовать","превратить","превзойти","превозмочь","преумножить",
+           "преувеличить","преклонить","преподнести","преобразить","преуспеть"],
+  },
+  // ── БЕЗ-/БЕС- ────────────────────────────────────────────
+  "БЕЗ-/БЕС-": {
+    color:["#9333ea","#c084fc"], icon:"БЕЗ",
+    desc:"Перед звонкими — БЕЗ-, перед глухими — БЕС-.",
+    rules:[
+      "Перед звонкими (б,в,г,д,ж,з,л,м,н,р): БЕЗ-",
+      "Перед глухими (п,ф,к,т,ш,с,х,ч,щ,ц): БЕС-",
+    ],
+    voiced:"бвгджзлмнр",
+    words:["бездомный","безвкусный","безлюдный","безжалостный","безветренный",
+           "безграничный","беззвучный","беззащитный","беззаботный","безболезненный",
+           "бесполезный","бескрайний","бесшумный","бесцветный","бесплатный",
+           "беспокойный","бесформенный","бесчестный","бесстрашный","бессильный"],
+  },
+  // ── РАЗ-/РАС- ────────────────────────────────────────────
+  "РАЗ-/РАС-": {
+    color:["#b45309","#fbbf24"], icon:"РАЗ",
+    desc:"Перед звонкими — РАЗ-, перед глухими — РАС-.",
+    rules:[
+      "Перед звонкими (б,в,г,д,ж,з,л,м,н,р): РАЗ-",
+      "Перед глухими (п,ф,к,т,ш,с,х,ч,щ,ц): РАС-",
+    ],
+    voiced:"бвгджзлмнр",
+    words:["разбудить","разбить","разговор","раздать","разгон","раздвинуть",
+           "разложить","разменять","разогреть","разгадать",
+           "расписать","расколоть","распилить","расставить","раскачать",
+           "рассыпать","раскрасить","расчесать","распечатать","расстегнуть"],
+  },
+};
+
+// ══ QUESTION GENERATORS ════════════════════════════════════════
+const VOICED = new Set("бвгджзлмнраеёиоуыэюя");
+const GLUKH  = new Set("пфктшсхчщц");
+
+function buildPriPreQ() {
+  const qs = [];
+  DB["ПРИ-"].words.forEach(w => qs.push({
+    display:"пр…"+w.replace("при",""),
+    full:w, answer:"ПРИ", options:["ПРИ","ПРЕ"],
+    explain:`Приставка ПРИ-: приближение, присоединение, неполное действие или близость.`,
+  }));
+  DB["ПРЕ-"].words.forEach(w => qs.push({
+    display:"пр…"+w.replace("пре",""),
+    full:w, answer:"ПРЕ", options:["ПРИ","ПРЕ"],
+    explain:`Приставка ПРЕ-: высшая степень (=очень) или близость к ПЕРЕ-.`,
+  }));
+  return qs;
+}
+
+function buildBezQ() {
+  return DB["БЕЗ-/БЕС-"].words.map(w => {
+    const body = w.replace(/^без|^бес/,"");
+    const fl   = body[0].toLowerCase();
+    const isV  = VOICED.has(fl);
+    return {
+      display:"без…/бес…"+body,
+      full:w, answer:isV?"БЕЗ":"БЕС", options:["БЕЗ","БЕС"],
+      explain:isV?`Перед звонкой/гласной «${fl}» пишется БЕЗ-`:`Перед глухой «${fl}» пишется БЕС-`,
+    };
+  });
+}
+
+function buildRazQ() {
+  return DB["РАЗ-/РАС-"].words.map(w => {
+    const body = w.replace(/^раз|^рас/,"");
+    const fl   = body[0].toLowerCase();
+    const isV  = VOICED.has(fl);
+    return {
+      display:"раз…/рас…"+body,
+      full:w, answer:isV?"РАЗ":"РАС", options:["РАЗ","РАС"],
+      explain:isV?`Перед звонкой/гласной «${fl}» пишется РАЗ-`:`Перед глухой «${fl}» пишется РАС-`,
+    };
+  });
+}
+
+function buildInvarQ() {
+  const qs = [];
+  [["ЗА-",2],["НА-",2],["ПОД-",3]].forEach(([key,len]) => {
+    const others = ["ЗА","НА","ПОД"].filter(k=>k!==key.replace("-",""));
+    DB[key].words.forEach(w => {
+      const wrong = others[Math.floor(Math.random()*others.length)];
+      const opts  = Math.random()>.5 ? [key.replace("-",""),wrong] : [wrong,key.replace("-","")];
+      qs.push({
+        display:"…"+w.slice(len),
+        full:w, answer:key.replace("-",""), options:opts,
+        explain:`Приставка ${key} — неизменяемая, всегда пишется одинаково!`,
+      });
+    });
+  });
+  return qs;
+}
+
+const ALL_Q = {
+  "ПРИ-/ПРЕ-": buildPriPreQ(),
+  "ПРИ-": buildPriPreQ().filter(q=>q.answer==="ПРИ"),
+  "ПРЕ-": buildPriPreQ().filter(q=>q.answer==="ПРЕ"),
+  "БЕЗ-/БЕС-": buildBezQ(),
+  "РАЗ-/РАС-": buildRazQ(),
+  "ЗА-": buildInvarQ().filter(q=>q.full.startsWith("за")),
+  "НА-": buildInvarQ().filter(q=>q.full.startsWith("на")),
+  "ПОД-": buildInvarQ().filter(q=>q.full.startsWith("под")),
+  "все": [...buildPriPreQ(),...buildBezQ(),...buildRazQ(),...buildInvarQ()],
+};
+
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+
+// ══ NAVIGATION ═════════════════════════════════════════════════
+let screenStack = ["s-home"];
+let currentScreen = "s-home";
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  const el = document.getElementById(id);
+  if (el) el.classList.add("active");
+  currentScreen = id;
+}
+
+function goTo(id, arg) {
+  screenStack.push(currentScreen);
+  if (arg !== undefined) _pendingArg = arg;
+  showScreen(id);
+  renderScreen(id, arg);
+}
+
+function goBack() {
+  if (screenStack.length < 1) return;
+  const prev = screenStack.pop();
+  showScreen(prev);
+}
+
+function navTo(id) {
+  screenStack = [id];
+  showScreen(id);
+  renderScreen(id);
+}
+
+let _pendingArg = null;
+
+// ══ STATE ══════════════════════════════════════════════════════
+const STATE = {
+  level:2, xp:320, stars:1250, diamonds:45, streak:15, lessons:12, correct:256
+};
+
+// ══ TRAINING STATE ═════════════════════════════════════════════
+let T = {
+  pool:[], idx:0, lives:3, correct:0, streak:0,
+  timerSec:null, timeLeft:null, answered:null,
+  totalCount:10, topic:"все", canNext:false,
+  timerInterval:null, pauseTimeout:null,
+};
+
+function startTraining(topic, timerSec, totalCount) {
+  T.pool = shuffle(ALL_Q[topic]||ALL_Q["все"]).slice(0, totalCount||10);
+  T.idx = 0; T.lives = 3; T.correct = 0; T.streak = 0;
+  T.timerSec = timerSec||null; T.totalCount = totalCount||10;
+  T.answered = null; T.canNext = false; T.topic = topic;
+  clearInterval(T.timerInterval); clearTimeout(T.pauseTimeout);
+  goTo("s-training");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  clearInterval(T.timerInterval); clearTimeout(T.pauseTimeout);
+  const q = T.pool[T.idx];
+  if (!q) { finishTraining(); return; }
+
+  // progress
+  document.getElementById("prog-fill").style.width = (T.idx/T.pool.length*100)+"%";
+  document.getElementById("prog-label").textContent = (T.idx+1)+"/"+T.pool.length;
+  const sb = document.getElementById("streak-badge");
+  sb.style.display = T.streak>=3 ? "" : "none";
+  if (T.streak>=3) sb.textContent = "🔥"+T.streak;
+
+  // lives
+  document.getElementById("lives-display").innerHTML =
+    "❤️".repeat(T.lives) + "🖤".repeat(3-T.lives);
+
+  // timer
+  const tw = document.getElementById("timer-wrap");
+  tw.style.display = T.timerSec ? "" : "none";
+
+  // question card
+  const qCard = document.getElementById("q-card");
+  qCard.style.background = "linear-gradient(135deg,var(--card),var(--card2))";
+  qCard.innerHTML = `
+    <div style="font-size:13px;opacity:.7;margin-bottom:10px;">Выбери правильную приставку</div>
+    <div style="font-size:30px;font-weight:900;word-break:break-all;">${q.display}</div>
+  `;
+
+  // answers
+  const ac = document.getElementById("q-answers");
+  ac.innerHTML = "";
+  q.options.forEach((opt,i) => {
+    const btn = document.createElement("div");
+    btn.className = "ans-btn";
+    btn.textContent = opt;
+    btn.onclick = () => pickAnswer(opt);
+    ac.appendChild(btn);
+  });
+
+  // result card hidden
+  document.getElementById("result-card").style.display = "none";
+
+  // next btn
+  const nb = document.getElementById("next-btn");
+  nb.className = "btn disabled";
+  nb.textContent = "Дальше →";
+
+  T.answered = null; T.canNext = false;
+
+  // start timer
+  if (T.timerSec) {
+    T.timeLeft = T.timerSec;
+    updateTimerBar();
+    T.timerInterval = setInterval(() => {
+      T.timeLeft--;
+      updateTimerBar();
+      if (T.timeLeft <= 0) {
+        clearInterval(T.timerInterval);
+        pickAnswer("__timeout__");
+      }
+    }, 1000);
+  }
+}
+
+function updateTimerBar() {
+  const pct = Math.max(0, T.timeLeft / T.timerSec * 100);
+  const tf = document.getElementById("timer-fill");
+  tf.style.width = pct+"%";
+  tf.className = "timer-fill" + (pct < 30 ? " danger" : "");
+}
+
+function pickAnswer(chosen) {
+  if (T.answered !== null) return;
+  clearInterval(T.timerInterval);
+  T.answered = chosen;
+  const q = T.pool[T.idx];
+  const isOk = chosen === q.answer;
+  const isOut = chosen === "__timeout__";
+
+  if (isOk)  { T.correct++; T.streak++; }
+  else        { T.lives = Math.max(0, T.lives-1); T.streak = 0; }
+
+  // update lives
+  document.getElementById("lives-display").innerHTML =
+    "❤️".repeat(T.lives) + "🖤".repeat(3-T.lives);
+
+  // highlight answers
+  document.querySelectorAll(".ans-btn").forEach(btn => {
+    btn.onclick = null;
+    if (btn.textContent === q.answer) {
+      btn.classList.add("correct");
+      btn.textContent += " ✓";
+    } else if (btn.textContent === chosen || isOut) {
+      btn.classList.add("wrong");
+      btn.textContent += " ✗";
+    }
+  });
+
+  // prefLen for word display
+  const prefLen = {"ПРИ":3,"ПРЕ":3,"БЕЗ":3,"БЕС":3,"РАЗ":3,"РАС":3,"ЗА":2,"НА":2,"ПОД":3}[q.answer]||3;
+  const pref = q.full.substring(0,prefLen);
+  const body = q.full.substring(prefLen);
+
+  // question card → result
+  const qCard = document.getElementById("q-card");
+  qCard.style.background = isOk && !isOut
+    ? "linear-gradient(135deg,rgba(34,197,94,.22),rgba(26,13,53,.95))"
+    : "linear-gradient(135deg,rgba(239,68,68,.22),rgba(26,13,53,.95))";
+  qCard.innerHTML = `
+    <div style="font-size:13px;font-weight:800;color:${isOk&&!isOut?"var(--green)":"var(--red)"};margin-bottom:8px;">
+      ${isOut?"⏰ Время вышло!":(isOk?"✓ Правильно!":"✗ Неправильно!")}
+    </div>
+    <div style="font-size:36px;font-weight:900;margin-bottom:6px;">
+      <span style="color:${isOk&&!isOut?"var(--green)":"var(--red)"};border-bottom:3px solid ${isOk&&!isOut?"var(--green)":"var(--red)"};padding-bottom:2px;">${pref}</span><span>${body}</span>
+    </div>
+    <div style="font-size:13px;opacity:.85;line-height:1.6;">${q.explain}</div>
+    ${isOk&&!isOut?'<div style="font-size:14px;color:var(--gold);margin-top:8px;font-weight:800;">+10 ⭐</div>':""}
+  `;
+
+  // pause before next
+  const delay = isOk && !isOut ? 1200 : 2500;
+  T.canNext = false;
+  document.getElementById("next-btn").textContent = "...";
+  T.pauseTimeout = setTimeout(() => {
+    T.canNext = true;
+    const nb = document.getElementById("next-btn");
+    nb.className = "btn";
+    nb.textContent = "Дальше →";
+  }, delay);
+}
+
+function nextQuestion() {
+  if (!T.canNext) return;
+  const nextIdx = T.idx + 1;
+  if (nextIdx >= T.pool.length || T.lives === 0) {
+    finishTraining(); return;
+  }
+  T.idx = nextIdx;
+  renderQuestion();
+}
+
+function finishTraining() {
+  const pct = Math.round(T.correct / T.pool.length * 100);
+  const stars = pct===100?3:pct>=70?2:pct>=40?1:0;
+  const xp = T.correct*10 + T.lives*5;
+  STATE.xp += xp; STATE.stars += T.correct*10;
+  STATE.lessons++; STATE.correct += T.correct;
+
+  // fill result screen
+  document.getElementById("res-stars").textContent = "⭐".repeat(stars)+"☆".repeat(3-stars);
+  document.getElementById("res-title").textContent = pct===100?"ОТЛИЧНО!":pct>=70?"ХОРОШО!":"ПРОДОЛЖАЙ!";
+  document.getElementById("res-topic").textContent = "Тема: "+(T.topic||"Все приставки");
+  document.getElementById("res-correct").textContent = T.correct+"/"+T.pool.length;
+  document.getElementById("res-xp").textContent = "+"+xp;
+  document.getElementById("res-streak").textContent = T.streak;
+  document.getElementById("res-again-btn").onclick = ()=>startTraining(T.topic,T.timerSec,T.totalCount);
+
+  // confetti
+  const inner = document.getElementById("result-screen-inner");
+  inner.querySelectorAll(".conf-item").forEach(e=>e.remove());
+  const cols=["#7c3aed","#9d5cf5","#f59e0b","#22c55e","#ef4444","#c4a0fa"];
+  for(let i=0;i<28;i++){
+    const el=document.createElement("div");
+    el.className="conf-item";
+    const s=6+Math.random()*8;
+    el.style.cssText=`left:${Math.random()*100}%;top:-16px;width:${s}px;height:${s}px;background:${cols[i%cols.length]};animation-delay:${Math.random()*1.6}s;animation-duration:${2+Math.random()*2}s;transform:rotate(${Math.random()*360}deg);`;
+    inner.appendChild(el);
+  }
+
+  goTo("s-result");
+}
+
+// ══ RENDER SCREENS ══════════════════════════════════════════════
+function renderScreen(id, arg) {
+  if (id==="s-home")        renderHome();
+  if (id==="s-pick-topic")  renderPickTopic(arg);
+  if (id==="s-theory")      renderTheory();
+  if (id==="s-theory-topic") renderTheoryTopic(arg);
+  if (id==="s-achievements") renderAchievements();
+  if (id==="s-profile")     renderProfile();
+  if (id==="s-settings")    renderSettings();
+}
+
+// HOME
+function renderHome() {
+  // inject logo
+  const logoEl = document.getElementById("logo-home");
+  if (logoEl) logoEl.src = LOGO;
+  // topics
+  const tc = document.getElementById("home-topics");
+  tc.innerHTML = "";
+  Object.entries(DB).forEach(([key,d],i) => {
+    const el = document.createElement("div");
+    el.className = "topic-item fade-in";
+    el.style.animationDelay = (i*.05)+"s";
+    el.innerHTML = `
+      <div class="topic-icon" style="background:linear-gradient(135deg,${d.color[0]},${d.color[1]});">${d.icon}</div>
+      <div style="flex:1;">
+        <div style="font-weight:800;font-size:14px;">${key}</div>
+        <div style="font-size:13px;margin-top:2px;opacity:.8;">${d.desc.substring(0,52)}…</div>
+      </div>
+      <div style="font-size:13px;color:var(--a3);font-weight:700;margin-right:4px;">${d.words.length}сл</div>
+      <div style="color:var(--text);font-size:20px;opacity:.6;">›</div>
+    `;
+    el.onclick = () => goTo("s-theory-topic", key);
+    tc.appendChild(el);
+  });
+}
+
+// PICK TOPIC
+function renderPickTopic(mode) {
+  const list = document.getElementById("pick-topic-list");
+  list.innerHTML = "";
+  const topics = [
+    {key:"ПРИ-/ПРЕ-", cols:["#16a34a","#f97316"], icon:"ПР"},
+    {key:"БЕЗ-/БЕС-", cols:["#9333ea","#c084fc"], icon:"БЗ"},
+    {key:"РАЗ-/РАС-", cols:["#b45309","#fbbf24"], icon:"РЗ"},
+    {key:"ЗА-",        cols:["#7c3aed","#9d5cf5"], icon:"ЗА"},
+    {key:"НА-",        cols:["#0891b2","#22d3ee"], icon:"НА"},
+    {key:"ПОД-",       cols:["#065f46","#22c55e"], icon:"ПОД"},
+    {key:"все",        cols:["#dc2626","#9333ea"], icon:"★"},
+  ];
+  topics.forEach((t,i) => {
+    const cnt = (ALL_Q[t.key]||[]).length;
+    const el = document.createElement("div");
+    el.className = "topic-item fade-in";
+    el.style.animationDelay = (i*.05)+"s";
+    el.innerHTML = `
+      <div class="topic-icon" style="background:linear-gradient(135deg,${t.cols[0]},${t.cols[1]});">${t.icon}</div>
+      <div style="flex:1;"><div style="font-weight:800;font-size:15px;">${t.key}</div><div style="font-size:13px;opacity:.8;">${cnt} вопросов</div></div>
+      <div style="opacity:.6;font-size:20px;">›</div>
+    `;
+    el.onclick = () => startTraining(t.key, null, 10);
+    list.appendChild(el);
+  });
+}
+
+// THEORY
+function renderTheory() {
+  const list = document.getElementById("theory-list");
+  list.innerHTML = "";
+  Object.entries(DB).forEach(([key,d],i) => {
+    const el = document.createElement("div");
+    el.className = "card fade-in";
+    el.style.cssText = "padding:16px;margin-bottom:10px;cursor:pointer;animation-delay:"+(i*.06)+"s;";
+    el.innerHTML = `
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,${d.color[0]},${d.color[1]});display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'Unbounded',sans-serif;font-weight:900;color:#fff;flex-shrink:0;">${d.icon}</div>
+        <div style="flex:1;">
+          <div style="font-weight:800;font-size:15px;">${key}</div>
+          <div style="font-size:13px;margin-top:3px;line-height:1.5;opacity:.8;">${d.desc.substring(0,58)}…</div>
+          <div style="font-size:12px;color:var(--a3);margin-top:3px;">${d.words.length} слов</div>
+        </div>
+        <div style="opacity:.6;font-size:20px;">›</div>
+      </div>
+    `;
+    el.onclick = () => goTo("s-theory-topic", key);
+    list.appendChild(el);
+  });
+}
+
+// THEORY TOPIC
+function renderTheoryTopic(topicKey) {
+  if (!topicKey) return;
+  const d = DB[topicKey];
+  if (!d) return;
+  document.getElementById("theory-topic-title").textContent = topicKey;
+  const body = document.getElementById("theory-topic-body");
+
+  let html = `
+    <div class="card" style="padding:20px;margin-bottom:14px;text-align:center;box-shadow:0 8px 28px rgba(124,58,237,.2);">
+      <div style="display:inline-block;background:linear-gradient(135deg,${d.color[0]},${d.color[1]});border-radius:10px;padding:6px 18px;font-size:20px;font-family:'Unbounded',sans-serif;font-weight:900;color:#fff;margin-bottom:12px;">${topicKey}</div>
+      <div style="font-size:14px;line-height:1.7;opacity:.9;">${d.desc}</div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-weight:800;font-size:15px;margin-bottom:8px;">Правила</div>
+      ${d.rules.map(r=>`<div class="rule-box"><span style="color:var(--gold);flex-shrink:0;">✦</span>${r}</div>`).join("")}
+    </div>
+    <div style="font-weight:800;font-size:15px;margin-bottom:8px;">Примеры слов</div>
+  `;
+
+  if (d.groups) {
+    Object.entries(d.groups).forEach(([grp,words]) => {
+      html += `<div style="font-weight:800;font-size:13px;margin-bottom:8px;color:var(--a3);">${grp}</div>`;
+      html += `<div style="display:flex;flex-wrap:wrap;margin-bottom:16px;">`;
+      words.forEach(w => {
+        const pLen = 3; // ПРИ/ПРЕ
+        html += `<span class="word-tag"><span style="color:${d.color[0]};">${w.substring(0,pLen)}</span>${w.substring(pLen)}</span>`;
+      });
+      html += `</div>`;
+    });
+  } else {
+    const prefLen = {"ЗА":2,"НА":2,"ПОД":3}[d.icon]||3;
+    html += `<div style="display:flex;flex-wrap:wrap;margin-bottom:16px;">`;
+    d.words.forEach(w => {
+      html += `<span class="word-tag"><span style="color:${d.color[0]};">${w.substring(0,prefLen)}</span>${w.substring(prefLen)}</span>`;
+    });
+    html += `</div>`;
+  }
+
+  // practice button
+  const trainTopic = {"ПРИ-":"ПРИ-/ПРЕ-","ПРЕ-":"ПРИ-/ПРЕ-","БЕЗ-/БЕС-":"БЕЗ-/БЕС-","РАЗ-/РАС-":"РАЗ-/РАС-"}[topicKey]||topicKey;
+  html += `<div style="height:10px;"></div>`;
+  body.innerHTML = html;
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "🎯 Тренироваться по теме";
+  btn.onclick = () => startTraining(trainTopic, null, 10);
+  body.appendChild(btn);
+  body.insertAdjacentHTML("beforeend","<div style='height:40px;'></div>");
+}
+
+// ACHIEVEMENTS
+const ACHS = [
+  {ic:"🌱",name:"Первые шаги",   desc:"Пройди 1 урок",        pct:100,done:true},
+  {ic:"💎",name:"Без ошибок ×10",desc:"10 раз подряд верно",  pct:70, done:false},
+  {ic:"🎓",name:"Мастер ПРИ/ПРЕ",desc:"Пройди уроки ПРИ,ПРЕ",pct:100,done:true},
+  {ic:"⚡",name:"Мастер БЕЗ/БЕС",desc:"Пройди урок БЕЗ/БЕС",  pct:50, done:false},
+  {ic:"👑",name:"Король приставок",desc:"Экзамен на 100%",     pct:0,  done:false},
+  {ic:"🔥",name:"Серия 7 дней",   desc:"Занимайся каждый день",pct:100,done:true},
+  {ic:"🏆",name:"Боец турнира",   desc:"Выиграй турнир",       pct:40, done:false},
+  {ic:"📚",name:"Знаток всех тем",desc:"Изучи все разделы",    pct:66, done:false},
+  {ic:"⭐",name:"Коллекционер",   desc:"Набери 1000 звёзд",    pct:100,done:true},
+];
+function renderAchievements() {
+  const grid = document.getElementById("ach-grid");
+  grid.innerHTML = "";
+  ACHS.forEach(a => {
+    const el = document.createElement("div");
+    el.className = "ach-card" + (a.done?" ach-done":"") + (!a.done&&a.pct===0?" ach-locked":"");
+    el.innerHTML = `
+      <div style="font-size:30px;">${a.ic}</div>
+      <div style="font-size:11px;font-weight:800;line-height:1.3;">${a.name}</div>
+      <div style="font-size:12px;opacity:.8;">${a.desc}</div>
+      <div class="ach-pbar"><div class="ach-pfill" style="width:${a.pct}%;"></div></div>
+      <div style="font-size:11px;">${a.done?'<span style="color:var(--green);font-weight:800;">✓ Получено</span>':a.pct+"%"}</div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+// PROFILE
+function renderProfile() {
+  const prog = {"ЗА-":85,"НА-":60,"ПОД-":70,"ПРИ-":78,"ПРЕ-":90,"БЕЗ-/БЕС-":55,"РАЗ-/РАС-":40};
+  const avg = Math.round(Object.values(prog).reduce((a,b)=>a+b,0)/Object.values(prog).length);
+  let html = `<div style="font-weight:800;font-size:15px;margin-bottom:14px;">Прогресс по темам</div>`;
+  Object.entries(DB).forEach(([key]) => {
+    const pct = prog[key]||0;
+    const col = DB[key].color;
+    html += `
+      <div class="tprog-row">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-size:12px;font-weight:700;">${key}</div>
+          <div style="font-size:12px;color:var(--a3);font-weight:800;">${pct}%</div>
+        </div>
+        <div class="tprog-bar"><div class="tprog-fill" style="width:${pct}%;background:linear-gradient(90deg,${col[0]},${col[1]});"></div></div>
+      </div>
+    `;
+  });
+  html += `
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-weight:800;font-size:14px;">Общий прогресс</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;color:var(--a3);">${avg}%</div>
+    </div>
+    <div class="tprog-bar" style="margin-top:6px;height:9px;"><div class="tprog-fill" style="width:${avg}%;"></div></div>
+  `;
+  document.getElementById("profile-progress").innerHTML = html;
+}
+
+// SETTINGS
+function renderSettings() {
+  const items = [
+    {ic:"🔔",t:"Уведомления",s:"Напоминания о занятиях",toggle:true,id:"tog-notif"},
+    {ic:"🔊",t:"Звуки",s:"Звуки при ответах",toggle:true,id:"tog-sound"},
+    {ic:"🌍",t:"Язык",s:"Русский",arrow:true},
+    {ic:"🗑️",t:"Сбросить прогресс",s:"Начать с нуля",arrow:true,red:true},
+  ];
+  let html = "";
+  items.forEach(it => {
+    html += `
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid ${it.red?"rgba(239,68,68,.25)":"var(--border)"};border-radius:14px;margin-bottom:9px;${it.red?"background:rgba(239,68,68,.06);":""}">
+        <span style="font-size:22px;">${it.ic}</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:14px;${it.red?"color:var(--red);":""}">${it.t}</div><div style="font-size:13px;opacity:.8;">${it.s}</div></div>
+        ${it.toggle?`<div class="toggle on" id="${it.id}" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div>`:'<div style="opacity:.6;font-size:20px;">›</div>'}
+      </div>
+    `;
+  });
+  document.getElementById("settings-body").innerHTML = html + "<div style='height:40px;'></div>";
+}
+
+// ══ INIT ════════════════════════════════════════════════════════
+// Bottom nav на экранах с BNav
+document.querySelectorAll("#bnav .nav-item").forEach(item => {
+  item.addEventListener("click", function() {
+    const screenId = this.getAttribute("onclick")?.match(/navTo\('([^']+)'\)/)?.[1];
+  });
+});
+
+// Init first screen
+showScreen("s-home");
+renderHome();
+renderTheory();
+renderPickTopic();
+renderAchievements();
+renderProfile();
+renderSettings();
+</script>
+</body>
+</html>

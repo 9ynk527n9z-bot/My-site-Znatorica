@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Примеры на сравнение — Знаторика</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+body{
+  font-family:'Arial Black',Arial,sans-serif;
+  background:linear-gradient(160deg,#f5f3ff 0%,#fff9e6 100%);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:16px;
+  padding-top:max(16px,env(safe-area-inset-top));
+  padding-bottom:max(16px,env(safe-area-inset-bottom));
+  gap:14px;
+}
+.hdr{text-align:center}
+.hdr h1{font-size:28px;color:#4f46e5}
+.hdr p{font-size:15px;color:#444;font-family:Arial,sans-serif;margin-top:2px}
+.scs{display:flex;gap:10px;width:100%;max-width:420px}
+.sc{flex:1;background:#fff;border-radius:12px;padding:10px 6px;text-align:center;box-shadow:0 2px 8px rgba(79,70,229,.12)}
+.sc-l{font-size:12px;color:#333;font-family:Arial,sans-serif;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.sc-v{font-size:30px;font-weight:900;line-height:1.1}
+.blue{color:#4f46e5}.green{color:#16a34a}.orange{color:#d97706}
+.board{background:#fff;border-radius:20px;padding:22px 18px 20px;box-shadow:0 4px 20px rgba(79,70,229,.12);width:100%;max-width:420px;text-align:center}
+.lbl{font-size:14px;color:#333;font-family:Arial,sans-serif;font-weight:700;letter-spacing:.5px;margin-bottom:16px}
+.row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px}
+.num{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:62px;font-weight:900;width:106px;height:106px;border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(102,126,234,.35)}
+.num:first-child{transform:rotate(-4deg)}
+.num:last-child{transform:rotate(4deg)}
+.slot{width:86px;height:86px;border-radius:50%;border:3px dashed #ffb700;background:linear-gradient(135deg,#fff3c4,#ffe08a);font-size:52px;font-weight:900;color:#92400e;display:flex;align-items:center;justify-content:center;transition:.2s;animation:pulse 1.4s ease-in-out infinite}
+.slot.set{background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-color:#10b981;color:#065f46;animation:none}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.ops{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.op{width:76px;height:76px;border-radius:14px;border:none;font-size:46px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 5px 10px rgba(0,0,0,.15);transition:transform .12s}
+.op:active{transform:scale(.91)}
+.op.chosen{outline:4px solid #ffd700;transform:scale(1.07)}
+.op[data-v="<"]{background:linear-gradient(135deg,#ff6b6b,#dc2626)}
+.op[data-v="="]{background:linear-gradient(135deg,#4facfe,#0284c7)}
+.op[data-v=">"]{background:linear-gradient(135deg,#43e97b,#16a34a)}
+.acts{display:flex;gap:10px;justify-content:center}
+.btn{padding:14px 28px;border:none;border-radius:12px;font-size:18px;font-weight:700;font-family:'Arial Black',Arial,sans-serif;cursor:pointer;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.btn:active{transform:scale(.95)}
+.b-ok{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.b-nx{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;align-items:center;justify-content:center}
+.ov.on{display:flex}
+.mod{background:#fff;border-radius:22px;padding:28px 22px;text-align:center;max-width:300px;width:90%;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.ico{font-size:66px;animation:bop .6s ease-in-out infinite}
+@keyframes bop{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.mod h3{font-size:28px;margin:10px 0 6px;color:#111}
+.mod p{font-size:18px;color:#333;font-family:Arial,sans-serif;margin-bottom:18px}
+.mod .btn{width:100%}
+#fw{position:fixed;inset:0;pointer-events:none;display:none;z-index:200}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>🔢 Примеры на сравнение</h1>
+  <p>Знаторика · 2–3 класс</p>
+</div>
+
+<div class="scs">
+  <div class="sc"><div class="sc-l">Задание</div><div class="sc-v blue" id="scT">1/10</div></div>
+  <div class="sc"><div class="sc-l">Верно</div><div class="sc-v green" id="scC">0</div></div>
+  <div class="sc"><div class="sc-l">Серия 🔥</div><div class="sc-v orange" id="scS">0</div></div>
+</div>
+
+<div class="board">
+  <div class="lbl">ПОСТАВЬ НУЖНЫЙ ЗНАК</div>
+  <div class="row">
+    <div class="num" id="n1">?</div>
+    <div class="slot" id="slot">?</div>
+    <div class="num" id="n2">?</div>
+  </div>
+  <div class="ops">
+    <button class="op" data-v="<" onclick="pick(this)">&lt;</button>
+    <button class="op" data-v="=" onclick="pick(this)">=</button>
+    <button class="op" data-v=">" onclick="pick(this)">&gt;</button>
+  </div>
+  <div class="acts">
+    <button class="btn b-ok" id="btnC" onclick="check()">✅ Проверить</button>
+    <button class="btn b-nx" id="btnN" style="display:none" onclick="nextT()">Дальше ▶</button>
+  </div>
+</div>
+
+<div class="ov" id="ovA">
+  <div class="mod">
+    <div class="ico" id="mIco">🎉</div>
+    <h3 id="mTtl">Правильно!</h3>
+    <p id="mTxt">Отлично!</p>
+    <button class="btn b-ok" onclick="closeA()">Дальше →</button>
+  </div>
+</div>
+
+<div class="ov" id="ovB">
+  <div class="mod">
+    <div class="ico" id="bIco">🎆</div>
+    <h3>Игра завершена!</h3>
+    <p id="bTxt">Правильно: 0/10</p>
+    <button class="btn b-ok" onclick="restart()">Снова ▶</button>
+  </div>
+</div>
+
+<canvas id="fw"></canvas>
+
+<script>
+try{if(window.vkBridge){vkBridge.send('VKWebAppInit',{});vkBridge.send('VKWebAppSetSwipeSettings',{history:false});}}catch(e){}
+
+var n1,n2,op,corr=0,tot=0,streak=0,MAX=10;
+
+function newTask(){
+  n1=Math.floor(Math.random()*100)+1;
+  n2=Math.floor(Math.random()*100)+1;
+  op=null;
+  document.getElementById('n1').textContent=n1;
+  document.getElementById('n2').textContent=n2;
+  document.getElementById('slot').textContent='?';
+  document.getElementById('slot').classList.remove('set');
+  document.querySelectorAll('.op').forEach(function(b){b.classList.remove('chosen')});
+  document.getElementById('btnC').style.display='';
+  document.getElementById('btnN').style.display='none';
+  document.getElementById('scT').textContent=(tot+1)+'/'+MAX;
+}
+
+function pick(btn){
+  op=btn.dataset.v;
+  document.querySelectorAll('.op').forEach(function(b){b.classList.remove('chosen')});
+  btn.classList.add('chosen');
+  document.getElementById('slot').textContent=op;
+  document.getElementById('slot').classList.add('set');
+}
+
+function check(){
+  if(!op)return;
+  tot++;
+  var ok=(op==='<'&&n1<n2)||(op==='>'&&n1>n2)||(op==='='&&n1===n2);
+  if(ok){corr++;streak++;}else{streak=0;}
+  document.getElementById('scC').textContent=corr;
+  document.getElementById('scS').textContent=streak;
+  document.getElementById('btnC').style.display='none';
+  document.getElementById('btnN').style.display='';
+  var GI=['🎉','🌟','🚀','💯','👏','🎊'];
+  var GT=['Правильно!','Отлично!','Молодец!','Супер!','Умница!','Так держать!'];
+  var GTx=['Ты лучше всех!','Отличный ответ!','Продолжай так!','Просто класс!','Ты звезда!','Блестяще!'];
+  if(ok){
+    var i=Math.floor(Math.random()*6);
+    document.getElementById('mIco').textContent=GI[i];
+    document.getElementById('mTtl').textContent=GT[i];
+    document.getElementById('mTxt').textContent=GTx[i];
+  }else{
+    var wr=n1<n2?'<':n1>n2?'>':'=';
+    document.getElementById('mIco').textContent='😊';
+    document.getElementById('mTtl').textContent='Почти!';
+    document.getElementById('mTxt').textContent='Правильно: '+n1+' '+wr+' '+n2;
+  }
+  document.getElementById('ovA').classList.add('on');
+}
+
+function closeA(){
+  document.getElementById('ovA').classList.remove('on');
+  if(tot>=MAX){finish();}
+}
+
+function nextT(){
+  if(tot>=MAX){finish();return;}
+  newTask();
+}
+
+function finish(){
+  document.getElementById('bTxt').textContent='Правильно: '+corr+' из '+MAX;
+  document.getElementById('bIco').textContent=corr===MAX?'🎆':corr>=8?'🎉':'👍';
+  document.getElementById('ovB').classList.add('on');
+  if(corr>=8)fw();
+}
+
+function restart(){
+  document.getElementById('ovB').classList.remove('on');
+  corr=0;tot=0;streak=0;
+  document.getElementById('scC').textContent=0;
+  document.getElementById('scS').textContent=0;
+  newTask();
+}
+
+function fw(){
+  var cv=document.getElementById('fw');
+  cv.width=window.innerWidth;cv.height=window.innerHeight;cv.style.display='block';
+  var cx=cv.getContext('2d'),ps=[];
+  var cols=['#FF6B6B','#4ECDC4','#FFE66D','#95E1D3','#F38181','#AA96DA','#ffd700'];
+  for(var i=0;i<70;i++){
+    var sx=cv.width*(Math.random()<.5?.25:.75);
+    ps.push({x:sx,y:cv.height*.4,vx:(Math.random()-.5)*14,vy:(Math.random()-.5)*14-7,c:cols[i%cols.length],l:1,r:Math.random()*5+2});
+  }
+  function step(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps=ps.filter(function(p){return p.l>.01});
+    ps.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.l-=.016;
+      cx.globalAlpha=p.l;cx.fillStyle=p.c;
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fill();
+    });
+    cx.globalAlpha=1;
+    if(ps.length)requestAnimationFrame(step);else cv.style.display='none';
+  }
+  step();
+}
+
+newTask();
+</script>
+</body>
+</html>

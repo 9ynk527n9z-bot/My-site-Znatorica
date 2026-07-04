@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Поговорки</title>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(135deg,#FF6B6B,#9B59B6,#4ECDC4);min-height:100vh;min-height:-webkit-fill-available;display:flex;justify-content:center;overscroll-behavior:none;}
+.app{width:100%;max-width:500px;background:white;display:flex;flex-direction:column;min-height:100vh;min-height:-webkit-fill-available;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
+.hdr{background:linear-gradient(135deg,#FF4757,#FF6B9D);color:white;padding:22px;text-align:center;font-size:28px;font-weight:bold;}
+.menu{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:25px;background:linear-gradient(160deg,#FFE066,#FF6B9D,#A855F7);}
+.menu h2{font-size:30px;font-weight:bold;color:white;margin-bottom:8px;}
+.menu p{color:rgba(255,255,255,0.95);margin-bottom:28px;font-size:19px;}
+.mbtn{width:100%;color:white;border:none;padding:20px 22px;border-radius:20px;font-size:20px;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;box-shadow:0 4px 15px rgba(0,0,0,0.15);}
+.m1{background:linear-gradient(135deg,#FF4757,#FF8E72);}
+.m2{background:linear-gradient(135deg,#00C9A7,#44A08D);}
+.m3{background:linear-gradient(135deg,#FFA500,#FF6932);}
+.m4{background:linear-gradient(135deg,#8B5CF6,#6D28D9);}
+.game{flex:1;display:flex;flex-direction:column;padding:18px;overflow-y:auto;background:linear-gradient(160deg,#EEF2FF,#FDE8F5,#E0F7FA);}
+.back{background:white;color:#1a1a2e;border:2px solid #ddd;padding:11px 20px;border-radius:18px;font-size:17px;font-weight:bold;cursor:pointer;align-self:flex-start;margin-bottom:15px;}
+.qicon{font-size:56px;text-align:center;margin-bottom:8px;}
+.qtitle{font-size:17px;color:#1a1a2e;font-weight:bold;text-align:center;margin-bottom:10px;}
+.pbox{font-size:23px;font-weight:bold;color:#1a1a2e;line-height:1.5;padding:18px;background:white;border-radius:18px;box-shadow:0 4px 15px rgba(0,0,0,0.1);margin-bottom:12px;text-align:center;}
+.mbox{font-size:18px;color:#1a1a2e;line-height:1.6;padding:14px;background:white;border-radius:14px;box-shadow:0 4px 15px rgba(0,0,0,0.1);margin-bottom:12px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.obtn{background:white;padding:15px;border-radius:14px;font-size:18px;font-weight:bold;cursor:pointer;text-align:left;line-height:1.4;color:#1a1a2e;border:3px solid #ddd;}
+.prog{font-size:17px;color:#1a1a2e;text-align:center;margin-top:12px;font-weight:bold;}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+.ccol{display:flex;flex-direction:column;gap:8px;}
+.sbtn{background:white;border:3px solid #FF4757;padding:10px 8px;border-radius:10px;font-size:14px;font-weight:bold;color:#1a1a2e;cursor:pointer;text-align:center;line-height:1.3;flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;}
+.ebtn{background:white;border:3px solid #00C9A7;padding:10px 8px;border-radius:10px;font-size:14px;font-weight:bold;color:#1a1a2e;cursor:pointer;text-align:center;line-height:1.3;flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;}
+.sbtn:disabled,.ebtn:disabled{opacity:0.45;cursor:default;}
+.result{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#FF6B6B,#9B59B6);padding:20px;text-align:center;}
+.remi{font-size:90px;margin-bottom:20px;}
+.rtxt{font-size:34px;font-weight:bold;color:white;margin-bottom:10px;}
+.rscr{font-size:26px;color:white;margin-bottom:30px;font-weight:bold;}
+.rbtn{background:white;color:#FF4757;border:none;padding:16px 44px;font-size:20px;font-weight:bold;border-radius:28px;cursor:pointer;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
+.conf{position:fixed;pointer-events:none;font-size:22px;z-index:999;animation:fall 1.2s linear forwards;}
+.h{display:none!important;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr">🎭 Поговорки</div>
+
+<div id="menu" class="menu">
+  <h2>📚 Выбери режим</h2>
+  <p>Давай учить поговорки!</p>
+  <button class="mbtn m1" onclick="startMode('read')"><span>👀 Читай и запоминай</span><span>›</span></button>
+  <button class="mbtn m2" onclick="startMode('connect')"><span>✏️ Соедини начало и конец</span><span>›</span></button>
+  <button class="mbtn m3" onclick="startMode('guess')"><span>🤔 Угадай по смыслу</span><span>›</span></button>
+  <button class="mbtn m4" onclick="startMode('quiz')"><span>🎮 Викторина</span><span>›</span></button>
+</div>
+
+<div id="game" class="game h">
+  <button class="back" onclick="backToMenu()">← Назад</button>
+  <div class="qicon" id="qi">📖</div>
+  <div class="qtitle" id="qt"></div>
+  <div class="pbox h" id="pb"></div>
+  <div class="mbox h" id="mb"></div>
+  <div id="opts" class="opts"></div>
+  <div class="prog" id="prog"></div>
+</div>
+
+<div id="result" class="result h">
+  <div class="remi" id="re">🎉</div>
+  <div class="rtxt">Молодец!</div>
+  <div class="rscr" id="rs"></div>
+  <button class="rbtn" onclick="backToMenu()">В меню</button>
+</div>
+
+</div>
+<script>
+
+// VK Mini Apps init
+if(typeof vkBridge !== 'undefined'){
+  vkBridge.send('VKWebAppInit');
+  vkBridge.send('VKWebAppSetSwipeSettings',{history:false});
+}
+
+var P=[
+  {t:"Без труда не вытащишь и рыбку из пруда.",s:"Без труда",e:"не вытащишь и рыбку из пруда.",m:"Без усилий ничего не достанется",i:"🎣"},
+  {t:"Делу время, потехе час.",s:"Делу время,",e:"потехе час.",m:"Сначала работа, потом развлечение",i:"⏰"},
+  {t:"Семь раз отмерь, один раз отрежь.",s:"Семь раз отмерь,",e:"один раз отрежь.",m:"Подумай хорошо перед действием",i:"📏"},
+  {t:"Друзья познаются в беде.",s:"Друзья",e:"познаются в беде.",m:"Настоящие друзья помогают в трудный момент",i:"👫"},
+  {t:"Что посеешь, то и пожнёшь.",s:"Что посеешь,",e:"то и пожнёшь.",m:"Что делаешь, то получишь в результате",i:"🌾"},
+  {t:"Терпение и труд всё перетрут.",s:"Терпение и труд",e:"всё перетрут.",m:"Упорство преодолевает любые трудности",i:"💪"},
+  {t:"Повторение — мать учения.",s:"Повторение —",e:"мать учения.",m:"Чтобы выучить, нужно повторять",i:"📚"},
+  {t:"Ученье — свет, а неученье — тьма.",s:"Ученье — свет,",e:"а неученье — тьма.",m:"Образование делает человека мудрым",i:"💡"},
+  {t:"Не имей сто рублей, а имей сто друзей.",s:"Не имей сто рублей,",e:"а имей сто друзей.",m:"Друзья важнее денег",i:"🤝"},
+  {t:"Кончил дело — гуляй смело.",s:"Кончил дело —",e:"гуляй смело.",m:"Закончи работу, потом отдыхай",i:"🎉"},
+  {t:"Мал золотник, да дорог.",s:"Мал золотник,",e:"да дорог.",m:"Маленькое тоже может быть ценным",i:"⭐"},
+  {t:"Один за всех, и все за одного.",s:"Один за всех,",e:"и все за одного.",m:"В команде помогают друг другу",i:"👥"},
+  {t:"Старый друг лучше новых двух.",s:"Старый друг",e:"лучше новых двух.",m:"Проверенная дружба дороже новых знакомств",i:"👴"},
+  {t:"Доброе слово и кошке приятно.",s:"Доброе слово",e:"и кошке приятно.",m:"Добрые слова радуют всех",i:"🐱"},
+  {t:"В гостях хорошо, а дома лучше.",s:"В гостях хорошо,",e:"а дома лучше.",m:"Дом — самое комфортное место",i:"🏠"},
+  {t:"Поспешишь — людей насмешишь.",s:"Поспешишь —",e:"людей насмешишь.",m:"Спешка приводит к ошибкам",i:"🏃"},
+  {t:"Мир не без добрых людей.",s:"Мир",e:"не без добрых людей.",m:"В мире есть хорошие люди",i:"🌍"},
+  {t:"Где дружба крепка, там дела идут на лад.",s:"Где дружба крепка,",e:"там дела идут на лад.",m:"В дружной команде всё получается",i:"🤜"},
+  {t:"Любишь кататься — люби и саночки возить.",s:"Любишь кататься —",e:"люби и саночки возить.",m:"Хочешь удовольствия — будь готов к работе",i:"🛷"},
+  {t:"Слово не воробей: вылетит — не поймаешь.",s:"Слово не воробей:",e:"вылетит — не поймаешь.",m:"Слова нельзя вернуть — говори осторожно",i:"🐦"}
+];
+
+var mode=null,qIdx=0,score=0,sel=[],selStart=null,cpairs=[],ccount=0;
+
+function rnd(a){return a.slice().sort(function(){return Math.random()-0.5;});}
+function show(id,v){document.getElementById(id).classList[v?"remove":"add"]("h");}
+
+function startMode(m){
+  mode=m; qIdx=0; score=0; selStart=null;
+  var all=[];for(var i=0;i<P.length;i++)all.push(i);
+  var idx=rnd(all).slice(0,m==="connect"?10:6);
+  sel=idx.map(function(i){return P[i];});
+  show("menu",false); show("game",true); show("result",false);
+  render();
+}
+
+function render(){
+  var od=document.getElementById("opts");
+  od.innerHTML="";
+  show("pb",false); show("mb",false);
+
+  if(mode==="connect"){
+    document.getElementById("qi").textContent="✏️";
+    document.getElementById("qt").textContent="Выбери начало, потом конец";
+    document.getElementById("prog").textContent="Соедини все "+sel.length+" поговорок";
+    cpairs=sel.map(function(p){return{s:p.s,e:p.e};});
+    ccount=0;
+    var ends=rnd(cpairs.map(function(p){return p.e;}));
+    var g=document.createElement("div"); g.className="cgrid";
+    var lc=document.createElement("div"); lc.className="ccol";
+    var rc=document.createElement("div"); rc.className="ccol";
+    for(var i=0;i<cpairs.length;i++){
+      (function(n){
+        var b=document.createElement("button"); b.className="sbtn"; b.id="s"+n; b.textContent=cpairs[n].s;
+        b.onclick=function(){selectS(n);};
+        lc.appendChild(b);
+      })(i);
+    }
+    for(var j=0;j<ends.length;j++){
+      (function(val){
+        var b=document.createElement("button"); b.className="ebtn"; b.dataset.v=val; b.textContent=val;
+        b.onclick=function(){selectE(this.dataset.v);};
+        rc.appendChild(b);
+      })(ends[j]);
+    }
+    g.appendChild(lc); g.appendChild(rc); od.appendChild(g);
+    return;
+  }
+
+  var cur=sel[qIdx];
+  document.getElementById("qi").textContent=cur.i;
+  document.getElementById("prog").textContent="Вопрос "+(qIdx+1)+" из "+sel.length;
+
+  if(mode==="read"){
+    document.getElementById("qt").textContent="Читай и запоминай";
+    document.getElementById("pb").textContent=cur.t; show("pb",true);
+    document.getElementById("mb").textContent="💭 "+cur.m; show("mb",true);
+    var b=document.createElement("button"); b.className="obtn"; b.textContent="✅ Понял! Дальше";
+    b.onclick=function(){next();}; od.appendChild(b);
+
+  } else if(mode==="guess"){
+    document.getElementById("qt").textContent="О какой поговорке речь?";
+    document.getElementById("mb").textContent="💭 "+cur.m; show("mb",true);
+    var opts=[cur];
+    var pool=rnd(sel.filter(function(p){return p!==cur;}));
+    while(opts.length<4 && pool.length>0) opts.push(pool.pop());
+    rnd(opts).forEach(function(o){
+      var b=document.createElement("button"); b.className="obtn"; b.textContent=o.t;
+      b.onclick=(function(x){return function(){chk(x===cur);};})(o);
+      od.appendChild(b);
+    });
+
+  } else if(mode==="quiz"){
+    document.getElementById("qt").textContent="Какой конец правильный?";
+    document.getElementById("pb").textContent=cur.s+" ..."; show("pb",true);
+    var wrongs=rnd(P.filter(function(p){return p!==cur;})).slice(0,3);
+    var opts=[{t:cur.e,ok:true}];
+    wrongs.forEach(function(w){opts.push({t:w.e,ok:false});});
+    rnd(opts).forEach(function(o){
+      var b=document.createElement("button"); b.className="obtn"; b.textContent=o.t;
+      b.onclick=(function(x){return function(){chk(x.ok);};})(o);
+      od.appendChild(b);
+    });
+  }
+}
+
+function selectS(i){
+  selStart=i;
+  var btns=document.querySelectorAll(".sbtn");
+  for(var j=0;j<btns.length;j++) btns[j].style.background=j===i?"#FFE5E5":"white";
+}
+
+function selectE(v){
+  if(selStart===null) return;
+  var ok=cpairs[selStart].e===v;
+  if(ok){
+    var sb=document.getElementById("s"+selStart);
+    sb.style.background="#E8F8F5"; sb.style.borderColor="#00C9A7"; sb.disabled=true;
+    var ebtns=document.querySelectorAll(".ebtn");
+    for(var i=0;i<ebtns.length;i++){
+      if(ebtns[i].dataset.v===v){ebtns[i].style.background="#E8F8F5";ebtns[i].style.borderColor="#00C9A7";ebtns[i].disabled=true;}
+    }
+    ccount++; score++; conf(); selStart=null;
+    if(ccount===cpairs.length) setTimeout(showRes,800);
+  } else {
+    var sb2=document.getElementById("s"+selStart); sb2.style.background="#FFE5E5";
+    var ebtns2=document.querySelectorAll(".ebtn");
+    for(var i=0;i<ebtns2.length;i++){if(ebtns2[i].dataset.v===v) ebtns2[i].style.background="#FFE5E5";}
+    setTimeout(function(){
+      var sb3=document.getElementById("s"+selStart); if(sb3) sb3.style.background="white";
+      var eb3=document.querySelectorAll(".ebtn:not([disabled])");
+      for(var i=0;i<eb3.length;i++) eb3[i].style.background="white";
+      selStart=null;
+    },500);
+  }
+}
+
+function chk(ok){if(ok){score++;conf();}next();}
+function next(){qIdx++;if(qIdx<sel.length)render();else showRes();}
+
+function showRes(){
+  show("game",false); show("result",true);
+  var tot=mode==="connect"?cpairs.length:sel.length;
+  document.getElementById("re").textContent=score>=tot?"🏆":score>=tot-1?"🎉":"😊";
+  document.getElementById("rs").textContent="Правильно: "+score+" из "+tot;
+}
+
+function conf(){
+  var emj=["🎉","⭐","✨","🎊","🌟"];
+  for(var i=0;i<12;i++){
+    var c=document.createElement("div"); c.className="conf";
+    c.textContent=emj[i%5];
+    c.style.left=(Math.random()*100)+"%";
+    c.style.top="-20px";
+    c.style.animationDelay=(Math.random()*0.3)+"s";
+    document.body.appendChild(c);
+    (function(el){setTimeout(function(){el.remove();},1500);})(c);
+  }
+}
+
+function backToMenu(){show("menu",true);show("game",false);show("result",false);}
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
+import { SEGMENTS } from '@/lib/constants';
+
+// Темы с реальным контентом. Дополнять этот список по мере наполнения сайта.
+const TOPIC_ROUTES: string[] = [
+  // 4–5 лет
+  '/4-5-let/matematika/schet-do-5',
+  '/4-5-let/matematika/schet-do-10',
+  '/4-5-let/matematika/figury',
+  '/4-5-let/matematika/tsveta',
+  '/4-5-let/razvitie/zvuki',
+  '/4-5-let/razvitie/slova',
+  '/4-5-let/gramota/bukvy',
+  '/4-5-let/gramota/slogov',
+  // 6–7 лет
+  '/6-7-let/matematika/schet-do-20',
+  '/6-7-let/matematika/slozhenie',
+  '/6-7-let/matematika/vychitanie',
+  '/6-7-let/matematika/vremya',
+  '/6-7-let/razvitie/dialogi',
+  '/6-7-let/razvitie/rasskazy',
+  '/6-7-let/gramota/chtenie',
+  '/6-7-let/gramota/pisanie',
+  // 1 класс
+  '/1-klass/matematika/slozhenie-5-10',
+  '/1-klass/matematika/vychitanie-5-10',
+  '/1-klass/matematika/zadachi',
+  '/1-klass/russkiy/pisanie',
+  '/1-klass/russkiy/punktuaciya',
+  '/1-klass/chtenie/proza',
+  '/1-klass/chtenie/stihi',
+  // 2 класс
+  '/2-klass/matematika/umnozhenie',
+  '/2-klass/matematika/delenie',
+  '/2-klass/matematika/dvuznachnye',
+  '/2-klass/russkiy/chasti-rechi',
+  '/2-klass/russkiy/predlozhenie',
+  '/2-klass/okruzhayushchiy/priroda',
+  '/2-klass/okruzhayushchiy/chelovek',
+  // 3 класс
+  '/3-klass/matematika/trekhznachnye',
+  '/3-klass/matematika/slozhnie-primery',
+  '/3-klass/matematika/doli',
+  '/3-klass/russkiy/spryazhenie',
+  '/3-klass/russkiy/slozhnie-predlozheniya',
+  '/3-klass/angliyskiy/vocabulary',
+  '/3-klass/angliyskiy/grammatika',
+  // 4 класс
+  '/4-klass/matematika/velikie-chisla',
+  '/4-klass/matematika/desyatichnie-drobi',
+  '/4-klass/matematika/geometriya',
+  '/4-klass/russkiy/stili-rechi',
+  '/4-klass/russkiy/sintaksis',
+  '/4-klass/literatura/klassika',
+  '/4-klass/literatura/analiz-teksta',
+];
+
+const TRAINER_ROUTES: string[] = [
+  '/trenazher',
+  '/trenazher/azbuky',
+  '/trenazher/numbers',
+  '/trenazher/colors',
+  '/trenazher/multiplication',
+  '/trenazher/english-words',
+  '/trenazher/irregular-verbs',
+  '/trenazher/pogovorki',
+  '/trenazher/shapes-colors',
+  '/trenazher/pristavki',
+];
+
+const STATIC_ROUTES: string[] = [
+  '/',
+  '/podpiska',
+  '/privacy',
+  '/terms',
+  '/login',
+  '/register',
+  '/generator',
+  '/generator/primery',
+  '/generator/propisi',
+  '/generator/math',
+  '/generator/sravnenie',
+  '/plakaty',
+];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
+  const segmentRoutes = SEGMENTS.map((segment) => `/${segment.id}`);
+
+  const allRoutes = [
+    ...STATIC_ROUTES,
+    ...segmentRoutes,
+    ...TRAINER_ROUTES,
+    ...TOPIC_ROUTES,
+  ];
+
+  return allRoutes.map((route) => ({
+    url: `${SITE_URL}${route}`,
+    lastModified: now,
+    changeFrequency: route === '/' ? 'daily' : 'weekly',
+    priority: route === '/' ? 1 : route.split('/').length <= 2 ? 0.8 : 0.6,
+  }));
+}

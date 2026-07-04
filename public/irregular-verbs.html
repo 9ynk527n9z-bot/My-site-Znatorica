@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irregular Verbs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #110d22 0%, #0c1428 55%, #130e20 100%);
+    color: #f1eeff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0e0b1a; }
+  ::-webkit-scrollbar-thumb { background: #2a1f50; border-radius: 3px; }
+
+  /* HEADER */
+  #header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(90deg, #1a1040 0%, #0f1e3a 100%);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(167,139,250,.22);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  #title {
+    font-size: 28px; font-weight: 700; line-height: 1;
+    background: linear-gradient(90deg, #e0d4ff, #67e8f9);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -.5px;
+  }
+  #tabs {
+    margin-left: auto; display: flex; gap: 3px;
+    background: rgba(0,0,0,.3);
+    border: 1px solid rgba(167,139,250,.10);
+    border-radius: 10px; padding: 3px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #a0836a;
+    padding: 5px 16px; border-radius: 7px;
+    font-size: 13px; font-weight: 400;
+    cursor: pointer; transition: all .18s;
+    font-family: inherit;
+  }
+  .tab-btn.active {
+    background: rgba(251,146,60,.18);
+    border-color: rgba(251,146,60,.6);
+    color: #fb923c; font-weight: 700;
+  }
+
+  /* CONTENT */
+  #content { padding: 14px 16px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex; gap: 8px; margin-bottom: 12px; align-items: center;
+  }
+  #search-input {
+    flex: 1;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(251,146,60,.25);
+    border-radius: 8px; padding: 8px 14px;
+    color: #fb923c; font-size: 14px; font-family: inherit;
+  }
+  #search-input:focus { outline: none; }
+  #filter-btn {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(251,146,60,.25);
+    color: #fb923c;
+    padding: 8px 12px; border-radius: 8px; font-size: 13px;
+    white-space: nowrap; transition: all .18s; cursor: pointer;
+    font-family: inherit; font-weight: 400;
+  }
+  #filter-btn.active {
+    background: rgba(251,146,60,.15);
+    border-color: rgba(251,146,60,.6);
+    font-weight: 700;
+  }
+  #count {
+    color: #3a3058; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* TABLE */
+  #table-panel {
+    background: linear-gradient(145deg, #1c1238 0%, #111b30 100%);
+    border: 1px solid rgba(167,139,250,.22);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+  .tbl-head {
+    display: grid;
+    grid-template-columns: 0.9fr 0.9fr 1fr 1.1fr 26px;
+    background: linear-gradient(90deg, rgba(167,139,250,.12), rgba(103,232,249,.08));
+    border-bottom: 1px solid rgba(167,139,250,.22);
+    padding: 9px 12px; gap: 6px;
+  }
+  .tbl-head div {
+    font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600;
+  }
+  .tbl-row {
+    display: grid;
+    grid-template-columns: 0.9fr 0.9fr 1fr 1.1fr 26px;
+    padding: 7px 12px; gap: 6px; align-items: start;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    transition: filter .12s;
+  }
+  .tbl-row:last-child { border-bottom: none; }
+  .tbl-row:hover { filter: brightness(1.2); }
+  .tbl-row.even { background: rgba(167,139,250,.04); }
+  .tbl-row.odd  { background: rgba(100,160,255,.03); }
+  .tbl-row.learned { background: rgba(134,239,172,.05) !important; }
+  .cell-word { font-weight: 700; font-size: 15px; }
+  .cell-pron {
+    font-size: 10px; color: #7c6fa0;
+    font-family: 'JetBrains Mono', monospace; margin-top: 1px;
+  }
+  .cell-flex { display: flex; align-items: center; gap: 2px; }
+  .cell-ru {
+    color: #fbbf24; font-size: 13px; font-style: italic;
+    padding-top: 1px; overflow: hidden;
+    word-break: break-word; line-height: 1.3; min-width: 0;
+  }
+  .speak-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 1px 3px; color: #a78bfa; font-size: 11px;
+    line-height: 1; opacity: .65; flex-shrink: 0;
+  }
+  .check-btn {
+    background: none; border: none; cursor: pointer;
+    font-size: 15px; color: #3a3058;
+    transition: color .18s; padding-top: 2px;
+    font-family: inherit;
+  }
+  .check-btn.done { color: #86efac; }
+
+  /* CARDS */
+  #cards-view {
+    display: none; flex-direction: column;
+    align-items: center; gap: 18px; padding-top: 8px;
+  }
+  #cards-view.active { display: flex; }
+  #card-counter {
+    color: #7c6fa0; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card-flip { perspective: 900px; width: min(420px, 100%); height: 260px; cursor: pointer; }
+  .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .45s cubic-bezier(.4,2,.55,.44);
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 18px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+  }
+  .card-front {
+    background: linear-gradient(145deg, #1c1238, #111b30);
+    border: 1px solid rgba(167,139,250,.4);
+    box-shadow: 0 8px 40px rgba(167,139,250,.15);
+  }
+  .card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #1a1040, #0f1e3a);
+    border: 1px solid rgba(103,232,249,.35);
+    box-shadow: 0 8px 40px rgba(103,232,249,.12);
+    padding: 24px; gap: 12px;
+  }
+  .card-label {
+    font-size: 11px; color: #7c6fa0;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .card-word { font-size: 52px; font-weight: 700; letter-spacing: -1px; }
+  .card-pron { font-size: 13px; color: #7c6fa0; font-family: 'JetBrains Mono', monospace; }
+  .card-ru   { font-size: 16px; color: #fbbf24; font-style: italic; }
+  .back-row  { text-align: center; }
+  .back-row-label {
+    font-size: 10px; color: #3a3058;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1px;
+  }
+  .back-row-word { font-size: 22px; font-weight: 700; }
+  .back-row-pron { font-size: 11px; color: #7c6fa0; font-family: 'JetBrains Mono', monospace; }
+  .back-row-flex { display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .card-nav { display: flex; gap: 10px; align-items: center; }
+  .nav-btn {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(167,139,250,.10);
+    color: #7c6fa0; padding: 8px 18px;
+    border-radius: 8px; font-size: 18px; cursor: pointer;
+    font-family: inherit;
+  }
+  #mark-btn {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(167,139,250,.10);
+    color: #7c6fa0; padding: 8px 16px;
+    border-radius: 8px; font-size: 13px;
+    transition: all .18s; cursor: pointer; font-family: inherit;
+  }
+  #mark-btn.done {
+    background: rgba(134,239,172,.12);
+    border-color: #86efac; color: #86efac;
+  }
+  #shuffle-btn {
+    background: none; border: none;
+    color: #3a3058; font-size: 12px; cursor: pointer;
+    font-family: inherit;
+  }
+
+  @keyframes fadein { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+  .fin { animation: fadein .22s ease; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div id="title">Irregular Verbs</div>
+  <div id="tabs">
+    <button class="tab-btn active" onclick="switchMode('table')">📋 Таблица</button>
+    <button class="tab-btn" onclick="switchMode('cards')">🃏 Карточки</button>
+  </div>
+</div>
+
+<div id="content">
+
+  <!-- TABLE VIEW -->
+  <div id="table-view" class="view active fin">
+    <div class="search-bar">
+      <input id="search-input" placeholder="Поиск..." oninput="renderTable()">
+      <button id="filter-btn" onclick="toggleFilter()">Все</button>
+      <span id="count"></span>
+    </div>
+    <div id="table-panel">
+      <div class="tbl-head">
+        <div style="color:rgba(224,212,255,.6)">Инфинитив</div>
+        <div style="color:rgba(167,139,250,.6)">Past Simple</div>
+        <div style="color:rgba(103,232,249,.6)">Past Participle</div>
+        <div style="color:rgba(251,191,36,.6)">Перевод</div>
+        <div></div>
+      </div>
+      <div id="table-body"></div>
+    </div>
+  </div>
+
+  <!-- CARDS VIEW -->
+  <div id="cards-view" class="view fin">
+    <div id="card-counter"></div>
+    <div class="card-flip" onclick="flipCard()">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front">
+          <div class="card-label">Инфинитив</div>
+          <div class="card-word" id="cf-base" style="color:#e0d4ff"></div>
+          <div class="card-pron" id="cf-pron"></div>
+          <div class="card-ru" id="cf-ru"></div>
+          <button class="speak-btn" onclick="event.stopPropagation();speakCard('base')">🔊</button>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-row">
+            <div class="back-row-label">Инфинитив</div>
+            <div class="back-row-flex">
+              <div class="back-row-word" id="cb-base" style="color:#e0d4ff"></div>
+              <button class="speak-btn" onclick="event.stopPropagation();speakCard('base')">🔊</button>
+            </div>
+            <div class="back-row-pron" id="cb-pron0"></div>
+          </div>
+          <div class="back-row">
+            <div class="back-row-label">Past Simple</div>
+            <div class="back-row-flex">
+              <div class="back-row-word" id="cb-past" style="color:#a78bfa"></div>
+              <button class="speak-btn" onclick="event.stopPropagation();speakCard('past')">🔊</button>
+            </div>
+            <div class="back-row-pron" id="cb-pron1"></div>
+          </div>
+          <div class="back-row">
+            <div class="back-row-label">Past Participle</div>
+            <div class="back-row-flex">
+              <div class="back-row-word" id="cb-pp" style="color:#67e8f9"></div>
+              <button class="speak-btn" onclick="event.stopPropagation();speakCard('pp')">🔊</button>
+            </div>
+            <div class="back-row-pron" id="cb-pron2"></div>
+          </div>
+          <div class="card-ru" id="cb-ru"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <button class="nav-btn" onclick="prevCard()">←</button>
+      <button id="mark-btn" onclick="toggleCardLearned()">Отметить</button>
+      <button class="nav-btn" onclick="nextCard()">→</button>
+    </div>
+    <button id="shuffle-btn" onclick="shuffleCards()">🔀 Перемешать</button>
+  </div>
+
+</div>
+
+<script>
+const verbs = [
+  { base:"be",       past:"was/were", pp:"been",       ru:"быть",         pron:["biː","wɒz/wɜː","biːn"] },
+  { base:"become",   past:"became",   pp:"become",     ru:"становиться",  pron:["bɪˈkʌm","bɪˈkeɪm","bɪˈkʌm"] },
+  { base:"begin",    past:"began",    pp:"begun",      ru:"начинать",     pron:["bɪˈɡɪn","bɪˈɡæn","bɪˈɡʌn"] },
+  { base:"break",    past:"broke",    pp:"broken",     ru:"ломать",       pron:["breɪk","brəʊk","ˈbrəʊkən"] },
+  { base:"bring",    past:"brought",  pp:"brought",    ru:"приносить",    pron:["brɪŋ","brɔːt","brɔːt"] },
+  { base:"build",    past:"built",    pp:"built",      ru:"строить",      pron:["bɪld","bɪlt","bɪlt"] },
+  { base:"buy",      past:"bought",   pp:"bought",     ru:"покупать",     pron:["baɪ","bɔːt","bɔːt"] },
+  { base:"catch",    past:"caught",   pp:"caught",     ru:"ловить",       pron:["kætʃ","kɔːt","kɔːt"] },
+  { base:"choose",   past:"chose",    pp:"chosen",     ru:"выбирать",     pron:["tʃuːz","tʃəʊz","ˈtʃəʊzən"] },
+  { base:"come",     past:"came",     pp:"come",       ru:"приходить",    pron:["kʌm","keɪm","kʌm"] },
+  { base:"cost",     past:"cost",     pp:"cost",       ru:"стоить",       pron:["kɒst","kɒst","kɒst"] },
+  { base:"cut",      past:"cut",      pp:"cut",        ru:"резать",       pron:["kʌt","kʌt","kʌt"] },
+  { base:"do",       past:"did",      pp:"done",       ru:"делать",       pron:["duː","dɪd","dʌn"] },
+  { base:"draw",     past:"drew",     pp:"drawn",      ru:"рисовать",     pron:["drɔː","druː","drɔːn"] },
+  { base:"drink",    past:"drank",    pp:"drunk",      ru:"пить",         pron:["drɪŋk","dræŋk","drʌŋk"] },
+  { base:"drive",    past:"drove",    pp:"driven",     ru:"водить",       pron:["draɪv","drəʊv","ˈdrɪvən"] },
+  { base:"eat",      past:"ate",      pp:"eaten",      ru:"есть",         pron:["iːt","eɪt","ˈiːtən"] },
+  { base:"fall",     past:"fell",     pp:"fallen",     ru:"падать",       pron:["fɔːl","fel","ˈfɔːlən"] },
+  { base:"feel",     past:"felt",     pp:"felt",       ru:"чувствовать",  pron:["fiːl","felt","felt"] },
+  { base:"find",     past:"found",    pp:"found",      ru:"находить",     pron:["faɪnd","faʊnd","faʊnd"] },
+  { base:"fly",      past:"flew",     pp:"flown",      ru:"летать",       pron:["flaɪ","fluː","fləʊn"] },
+  { base:"forget",   past:"forgot",   pp:"forgotten",  ru:"забывать",     pron:["fəˈɡet","fəˈɡɒt","fəˈɡɒtən"] },
+  { base:"get",      past:"got",      pp:"got/gotten", ru:"получать",     pron:["ɡet","ɡɒt","ɡɒt"] },
+  { base:"give",     past:"gave",     pp:"given",      ru:"давать",       pron:["ɡɪv","ɡeɪv","ˈɡɪvən"] },
+  { base:"go",       past:"went",     pp:"gone",       ru:"идти",         pron:["ɡəʊ","went","ɡɒn"] },
+  { base:"grow",     past:"grew",     pp:"grown",      ru:"расти",        pron:["ɡrəʊ","ɡruː","ɡrəʊn"] },
+  { base:"have",     past:"had",      pp:"had",        ru:"иметь",        pron:["hæv","hæd","hæd"] },
+  { base:"hear",     past:"heard",    pp:"heard",      ru:"слышать",      pron:["hɪə","hɜːd","hɜːd"] },
+  { base:"hold",     past:"held",     pp:"held",       ru:"держать",      pron:["həʊld","held","held"] },
+  { base:"keep",     past:"kept",     pp:"kept",       ru:"хранить",      pron:["kiːp","kept","kept"] },
+  { base:"know",     past:"knew",     pp:"known",      ru:"знать",        pron:["nəʊ","njuː","nəʊn"] },
+  { base:"leave",    past:"left",     pp:"left",       ru:"уходить",      pron:["liːv","left","left"] },
+  { base:"let",      past:"let",      pp:"let",        ru:"позволять",    pron:["let","let","let"] },
+  { base:"lose",     past:"lost",     pp:"lost",       ru:"терять",       pron:["luːz","lɒst","lɒst"] },
+  { base:"make",     past:"made",     pp:"made",       ru:"делать",       pron:["meɪk","meɪd","meɪd"] },
+  { base:"meet",     past:"met",      pp:"met",        ru:"встречать",    pron:["miːt","met","met"] },
+  { base:"pay",      past:"paid",     pp:"paid",       ru:"платить",      pron:["peɪ","peɪd","peɪd"] },
+  { base:"put",      past:"put",      pp:"put",        ru:"класть",       pron:["pʊt","pʊt","pʊt"] },
+  { base:"read",     past:"read",     pp:"read",       ru:"читать",       pron:["riːd","red","red"] },
+  { base:"ride",     past:"rode",     pp:"ridden",     ru:"ехать",        pron:["raɪd","rəʊd","ˈrɪdən"] },
+  { base:"run",      past:"ran",      pp:"run",        ru:"бежать",       pron:["rʌn","ræn","rʌn"] },
+  { base:"say",      past:"said",     pp:"said",       ru:"говорить",     pron:["seɪ","sed","sed"] },
+  { base:"see",      past:"saw",      pp:"seen",       ru:"видеть",       pron:["siː","sɔː","siːn"] },
+  { base:"sell",     past:"sold",     pp:"sold",       ru:"продавать",    pron:["sel","səʊld","səʊld"] },
+  { base:"send",     past:"sent",     pp:"sent",       ru:"отправлять",   pron:["send","sent","sent"] },
+  { base:"show",     past:"showed",   pp:"shown",      ru:"показывать",   pron:["ʃəʊ","ʃəʊd","ʃəʊn"] },
+  { base:"sing",     past:"sang",     pp:"sung",       ru:"петь",         pron:["sɪŋ","sæŋ","sʌŋ"] },
+  { base:"sit",      past:"sat",      pp:"sat",        ru:"сидеть",       pron:["sɪt","sæt","sæt"] },
+  { base:"sleep",    past:"slept",    pp:"slept",      ru:"спать",        pron:["sliːp","slept","slept"] },
+  { base:"speak",    past:"spoke",    pp:"spoken",     ru:"говорить",     pron:["spiːk","spəʊk","ˈspəʊkən"] },
+  { base:"spend",    past:"spent",    pp:"spent",      ru:"тратить",      pron:["spend","spent","spent"] },
+  { base:"stand",    past:"stood",    pp:"stood",      ru:"стоять",       pron:["stænd","stʊd","stʊd"] },
+  { base:"swim",     past:"swam",     pp:"swum",       ru:"плавать",      pron:["swɪm","swæm","swʌm"] },
+  { base:"take",     past:"took",     pp:"taken",      ru:"брать",        pron:["teɪk","tʊk","ˈteɪkən"] },
+  { base:"teach",    past:"taught",   pp:"taught",     ru:"учить",        pron:["tiːtʃ","tɔːt","tɔːt"] },
+  { base:"tell",     past:"told",     pp:"told",       ru:"рассказывать", pron:["tel","təʊld","təʊld"] },
+  { base:"think",    past:"thought",  pp:"thought",    ru:"думать",       pron:["θɪŋk","θɔːt","θɔːt"] },
+  { base:"throw",    past:"threw",    pp:"thrown",     ru:"бросать",      pron:["θrəʊ","θruː","θrəʊn"] },
+  { base:"wake",     past:"woke",     pp:"woken",      ru:"просыпаться",  pron:["weɪk","wəʊk","ˈwəʊkən"] },
+  { base:"wear",     past:"wore",     pp:"worn",       ru:"носить",       pron:["weə","wɔː","wɔːn"] },
+  { base:"win",      past:"won",      pp:"won",        ru:"побеждать",    pron:["wɪn","wʌn","wʌn"] },
+  { base:"write",    past:"wrote",    pp:"written",    ru:"писать",       pron:["raɪt","rəʊt","ˈrɪtən"] },
+];
+
+// State
+let learned = new Set();
+try { learned = new Set(JSON.parse(localStorage.getItem("lrnd") || "[]")); } catch(e){}
+let filterOnly = false;
+let mode = "table";
+let cardOrder = shuffle(verbs.map((_,i)=>i));
+let cardIdx = 0;
+let cardFlipped = false;
+
+function saveLearned() { localStorage.setItem("lrnd", JSON.stringify([...learned])); }
+
+function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+  const clean = text.replace("/", " or ");
+  const trySpeak = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const gbVoice = voices.find(v => v.lang==="en-GB" || v.name.includes("Daniel") || v.name.includes("British"));
+    const u = new SpeechSynthesisUtterance(clean);
+    u.lang = "en-GB"; u.rate = 0.82;
+    if (gbVoice) u.voice = gbVoice;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  };
+  if (window.speechSynthesis.getVoices().length) trySpeak();
+  else window.speechSynthesis.onvoiceschanged = trySpeak;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function switchMode(m) {
+  mode = m;
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && m==='table') || (i===1 && m==='cards'));
+  });
+  document.getElementById('table-view').classList.toggle('active', m==='table');
+  document.getElementById('cards-view').classList.toggle('active', m==='cards');
+  if (m==='cards') renderCard();
+}
+
+function toggleFilter() {
+  filterOnly = !filterOnly;
+  const btn = document.getElementById('filter-btn');
+  btn.textContent = filterOnly ? '✓ Не выученные' : 'Все';
+  btn.classList.toggle('active', filterOnly);
+  renderTable();
+}
+
+function getFiltered() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  return verbs.filter(v =>
+    (!filterOnly || !learned.has(v.base)) &&
+    (q==='' || v.base.includes(q) || v.past.includes(q) || v.pp.includes(q) || v.ru.includes(q))
+  );
+}
+
+function renderTable() {
+  const filtered = getFiltered();
+  document.getElementById('count').textContent = filtered.length;
+  const body = document.getElementById('table-body');
+  body.innerHTML = '';
+  filtered.forEach((v, i) => {
+    const row = document.createElement('div');
+    row.className = 'tbl-row ' + (learned.has(v.base) ? 'learned' : (i%2===0?'even':'odd'));
+
+    row.innerHTML = `
+      <div>
+        <div class="cell-flex">
+          <span class="cell-word" style="color:#e0d4ff">${v.base}</span>
+          <button class="speak-btn" onclick="speak('${v.base}')">🔊</button>
+        </div>
+        <div class="cell-pron">/${v.pron[0]}/</div>
+      </div>
+      <div>
+        <div class="cell-flex">
+          <span class="cell-word" style="color:#a78bfa">${v.past}</span>
+          <button class="speak-btn" onclick="speak('${v.past}')">🔊</button>
+        </div>
+        <div class="cell-pron">/${v.pron[1]}/</div>
+      </div>
+      <div>
+        <div class="cell-flex">
+          <span class="cell-word" style="color:#67e8f9">${v.pp}</span>
+          <button class="speak-btn" onclick="speak('${v.pp}')">🔊</button>
+        </div>
+        <div class="cell-pron">/${v.pron[2]}/</div>
+      </div>
+      <div class="cell-ru">${v.ru}</div>
+      <button class="check-btn ${learned.has(v.base)?'done':''}" onclick="toggleLearned('${v.base}', this)">✓</button>
+    `;
+    body.appendChild(row);
+  });
+}
+
+function toggleLearned(base, btn) {
+  if (learned.has(base)) learned.delete(base);
+  else learned.add(base);
+  saveLearned();
+  btn.classList.toggle('done', learned.has(base));
+  const row = btn.closest('.tbl-row');
+  if (row) {
+    row.classList.toggle('learned', learned.has(base));
+    if (filterOnly) renderTable();
+  }
+  if (mode==='cards') renderCard();
+}
+
+// CARDS
+function renderCard() {
+  const v = verbs[cardOrder[cardIdx % cardOrder.length]];
+  document.getElementById('card-counter').textContent =
+    `${(cardIdx % cardOrder.length)+1} / ${cardOrder.length} · нажми чтобы перевернуть`;
+
+  document.getElementById('cf-base').textContent = v.base;
+  document.getElementById('cf-pron').textContent = `/${v.pron[0]}/`;
+  document.getElementById('cf-ru').textContent = v.ru;
+
+  document.getElementById('cb-base').textContent = v.base;
+  document.getElementById('cb-pron0').textContent = `/${v.pron[0]}/`;
+  document.getElementById('cb-past').textContent = v.past;
+  document.getElementById('cb-pron1').textContent = `/${v.pron[1]}/`;
+  document.getElementById('cb-pp').textContent = v.pp;
+  document.getElementById('cb-pron2').textContent = `/${v.pron[2]}/`;
+  document.getElementById('cb-ru').textContent = v.ru;
+
+  const markBtn = document.getElementById('mark-btn');
+  if (learned.has(v.base)) {
+    markBtn.textContent = '✓ Выучено'; markBtn.classList.add('done');
+  } else {
+    markBtn.textContent = 'Отметить'; markBtn.classList.remove('done');
+  }
+
+  cardFlipped = false;
+  document.getElementById('card-inner').classList.remove('flipped');
+}
+
+function flipCard() {
+  cardFlipped = !cardFlipped;
+  document.getElementById('card-inner').classList.toggle('flipped', cardFlipped);
+}
+
+function nextCard() { cardIdx = (cardIdx+1) % cardOrder.length; renderCard(); }
+function prevCard() { cardIdx = (cardIdx-1+cardOrder.length) % cardOrder.length; renderCard(); }
+
+function toggleCardLearned() {
+  const v = verbs[cardOrder[cardIdx % cardOrder.length]];
+  if (learned.has(v.base)) learned.delete(v.base);
+  else learned.add(v.base);
+  saveLearned();
+  renderCard();
+  renderTable();
+}
+
+function shuffleCards() {
+  cardOrder = shuffle(verbs.map((_,i)=>i));
+  cardIdx = 0; renderCard();
+}
+
+function speakCard(field) {
+  const v = verbs[cardOrder[cardIdx % cardOrder.length]];
+  speak(v[field]);
+}
+
+// Init
+renderTable();
+</script>
+</body>
+</html>

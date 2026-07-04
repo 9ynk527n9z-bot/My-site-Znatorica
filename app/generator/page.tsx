@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Генераторы заданий',
-  description: 'Создай примеры, прописи, кроссворды и другие задания',
+  title: 'Генераторы заданий — примеры, прописи, кроссворды',
+  description: 'Создавайте примеры по математике, прописи, кроссворды и другие учебные задания. 10 бесплатных генераций в день.',
+  alternates: { canonical: '/generator' },
 };
 
 export default function GeneratorPage() {
@@ -48,7 +49,7 @@ export default function GeneratorPage() {
               ✏️ Прописи
             </h3>
             <p className="text-gray-400 mb-4">
-              Прописи букв для улучшения почерка
+              Прописи английских букв для улучшения почерка
             </p>
             <div className="flex gap-2 text-xs">
               <span className="bg-orange/20 text-orange px-2 py-1 rounded">
@@ -58,6 +59,36 @@ export default function GeneratorPage() {
                 Строчные
               </span>
             </div>
+          </Link>
+
+          {/* Математика: деление, столбик */}
+          <Link
+            href="/generator/math"
+            className="card hover:border-orange transition-colors group"
+          >
+            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
+              🧮 Деление и столбик
+            </h3>
+            <p className="text-gray-400 mb-4">
+              Примеры на вычитание, деление и счёт в столбик
+            </p>
+            <div className="flex gap-2 text-xs">
+              <span className="bg-orange/20 text-orange px-2 py-1 rounded">−</span>
+              <span className="bg-orange/20 text-orange px-2 py-1 rounded">÷</span>
+            </div>
+          </Link>
+
+          {/* Сравнение чисел */}
+          <Link
+            href="/generator/sravnenie"
+            className="card hover:border-orange transition-colors group"
+          >
+            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
+              ⚖️ Сравнение чисел
+            </h3>
+            <p className="text-gray-400 mb-4">
+              Примеры на сравнение: больше, меньше, равно
+            </p>
           </Link>
 
           {/* Кроссворды */}

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<title>English Words 🇬🇧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow-x:hidden;min-height:100vh;touch-action:pan-y}
+#app{min-height:100vh}
+@keyframes bgShift{0%{background-position:0% 50%}25%{background-position:100% 0%}50%{background-position:100% 100%}75%{background-position:0% 100%}100%{background-position:0% 50%}}
+@keyframes floatStar{0%,100%{transform:translateY(0) rotate(0deg) scale(1)}33%{transform:translateY(-22px) rotate(15deg) scale(1.15)}66%{transform:translateY(-10px) rotate(-10deg) scale(0.92)}}
+@keyframes floatBall{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-28px) scale(1.12)}70%{transform:translateY(-14px) scale(0.95)}}
+@keyframes slideIn{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideInR{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideInL{from{transform:translateX(-40px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes correctPop{0%{transform:scale(1)}40%{transform:scale(1.08)}80%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes flipIn{from{transform:rotateY(-90deg);opacity:0}to{transform:rotateY(0);opacity:1}}
+.screen{min-height:100vh;font-family:'Nunito',sans-serif}
+.btn-back{background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.5);border-radius:50px;padding:9px 20px;color:white;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:15px;letter-spacing:.3px}
+.btn-back:active{transform:scale(.93)}
+.theme-card{border:2px solid rgba(255,255,255,.25);border-radius:22px;padding:24px 14px 20px;cursor:pointer;color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;box-shadow:0 8px 32px rgba(0,0,0,.3);display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s;animation:slideIn .45s ease both}
+.theme-card:hover{transform:translateY(-5px) scale(1.03)}
+.theme-card:active{transform:scale(.95)}
+.mode-card{background:rgba(255,255,255,.97);border:2px solid rgba(255,255,255,.7);border-radius:22px;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:18px;box-shadow:0 8px 30px rgba(0,0,0,.18);font-family:'Nunito',sans-serif;text-align:left;animation:slideIn .4s ease both;transition:transform .2s}
+.mode-card:hover{transform:translateY(-4px) scale(1.02)}
+.mode-card:active{transform:scale(.96)}
+.word-card{background:linear-gradient(160deg,#fff,var(--t1),var(--t2));border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.22);border:2px solid rgba(255,255,255,.85);padding:32px 28px 28px;display:flex;flex-direction:column;align-items:center;gap:0}
+.listen-btn{border:none;border-radius:50px;padding:13px 32px;color:white;font-weight:800;cursor:pointer;font-size:1.05rem;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.22);display:flex;align-items:center;gap:8px}
+.listen-btn:active{transform:scale(.95)}
+.nav-btn{background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.5);border-radius:50px;padding:12px 28px;color:white;font-size:22px;cursor:pointer}
+.nav-btn:active{transform:scale(.93)}
+.opt-btn{border:none;border-radius:18px;padding:17px 22px;cursor:pointer;font-weight:800;font-size:1.2rem;font-family:'Nunito',sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.12);transition:all .2s;width:100%}
+.opt-btn:active{transform:scale(.96)}
+.opt-btn.correct{background:#27ae60!important;color:white!important;animation:correctPop .45s ease;box-shadow:0 8px 24px rgba(39,174,96,.4)!important}
+.opt-btn.wrong{background:#e74c3c!important;color:white!important;animation:shake .45s ease;box-shadow:0 8px 24px rgba(231,76,60,.4)!important}
+.opt-btn:not(.correct):not(.wrong):not([disabled]):hover{transform:scale(1.03);filter:brightness(1.05)}
+.prog-bar{height:7px;background:rgba(255,255,255,.28);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:white;border-radius:4px;transition:width .45s ease;box-shadow:0 0 8px rgba(255,255,255,.6)}
+.float-el{position:fixed;pointer-events:none;z-index:0}
+.confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}
+.confetti-p{position:absolute;top:-20px;border-radius:3px}
+.result-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;color:white;padding:20px;text-align:center}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ─── VK BRIDGE ───
+(function(){try{if(window.vkBridge){window.vkBridge.send("VKWebAppInit");window.vkBridge.send("VKWebAppSetSwipeSettings",{history:false})}else if(window.VK&&window.VK.init){window.VK.init()}}catch(e){}})();
+
+// ─── DATA ───
+const T=[
+{id:"food",name:"Еда",nameEn:"Food",emoji:"🍎",color:"#E53935",g:"linear-gradient(135deg,#E53935,#FF7043,#FFA726)",
+w:[
+{en:"apple",t:"[ˈæpəl]",ru:"яблоко",e:"🍎",p:"I eat an ___ every morning.",pr:"Я ем ___ каждое утро."},
+{en:"bread",t:"[brɛd]",ru:"хлеб",e:"🍞",p:"She buys ___ at the shop.",pr:"Она покупает ___ в магазине."},
+{en:"milk",t:"[mɪlk]",ru:"молоко",e:"🥛",p:"___ is the most important drink on Earth.",pr:"___ — самый важный напиток на Земле."},
+{en:"egg",t:"[eɡ]",ru:"яйцо",e:"🥚",p:"He fries an ___ for breakfast.",pr:"Он жарит ___ на завтрак."},
+{en:"cheese",t:"[tʃiːz]",ru:"сыр",e:"🧀",p:"I put ___ on my sandwich.",pr:"Я кладу ___ на бутерброд."},
+{en:"meat",t:"[miːt]",ru:"мясо",e:"🥩",p:"We cook ___ for dinner.",pr:"Мы готовим ___ на ужин."},
+{en:"fish",t:"[fɪʃ]",ru:"рыба",e:"🐟",p:"___ swim and live in rivers and seas.",pr:"___ живут в реках, морях и океанах."},
+{en:"soup",t:"[suːp]",ru:"суп",e:"🍲",p:"Mum makes ___ for lunch.",pr:"Мама готовит ___ на обед."},
+{en:"rice",t:"[raɪs]",ru:"рис",e:"🍚",p:"We eat ___ with vegetables.",pr:"Мы едим ___ с овощами."},
+{en:"banana",t:"[bəˈnɑːnə]",ru:"банан",e:"🍌",p:"The monkey loves ___.",pr:"Обезьяна любит ___."},
+{en:"orange",t:"[ˈɒrɪndʒ]",ru:"апельсин",e:"🍊",p:"An ___ is a sweet and juicy fruit.",pr:"___ — это сладкий сочный фрукт."},
+{en:"cake",t:"[keɪk]",ru:"торт",e:"🎂",p:"We eat ___ on birthdays.",pr:"Мы едим ___ в день рождения."},
+{en:"juice",t:"[dʒuːs]",ru:"сок",e:"🧃",p:"She drinks ___ every morning.",pr:"Она пьёт ___ каждое утро."},
+{en:"pizza",t:"[ˈpiːtsə]",ru:"пицца",e:"🍕",p:"___ is our favourite dish on Fridays.",pr:"___ — наше любимое блюдо по пятницам."},
+{en:"butter",t:"[ˈbʌtə]",ru:"масло",e:"🧈",p:"I put ___ on my bread.",pr:"Я намазываю ___ на хлеб."},
+{en:"sugar",t:"[ˈʃʊɡə]",ru:"сахар",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8IS0tINCX0LDQtNC90LjQuSDQutGD0LHQuNC6INGA0LDRhNC40L3QsNC00LAgLS0+CiAgPHJlY3QgeD0iNTIiIHk9IjE4IiB3aWR0aD0iNDYiIGhlaWdodD0iNDYiIHJ4PSI1IiBmaWxsPSIjRThFMEQ0Ii8+CiAgPHJlY3QgeD0iNTIiIHk9IjE4IiB3aWR0aD0iNDYiIGhlaWdodD0iOCIgcng9IjUiIGZpbGw9IiNGNUYwRUEiLz4KICA8cmVjdCB4PSI5MiIgeT0iMTgiIHdpZHRoPSI4IiBoZWlnaHQ9IjQ2IiByeD0iMyIgZmlsbD0iI0M5QkZCMiIvPgogIDwhLS0g0JPRgNCw0L3RjCDRgdCx0L7QutGDINC30LDQtNC90LXQs9C+INC60YPQsdC40LrQsCAtLT4KICA8cG9seWdvbiBwb2ludHM9Ijk4LDE4IDExMCwyOCAxMTAsNzQgOTgsNjQiIGZpbGw9IiNEOENFQzQiLz4KICA8cG9seWdvbiBwb2ludHM9IjUyLDE4IDk4LDE4IDExMCwyOCA2NCwyOCIgZmlsbD0iI0Y1RjBFQSIvPgogIDwhLS0g0J/QtdGA0LXQtNC90LjQuSDQutGD0LHQuNC6INGA0LDRhNC40L3QsNC00LAgLS0+CiAgPHJlY3QgeD0iMjIiIHk9IjQyIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHJ4PSI1IiBmaWxsPSIjRjBFQUUyIi8+CiAgPHJlY3QgeD0iMjIiIHk9IjQyIiB3aWR0aD0iNTAiIGhlaWdodD0iOSIgcng9IjUiIGZpbGw9IiNGREZCRjgiLz4KICA8cmVjdCB4PSI2NiIgeT0iNDIiIHdpZHRoPSI4IiBoZWlnaHQ9IjUwIiByeD0iMyIgZmlsbD0iI0Q0QzhCQyIvPgogIDwhLS0g0JPRgNCw0L3RjCDRgdCx0L7QutGDINC/0LXRgNC10LTQvdC10LPQviDQutGD0LHQuNC60LAgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSI3Miw0MiA4Niw1MiA4Niw5MiA3Miw4MiIgZmlsbD0iI0RERDJDOCIvPgogIDxwb2x5Z29uIHBvaW50cz0iMjIsNDIgNzIsNDIgODYsNTIgMzYsNTIiIGZpbGw9IiNGREZCRjgiLz4KICA8IS0tINCc0LXQu9C60LjQtSDRgtC+0YfQutC4ICjRgtC10LrRgdGC0YPRgNCwINGB0LDRhdCw0YDQsCkg0L3QsCDQv9C10YDQtdC00L3QtdC8INC60YPQsdC40LrQtSAtLT4KICA8Y2lyY2xlIGN4PSIzOCIgY3k9IjYwIiByPSIyIiBmaWxsPSIjRTBEOEQwIiBvcGFjaXR5PSIwLjciLz4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjY2IiByPSIxLjUiIGZpbGw9IiNFMEQ4RDAiIG9wYWNpdHk9IjAuNiIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNzQiIHI9IjEuNSIgZmlsbD0iI0UwRDhEMCIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iNTYiIGN5PSI3MCIgcj0iMiIgZmlsbD0iI0UwRDhEMCIgb3BhY2l0eT0iMC42Ii8+CiAgPGNpcmNsZSBjeD0iMzQiIGN5PSI3NiIgcj0iMS41IiBmaWxsPSIjRTBEOEQwIiBvcGFjaXR5PSIwLjUiLz4KICA8IS0tINCc0LXQu9C60LjQtSDRgtC+0YfQutC4INC90LAg0LfQsNC00L3QtdC8INC60YPQsdC40LrQtSAtLT4KICA8Y2lyY2xlIGN4PSI2NSIgY3k9IjMyIiByPSIxLjUiIGZpbGw9IiNFMEQ4RDAiIG9wYWNpdHk9IjAuNSIvPgogIDxjaXJjbGUgY3g9Ijc2IiBjeT0iMzgiIHI9IjEuNSIgZmlsbD0iI0UwRDhEMCIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iODQiIGN5PSI0NCIgcj0iMS41IiBmaWxsPSIjRDRDOEJDIiBvcGFjaXR5PSIwLjUiLz4KPC9zdmc+",p:"She puts ___ in her tea.",pr:"Она кладёт ___ в чай."},
+{en:"tomato",t:"[təˈmɑːtəʊ]",ru:"помидор",e:"🍅",p:"He grows ___ in the garden.",pr:"___ — красный сочный овощ из сада."},
+{en:"potato",t:"[pəˈteɪtəʊ]",ru:"картошка",e:"🥔",p:"___ is a delicious side dish for dinner.",pr:"___ — очень вкусный гарнир к ужину."},
+{en:"carrot",t:"[ˈkærət]",ru:"морковь",e:"🥕",p:"The rabbit eats a ___.",pr:"Кролик ест ___."},
+{en:"chicken",t:"[ˈtʃɪkɪn]",ru:"курица",e:"🍗",p:"___ with rice is a simple and tasty dish.",pr:"___ с рисом — простое и вкусное блюдо."},
+{en:"sandwich",t:"[ˈsænwɪdʒ]",ru:"бутерброд",e:"🥪",p:"I make a ___ for lunch.",pr:"Я делаю ___ на обед."},
+{en:"strawberry",t:"[ˈstrɔːbəri]",ru:"клубника",e:"🍓",p:"___ grows in the garden in neat rows.",pr:"___ растёт прямо на грядке в саду."},
+{en:"water",t:"[ˈwɔːtə]",ru:"вода",e:"💧",p:"___ is essential for all living things.",pr:"___ — основа жизни всех живых существ."},
+{en:"salt",t:"[sɔːlt]",ru:"соль",e:"🧂",p:"She adds ___ to the soup.",pr:"Она добавляет ___ в суп."},
+{en:"onion",t:"[ˈʌnjən]",ru:"лук",e:"🧅",p:"He cuts an ___ for the salad.",pr:"Он режет ___ для салата."},
+]},
+{id:"nature",name:"Природа",nameEn:"Nature",emoji:"🌿",color:"#2E7D32",g:"linear-gradient(135deg,#2E7D32,#00897B,#26C6DA)",
+w:[
+{en:"sun",t:"[sʌn]",ru:"солнце",e:"☀️",p:"The ___ shines brightly today.",pr:"Сегодня ___ светит ярко."},
+{en:"moon",t:"[muːn]",ru:"луна",e:"🌙",p:"The ___ is full tonight.",pr:"Сегодня ночью полная ___."},
+{en:"star",t:"[stɑː]",ru:"звезда",e:"⭐",p:"I can see a bright ___ in the sky.",pr:"Яркая ___ светит ночью в небе."},
+{en:"tree",t:"[triː]",ru:"дерево",e:"🌳",p:"A tall ___ can live for hundreds of years.",pr:"Высокое ___ растёт много лет."},
+{en:"flower",t:"[ˈflaʊə]",ru:"цветок",e:"🌸",p:"A ___ grows in the garden.",pr:"В саду растёт ___."},
+{en:"river",t:"[ˈrɪvə]",ru:"река",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzg3Q0VFQiIgcng9IjgiLz4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSI1MCIgcng9IjU1IiByeT0iMjgiIGZpbGw9IiMxQTdGQzQiLz4KICA8cGF0aCBkPSJNNSA0NCBRMjAgMzYgMzUgNDQgUTUwIDUyIDY1IDQ0IFE4MCAzNiA5NSA0NCBRMTEwIDUyIDExNSA0NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNEZCM0U4IiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iLjciLz4KICA8cGF0aCBkPSJNNSA1NCBRMjAgNDYgMzUgNTQgUTUwIDYyIDY1IDU0IFE4MCA0NiA5NSA1NCBRMTEwIDYyIDExNSA1NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNEZCM0U4IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9Ii41Ii8+CiAgPGVsbGlwc2UgY3g9IjYwIiBjeT0iNzgiIHJ4PSI1NSIgcnk9IjIyIiBmaWxsPSIjNUI5RTNBIi8+CiAgPGVsbGlwc2UgY3g9IjYwIiBjeT0iMjIiIHJ4PSI1NSIgcnk9IjIyIiBmaWxsPSIjNUI5RTNBIi8+CiAgPGNpcmNsZSBjeD0iMjUiIGN5PSIxOCIgcj0iOSIgZmlsbD0iIzNEN0EyOCIvPgogIDxjaXJjbGUgY3g9IjE4IiBjeT0iMjIiIHI9IjciIGZpbGw9IiM0QThDMzAiLz4KICA8Y2lyY2xlIGN4PSI5NSIgY3k9IjE4IiByPSI5IiBmaWxsPSIjM0Q3QTI4Ii8+CiAgPGNpcmNsZSBjeD0iMTAyIiBjeT0iMjIiIHI9IjciIGZpbGw9IiM0QThDMzAiLz4KPC9zdmc+",p:"A wide ___ flows down to the sea.",pr:"Широкая ___ несёт воды к морю."},
+{en:"mountain",t:"[ˈmaʊntɪn]",ru:"гора",e:"⛰️",p:"A ___ is the highest point of land.",pr:"___ — самая высокая точка суши."},
+{en:"sea",t:"[siː]",ru:"море",e:"🏖️",p:"The ___ is smaller than an ocean but bigger than a lake.",pr:"___ меньше океана, но больше озера."},
+{en:"forest",t:"[ˈfɒrɪst]",ru:"лес",e:"🌲",p:"Bears live in the ___.",pr:"___ — дом для многих зверей и птиц."},
+{en:"sky",t:"[skaɪ]",ru:"небо",e:"🌤️",p:"The blue ___ is visible from every window.",pr:"Голубое ___ видно из любого окна."},
+{en:"cloud",t:"[klaʊd]",ru:"облако",e:"☁️",p:"A white ___ floats above us.",pr:"Белое ___ плывёт над нами."},
+{en:"rain",t:"[reɪn]",ru:"дождь",e:"🌧️",p:"The ___ is falling outside.",pr:"На улице идёт ___."},
+{en:"snow",t:"[snəʊ]",ru:"снег",e:"❄️",p:"Children love the ___.",pr:"Дети любят ___."},
+{en:"wind",t:"[wɪnd]",ru:"ветер",e:"💨",p:"The ___ blows strongly today.",pr:"Сегодня сильно дует ___."},
+{en:"grass",t:"[ɡrɑːs]",ru:"трава",e:"🌿",p:"Green ___ covers the fields and meadows.",pr:"Зелёная ___ покрывает поля и луга."},
+{en:"leaf",t:"[liːf]",ru:"лист",e:"🍃",p:"A yellow ___ falls from the tree.",pr:"Жёлтый ___ падает с дерева."},
+{en:"stone",t:"[stəʊn]",ru:"камень",e:"🪨",p:"He throws a ___ into the river.",pr:"Он бросает ___ в реку."},
+{en:"sand",t:"[sænd]",ru:"песок",e:"🏜️",p:"The ___ is warm on the beach.",pr:"___ тёплый и мягкий на пляже."},
+{en:"lake",t:"[leɪk]",ru:"озеро",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI0M4RTZGNSIgcng9IjgiLz4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSI2OCIgcng9IjUyIiByeT0iMjYiIGZpbGw9IiMyMTk2QTYiLz4KICA8cG9seWdvbiBwb2ludHM9IjIwLDU1IDQ1LDIwIDcwLDU1IiBmaWxsPSIjN0I4RkE2Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSI1MCw1NSA3OCwxNCAxMDYsNTUiIGZpbGw9IiM4RTlFQjAiLz4KICA8cG9seWdvbiBwb2ludHM9IjU1LDI1IDQ1LDIwIDcwLDU1IDYwLDU1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iLjMiLz4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSI2OCIgcng9IjUyIiByeT0iMjYiIGZpbGw9IiMyMTk2QTYiIG9wYWNpdHk9Ii44NSIvPgogIDxwYXRoIGQ9Ik0xNSA2NiBRMzUgNjAgNTUgNjYgUTc1IDcyIDk1IDY2IFExMDggNjIgMTE1IDY1IiBmaWxsPSJub25lIiBzdHJva2U9IiM1QkM4RDgiIHN0cm9rZS13aWR0aD0iMS44IiBvcGFjaXR5PSIuNiIvPgogIDxwYXRoIGQ9Ik0yMCA3MyBRNDAgNjggNjAgNzMgUTgwIDc4IDEwMCA3MyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNUJDOEQ4IiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjQiLz4KPC9zdmc+",p:"A ___ is a body of water smaller than a sea.",pr:"___ — водоём меньше моря, но больше пруда."},
+{en:"island",t:"[ˈaɪlənd]",ru:"остров",e:"🏝️",p:"An ___ is a piece of land surrounded by water.",pr:"___ — это суша, окружённая водой."},
+{en:"rainbow",t:"[ˈreɪnbəʊ]",ru:"радуга",e:"🌈",p:"I see a ___ after the rain.",pr:"___ появляется на небе после дождя."},
+{en:"volcano",t:"[vɒlˈkeɪnəʊ]",ru:"вулкан",e:"🌋",p:"The ___ erupted last year.",pr:"___ извергся в прошлом году."},
+{en:"desert",t:"[ˈdɛzət]",ru:"пустыня",e:"🐪",p:"A ___ is the hottest and driest place on Earth.",pr:"___ — самое жаркое и сухое место."},
+{en:"waterfall",t:"[ˈwɔːtəfɔːl]",ru:"водопад",e:"💦",p:"The ___ is very beautiful.",pr:"Этот ___ очень красивый."},
+{en:"lightning",t:"[ˈlaɪtnɪŋ]",ru:"молния",e:"⚡",p:"We saw ___ during the storm.",pr:"___ сверкает в небе во время грозы."},
+]},
+{id:"city",name:"Город",nameEn:"City",emoji:"🏙️",color:"#1565C0",g:"linear-gradient(135deg,#1565C0,#6A1B9A,#AD1457)",
+w:[
+{en:"house",t:"[haʊs]",ru:"дом",e:"🏠",p:"They live in a big ___.",pr:"Это их большой ___."},
+{en:"street",t:"[striːt]",ru:"улица",e:"🛣️",p:"A ___ is the road between buildings in a town.",pr:"___ — это дорога между домами."},
+{en:"park",t:"[pɑːk]",ru:"парк",e:"🌳",p:"Children love the ___.",pr:"Дети любят ___."},
+{en:"shop",t:"[ʃɒp]",ru:"магазин",e:"🏪",p:"A ___ is a place where people buy things.",pr:"___ — место, где продают товары."},
+{en:"hospital",t:"[ˈhɒspɪtl]",ru:"больница",e:"🏥",p:"The doctor works at the ___.",pr:"___ — место, где лечат людей."},
+{en:"library",t:"[ˈlaɪbrəri]",ru:"библиотека",e:"📚",p:"I love reading at the ___.",pr:"___ — место, где хранятся тысячи книг."},
+{en:"bridge",t:"[brɪdʒ]",ru:"мост",e:"🌉",p:"We walk across the ___.",pr:"Мы переходим через ___."},
+{en:"road",t:"[rəʊd]",ru:"дорога",e:"🛤️",p:"The car drives along the ___.",pr:"___ соединяет города и сёла."},
+{en:"building",t:"[ˈbɪldɪŋ]",ru:"здание",e:"🏢",p:"The office is in that ___.",pr:"Это высокое ___."},
+{en:"market",t:"[ˈmɑːkɪt]",ru:"рынок",e:"🛒",p:"We buy vegetables at the ___.",pr:"___ — место, где продают овощи."},
+{en:"museum",t:"[mjuːˈzɪəm]",ru:"музей",e:"🏛️",p:"We visit the ___ at weekends.",pr:"Мы посещаем ___ в выходные."},
+{en:"cinema",t:"[ˈsɪnəmə]",ru:"кинотеатр",e:"🎬",p:"A ___ is a place where you watch films on a big screen.",pr:"___ — место, где смотрят фильмы на большом экране."},
+{en:"cafe",t:"[ˈkæfeɪ]",ru:"кафе",e:"☕",p:"A ___ is a cosy place where people eat and drink coffee.",pr:"___ — уютное место, где пьют кофе и едят."},
+{en:"hotel",t:"[həʊˈtɛl]",ru:"отель",e:"🏨",p:"They stay at a big ___.",pr:"___ — место для ночлега в поездке."},
+{en:"airport",t:"[ˈɛəpɔːt]",ru:"аэропорт",e:"✈️",p:"An ___ is a place where planes take off and land.",pr:"___ — место, откуда улетают самолёты."},
+{en:"station",t:"[ˈsteɪʃn]",ru:"вокзал",e:"🚉",p:"The train departs from the ___.",pr:"___ — отсюда уходят поезда."},
+{en:"fountain",t:"[ˈfaʊntɪn]",ru:"фонтан",e:"⛲",p:"Children play near the ___.",pr:"В парке красивый ___."},
+{en:"square",t:"[skwɛə]",ru:"площадь",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI0U4REREMCIgcng9IjgiLz4KICA8cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0iI0Q0QzRCMCIvPgogIDwhLS0g0JHRgNGD0YHRh9Cw0YLQutCwIC0tPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxMiIgcng9IjIiIGZpbGw9IiNDNEI0OUUiLz48cmVjdCB4PSIzMCIgeT0iOCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEyIiByeD0iMiIgZmlsbD0iI0JFQjA5QSIvPjxyZWN0IHg9IjUyIiB5PSI4IiB3aWR0aD0iMjAiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQzRCNDlFIi8+PHJlY3QgeD0iNzQiIHk9IjgiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxMiIgcng9IjIiIGZpbGw9IiNCRUIwOUEiLz48cmVjdCB4PSI5NiIgeT0iOCIgd2lkdGg9IjE4IiBoZWlnaHQ9IjEyIiByeD0iMiIgZmlsbD0iI0M0QjQ5RSIvPgogIDxyZWN0IHg9IjgiIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQkVCMDlBIi8+PHJlY3QgeD0iMzAiIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQzRCNDlFIi8+PHJlY3QgeD0iNTIiIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQkVCMDlBIi8+PHJlY3QgeD0iNzQiIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQzRCNDlFIi8+PHJlY3QgeD0iOTYiIHk9IjIyIiB3aWR0aD0iMTgiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjQkVCMDlBIi8+CiAgPCEtLSDQpNC+0L3RgtCw0L0g0LIg0YbQtdC90YLRgNC1IC0tPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjYyIiByeD0iMjgiIHJ5PSIxMiIgZmlsbD0iIzkwQzREOCIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjYyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjNjRCMENDIi8+CiAgPHJlY3QgeD0iNTYiIHk9IjQwIiB3aWR0aD0iOCIgaGVpZ2h0PSIyMiIgcng9IjQiIGZpbGw9IiNBMEEwQjAiLz4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSI0MCIgcng9IjEyIiByeT0iNSIgZmlsbD0iIzdFQzhEQyIvPgogIDwhLS0g0KHRgtGA0YPQuCDQstC+0LTRiyAtLT4KICA8cGF0aCBkPSJNNjAgMzggUTU0IDI4IDQ4IDMyIiBmaWxsPSJub25lIiBzdHJva2U9IiM3RUM4REMiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxwYXRoIGQ9Ik02MCAzOCBRNjYgMjggNzIgMzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdFQzhEQyIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHBhdGggZD0iTTYwIDM4IFE2MCAyNSA2MCAzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQTBEQ0YwIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDwhLS0g0JTQtdGA0LXQstGM0Y8g0L/QviDRg9Cz0LvQsNC8IC0tPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iNzgiIHI9IjEwIiBmaWxsPSIjNENBRjUwIi8+CiAgPHJlY3QgeD0iMTgiIHk9Ijg2IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiBmaWxsPSIjNzk1NTQ4Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNzgiIHI9IjEwIiBmaWxsPSIjNENBRjUwIi8+CiAgPHJlY3QgeD0iOTgiIHk9Ijg2IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiBmaWxsPSIjNzk1NTQ4Ii8+Cjwvc3ZnPg==",p:"People meet at the central ___.",pr:"Центральная ___ — самое людное место."},
+{en:"theatre",t:"[ˈθɪətə]",ru:"театр",e:"🎭",p:"We watch a play at the ___.",pr:"___ — любимое место зрителей."},
+{en:"bank",t:"[bæŋk]",ru:"банк",e:"🏦",p:"She gets money from the ___.",pr:"___ хранит деньги людей."},
+{en:"pharmacy",t:"[ˈfɑːməsi]",ru:"аптека",e:"💊",p:"He buys medicine at the ___.",pr:"___ — место, где продают лекарства."},
+{en:"stadium",t:"[ˈsteɪdiəm]",ru:"стадион",e:"🏟️",p:"They watch football at the ___.",pr:"___ вмещает тысячи болельщиков."},
+{en:"tower",t:"[ˈtaʊə]",ru:"башня",e:"🗼",p:"The ___ is very tall.",pr:"___ очень высокая."},
+{en:"church",t:"[tʃɜːtʃ]",ru:"церковь",e:"⛪",p:"The old ___ is in the city centre.",pr:"Старая ___ в центре города."},
+{en:"school",t:"[skuːl]",ru:"школа",e:"🏫",p:"Children go to ___ every day.",pr:"___ начинается в сентябре."},
+]},
+{id:"ecology",name:"Экология",nameEn:"Ecology",emoji:"♻️",color:"#00695C",g:"linear-gradient(135deg,#00695C,#2E7D32,#F9A825)",
+w:[
+{en:"air",t:"[ɛə]",ru:"воздух",e:"💨",p:"We breathe fresh ___ in the forest.",pr:"Свежий ___ в лесу лучше, чем в городе."},
+{en:"pollution",t:"[pəˈluːʃn]",ru:"загрязнение",e:"😷",p:"Cars cause ___ in the city.",pr:"Машины вызывают ___ в городе."},
+{en:"recycle",t:"[riːˈsaɪkl]",ru:"перерабатывать",e:"♻️",p:"We ___ paper and plastic at home.",pr:"Важно ___ бумагу, стекло и пластик."},
+{en:"energy",t:"[ˈɛnədʒi]",ru:"энергия",e:"⚡",p:"Solar ___ is clean and free.",pr:"Солнечная ___ чистая и бесплатная."},
+{en:"solar",t:"[ˈsəʊlə]",ru:"солнечный",e:"☀️",p:"___ panels on the roof make free electricity.",pr:"___ панели на крыше дают бесплатную энергию."},
+{en:"nature",t:"[ˈneɪtʃə]",ru:"природа",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzg3Q0VFQiIgcng9IjgiLz4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSIxMDUiIHJ4PSI2NSIgcnk9IjM1IiBmaWxsPSIjNUJBRDNBIi8+CiAgPCEtLSDQodC+0LvQvdGG0LUgLS0+CiAgPGNpcmNsZSBjeD0iOTIiIGN5PSIyMCIgcj0iMTQiIGZpbGw9IiNGREQ4MzUiLz4KICA8bGluZSB4MT0iOTIiIHkxPSIyIiB4Mj0iOTIiIHkyPSI4IiBzdHJva2U9IiNGREQ4MzUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjkyIiB5MT0iMzIiIHgyPSI5MiIgeTI9IjM4IiBzdHJva2U9IiNGREQ4MzUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9Ijc0IiB5MT0iMjAiIHgyPSI2OCIgeTI9IjIwIiBzdHJva2U9IiNGREQ4MzUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjExMCIgeTE9IjIwIiB4Mj0iMTE2IiB5Mj0iMjAiIHN0cm9rZT0iI0ZERDgzNSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iNzkiIHkxPSI3IiB4Mj0iNzUiIHkyPSIzIiBzdHJva2U9IiNGREQ4MzUiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMTA1IiB5MT0iMzMiIHgyPSIxMDkiIHkyPSIzNyIgc3Ryb2tlPSIjRkREODM1IiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9Ijc5IiB5MT0iMzMiIHgyPSI3NSIgeTI9IjM3IiBzdHJva2U9IiNGREQ4MzUiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMTA1IiB5MT0iNyIgeDI9IjEwOSIgeTI9IjMiIHN0cm9rZT0iI0ZERDgzNSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0g0JTQtdGA0LXQstC+IC0tPgogIDxyZWN0IHg9IjI4IiB5PSI1MiIgd2lkdGg9IjgiIGhlaWdodD0iMzAiIHJ4PSIzIiBmaWxsPSIjNzk1NTQ4Ii8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzOCIgcj0iMjAiIGZpbGw9IiMyRTdEMzIiLz4KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjQ2IiByPSIxMyIgZmlsbD0iIzM4OEUzQyIvPgogIDxjaXJjbGUgY3g9IjQ0IiBjeT0iNDYiIHI9IjEzIiBmaWxsPSIjMzg4RTNDIi8+CiAgPCEtLSDQptCy0LXRgtGLIC0tPgogIDxjaXJjbGUgY3g9IjEwIiBjeT0iODAiIHI9IjYiIGZpbGw9IiNFOTFFNjMiLz4KICA8Y2lyY2xlIGN4PSIxMCIgY3k9IjgwIiByPSIzIiBmaWxsPSIjRkREODM1Ii8+CiAgPGNpcmNsZSBjeD0iMjIiIGN5PSI4MiIgcj0iNSIgZmlsbD0iI0ZGOTgwMCIvPgogIDxjaXJjbGUgY3g9IjIyIiBjeT0iODIiIHI9IjIuNSIgZmlsbD0iI0ZERDgzNSIvPgogIDxjaXJjbGUgY3g9IjY4IiBjeT0iODAiIHI9IjYiIGZpbGw9IiM5QzI3QjAiLz4KICA8Y2lyY2xlIGN4PSI2OCIgY3k9IjgwIiByPSIzIiBmaWxsPSIjRkREODM1Ii8+CiAgPGNpcmNsZSBjeD0iODAiIGN5PSI3OCIgcj0iNSIgZmlsbD0iI0U5MUU2MyIvPgogIDxjaXJjbGUgY3g9IjgwIiBjeT0iNzgiIHI9IjIuNSIgZmlsbD0iI0ZERDgzNSIvPgo8L3N2Zz4=",p:"We must protect ___.",pr:"___ — наш общий дом, её нужно беречь."},
+{en:"clean",t:"[kliːn]",ru:"чистый",e:"✨",p:"Let's keep the park ___.",pr:"___ воздух нужен всем живым существам."},
+{en:"waste",t:"[weɪst]",ru:"отходы",e:"🗑️",p:"We sort our ___ into bins.",pr:"Мы сортируем ___ по контейнерам."},
+{en:"ocean",t:"[ˈəʊʃn]",ru:"океан",e:"🌊",p:"The ___ is full of plastic rubbish.",pr:"___ полон пластикового мусора."},
+{en:"protect",t:"[prəˈtɛkt]",ru:"защищать",e:"🛡️",p:"We must ___ our forests.",pr:"Мы должны ___ наши леса."},
+{en:"climate",t:"[ˈklaɪmɪt]",ru:"климат",e:"🌡️",p:"___ change is a serious problem.",pr:"___ планеты меняется из-за человека."},
+{en:"oxygen",t:"[ˈɒksɪdʒən]",ru:"кислород",e:"🫁",p:"Trees produce ___ for us.",pr:"Деревья производят ___ для нас."},
+{en:"wildlife",t:"[ˈwaɪldlaɪf]",ru:"дикая природа",e:"🦁",p:"We must protect our ___.",pr:"___ — это все дикие звери и растения."},
+{en:"plastic",t:"[ˈplæstɪk]",ru:"пластик",e:"🛍️",p:"Try to avoid using ___ bags.",pr:"___ разлагается сотни лет в земле."},
+{en:"rubbish",t:"[ˈrʌbɪʃ]",ru:"мусор",e:"🚮",p:"Don't drop ___ on the ground.",pr:"Не бросай ___ на землю."},
+{en:"save",t:"[seɪv]",ru:"экономить",e:"💚",p:"We must ___ water every day.",pr:"___ воду — значит не тратить её зря."},
+{en:"green",t:"[ɡriːn]",ru:"зелёный",e:"🌿",p:"___ forests are the lungs of our planet.",pr:"___ лес — лёгкие нашей планеты."},
+{en:"earth",t:"[ɜːθ]",ru:"Земля",e:"🌎",p:"We must look after our ___.",pr:"___ — наша планета, наш общий дом."},
+{en:"carbon",t:"[ˈkɑːbən]",ru:"углерод",e:"🌫️",p:"___ dioxide from cars pollutes the air.",pr:"Машины выбрасывают ___ в атмосферу."},
+{en:"compost",t:"[ˈkɒmpɒst]",ru:"компост",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTEwIj4KICA8IS0tINCc0LXRiNC+0Log0YEg0YPQtNC+0LHRgNC10L3QuNC10LwgLS0+CiAgPHJlY3QgeD0iMTgiIHk9IjM4IiB3aWR0aD0iODQiIGhlaWdodD0iNTgiIHJ4PSIxMCIgZmlsbD0iIzhCNjkxNCIvPgogIDxyZWN0IHg9IjE4IiB5PSIzOCIgd2lkdGg9Ijg0IiBoZWlnaHQ9IjE0IiByeD0iMTAiIGZpbGw9IiNBMDc4MjAiLz4KICA8IS0tINCX0LDQstGP0LfQutCwIC0tPgogIDxyZWN0IHg9IjQ4IiB5PSIyMiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjIwIiByeD0iNCIgZmlsbD0iIzlBNzAxOCIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjIyIiByeD0iMTAiIHJ5PSI2IiBmaWxsPSIjN0E1QTEwIi8+CiAgPCEtLSDQndCw0LTQv9C40YHRjCBOUEsgKNGD0LTQvtCx0YDQtdC90LjQtSkgLS0+CiAgPHRleHQgeD0iNjAiIHk9IjcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0Y1RTY0MiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPk5QSzwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iODYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iI0Y1RTA2MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIG9wYWNpdHk9Ii45Ij5GRVJUSUxJU0VSPC90ZXh0PgogIDwhLS0g0KDQvtGB0YLQvtC6INC40Lcg0LfQtdC80LvQuCDRgNGP0LTQvtC8IC0tPgogIDxlbGxpcHNlIGN4PSI5NSIgY3k9Ijk2IiByeD0iMTYiIHJ5PSI3IiBmaWxsPSIjNUIzRTEwIi8+CiAgPHJlY3QgeD0iOTIiIHk9IjcyIiB3aWR0aD0iNSIgaGVpZ2h0PSIyNSIgcng9IjIiIGZpbGw9IiM0Q0FGNTAiLz4KICA8ZWxsaXBzZSBjeD0iOTciIGN5PSI3MiIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjNjZCQjZBIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOTcgNzIpIi8+CiAgPGVsbGlwc2UgY3g9Ijg5IiBjeT0iNzUiIHJ4PSI4IiByeT0iNSIgZmlsbD0iIzgxQzc4NCIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgODkgNzUpIi8+Cjwvc3ZnPg==",p:"We make ___ from food scraps.",pr:"Мы делаем ___ из остатков еды."},
+{en:"planet",t:"[ˈplænɪt]",ru:"планета",e:"🪐",p:"Our ___ needs our help.",pr:"___ Земля — наш дом в космосе."},
+{en:"habitat",t:"[ˈhæbɪtæt]",ru:"среда обитания",e:"🏞️",p:"Animals are losing their ___.",pr:"___ — это место, где живёт животное."},
+{en:"drought",t:"[draʊt]",ru:"засуха",e:"🥵",p:"The ___ lasted for three months.",pr:"___ длилась три месяца."},
+{en:"windmill",t:"[ˈwɪndmɪl]",ru:"ветряная мельница",e:"💨",p:"A ___ produces clean electricity.",pr:"___ вырабатывает чистое электричество."},
+{en:"extinction",t:"[ɪkˈstɪŋkʃn]",ru:"вымирание",e:"💀",p:"Many animals are at risk of ___.",pr:"___ — это когда вид исчезает навсегда."},
+]},
+{id:"clothes",name:"Одежда",nameEn:"Clothes",emoji:"👕",color:"#880E4F",g:"linear-gradient(135deg,#880E4F,#C62828,#E65100)",
+w:[
+{en:"shirt",t:"[ʃɜːt]",ru:"рубашка",e:"👔",p:"He wears a blue ___ to school.",pr:"У него синяя ___."},
+{en:"dress",t:"[drɛs]",ru:"платье",e:"👗",p:"She puts on a beautiful ___.",pr:"Она надевает красивое ___."},
+{en:"shoes",t:"[ʃuːz]",ru:"туфли",e:"👞",p:"I need new ___ for school.",pr:"Мне нужны новые ___ для школы."},
+{en:"hat",t:"[hæt]",ru:"шляпа",e:"🎩",p:"He wears a funny ___ in summer.",pr:"У него смешная ___."},
+{en:"coat",t:"[kəʊt]",ru:"пальто",e:"🧥",p:"She puts on her ___ in autumn.",pr:"Осенью она надевает ___."},
+{en:"trousers",t:"[ˈtraʊzəz]",ru:"брюки",e:"👖",p:"He wears black ___ to work.",pr:"На работу он носит чёрные ___."},
+{en:"jacket",t:"[ˈdʒækɪt]",ru:"куртка",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIj4KICA8cGF0aCBkPSJNNjAgMTggTDM4IDI2IEwyMCA0NiBMMTYgOTAgTDUyIDkwIEw1MiAzOCBMNjAgMzAgTDY4IDM4IEw2OCA5MCBMMTA0IDkwIEwxMDAgNDYgTDgyIDI2IFoiIGZpbGw9IiMyRTg2REUiLz4KICA8cGF0aCBkPSJNMzggMjYgTDUyIDM4IEw2MCAzMCBMNjggMzggTDgyIDI2IEw3NiAxOCBMNjggMjQgTDYwIDE4IEw1MiAyNCBMNDQgMTggWiIgZmlsbD0iIzFBNkJBRCIvPgogIDxyZWN0IHg9IjU3IiB5PSIzMCIgd2lkdGg9IjYiIGhlaWdodD0iNjAiIHJ4PSIyIiBmaWxsPSIjMTU1OEEwIi8+CiAgPGNpcmNsZSBjeD0iNjAiIGN5PSIzOCIgcj0iMyIgZmlsbD0iI0E4RDRGNSIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iNTAiIHI9IjMiIGZpbGw9IiNBOEQ0RjUiLz4KICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjYyIiByPSIzIiBmaWxsPSIjQThENEY1Ii8+CiAgPHJlY3QgeD0iMTYiIHk9IjkwIiB3aWR0aD0iMzYiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjMUE2QkFEIi8+CiAgPHJlY3QgeD0iNjgiIHk9IjkwIiB3aWR0aD0iMzYiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjMUE2QkFEIi8+CiAgPHJlY3QgeD0iMjQiIHk9IjU2IiB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjMUE2QkFEIi8+Cjwvc3ZnPg==",p:"She puts on a warm ___ outside.",pr:"У неё тёплая ___."},
+{en:"socks",t:"[sɒks]",ru:"носки",e:"🧦",p:"I put on clean ___ every morning.",pr:"Каждое утро я надеваю чистые ___."},
+{en:"gloves",t:"[ɡlʌvz]",ru:"перчатки",e:"🧤",p:"She wears ___ in winter.",pr:"Зимой она носит ___."},
+{en:"scarf",t:"[skɑːf]",ru:"шарф",e:"🧣",p:"He wraps a red ___ around his neck.",pr:"В мороз он наматывает красный ___ на шею."},
+{en:"boots",t:"[buːts]",ru:"сапоги",e:"👢",p:"She wears ___ when it rains.",pr:"Когда идёт дождь, она носит ___."},
+{en:"skirt",t:"[skɜːt]",ru:"юбка",e:"💃",p:"She wears a short ___ in summer.",pr:"У неё короткая ___."},
+{en:"sweater",t:"[ˈswɛtə]",ru:"свитер",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIj4KICA8cGF0aCBkPSJNNjAgMTQgTDQyIDIyIEwxOCA0MiBMMjYgNjAgTDQwIDUwIEw0MCA5OCBMODAgOTggTDgwIDUwIEw5NCA2MCBMMTAyIDQyIEw3OCAyMiBaIiBmaWxsPSIjRTc0QzNDIi8+CiAgPHBhdGggZD0iTTQyIDIyIEw1NCAzNiBMNjAgMjggTDY2IDM2IEw3OCAyMiBMNzIgMTQgTDY2IDIwIEw2MCAxNCBMNTQgMjAgTDQ4IDE0IFoiIGZpbGw9IiNDMDM5MkIiLz4KICA8cGF0aCBkPSJNNTQgMzYgTDYwIDI4IEw2NiAzNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzAzOTJCIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8bGluZSB4MT0iNDAiIHkxPSI2MCIgeDI9IjgwIiB5Mj0iNjAiIHN0cm9rZT0iI0MwMzkyQiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNDAiIHkxPSI3MCIgeDI9IjgwIiB5Mj0iNzAiIHN0cm9rZT0iI0MwMzkyQiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNDAiIHkxPSI4MCIgeDI9IjgwIiB5Mj0iODAiIHN0cm9rZT0iI0MwMzkyQiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNDAiIHkxPSI5MCIgeDI9IjgwIiB5Mj0iOTAiIHN0cm9rZT0iI0MwMzkyQiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8cmVjdCB4PSI0MCIgeT0iOTIiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iI0MwMzkyQiIvPgogIDxyZWN0IHg9IjE4IiB5PSI5MCIgd2lkdGg9IjIyIiBoZWlnaHQ9IjgiIHJ4PSIyIiBmaWxsPSIjQzAzOTJCIi8+CiAgPHJlY3QgeD0iODAiIHk9IjkwIiB3aWR0aD0iMjIiIGhlaWdodD0iOCIgcng9IjIiIGZpbGw9IiNDMDM5MkIiLz4KPC9zdmc+",p:"He puts on a warm ___ in autumn.",pr:"Осенью он надевает тёплый ___."},
+{en:"jeans",t:"[dʒiːnz]",ru:"джинсы",e:"👖",p:"She wears blue ___ every day.",pr:"Она носит синие ___ каждый день."},
+{en:"t-shirt",t:"[ˈtiːʃɜːt]",ru:"футболка",e:"👕",p:"He wears a white ___ in summer.",pr:"У него белая ___."},
+{en:"cap",t:"[kæp]",ru:"кепка",e:"🧢",p:"A ___ protects your head from the sun.",pr:"___ защищает голову от солнца."}, 
+{en:"belt",t:"[bɛlt]",ru:"ремень",e:"🎗️",p:"He wears a leather ___.",pr:"Он носит кожаный ___."},
+{en:"tie",t:"[taɪ]",ru:"галстук",e:"👔",p:"Dad wears a ___ to work.",pr:"Папа носит ___ на работу."},
+{en:"uniform",t:"[ˈjuːnɪfɔːm]",ru:"форма",e:"🎓",p:"Pupils wear a school ___ every day.",pr:"Школьная ___ — одежда для учёбы."},
+{en:"pyjamas",t:"[pəˈdʒɑːməz]",ru:"пижама",e:"😴",p:"I put on my ___ before bed.",pr:"___ — уютная одежда для сна."},
+{en:"raincoat",t:"[ˈreɪnkəʊt]",ru:"плащ-дождевик",e:"☔",p:"She puts on a ___ when it rains.",pr:"Когда идёт дождь, она надевает ___."},
+{en:"trainers",t:"[ˈtreɪnəz]",ru:"кроссовки",e:"👟",p:"He runs in his ___.",pr:"___ — удобная обувь для спорта и прогулок."}, 
+{en:"blouse",t:"[blaʊz]",ru:"блузка",e:"👚",p:"She wears a pretty ___ today.",pr:"У неё красивая ___."},
+{en:"mittens",t:"[ˈmɪtɪnz]",ru:"варежки",e:"🧤",p:"Children wear ___ in the snow.",pr:"Зимой дети надевают ___."},
+{en:"swimsuit",t:"[ˈswɪmsuːt]",ru:"купальник",e:"🩱",p:"She wears a ___ at the beach.",pr:"На пляже она носит ___."},
+]},
+{id:"transport",name:"Транспорт",nameEn:"Transport",emoji:"🚗",color:"#E65100",g:"linear-gradient(135deg,#E65100,#F57F17,#1B5E20)",
+w:[
+{en:"car",t:"[kɑː]",ru:"машина",e:"🚗",p:"A ___ is the most popular form of transport.",pr:"___ — самый популярный вид транспорта."},
+{en:"bus",t:"[bʌs]",ru:"автобус",e:"🚌",p:"A ___ stops at every bus stop along the route.",pr:"___ останавливается на каждой остановке."},
+{en:"train",t:"[treɪn]",ru:"поезд",e:"🚂",p:"The ___ arrives at three o'clock.",pr:"___ прибывает в три часа."},
+{en:"plane",t:"[pleɪn]",ru:"самолёт",e:"✈️",p:"A ___ travels faster than a train or a ship.",pr:"___ летит быстрее поезда и корабля."},
+{en:"bike",t:"[baɪk]",ru:"велосипед",e:"🚲",p:"A ___ is a convenient way to get around town.",pr:"___ — удобный транспорт для города."}, 
+{en:"boat",t:"[bəʊt]",ru:"лодка",e:"🛶",p:"They go fishing in a ___.",pr:"___ плывёт по реке."},
+{en:"ship",t:"[ʃɪp]",ru:"корабль",e:"🚢",p:"The ___ sails across the ocean.",pr:"___ плывёт через океан."},
+{en:"taxi",t:"[ˈtæksi]",ru:"такси",e:"🚕",p:"You can order a ___ from your smartphone.",pr:"___ можно вызвать прямо со смартфона."},
+{en:"lorry",t:"[ˈlɒri]",ru:"грузовик",e:"🚛",p:"A big ___ drives along the road.",pr:"Большой ___ едет по дороге."},
+{en:"helicopter",t:"[ˈhɛlɪkɒptə]",ru:"вертолёт",e:"🚁",p:"The ___ flies above the city.",pr:"___ летит над городом."},
+{en:"motorcycle",t:"[ˈməʊtəsaɪkl]",ru:"мотоцикл",e:"🏍️",p:"A ___ is a fast two-wheeled vehicle.",pr:"___ — быстрый двухколёсный транспорт."},
+{en:"underground",t:"[ˈʌndəɡraʊnd]",ru:"метро",e:"🚇",p:"The ___ is the fastest way to travel in a big city.",pr:"___ — самый быстрый транспорт в большом городе."},
+{en:"tram",t:"[træm]",ru:"трамвай",e:"🚃",p:"The ___ goes along the street.",pr:"___ едет по улице."},
+{en:"ferry",t:"[ˈfɛri]",ru:"паром",e:"⛴️",p:"We cross the river by ___.",pr:"___ перевозит людей через реку."},
+{en:"rocket",t:"[ˈrɒkɪt]",ru:"ракета",e:"🚀",p:"The ___ flies to the Moon.",pr:"___ летит на Луну."},
+{en:"scooter",t:"[ˈskuːtə]",ru:"самокат",e:"🛴",p:"A ___ is great for short trips around town.",pr:"___ — удобный транспорт для коротких поездок."}, 
+{en:"ambulance",t:"[ˈæmbjʊləns]",ru:"скорая помощь",e:"🚑",p:"The ___ drives very fast.",pr:"___ едет очень быстро."},
+{en:"van",t:"[væn]",ru:"фургон",e:"🚐",p:"The workers come in a white ___.",pr:"___ перевозит грузы и инструменты."},
+{en:"sailboat",t:"[ˈseɪlbəʊt]",ru:"парусник",e:"⛵",p:"He sails a ___ on the lake.",pr:"___ плывёт по озеру."},
+{en:"submarine",t:"[ˌsʌbməˈriːn]",ru:"подлодка",e:"🫧",p:"The ___ dives deep underwater.",pr:"___ погружается глубоко под воду."},
+{en:"tractor",t:"[ˈtræktə]",ru:"трактор",e:"🚜",p:"The farmer drives a ___ in the field.",pr:"___ помогает фермеру пахать поле."},
+{en:"speedboat",t:"[ˈspiːdbəʊt]",ru:"катер",e:"🚤",p:"The ___ goes very fast.",pr:"___ идёт очень быстро."},
+{en:"cable car",t:"[ˈkeɪbl kɑː]",ru:"канатная дорога",e:"🚡",p:"We ride a ___ up the mountain.",pr:"___ поднимает людей высоко в горы."},
+{en:"fire engine",t:"[ˈfaɪər ˈɛndʒɪn]",ru:"пожарная машина",e:"🚒",p:"The ___ rushes to the fire.",pr:"___ мчится на пожар."},
+{en:"bicycle",t:"[ˈbaɪsɪkl]",ru:"велосипед",e:"🚲",p:"A ___ is an eco-friendly and healthy transport.",pr:"___ — экологичный и полезный транспорт."}, 
+]},
+{id:"sports",name:"Спорт",nameEn:"Sports",emoji:"⚽",color:"#01579B",g:"linear-gradient(135deg,#01579B,#0277BD,#00838F)",
+w:[
+{en:"football",t:"[ˈfʊtbɔːl]",ru:"футбол",e:"⚽",p:"He plays ___ every weekend.",pr:"Он играет в ___ каждые выходные."},
+{en:"basketball",t:"[ˈbɑːskɪtbɔːl]",ru:"баскетбол",e:"🏀",p:"She plays ___ after school.",pr:"После школы она играет в ___."},
+{en:"swimming",t:"[ˈswɪmɪŋ]",ru:"плавание",e:"🏊",p:"I love ___ in summer.",pr:"Летом я люблю ___."},
+{en:"tennis",t:"[ˈtɛnɪs]",ru:"теннис",e:"🎾",p:"She plays ___ with her friend.",pr:"Она играет в ___ с подругой."},
+{en:"volleyball",t:"[ˈvɒlibɔːl]",ru:"волейбол",e:"🏐",p:"We play ___ on the beach.",pr:"Мы играем в ___ на пляже."},
+{en:"running",t:"[ˈrʌnɪŋ]",ru:"бег",e:"🏃",p:"___ every morning is the best way to wake up.",pr:"___ — лучший способ взбодриться с утра."},
+{en:"cycling",t:"[ˈsaɪklɪŋ]",ru:"велоспорт",e:"🚴",p:"He loves ___ in the mountains.",pr:"Он любит ___ в горах."},
+{en:"skiing",t:"[ˈskiːɪŋ]",ru:"лыжный спорт",e:"⛷️",p:"They enjoy ___ in winter.",pr:"Зимой они любят ___."},
+{en:"gymnastics",t:"[dʒɪmˈnæstɪks]",ru:"гимнастика",e:"🤸",p:"___ is a beautiful and challenging sport.",pr:"___ — красивый и сложный вид спорта."},
+{en:"boxing",t:"[ˈbɒksɪŋ]",ru:"бокс",e:"🥊",p:"___ is a sport that needs strength and skill.",pr:"___ — это спорт, где нужны сила и ловкость."},
+{en:"hockey",t:"[ˈhɒki]",ru:"хоккей",e:"🏒",p:"He plays ___ in winter.",pr:"Зимой он играет в ___."},
+{en:"baseball",t:"[ˈbeɪsbɔːl]",ru:"бейсбол",e:"⚾",p:"They play ___ in the park.",pr:"Они играют в ___ в парке."},
+{en:"golf",t:"[ɡɒlf]",ru:"гольф",e:"⛳",p:"Dad plays ___ on Saturdays.",pr:"По субботам папа играет в ___."},
+{en:"yoga",t:"[ˈjəʊɡə]",ru:"йога",e:"🧘",p:"___ helps you relax and feel calm.",pr:"___ помогает расслабиться и успокоиться."},
+{en:"dancing",t:"[ˈdɑːnsɪŋ]",ru:"танцы",e:"💃",p:"She loves ___ at parties.",pr:"Она любит ___ на вечеринках."},
+{en:"wrestling",t:"[ˈrɛslɪŋ]",ru:"борьба",e:"🤼",p:"___ is one of the oldest sports in the world.",pr:"___ — один из старейших видов спорта."},
+{en:"archery",t:"[ˈɑːtʃəri]",ru:"стрельба из лука",e:"🏹",p:"___ is a sport where you shoot arrows with a bow.",pr:"___ — это спорт с луком и стрелами."},
+{en:"surfing",t:"[ˈsɜːfɪŋ]",ru:"сёрфинг",e:"🏄",p:"___ means riding the waves on a board.",pr:"___ — это кататься на волнах на доске."},
+{en:"skating",t:"[ˈskeɪtɪŋ]",ru:"катание на коньках",e:"⛸️",p:"___ means gliding on ice with blades on your feet.",pr:"___ — это скользить по льду на коньках."},
+{en:"jumping",t:"[ˈdʒʌmpɪŋ]",ru:"прыжки",e:"🦘",p:"He loves ___ on the trampoline.",pr:"Он любит ___ на батуте."},
+{en:"rowing",t:"[ˈrəʊɪŋ]",ru:"гребля",e:"🚣",p:"___ means moving a boat using oars.",pr:"___ — это грести вёслами по воде."},
+{en:"climbing",t:"[ˈklaɪmɪŋ]",ru:"скалолазание",e:"🧗",p:"She loves ___ in the mountains.",pr:"Она любит ___ в горах."},
+{en:"karate",t:"[kəˈrɑːti]",ru:"карате",e:"🥋",p:"___ is a Japanese martial art.",pr:"___ — японское боевое искусство."},
+{en:"badminton",t:"[ˈbædmɪntən]",ru:"бадминтон",e:"🏸",p:"They play ___ in the garden.",pr:"Они играют в ___ в саду."},
+{en:"chess",t:"[tʃɛs]",ru:"шахматы",e:"♟️",p:"She plays ___ with her brother.",pr:"Она играет в ___ с братом."},
+]},
+{id:"school",name:"Школа",nameEn:"School",emoji:"📚",color:"#4A148C",g:"linear-gradient(135deg,#4A148C,#880E4F,#BF360C)",
+w:[
+{en:"book",t:"[bʊk]",ru:"книга",e:"📕",p:"I read a ___ every week.",pr:"Я читаю ___ каждую неделю."},
+{en:"pen",t:"[pɛn]",ru:"ручка",e:"🖊️",p:"This is her favourite ___.",pr:"Это её любимая ___."},
+{en:"pencil",t:"[ˈpɛnsəl]",ru:"карандаш",e:"✏️",p:"He always uses a ___ for drawing.",pr:"В пенале лежат ___ и ручка."},
+{en:"teacher",t:"[ˈtiːtʃə]",ru:"учитель",e:"👩‍🏫",p:"The ___ explains the lesson.",pr:"___ объясняет урок."},
+{en:"pupil",t:"[ˈpjuːpɪl]",ru:"ученик",e:"👦",p:"Every ___ has a bag.",pr:"У каждого ___ есть сумка."},
+{en:"classroom",t:"[ˈklɑːsruːm]",ru:"класс",e:"🧑‍🏫",p:"We study in the ___.",pr:"Наш ___ очень большой."},
+{en:"desk",t:"[dɛsk]",ru:"парта",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj4KICA8cmVjdCB4PSI4IiB5PSIzNCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSIxMSIgcng9IjQiIGZpbGw9IiNDODkyNUEiLz4KICA8cmVjdCB4PSI4IiB5PSI0MCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI1IiByeD0iMiIgZmlsbD0iI0E4NzA0MCIvPgogIDxyZWN0IHg9IjEyIiB5PSI0NSIgd2lkdGg9IjkiIGhlaWdodD0iNDQiIHJ4PSIzIiBmaWxsPSIjQjA3ODQwIi8+CiAgPHJlY3QgeD0iOTkiIHk9IjQ1IiB3aWR0aD0iOSIgaGVpZ2h0PSI0NCIgcng9IjMiIGZpbGw9IiNCMDc4NDAiLz4KICA8cmVjdCB4PSIzMCIgeT0iMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIxNCIgcng9IjIiIGZpbGw9IiNFNzRDM0MiLz4KICA8cmVjdCB4PSIzMiIgeT0iMTciIHdpZHRoPSIyOCIgaGVpZ2h0PSIxNCIgcng9IjIiIGZpbGw9IiMzNDk4REIiLz4KICA8cmVjdCB4PSIzNCIgeT0iMTQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIxNCIgcng9IjIiIGZpbGw9IiMyN0FFNjAiLz4KICA8cmVjdCB4PSI3MiIgeT0iMjAiIHdpZHRoPSI1IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI0YxQzQwRiIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyIDc0IDI0KSIvPgogIDxlbGxpcHNlIGN4PSI3NCIgY3k9IjIwIiByeD0iNCIgcnk9IjMiIGZpbGw9IiNFNjdFMjIiIHRyYW5zZm9ybT0icm90YXRlKC0xMiA3NCAyNCkiLz4KPC9zdmc+",p:"He sits at his ___.",pr:"Его ___ стоит у окна."},
+{en:"board",t:"[bɔːd]",ru:"доска",e:"🖍️",p:"The teacher writes on the ___.",pr:"___ висит в каждом школьном классе."},
+{en:"notebook",t:"[ˈnəʊtbʊk]",ru:"тетрадь",e:"📓",p:"This is her school ___.",pr:"Это её школьная ___."},
+{en:"lesson",t:"[ˈlɛsn]",ru:"урок",e:"📖",p:"The ___ starts at nine o'clock.",pr:"___ начинается в девять часов."},
+{en:"homework",t:"[ˈhəʊmwɜːk]",ru:"домашнее задание",e:"📝",p:"I do my ___ every evening.",pr:"Я делаю ___ каждый вечер."},
+{en:"exam",t:"[ɪɡˈzæm]",ru:"экзамен",e:"📃",p:"She studies hard for the ___.",pr:"Завтра у неё ___."},
+{en:"mark",t:"[mɑːk]",ru:"оценка",e:"⭐",p:"He gets a good ___ in Maths.",pr:"У него хорошая ___ по математике."},
+{en:"Science",t:"[ˈsaɪəns]",ru:"наука",e:"🔬",p:"She loves ___ at school.",pr:"___ — её любимый предмет."},
+{en:"Maths",t:"[mæθs]",ru:"математика",e:"🔢",p:"We love ___ at school.",pr:"___ — любимый урок многих детей."},
+{en:"History",t:"[ˈhɪstri]",ru:"история",e:"🏛️",p:"___ tells us about the past.",pr:"___ рассказывает нам о прошлом."},
+{en:"Art",t:"[ɑːt]",ru:"рисование",e:"🎨",p:"We paint pictures in ___ class.",pr:"___ — мой любимый урок в школе."},
+{en:"Music",t:"[ˈmjuːzɪk]",ru:"музыка",e:"🎵",p:"She plays piano in ___ class.",pr:"___ учит петь и играть на инструментах."},
+{en:"rubber",t:"[ˈrʌbə]",ru:"ластик",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgODAiPgogIDxyZWN0IHg9IjEwIiB5PSIxNSIgd2lkdGg9IjEwMCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNGNEE3QjkiLz4KICA8cmVjdCB4PSIxMCIgeT0iMTUiIHdpZHRoPSI0MiIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNFOTFFOEMiLz4KICA8cmVjdCB4PSIxMCIgeT0iNTIiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTMiIHJ4PSI1IiBmaWxsPSIjRDgxQjcwIiBvcGFjaXR5PSIwLjYiLz4KICA8dGV4dCB4PSIzMSIgeT0iNDYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkVSQVNFPC90ZXh0PgogIDx0ZXh0IHg9IjY1IiB5PSI0NiIgZm9udC1zaXplPSIxMCIgZmlsbD0iI0MwMzA2QSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj7Qu9Cw0YHRgtC40Lo8L3RleHQ+CiAgPGxpbmUgeDE9IjUyIiB5MT0iMTUiIHgyPSI1MiIgeTI9IjUyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==",p:"I use a ___ to correct mistakes.",pr:"Я использую ___ для исправления ошибок."},
+{en:"ruler",t:"[ˈruːlə]",ru:"линейка",e:"📏",p:"She measures with a ___.",pr:"С помощью ___ измеряют длину."},
+{en:"rucksack",t:"[ˈrʌksæk]",ru:"рюкзак",e:"🎒",p:"He puts his books in a ___.",pr:"Он кладёт книги в ___."},
+{en:"globe",t:"[ɡləʊb]",ru:"глобус",e:"🌐",p:"We find countries on the ___.",pr:"___ — это круглая модель Земли."},
+{en:"dictionary",t:"[ˈdɪkʃənri]",ru:"словарь",e:"📘",p:"I look words up in the ___.",pr:"___ — книга, где объясняются слова языка."},
+{en:"lunch",t:"[lʌntʃ]",ru:"обед",e:"🍱",p:"We have ___ at noon.",pr:"В полдень у нас ___."},
+{en:"library",t:"[ˈlaɪbrəri]",ru:"библиотека",e:"📚",p:"She reads at the school ___.",pr:"___ — место, где хранятся тысячи книг."},
+]},
+{id:"travel",name:"Путешествие",nameEn:"Travel",emoji:"✈️",color:"#006064",g:"linear-gradient(135deg,#006064,#01579B,#4A148C)",
+w:[
+{en:"passport",t:"[ˈpɑːspɔːt]",ru:"паспорт",e:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTMwIj4KICA8IS0tINCe0LHQu9C+0LbQutCwINC/0LDRgdC/0L7RgNGC0LAgLS0+CiAgPHJlY3QgeD0iOCIgeT0iNSIgd2lkdGg9Ijg0IiBoZWlnaHQ9IjEyMCIgcng9IjgiIGZpbGw9IiM4QjAwMDAiLz4KICA8cmVjdCB4PSI4IiB5PSI1IiB3aWR0aD0iODQiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNkIwMDAwIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8IS0tINCi0LjRgdC90LXQvdC40LUg4oCUINGA0LDQvNC60LAgLS0+CiAgPHJlY3QgeD0iMTYiIHk9IjEzIiB3aWR0aD0iNjgiIGhlaWdodD0iMTA0IiByeD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzA5MDIwIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iLjciLz4KICA8IS0tINCT0LXRgNCxICjRgdGC0LjQu9C40LfQvtCy0LDQvdC90YvQuSDQvtGA0ZHQuykgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MiIgcj0iMjIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0MwOTAyMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUyIiByPSIxOCIgZmlsbD0iIzdBMDAwMCIvPgogIDwhLS0g0J7RgNGR0Ls6INGC0LXQu9C+IC0tPgogIDxlbGxpcHNlIGN4PSI1MCIgY3k9IjU0IiByeD0iOCIgcnk9IjEwIiBmaWxsPSIjQzA5MDIwIi8+CiAgPCEtLSDQmtGA0YvQu9GM0Y8gLS0+CiAgPHBhdGggZD0iTTQyIDUwIFEzMCA0MiAyOCA1MCBRMzIgNTYgNDIgNTQgWiIgZmlsbD0iI0MwOTAyMCIvPgogIDxwYXRoIGQ9Ik01OCA1MCBRNzAgNDIgNzIgNTAgUTY4IDU2IDU4IDU0IFoiIGZpbGw9IiNDMDkwMjAiLz4KICA8IS0tINCT0L7Qu9C+0LLQsCDQvtGA0LvQsCAtLT4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjQ0IiByPSI2IiBmaWxsPSIjQzA5MDIwIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI1MCwzOCA0NywzNCA1MywzNCIgZmlsbD0iI0MwOTAyMCIvPgogIDwhLS0g0KLQtdC60YHRgiBQQVNTUE9SVCAtLT4KICA8dGV4dCB4PSI1MCIgeT0iOTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOC41IiBmaWxsPSIjQzA5MDIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIxIj5QQVNTUE9SVDwvdGV4dD4KICA8IS0tINCb0LjQvdC40Lgg0YHRgtGA0LDQvdC40YYgLS0+CiAgPHJlY3QgeD0iMTQiIHk9IjEwMCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSIjNkIwMDAwIi8+CiAgPHJlY3QgeD0iMTQiIHk9IjEwNyIgd2lkdGg9IjcyIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSIjNkIwMDAwIi8+CiAgPHJlY3QgeD0iMTQiIHk9IjExNCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSIjNkIwMDAwIi8+Cjwvc3ZnPg==",p:"Don't forget your ___ !",pr:"Не забудь свой ___ !"},
+{en:"ticket",t:"[ˈtɪkɪt]",ru:"билет",e:"🎫",p:"He buys a ___ for the train.",pr:"Он покупает ___ на поезд."},
+{en:"hotel",t:"[həʊˈtɛl]",ru:"отель",e:"🏨",p:"They stay at a nice ___.",pr:"___ — место, где останавливаются туристы."},
+{en:"luggage",t:"[ˈlʌɡɪdʒ]",ru:"багаж",e:"🧳",p:"She packs her ___ the night before.",pr:"Она собирает ___ накануне вечером."},
+{en:"map",t:"[mæp]",ru:"карта",e:"🗺️",p:"I use a ___ to find the way.",pr:"Я использую ___, чтобы найти дорогу."},
+{en:"tourist",t:"[ˈtʊərɪst]",ru:"турист",e:"📸",p:"The ___ takes lots of photos.",pr:"___ делает много фотографий."},
+{en:"journey",t:"[ˈdʒɜːni]",ru:"поездка",e:"🗺️",p:"The ___ takes two days.",pr:"___ занимает два дня."},
+{en:"beach",t:"[biːtʃ]",ru:"пляж",e:"🏖️",p:"A ___ is a strip of sand beside the water.",pr:"___ — полоска песка у воды."},
+{en:"camera",t:"[ˈkæmərə]",ru:"фотоаппарат",e:"📷",p:"She takes photos with her ___.",pr:"___ нужен, чтобы делать фотографии."},
+{en:"souvenir",t:"[ˌsuːvəˈnɪə]",ru:"сувенир",e:"🎁",p:"I buy a ___ for my friend.",pr:"Я покупаю ___ для друга."},
+{en:"adventure",t:"[ədˈvɛntʃə]",ru:"приключение",e:"🧭",p:"They go on a great ___.",pr:"Они отправляются в большое ___."},
+{en:"guide",t:"[ɡaɪd]",ru:"гид",e:"🗣️",p:"The ___ shows us the city.",pr:"___ показывает нам город."},
+{en:"visa",t:"[ˈviːzə]",ru:"виза",e:"📄",p:"You need a ___ to enter the country.",pr:"Для въезда в страну нужна ___."},
+{en:"currency",t:"[ˈkʌrənsi]",ru:"валюта",e:"💰",p:"He changes ___ at the bank.",pr:"Он меняет ___ в банке."},
+{en:"holiday",t:"[ˈhɒlədeɪ]",ru:"каникулы",e:"🌴",p:"We travel during the summer ___.",pr:"Летние ___ — время путешествий."},
+{en:"departure",t:"[dɪˈpɑːtʃə]",ru:"отправление",e:"🛫",p:"The ___ is at seven in the morning.",pr:"___ в семь утра."},
+{en:"arrival",t:"[əˈraɪvl]",ru:"прибытие",e:"🛬",p:"The ___ is delayed by one hour.",pr:"___ задерживается на час."},
+{en:"sightseeing",t:"[ˈsaɪtsiːɪŋ]",ru:"осмотр достопримечательностей",e:"🗽",p:"We go ___ in the morning.",pr:"___ — это прогулка по интересным местам города."},
+{en:"booking",t:"[ˈbʊkɪŋ]",ru:"бронирование",e:"📅",p:"He makes a ___ at the hotel.",pr:"Он делает ___ в отеле."},
+{en:"customs",t:"[ˈkʌstəmz]",ru:"таможня",e:"🛂",p:"We pass through ___ at the airport.",pr:"В аэропорту мы проходим ___."},
+{en:"sunscreen",t:"[ˈsʌnskriːn]",ru:"крем от солнца",e:"🧴",p:"Don't forget to put on ___.",pr:"Не забудь нанести ___."},
+{en:"border",t:"[ˈbɔːdə]",ru:"граница",e:"🚧",p:"We cross the ___ by car.",pr:"___ — это черта между двумя странами."},
+{en:"destination",t:"[ˌdɛstɪˈneɪʃn]",ru:"пункт назначения",e:"📍",p:"Our ___ is Paris.",pr:"Наш ___ — Париж."},
+{en:"rucksack",t:"[ˈrʌksæk]",ru:"рюкзак",e:"🎒",p:"She carries a ___ on her back.",pr:"Она несёт ___ за спиной."},
+{en:"itinerary",t:"[aɪˈtɪnərəri]",ru:"маршрут",e:"🗒️",p:"We plan our ___ carefully.",pr:"Мы тщательно планируем наш ___."},
+]},
+{id:"animals",name:"Животные",nameEn:"Animals",emoji:"🦁",color:"#BF360C",g:"linear-gradient(135deg,#BF360C,#E65100,#F9A825)",
+w:[
+{en:"dog",t:"[dɒɡ]",ru:"собака",e:"🐕",p:"My ___ loves to play in the park.",pr:"Моя ___ любит играть в парке."},
+{en:"cat",t:"[kæt]",ru:"кошка",e:"🐈",p:"The ___ sleeps on the sofa.",pr:"___ спит на диване."},
+{en:"bird",t:"[bɜːd]",ru:"птица",e:"🐦",p:"The ___ sings in the morning.",pr:"___ поёт по утрам."},
+{en:"rabbit",t:"[ˈræbɪt]",ru:"кролик",e:"🐰",p:"The ___ eats carrots.",pr:"___ ест морковь."},
+{en:"horse",t:"[hɔːs]",ru:"лошадь",e:"🐴",p:"A ___ is a beautiful and fast animal.",pr:"___ — красивое и быстрое животное."},
+{en:"cow",t:"[kaʊ]",ru:"корова",e:"🐄",p:"The ___ gives us milk.",pr:"___ даёт нам молоко."},
+{en:"lion",t:"[ˈlaɪən]",ru:"лев",e:"🦁",p:"The ___ is the king of the jungle.",pr:"___ — король джунглей."},
+{en:"elephant",t:"[ˈɛlɪfənt]",ru:"слон",e:"🐘",p:"The ___ is the largest land animal on Earth.",pr:"___ — самое большое сухопутное животное."},
+{en:"tiger",t:"[ˈtaɪɡə]",ru:"тигр",e:"🐯",p:"The ___ runs very fast.",pr:"___ бегает очень быстро."},
+{en:"bear",t:"[bɛə]",ru:"медведь",e:"🐻",p:"The ___ sleeps all winter.",pr:"___ спит всю зиму."},
+{en:"wolf",t:"[wʊlf]",ru:"волк",e:"🐺",p:"The ___ howls at the moon.",pr:"___ воет на луну."},
+{en:"fox",t:"[fɒks]",ru:"лиса",e:"🦊",p:"The ___ is very clever.",pr:"___ очень умная."},
+{en:"monkey",t:"[ˈmʌŋki]",ru:"обезьяна",e:"🐒",p:"The ___ climbs the tree.",pr:"___ забирается на дерево."},
+{en:"giraffe",t:"[dʒɪˈrɑːf]",ru:"жираф",e:"🦒",p:"The ___ has a very long neck.",pr:"___ — самое высокое животное в мире."},
+{en:"penguin",t:"[ˈpɛŋɡwɪn]",ru:"пингвин",e:"🐧",p:"The ___ lives in Antarctica.",pr:"___ живёт в Антарктиде."},
+{en:"dolphin",t:"[ˈdɒlfɪn]",ru:"дельфин",e:"🐬",p:"The ___ jumps out of the water.",pr:"___ выпрыгивает из воды."},
+{en:"snake",t:"[sneɪk]",ru:"змея",e:"🐍",p:"The ___ slithers through the grass.",pr:"___ ползёт по траве."},
+{en:"frog",t:"[frɒɡ]",ru:"лягушка",e:"🐸",p:"The ___ jumps into the pond.",pr:"___ прыгает в пруд."},
+{en:"butterfly",t:"[ˈbʌtəflaɪ]",ru:"бабочка",e:"🦋",p:"A ___ lands on the flower.",pr:"___ садится на цветок."},
+{en:"eagle",t:"[ˈiːɡl]",ru:"орёл",e:"🦅",p:"The ___ flies high in the sky.",pr:"___ высоко летит в небе."},
+{en:"crocodile",t:"[ˈkrɒkədaɪl]",ru:"крокодил",e:"🐊",p:"The ___ opens its huge mouth.",pr:"___ открывает огромную пасть."},
+{en:"parrot",t:"[ˈpærət]",ru:"попугай",e:"🦜",p:"The ___ can talk like a person.",pr:"___ умеет говорить, как человек."},
+{en:"whale",t:"[weɪl]",ru:"кит",e:"🐳",p:"The blue ___ is the largest animal.",pr:"Синий ___ — самое крупное животное."},
+{en:"zebra",t:"[ˈzɛbrə]",ru:"зебра",e:"🦓",p:"The ___ has black and white stripes.",pr:"___ — полосатое животное из Африки."},
+{en:"tortoise",t:"[ˈtɔːtəs]",ru:"черепаха",e:"🐢",p:"The ___ walks very slowly.",pr:"___ ходит очень медленно."},
+]},
+];
+
+const IDIOMS=[
+{en:"It's raining cats and dogs",ru:"Льёт как из ведра",meaning:"Очень сильный дождь"},
+{en:"Break a leg",ru:"Ни пуха ни пера",meaning:"Пожелание удачи"},
+{en:"Piece of cake",ru:"Проще простого",meaning:"Очень лёгкое дело"},
+{en:"Let the cat out of the bag",ru:"Выболтать секрет",meaning:"Случайно раскрыть тайну"},
+{en:"Hit the books",ru:"Засесть за учёбу",meaning:"Начать усердно учиться"},
+{en:"Under the weather",ru:"Неважно себя чувствовать",meaning:"Быть больным или не в духе"},
+{en:"A blessing in disguise",ru:"Нет худа без добра",meaning:"То, что кажется плохим, оказывается хорошим"},
+{en:"Kill two birds with one stone",ru:"Убить двух зайцев одним выстрелом",meaning:"Решить две задачи одновременно"},
+{en:"Speak of the devil",ru:"Лёгок на помине",meaning:"Появился тот, о ком только что говорили"},
+{en:"Once in a blue moon",ru:"Раз в сто лет",meaning:"Очень редко"},
+{en:"The best of both worlds",ru:"И волки сыты, и овцы целы",meaning:"Получить выгоду с обеих сторон"},
+{en:"When pigs fly",ru:"Когда рак на горе свистнет",meaning:"Никогда — это невозможно"},
+];
+
+// ─── STATE ───
+let S={
+  screen:'home',theme:null,totalStars:0,
+  // learn
+  learnIdx:0,learnAnim:'',
+  // phrases
+  phraseItems:[],phraseIdx:0,phraseSel:null,phraseCorrect:0,phraseOpts:[],phraseWinCalled:false,
+  // quiz
+  quizItems:[],quizIdx:0,quizSel:null,quizCorrect:0,quizStreak:0,quizBest:0,quizWinCalled:false,
+  // idioms
+  idiomIdx:0,idiomFlipped:false,
+  // confetti
+  showConf:false,confTimer:null,
+};
+
+// ─── HELPERS ───
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+function speak(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.82;u.pitch=1.05;window.speechSynthesis.speak(u)}
+
+function tint(hex,pct){try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);const f=1-pct;return`rgb(${Math.round(r*pct+255*f)},${Math.round(g*pct+255*f)},${Math.round(b*pct+255*f)})`}catch{return'rgb(248,246,255)'}}
+
+function playOK(){try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(523,a.currentTime);o.frequency.setValueAtTime(659,a.currentTime+.1);o.frequency.setValueAtTime(784,a.currentTime+.2);g.gain.setValueAtTime(.3,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.55);o.start(a.currentTime);o.stop(a.currentTime+.55)}catch(e){}}
+function playFail(){try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sawtooth';o.frequency.setValueAtTime(220,a.currentTime);o.frequency.setValueAtTime(160,a.currentTime+.18);g.gain.setValueAtTime(.2,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.35);o.start(a.currentTime);o.stop(a.currentTime+.35)}catch(e){}}
+
+// Render emoji or SVG image
+function emojiImg(e,size){
+  if(e&&e.startsWith('data:')){
+    return`<img src="${e}" style="width:${size}px;height:${size}px;object-fit:contain;display:block;margin:0 auto">`;
+  }
+  return`<span style="font-size:${size}px;line-height:1;display:block;text-align:center">${e}</span>`;
+}
+
+// Confetti particles (stable)
+const CONF_PARTS=(()=>{
+  const colors=["#e74c3c","#f39c12","#2ecc71","#3498db","#9b59b6","#e91e63","#00bcd4","#ff5722","#ffeb3b","#ff69b4","#adff2f"];
+  return Array.from({length:90}).map((_,i)=>({
+    left:(Math.random()*100).toFixed(1),
+    w:(Math.random()*13+5).toFixed(1),
+    h:(Math.random()*13+5).toFixed(1),
+    color:colors[i%colors.length],
+    round:Math.random()>.5,
+    dur:(Math.random()*2+1.4).toFixed(2),
+    delay:(Math.random()*.9).toFixed(2),
+    rot:Math.floor(Math.random()*360),
+  }));
+})();
+
+function confettiHTML(){
+  return`<div class="confetti-wrap">${CONF_PARTS.map(p=>`<div class="confetti-p" style="left:${p.left}%;width:${p.w}px;height:${p.h}px;background:${p.color};border-radius:${p.round?'50%':'3px'};animation:confettiFall ${p.dur}s linear ${p.delay}s forwards;transform:rotate(${p.rot}deg)"></div>`).join('')}</div>`;
+}
+
+const FLOATS=[
+  {e:'🌟',s:42,t:'7%',l:'5%',d:'0s',type:'star'},
+  {e:'🎈',s:48,t:'12%',l:'86%',d:'.5s',type:'ball'},
+  {e:'⭐',s:36,t:'62%',l:'90%',d:'.9s',type:'star'},
+  {e:'🎈',s:44,t:'72%',l:'3%',d:'1.4s',type:'ball'},
+  {e:'✨',s:38,t:'40%',l:'92%',d:'2s',type:'star'},
+  {e:'🌟',s:50,t:'85%',l:'48%',d:'1.7s',type:'star'},
+  {e:'🎈',s:40,t:'22%',l:'46%',d:'.3s',type:'ball'},
+];
+
+function floatsHTML(){
+  return FLOATS.map(f=>`<div class="float-el" style="top:${f.t};left:${f.l};font-size:${f.s}px;animation:${f.type==='ball'?'floatBall':'floatStar'} ${f.type==='ball'?'4s':'3.5s'} ease-in-out ${f.d} infinite;filter:drop-shadow(0 0 8px rgba(255,255,255,.7));opacity:.9">${f.e}</div>`).join('');
+}
+
+// ─── SCREENS ───
+
+function renderHome(){
+  const bg='linear-gradient(-45deg,#ff6b6b,#ee0979,#ff6b6b,#23a6d5,#23d5ab,#7c3aed,#f59e0b,#ee0979)';
+  let html=`<div class="screen" style="background:${bg};background-size:600% 600%;animation:bgShift 6s ease infinite;padding:20px 16px 32px;position:relative;overflow:hidden">`;
+  html+=floatsHTML();
+  html+=`<div style="text-align:center;margin-bottom:26px;position:relative;z-index:1">
+    <div style="font-size:60px;margin-bottom:6px;animation:floatStar 3.5s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,255,255,.8))">🇬🇧</div>
+    <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.4rem,7vw,3.6rem);color:white;text-shadow:0 3px 16px rgba(0,0,0,.4);line-height:1.1;margin:0">English Words</h1>
+    <p style="color:white;font-size:1.1rem;margin-top:6px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.35)">250 слов по темам для школьников 🚀</p>
+    ${S.totalStars>0?`<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.22);backdrop-filter:blur(10px);border-radius:50px;padding:8px 22px;margin-top:12px;color:white;font-weight:900;font-size:1.2rem;border:2px solid rgba(255,255,255,.5)">⭐ ${S.totalStars} звёзд</div>`:''}
+  </div>`;
+  html+=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;max-width:720px;margin:0 auto;position:relative;z-index:1">`;
+  T.forEach((t,i)=>{
+    html+=`<button class="theme-card" onclick="selectTheme(${i})" style="background:${t.g};animation-delay:${i*.065}s">
+      <span style="font-size:3rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))">${t.emoji}</span>
+      <span style="font-size:1.1rem">${t.name}</span>
+      <span style="font-size:.9rem;color:rgba(255,255,255,.75);font-weight:600">(${t.nameEn})</span>
+      <span style="background:rgba(255,255,255,.22);border-radius:12px;padding:3px 12px;font-size:.78rem;margin-top:2px">25 слов</span>
+    </button>`;
+  });
+  html+=`</div></div>`;
+  return html;
+}
+
+function renderModes(){
+  const t=S.theme;
+  const t1=tint(t.color,.06), t2=tint(t.color,.11);
+  const modes=[
+    {id:'learn',emoji:'📖',name:'Учим слова',desc:'Карточки с произношением, транскрипцией и переводом',g:'linear-gradient(135deg,#1a9e54,#27ae60,#2ecc71)',c:'#27ae60'},
+    {id:'phrases',emoji:'💬',name:'Фразы',desc:'Вставь пропущенное слово — выбери из 3 вариантов',g:'linear-gradient(135deg,#1565c0,#2980b9,#3498db)',c:'#2980b9'},
+    {id:'quiz',emoji:'⚡',name:'Быстрый тест',desc:'Русское слово → выбери правильный английский перевод',g:'linear-gradient(135deg,#8b0000,#c0392b,#e74c3c)',c:'#c0392b'},
+    {id:'idioms',emoji:'🎭',name:'Идиомы',desc:'Английские идиомы с переводом и объяснением',g:'linear-gradient(135deg,#4a0080,#8e44ad,#9b59b6)',c:'#8e44ad'},
+  ];
+  let html=`<div class="screen" style="background:${t.g};padding:20px 16px 32px">
+    <button class="btn-back" onclick="go('home')">← Темы</button>
+    <div style="text-align:center;margin:22px 0 28px">
+      <div style="font-size:56px;animation:floatStar 3.5s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,255,255,.6))">${t.emoji}</div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:2.2rem;color:white;text-shadow:0 2px 12px rgba(0,0,0,.3);margin:10px 0 4px">${t.name} <span style="font-size:1.4rem;opacity:.75">(${t.nameEn})</span></h2>
+      <p style="color:rgba(255,255,255,.9);font-weight:700;font-size:1.05rem">Выбери режим</p>
+    </div>
+    <div style="display:grid;gap:14px;max-width:520px;margin:0 auto">`;
+  modes.forEach((m,i)=>{
+    html+=`<button class="mode-card" onclick="selectMode('${m.id}')" style="animation-delay:${i*.09}s">
+      <div style="width:74px;height:74px;background:${m.g};border-radius:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 24px ${m.c}88;border:2.5px solid rgba(255,255,255,.5);position:relative;overflow:hidden">
+        <span style="font-size:2.5rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));position:relative;z-index:1">${m.emoji}</span>
+      </div>
+      <div>
+        <div style="font-weight:900;font-size:1.2rem;color:#1a1a2e">${m.name}</div>
+        <div style="font-size:.9rem;color:#555;margin-top:3px;line-height:1.4">${m.desc}</div>
+      </div>
+    </button>`;
+  });
+  html+=`</div></div>`;
+  return html;
+}
+
+function renderLearn(){
+  const t=S.theme, w=t.w[S.learnIdx];
+  const t1=tint(t.color,.06), t2=tint(t.color,.11);
+  const pct=((S.learnIdx+1)/t.w.length*100).toFixed(1);
+  let html=`<div class="screen" style="background:${t.g};padding:20px 16px" id="learn-screen">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <button class="btn-back" onclick="go('modes')">← Назад</button>
+      <span style="color:white;font-weight:800;font-size:1rem;background:rgba(255,255,255,.22);padding:7px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.4)">${S.learnIdx+1} / ${t.w.length}</span>
+    </div>
+    <div style="max-width:440px;margin:24px auto;display:flex;flex-direction:column;align-items:center;gap:20px">
+      <div class="prog-bar" style="width:100%"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="word-card" id="word-card" style="--t1:${t1};--t2:${t2};width:100%;${S.learnAnim?`animation:${S.learnAnim} .22s ease`:''}">
+        <div style="margin-bottom:14px">${emojiImg(w.e,82)}</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:2.8rem;color:#1a1a2e;letter-spacing:.5px;line-height:1.1">${w.en}</div>
+        <div style="font-size:1.2rem;color:#666;margin-top:8px;font-style:italic;font-weight:700;letter-spacing:.3px">${w.t}</div>
+        <div style="width:60%;height:2px;background:linear-gradient(90deg,transparent,${t.color}55,transparent);margin:18px 0"></div>
+        <div style="font-family:'Fredoka One',cursive;font-size:2.4rem;color:#1a1a2e;letter-spacing:.5px;line-height:1.2;text-align:center">${w.ru}</div>
+        <button class="listen-btn" onclick="speak('${w.en.replace(/'/g,"\\'")}');event.stopPropagation()" style="margin-top:22px;background:${t.g}">
+          <span style="font-size:1.3rem">🔊</span> Послушать
+        </button>
+      </div>
+      <div style="display:flex;gap:16px">
+        <button class="nav-btn" onclick="learnNav(-1)">◀</button>
+        <button class="nav-btn" onclick="learnNav(1)">▶</button>
+      </div>
+    </div>
+  </div>`;
+  return html;
+}
+
+function renderPhrases(){
+  const t=S.theme;
+  if(S.phraseIdx>=S.phraseItems.length){
+    const s=Math.round((S.phraseCorrect/S.phraseItems.length)*5);
+    return renderResult(s);
+  }
+  const w=S.phraseItems[S.phraseIdx];
+  const t1=tint(t.color,.06), t2=tint(t.color,.11);
+  const pct=((S.phraseIdx+1)/S.phraseItems.length*100).toFixed(1);
+  const parts=w.p.split('___');
+  let html=`<div class="screen" style="background:${t.g};padding:20px 16px">
+    ${S.showConf?confettiHTML():''}
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <button class="btn-back" onclick="go('modes')">← Назад</button>
+      <span style="color:white;font-weight:800;background:rgba(255,255,255,.22);padding:7px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.4)">${S.phraseIdx+1}/${S.phraseItems.length}</span>
+    </div>
+    <div style="max-width:480px;margin:26px auto">
+      <div class="prog-bar" style="margin-bottom:22px"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div id="phrase-card" style="background:linear-gradient(160deg,#fff,${t1},${t2});border-radius:26px;padding:28px 26px;box-shadow:0 16px 50px rgba(0,0,0,.22);text-align:center;border:2px solid rgba(255,255,255,.5)">
+        <div style="margin-bottom:10px">${emojiImg(w.e,52)}</div>
+        <p style="font-size:1.2rem;color:#1a1a2e;font-weight:800;line-height:1.7">
+          ${parts[0]}<span style="display:inline-block;width:88px;height:3px;background:${t.color};margin:0 5px 4px;border-radius:3px;opacity:.7;vertical-align:middle"></span>${parts[1]||''}
+        </p>
+      </div>
+      <div style="display:grid;gap:13px;margin-top:18px">`;
+  S.phraseOpts.forEach((o,i)=>{
+    const isCorrect=S.phraseSel&&o.en===w.en;
+    const isWrong=S.phraseSel===o.en&&o.en!==w.en;
+    const cls=isCorrect?'correct':isWrong?'wrong':'';
+    const bg=isCorrect?'#27ae60':isWrong?'#e74c3c':`linear-gradient(160deg,#fff,${t2})`;
+    const col=isCorrect||isWrong?'white':'#1a1a2e';
+    html+=`<button class="opt-btn ${cls}" onclick="pickPhrase(${i})" ${S.phraseSel?'disabled':''} style="background:${bg};color:${col};border:${isCorrect||isWrong?'none':`2px solid rgba(255,255,255,.75)`}">
+      ${o.en} <span style="opacity:.45;font-size:.9rem;font-weight:600">${o.t}</span>
+    </button>`;
+  });
+  html+=`</div></div></div>`;
+  return html;
+}
+
+function renderQuiz(){
+  const t=S.theme;
+  if(S.quizIdx>=S.quizItems.length){
+    const s=Math.round((S.quizCorrect/S.quizItems.length)*5);
+    return renderResult(s,`Лучшая серия: ${S.quizBest} 🔥`);
+  }
+  const w=S.quizItems[S.quizIdx];
+  const t1=tint(t.color,.06), t2=tint(t.color,.11);
+  const pct=((S.quizIdx+1)/S.quizItems.length*100).toFixed(1);
+  const progColor=S.quizStreak>2?'#FFD700':'white';
+  let html=`<div class="screen" style="background:${t.g};padding:20px 16px">
+    ${S.showConf?confettiHTML():''}
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <button class="btn-back" onclick="go('modes')">← Назад</button>
+      <div style="display:flex;gap:10px;align-items:center">
+        ${S.quizStreak>1?`<span style="color:#FFD700;font-weight:900;font-size:1.2rem;animation:pulse 1s ease infinite;text-shadow:0 0 10px rgba(255,200,0,.6)">🔥${S.quizStreak}</span>`:''}
+        <span style="color:white;font-weight:800;background:rgba(255,255,255,.22);padding:7px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.4)">${S.quizIdx+1}/${S.quizItems.length}</span>
+      </div>
+    </div>
+    <div style="max-width:480px;margin:26px auto">
+      <div class="prog-bar" style="margin-bottom:22px"><div class="prog-fill" style="width:${pct}%;background:${progColor};${S.quizStreak>2?'box-shadow:0 0 12px rgba(255,200,0,.7)':''}"></div></div>
+      <div id="quiz-card" style="background:linear-gradient(160deg,#fff,${t1},${t2});border-radius:26px;padding:32px 26px;box-shadow:0 16px 50px rgba(0,0,0,.22);text-align:center;border:2px solid rgba(255,255,255,.5)">
+        <div style="margin-bottom:12px">${emojiImg(w.e,72)}</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:2.2rem;color:#1a1a2e">${w.ru}</div>
+        <p style="font-size:1rem;color:#888;font-weight:700;margin-top:10px">Выбери правильный английский перевод:</p>
+      </div>
+      <div style="display:grid;gap:13px;margin-top:18px">`;
+  S.quizOpts.forEach((o,i)=>{
+    const isCorrect=S.quizSel&&o.en===w.en;
+    const isWrong=S.quizSel===o.en&&o.en!==w.en;
+    const cls=isCorrect?'correct':isWrong?'wrong':'';
+    const bg=isCorrect?'#27ae60':isWrong?'#e74c3c':`linear-gradient(160deg,#fff,${t2})`;
+    const col=isCorrect||isWrong?'white':'#1a1a2e';
+    html+=`<button class="opt-btn ${cls}" onclick="pickQuiz(${i})" ${S.quizSel?'disabled':''} style="background:${bg};color:${col};border:${isCorrect||isWrong?'none':`2px solid rgba(255,255,255,.75)`}">
+      ${o.en} <span style="opacity:.4;font-size:.9rem">${o.t}</span>
+    </button>`;
+  });
+  html+=`</div></div></div>`;
+  return html;
+}
+
+function renderResult(stars, extra=''){
+  const t=S.theme;
+  const correct = S.screen==='phrases'?S.phraseCorrect:S.quizCorrect;
+  const total = S.screen==='phrases'?S.phraseItems.length:S.quizItems.length;
+  return`<div class="result-screen" style="background:${t.g}">
+    ${confettiHTML()}
+    <div style="font-size:88px;margin-bottom:16px;animation:floatStar 3s ease-in-out infinite">🎉</div>
+    <h2 style="font-family:'Fredoka One',cursive;font-size:2.4rem;text-shadow:0 2px 10px rgba(0,0,0,.25)">Отлично!</h2>
+    <p style="font-size:1.3rem;margin-top:10px;font-weight:700">${correct} из ${total} правильно</p>
+    ${extra?`<p style="font-size:1.1rem;margin-top:6px;opacity:.9">${extra}</p>`:''}
+    <div style="font-size:2.2rem;margin-top:10px;letter-spacing:4px">${'⭐'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+    <button class="btn-back" onclick="go('modes')" style="margin-top:28px;font-size:1.15rem;padding:14px 36px;box-shadow:0 8px 24px rgba(0,0,0,.2)">← Меню</button>
+  </div>`;
+}
+
+function renderIdioms(){
+  const id=IDIOMS[S.idiomIdx];
+  const bg='linear-gradient(-45deg,#7c3aed,#db2777,#f59e0b,#10b981,#7c3aed)';
+  let html=`<div class="screen" style="background:${bg};background-size:600% 600%;animation:bgShift 7s ease infinite;padding:20px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <button class="btn-back" onclick="go('modes')">← Назад</button>
+      <span style="color:white;font-weight:800;background:rgba(255,255,255,.22);padding:7px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.4)">${S.idiomIdx+1}/${IDIOMS.length}</span>
+    </div>
+    <div style="max-width:480px;margin:28px auto;text-align:center">
+      <h2 style="font-family:'Fredoka One',cursive;font-size:2rem;color:white;text-shadow:0 2px 12px rgba(0,0,0,.3);margin-bottom:22px">🎭 English Idioms</h2>
+      <div style="cursor:pointer;perspective:900px" onclick="S.idiomFlipped=!S.idiomFlipped;render()">
+        <div style="width:100%;min-height:320px;position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1);transform:${S.idiomFlipped?'rotateY(180deg)':'rotateY(0)'}">
+          <div style="position:absolute;top:0;left:0;width:100%;min-height:320px;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:rgba(255,255,255,.97);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;border:2px solid rgba(255,255,255,.5)">
+            <div style="font-size:52px;margin-bottom:14px">🇬🇧</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:#1a1a2e;line-height:1.5;text-align:center">${id.en}</div>
+            <button onclick="speak('${id.en.replace(/'/g,"\\'")}');event.stopPropagation()" style="margin-top:18px;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:50px;padding:12px 28px;color:white;font-weight:800;cursor:pointer;font-size:1rem;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(124,58,237,.35)">🔊 Послушать</button>
+            <div style="margin-top:14px;font-size:.9rem;color:#bbb;font-weight:600">Нажми для перевода ➜</div>
+          </div>
+          <div style="position:absolute;top:0;left:0;width:100%;min-height:320px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#7c3aed,#db2777);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;color:white;border:2px solid rgba(255,255,255,.25)">
+            <div style="font-size:52px;margin-bottom:14px">🇷🇺</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;text-align:center;line-height:1.4">${id.ru}</div>
+            <div style="font-size:1rem;margin-top:16px;opacity:.9;background:rgba(255,255,255,.15);padding:12px 20px;border-radius:16px;border:1px solid rgba(255,255,255,.2);line-height:1.5">💡 ${id.meaning}</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:24px">
+        <button class="nav-btn" onclick="idiomNav(-1)">◀</button>
+        <button class="nav-btn" onclick="idiomNav(1)">▶</button>
+      </div>
+    </div>
+  </div>`;
+  return html;
+}
+
+// ─── ACTIONS ───
+function go(screen){S.screen=screen;S.showConf=false;render()}
+
+function selectTheme(i){S.theme=T[i];S.screen='modes';render()}
+
+function selectMode(mode){
+  S.screen=mode;S.showConf=false;
+  if(mode==='learn'){S.learnIdx=0;S.learnAnim=''}
+  if(mode==='phrases'){
+    S.phraseItems=shuffle(S.theme.w);S.phraseIdx=0;S.phraseSel=null;
+    S.phraseCorrect=0;S.phraseWinCalled=false;
+    S.phraseOpts=genOpts(S.phraseItems[0]);
+  }
+  if(mode==='quiz'){
+    S.quizItems=shuffle(S.theme.w);S.quizIdx=0;S.quizSel=null;
+    S.quizCorrect=0;S.quizStreak=0;S.quizBest=0;S.quizWinCalled=false;
+    S.quizOpts=genOpts(S.quizItems[0]);
+  }
+  if(mode==='idioms'){S.idiomIdx=0;S.idiomFlipped=false}
+  render();
+}
+
+function genOpts(w){
+  const wrong=shuffle(S.theme.w.filter(x=>x.en!==w.en)).slice(0,2);
+  return shuffle([w,...wrong]);
+}
+
+function learnNav(d){
+  const n=S.learnIdx+d;
+  const len=S.theme.w.length;
+  S.learnAnim=d>0?'slideInR':'slideInL';
+  S.learnIdx=(n+len)%len;
+  render();
+  setTimeout(()=>{S.learnAnim='';const c=document.getElementById('word-card');if(c)c.style.animation=''},400);
+}
+
+function pickPhrase(i){
+  if(S.phraseSel)return;
+  const w=S.phraseItems[S.phraseIdx];
+  const o=S.phraseOpts[i];
+  S.phraseSel=o.en;
+  const card=document.getElementById('phrase-card');
+  if(o.en===w.en){
+    playOK();S.phraseCorrect++;S.showConf=true;
+    if(card)card.style.animation='correctPop .45s ease';
+    setTimeout(()=>{S.showConf=false},2000);
+    setTimeout(()=>{
+      S.phraseIdx++;S.phraseSel=null;
+      if(S.phraseIdx<S.phraseItems.length)S.phraseOpts=genOpts(S.phraseItems[S.phraseIdx]);
+      else if(!S.phraseWinCalled){
+        S.phraseWinCalled=true;
+        S.totalStars+=Math.round((S.phraseCorrect/S.phraseItems.length)*5);
+      }
+      render();
+    },1500);
+  }else{
+    playFail();
+    if(card)card.style.animation='shake .45s ease';
+    setTimeout(()=>{S.phraseSel=null;render()},900);
+    return;
+  }
+  render();
+}
+
+function pickQuiz(i){
+  if(S.quizSel)return;
+  const w=S.quizItems[S.quizIdx];
+  const o=S.quizOpts[i];
+  S.quizSel=o.en;
+  const card=document.getElementById('quiz-card');
+  if(o.en===w.en){
+    playOK();S.quizCorrect++;S.quizStreak++;
+    if(S.quizStreak>S.quizBest)S.quizBest=S.quizStreak;
+    S.showConf=true;
+    if(card)card.style.animation='correctPop .45s ease';
+    setTimeout(()=>{S.showConf=false},2000);
+    setTimeout(()=>{
+      S.quizIdx++;S.quizSel=null;
+      if(S.quizIdx<S.quizItems.length)S.quizOpts=genOpts(S.quizItems[S.quizIdx]);
+      else if(!S.quizWinCalled){
+        S.quizWinCalled=true;
+        S.totalStars+=Math.round((S.quizCorrect/S.quizItems.length)*5);
+      }
+      render();
+    },1300);
+  }else{
+    playFail();S.quizStreak=0;
+    if(card)card.style.animation='shake .45s ease';
+    setTimeout(()=>{S.quizSel=null;render()},900);
+    return;
+  }
+  render();
+}
+
+function idiomNav(d){
+  S.idiomIdx=(S.idiomIdx+d+IDIOMS.length)%IDIOMS.length;
+  S.idiomFlipped=false;
+  render();
+}
+
+// ─── MAIN RENDER ───
+function render(){
+  const app=document.getElementById('app');
+  switch(S.screen){
+    case 'home':    app.innerHTML=renderHome();break;
+    case 'modes':   app.innerHTML=renderModes();break;
+    case 'learn':   app.innerHTML=renderLearn();break;
+    case 'phrases': app.innerHTML=renderPhrases();break;
+    case 'quiz':    app.innerHTML=renderQuiz();break;
+    case 'idioms':  app.innerHTML=renderIdioms();break;
+    default: app.innerHTML=renderHome();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

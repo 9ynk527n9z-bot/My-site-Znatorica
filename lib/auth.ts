@@ -2,15 +2,22 @@ import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { db } from './db';
 
+// Небезопасный дефолт JWT_SECRET позволил бы подделывать токены — падаем сразу, а не тихо.
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET не задан в переменных окружения. Задайте случайную строку в .env.');
+}
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export function generateToken(userId: string) {
-  return jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', {
+  return jwt.sign({ userId }, JWT_SECRET, {
     expiresIn: '30d',
   });
 }
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET || 'secret') as {
+    return jwt.verify(token, JWT_SECRET) as {
       userId: string;
     };
   } catch {

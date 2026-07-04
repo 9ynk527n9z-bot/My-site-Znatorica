@@ -1,9 +1,82 @@
-export const metadata = {
-  title: 'Подписка Знаторика — 299 ₽ в месяц',
-  description: 'Получи полный доступ к тренажёрам, генераторам и материалам для учителей',
-};
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import PaymentMethods from '@/components/PaymentMethods';
 
 export default function SubscriptionPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('bank_card');
+
+  useEffect(() => {
+    // Check if user is already subscribed
+    const checkSubscription = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const response = await fetch('/api/payments/status', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.subscription?.isActive) {
+            setIsSubscribed(true);
+            setSubscriptionEndDate(data.subscription.endDate);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    checkSubscription();
+  }, []);
+
+  const handleSubscribe = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await fetch('/api/payments/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          returnUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/podpiska`,
+          paymentMethod: selectedPaymentMethod,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create payment');
+      }
+
+      const data = await response.json();
+
+      // Redirect to YuKassa payment page
+      if (data.confirmationUrl) {
+        window.location.href = data.confirmationUrl;
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка при создании платежа');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black py-20 px-6">
       <div className="max-w-4xl mx-auto">
@@ -50,13 +123,35 @@ export default function SubscriptionPage() {
             </li>
           </ul>
 
-          <button className="btn-primary w-full text-lg mb-4">
-            Оформить подписку (демо)
-          </button>
+          {isSubscribed ? (
+            <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4 text-center">
+              <p className="text-green-400 font-bold mb-1">✅ Подписка активна</p>
+              <p className="text-green-400 text-sm">
+                До {new Date(subscriptionEndDate || '').toLocaleDateString('ru-RU')}
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="mb-8 pb-8 border-b border-[#2D2350]">
+                <PaymentMethods
+                  onSelect={setSelectedPaymentMethod}
+                  loading={loading}
+                />
+              </div>
 
-          <p className="text-center text-sm text-gray-500">
-            Автопродление. Отмену можно оформить в любой момент.
-          </p>
+              <button
+                onClick={handleSubscribe}
+                disabled={loading}
+                className="btn-primary w-full text-lg mb-4 disabled:opacity-50"
+              >
+                {loading ? 'Обработка...' : 'Оформить подписку'}
+              </button>
+
+              <p className="text-center text-sm text-gray-500">
+                Автопродление. Отмену можно оформить в личном кабинете в любой момент.
+              </p>
+            </>
+          )}
         </div>
 
         {/* FAQ */}

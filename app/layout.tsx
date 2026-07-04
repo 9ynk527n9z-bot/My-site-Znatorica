@@ -1,13 +1,50 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Знаторика — Учись. Тренируйся. Сдавай.',
-  description: 'Образовательная платформа для детей 4–11 лет. Интерактивные тренажёры, генераторы заданий, плакаты.',
-  icons: {
-    icon: '/favicon.ico',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Учись. Тренируйся. Сдавай.`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    'обучение детей',
+    'тренажёры для детей',
+    'математика для детей',
+    'подготовка к школе',
+    'начальная школа',
+    'генератор примеров',
+    'ВПР',
+    'занятия для дошкольников',
+  ],
+  authors: [{ name: SITE_NAME }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'ru_RU',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Учись. Тренируйся. Сдавай.`,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} — Учись. Тренируйся. Сдавай.`,
+    description: SITE_DESCRIPTION,
   },
 };
 
@@ -20,9 +57,14 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Знаторика" />
-        <meta property="og:description" content="Образовательная платформа для детей 4–11 лет" />
-        <meta property="og:image" content="/og-image.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
       </head>
       <body className="bg-black text-white">
         <Navbar />
