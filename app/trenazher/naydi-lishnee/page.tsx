@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
-import { trackUsage } from '@/lib/track';
 import { SHAPES, COLORS, SIZES, randItem, type ShapeKind } from '@/lib/shapes';
 
 type Mode = 'shape' | 'color' | 'size';
@@ -71,7 +70,6 @@ export default function NaydiLishneeTrainerPage() {
     setItems(makeRound(m));
     setFeedback(null);
     setPickedId(null);
-    trackUsage(`trainer:naydi-lishnee-${m}`);
   }
 
   function nextRound() {
@@ -96,8 +94,6 @@ export default function NaydiLishneeTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:naydi-lishnee" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -105,6 +101,7 @@ export default function NaydiLishneeTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">🧩 Найди лишнее</h1>
       </div>
 
+      <TrainerGate type="trainer:naydi-lishnee">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {/* Настройки */}
         <div className="card mb-8">
@@ -205,6 +202,7 @@ export default function NaydiLishneeTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

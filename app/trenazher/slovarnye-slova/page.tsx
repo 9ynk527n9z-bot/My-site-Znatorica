@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { VOCAB_WORDS, type VocabGrade, type VocabWord } from '@/lib/vocab-words';
-import TrackPageView from '@/components/TrackPageView';
-import { trackUsage } from '@/lib/track';
+import TrainerGate from '@/components/TrainerGate';
 
 type Mode = 'practice' | 'timed';
 
@@ -126,7 +125,6 @@ export default function SlovarnyeSlovaTrainerPage() {
     setOptions(makeOptions(w.word[w.blanks[0]]));
     setPhase('answer');
     setLastResult(null);
-    trackUsage(`trainer:slovarnye-slova-${m}`);
   }
 
   // Таймер для режима «на время»
@@ -224,8 +222,6 @@ export default function SlovarnyeSlovaTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:slovarnye-slova" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -233,6 +229,7 @@ export default function SlovarnyeSlovaTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">📖 Словарные слова — тренажёр</h1>
       </div>
 
+      <TrainerGate type="trainer:slovarnye-slova">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {/* Настройки */}
         <div className="card mb-8">
@@ -344,6 +341,7 @@ export default function SlovarnyeSlovaTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

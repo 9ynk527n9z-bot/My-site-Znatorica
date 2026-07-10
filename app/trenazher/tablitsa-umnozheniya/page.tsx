@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
-import { trackUsage } from '@/lib/track';
+import TrainerGate from '@/components/TrainerGate';
 
 type Mode = 'table' | 'practice' | 'timed' | 'inverse';
 
@@ -50,7 +49,6 @@ export default function MultiplicationTablePage() {
     if (timeLeft <= 0) {
       setTimerRunning(false);
       setTimedFinished(true);
-      trackUsage('trainer:tablitsa-umnozheniya-timed');
       return;
     }
     const t = setTimeout(() => setTimeLeft((s) => s - 1), 1000);
@@ -107,8 +105,6 @@ export default function MultiplicationTablePage() {
 
   return (
     <div className="bg-black min-h-screen">
-      <TrackPageView type="trainer:tablitsa-umnozheniya" />
-
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -116,6 +112,7 @@ export default function MultiplicationTablePage() {
         <h1 className="text-2xl font-bold mt-2">✖️ Таблица умножения</h1>
       </div>
 
+      <TrainerGate type="trainer:tablitsa-umnozheniya">
       <div className="max-w-4xl mx-auto py-10 px-6">
         <div className="flex gap-3 mb-8 flex-wrap">
           <button
@@ -265,6 +262,7 @@ export default function MultiplicationTablePage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

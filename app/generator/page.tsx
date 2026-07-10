@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Генераторы заданий — примеры, прописи, кроссворды',
-  description: 'Создавайте примеры по математике, прописи, кроссворды и другие развивающие задания. 5 бесплатных генераций в день.',
+  description: 'Создавайте примеры по математике, прописи, кроссворды и другие развивающие задания. 3 бесплатных генерации в день.',
   alternates: { canonical: '/generator' },
 };
 
@@ -27,7 +27,7 @@ export default function GeneratorPage() {
     <div className="min-h-screen py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-4">Генераторы заданий</h1>
-        <p className="text-center text-white/75 mb-12">5 раз бесплатно в день. Без лимита по подписке.</p>
+        <p className="text-center text-white/75 mb-12">3 раза бесплатно в день. Без лимита по подписке.</p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {GENERATORS.map((g) => (

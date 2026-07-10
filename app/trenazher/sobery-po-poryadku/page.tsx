@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
-import { trackUsage } from '@/lib/track';
 import { SHAPES, COLORS, ORDER_SIZES, shuffle, randItem, type ShapeKind } from '@/lib/shapes';
 
 const ROUNDS_PER_SESSION = 8;
@@ -51,7 +50,6 @@ export default function SoberyPoPoryadkuTrainerPage() {
     setRound(1);
     setScore({ correct: 0, total: 0 });
     setupRound();
-    trackUsage('trainer:sobery-po-poryadku');
   }
 
   // Порядок, в котором элементы должны быть собраны (по возрастанию/убыванию размера)
@@ -89,8 +87,6 @@ export default function SoberyPoPoryadkuTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:sobery-po-poryadku" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -98,6 +94,7 @@ export default function SoberyPoPoryadkuTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">📏 Собери по порядку</h1>
       </div>
 
+      <TrainerGate type="trainer:sobery-po-poryadku">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {!started && (
           <div className="card text-center">
@@ -158,6 +155,7 @@ export default function SoberyPoPoryadkuTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

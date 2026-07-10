@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
-import { trackUsage } from '@/lib/track';
 import { SHAPES, COLORS, shuffle, type ShapeKind } from '@/lib/shapes';
 
 const PAIRS_COUNT = 6; // 6 пар = 12 карточек
@@ -46,7 +45,6 @@ export default function NaydiParuTrainerPage() {
     setMoves(0);
     setMatchedCount(0);
     setStarted(true);
-    trackUsage('trainer:naydi-paru');
   }
 
   function handleFlip(card: Card) {
@@ -81,8 +79,6 @@ export default function NaydiParuTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:naydi-paru" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -90,6 +86,7 @@ export default function NaydiParuTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">🃏 Найди пару</h1>
       </div>
 
+      <TrainerGate type="trainer:naydi-paru">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {!started && (
           <div className="card text-center">
@@ -155,6 +152,7 @@ export default function NaydiParuTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 
 export const metadata = {
   title: 'Неправильные глаголы английского — тренажёр',
@@ -10,7 +10,6 @@ export const metadata = {
 export default function IrregularVerbsTrainerPage() {
   return (
     <div className="bg-black min-h-screen">
-      <TrackPageView type="trainer:irregular-verbs" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">
@@ -20,14 +19,16 @@ export default function IrregularVerbsTrainerPage() {
         </div>
       </div>
 
-      <div className="w-full h-[calc(100vh-100px)]">
-        <iframe
-          src="/irregular-verbs.html"
-          className="w-full h-full border-none"
-          title="Неправильные глаголы"
-          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-        />
-      </div>
+      <TrainerGate type="trainer:irregular-verbs">
+        <div className="w-full h-[calc(100vh-100px)]">
+          <iframe
+            src="/irregular-verbs.html"
+            className="w-full h-full border-none"
+            title="Неправильные глаголы"
+            sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+          />
+        </div>
+      </TrainerGate>
     </div>
   );
 }

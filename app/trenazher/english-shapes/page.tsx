@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
-import { trackUsage } from '@/lib/track';
 import { SHAPES, COLORS, randItem, shuffle, type ShapeKind } from '@/lib/shapes';
 
 const SHAPE_NAMES: Record<ShapeKind, string> = {
@@ -46,7 +45,6 @@ export default function EnglishShapesTrainerPage() {
     setCurrent(makeRound());
     setPickedShape(null);
     setFeedback(null);
-    trackUsage('trainer:english-shapes');
   }
 
   function nextRound() {
@@ -71,8 +69,6 @@ export default function EnglishShapesTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:english-shapes" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -80,6 +76,7 @@ export default function EnglishShapesTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">🇬🇧 Формы на английском</h1>
       </div>
 
+      <TrainerGate type="trainer:english-shapes">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {!started && (
           <div className="card text-center">
@@ -158,6 +155,7 @@ export default function EnglishShapesTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }

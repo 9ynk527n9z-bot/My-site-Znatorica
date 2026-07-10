@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import TrackPageView from '@/components/TrackPageView';
+import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
-import { trackUsage } from '@/lib/track';
 import { SHAPES, COLORS, SIZES, shuffle, randItem, type ShapeKind } from '@/lib/shapes';
 
 const ITEMS_COUNT = 5;
@@ -76,7 +75,6 @@ export default function ChtoIzmenilosTrainerPage() {
     setRound(1);
     setScore({ correct: 0, total: 0 });
     setupRound();
-    trackUsage('trainer:chto-izmenilos');
   }
 
   // Обратный отсчёт запоминания
@@ -112,8 +110,6 @@ export default function ChtoIzmenilosTrainerPage() {
 
   return (
     <div className="min-h-screen">
-      <TrackPageView type="trainer:chto-izmenilos" />
-
       <div className="border-b border-white/15 px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -121,6 +117,7 @@ export default function ChtoIzmenilosTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">👀 Что изменилось?</h1>
       </div>
 
+      <TrainerGate type="trainer:chto-izmenilos">
       <div className="max-w-2xl mx-auto py-8 px-6">
         {!started && (
           <div className="card text-center">
@@ -196,6 +193,7 @@ export default function ChtoIzmenilosTrainerPage() {
           </div>
         )}
       </div>
+      </TrainerGate>
     </div>
   );
 }
