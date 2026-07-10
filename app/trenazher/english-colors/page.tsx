@@ -25,7 +25,7 @@ export default function EnglishColorsTrainerPage() {
           src="/colors-app.html"
           className="w-full h-full border-none"
           title="Цвета на английском"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

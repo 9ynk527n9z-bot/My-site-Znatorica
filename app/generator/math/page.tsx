@@ -25,7 +25,7 @@ export default function MathGeneratorPage() {
           src="/math-generator.html"
           className="w-full h-full border-none"
           title="Генератор примеров"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

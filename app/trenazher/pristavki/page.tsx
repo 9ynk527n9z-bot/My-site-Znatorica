@@ -25,7 +25,7 @@ export default function PristavkiTrainerPage() {
           src="/pristavki.html"
           className="w-full h-full border-none"
           title="Приставки"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

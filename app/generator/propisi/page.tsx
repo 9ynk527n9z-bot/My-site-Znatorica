@@ -25,7 +25,7 @@ export default function PropisiGeneratorPage() {
           src="/propisi.html"
           className="w-full h-full border-none"
           title="Генератор прописей"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

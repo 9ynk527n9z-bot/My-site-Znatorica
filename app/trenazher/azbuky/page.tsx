@@ -25,7 +25,7 @@ export default function AzbukyTrainerPage() {
           src="/alphabet-app.html"
           className="w-full h-full border-none"
           title="Азбука"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

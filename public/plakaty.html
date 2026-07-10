@@ -76,6 +76,22 @@ a{color:inherit;text-decoration:none;}
 /* Скрытые */
 .section.hidden{display:none;}
 
+/* Кнопка скачивания/печати в модалке */
+.modal-actions{margin-top:14px;}
+.modal-dl-btn{display:inline-block;background:var(--orange);color:#fff;font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;border:none;cursor:pointer;}
+.modal-dl-btn:hover{opacity:.92;}
+.modal-locked{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:12px;padding:16px 20px;font-size:14px;color:var(--muted);}
+.modal-locked a{color:var(--orange);font-weight:700;text-decoration:underline;}
+.modal-locked-title{color:#fff;font-weight:800;font-size:15px;margin-bottom:4px;}
+
+@media print{
+  body *{visibility:hidden;}
+  .modal, .modal *{visibility:visible;}
+  .modal{position:absolute;inset:0;background:#fff;padding:0;}
+  .modal-close, .modal-info{display:none !important;}
+  .modal-inner{max-width:100%;}
+}
+
 @media(max-width:600px){
   .grid{grid-template-columns:1fr 1fr;gap:12px;}
   .plakat-card-body{padding:12px;}
@@ -296,15 +312,53 @@ a{color:inherit;text-decoration:none;}
     <div class="modal-info">
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-sub" id="modal-sub"></div>
+      <div class="modal-actions" id="modal-actions"></div>
     </div>
   </div>
 </div>
 
 <script>
+let isSubscribed = false;
+(function checkSubscription(){
+  const token = localStorage.getItem('token');
+  if (!token) return;
+  fetch('/api/payments/status', { headers: { Authorization: 'Bearer ' + token } })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => { if (data && data.subscription && data.subscription.isActive) isSubscribed = true; })
+    .catch(() => {});
+})();
+
+function renderModalActions(src, title){
+  const el = document.getElementById('modal-actions');
+  if (isSubscribed){
+    el.innerHTML = '';
+    const btn = document.createElement('button');
+    btn.className = 'modal-dl-btn';
+    btn.textContent = '⬇️ Скачать / распечатать';
+    btn.onclick = function(){
+      const a = document.createElement('a');
+      a.href = src;
+      a.download = title.replace(/\s+/g, '-') + '.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    };
+    el.appendChild(btn);
+  } else {
+    el.innerHTML =
+      '<div class="modal-locked">' +
+        '<div class="modal-locked-title">🔒 Скачивание и печать — по подписке</div>' +
+        'Смотреть плакаты можно бесплатно. Чтобы скачать или распечатать в хорошем качестве, ' +
+        '<a href="/podpiska" target="_top">оформите подписку</a>.' +
+      '</div>';
+  }
+}
+
 function openModal(src, title, sub){
   document.getElementById('modal-img').src = src;
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-sub').textContent = sub;
+  renderModalActions(src, title);
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }

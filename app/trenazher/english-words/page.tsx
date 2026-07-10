@@ -25,7 +25,7 @@ export default function EnglishWordsTrainerPage() {
           src="/english-words.html"
           className="w-full h-full border-none"
           title="Английские слова"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>

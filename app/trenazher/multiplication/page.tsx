@@ -25,7 +25,7 @@ export default function MultiplicationTrainerPage() {
           src="/multiplication-app.html"
           className="w-full h-full border-none"
           title="Умножение"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
     </div>
