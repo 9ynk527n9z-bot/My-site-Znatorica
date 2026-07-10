@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: article.title,
       description: article.description,
       publishedTime: article.date,
+      images: [{ url: '/og-image.png', width: 1200, height: 630 }],
     },
   };
 }

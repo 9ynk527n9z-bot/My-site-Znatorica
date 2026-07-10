@@ -24,9 +24,11 @@ export function generateMetadata({ params }: Props): Metadata {
   const data = getVprData(params.klass, params.subject);
   const id = parseVariantId(params.variant);
   if (!data || !id) return {};
+  const variant = getVprVariant(params.klass, params.subject, id);
+  if (!variant) return {};
   return {
     title: `Подготовка к ВПР по предмету «${data.subjectTitle}», ${data.grade} класс — вариант ${id} с ответами`,
-    description: `Тренировочный вариант ${id} для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса: ${data.variants[0].tasks.length} заданий с ответами и решениями.`,
+    description: `Тренировочный вариант ${id} для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса: ${variant.tasks.length} заданий с ответами и решениями.`,
     alternates: { canonical: `/vpr/${params.klass}/${params.subject}/${params.variant}` },
   };
 }
