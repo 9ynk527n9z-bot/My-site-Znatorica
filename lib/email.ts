@@ -78,6 +78,28 @@ export async function sendConfirmationEmail(email: string, code: string) {
   });
 }
 
+export async function sendPasswordResetEmail(email: string, code: string) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  return sendEmail({
+    to: email,
+    subject: 'Восстановление пароля — Знаторика',
+    text: `Ваш код для сброса пароля: ${code}\n\nВведите его на странице ${siteUrl}/reset-password\n\nКод действителен 1 час. Если вы не запрашивали восстановление пароля — проигнорируйте это письмо.`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+        <h2 style="color: #F97316;">🐿️ Знаторика</h2>
+        <p>Вы запросили восстановление пароля.</p>
+        <p>Ваш код для сброса пароля:</p>
+        <p style="font-size: 28px; font-weight: bold; letter-spacing: 2px; background: #2A1B4D; color: #fff; padding: 16px; border-radius: 8px; text-align: center;">
+          ${code}
+        </p>
+        <p>Введите его на странице <a href="${siteUrl}/reset-password">восстановления пароля</a> вместе с новым паролем.</p>
+        <p style="color: #888; font-size: 13px;">Код действителен 1 час. Если вы не запрашивали восстановление пароля — просто проигнорируйте это письмо, ваш пароль останется прежним.</p>
+      </div>
+    `,
+  });
+}
+
 export async function sendPaymentSuccessEmail(email: string, amount: number, endDate: Date) {
   return sendEmail({
     to: email,

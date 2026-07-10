@@ -26,6 +26,7 @@ model User {
   generatorUses GeneratorUse[]
   consents      UserConsent[]
   verificationCodes EmailVerificationCode[]
+  passwordResetCodes PasswordResetCode[]
 
   @@map("users")
 }
@@ -162,6 +163,20 @@ model EmailVerificationCode {
   createdAt DateTime  @default(now())
 
   @@map("email_verification_codes")
+}
+
+model PasswordResetCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_codes")
 }
 
 model Setting {
