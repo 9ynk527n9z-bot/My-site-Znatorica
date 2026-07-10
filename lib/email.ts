@@ -68,7 +68,7 @@ export async function sendConfirmationEmail(email: string, code: string) {
         <h2 style="color: #F97316;">🐿️ Знаторика</h2>
         <p>Здравствуйте! Спасибо за регистрацию.</p>
         <p>Ваш код подтверждения email:</p>
-        <p style="font-size: 28px; font-weight: bold; letter-spacing: 2px; background: #16102A; color: #fff; padding: 16px; border-radius: 8px; text-align: center;">
+        <p style="font-size: 28px; font-weight: bold; letter-spacing: 2px; background: #2A1B4D; color: #fff; padding: 16px; border-radius: 8px; text-align: center;">
           ${code}
         </p>
         <p>Введите его на странице <a href="${siteUrl}/confirm-email">подтверждения email</a>.</p>

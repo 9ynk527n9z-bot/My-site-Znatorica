@@ -1,60 +1,15 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
 import { SEGMENTS } from '@/lib/constants';
+import { getAllVprParams, getAllVprSubjectParams } from '@/lib/vpr';
+import { getAllArticleSlugs, getPublishedTopics } from '@/lib/content';
+import { CODE_TOPIC_ROUTES } from '@/lib/code-topics';
 
-// Темы с реальным контентом. Дополнять этот список по мере наполнения сайта.
-const TOPIC_ROUTES: string[] = [
-  // 4–5 лет
-  '/4-5-let/matematika/schet-do-5',
-  '/4-5-let/matematika/schet-do-10',
-  '/4-5-let/matematika/figury',
-  '/4-5-let/matematika/tsveta',
-  '/4-5-let/razvitie/zvuki',
-  '/4-5-let/razvitie/slova',
-  '/4-5-let/gramota/bukvy',
-  '/4-5-let/gramota/slogov',
-  // 6–7 лет
-  '/6-7-let/matematika/schet-do-20',
-  '/6-7-let/matematika/slozhenie',
-  '/6-7-let/matematika/vychitanie',
-  '/6-7-let/matematika/vremya',
-  '/6-7-let/razvitie/dialogi',
-  '/6-7-let/razvitie/rasskazy',
-  '/6-7-let/gramota/chtenie',
-  '/6-7-let/gramota/pisanie',
-  // 1 класс
-  '/1-klass/matematika/slozhenie-5-10',
-  '/1-klass/matematika/vychitanie-5-10',
-  '/1-klass/matematika/zadachi',
-  '/1-klass/russkiy/pisanie',
-  '/1-klass/russkiy/punktuaciya',
-  '/1-klass/chtenie/proza',
-  '/1-klass/chtenie/stihi',
-  // 2 класс
-  '/2-klass/matematika/umnozhenie',
-  '/2-klass/matematika/delenie',
-  '/2-klass/matematika/dvuznachnye',
-  '/2-klass/russkiy/chasti-rechi',
-  '/2-klass/russkiy/predlozhenie',
-  '/2-klass/okruzhayushchiy/priroda',
-  '/2-klass/okruzhayushchiy/chelovek',
-  // 3 класс
-  '/3-klass/matematika/trekhznachnye',
-  '/3-klass/matematika/slozhnie-primery',
-  '/3-klass/matematika/doli',
-  '/3-klass/russkiy/spryazhenie',
-  '/3-klass/russkiy/slozhnie-predlozheniya',
-  '/3-klass/angliyskiy/vocabulary',
-  '/3-klass/angliyskiy/grammatika',
-  // 4 класс
-  '/4-klass/matematika/velikie-chisla',
-  '/4-klass/matematika/desyatichnie-drobi',
-  '/4-klass/matematika/geometriya',
-  '/4-klass/russkiy/stili-rechi',
-  '/4-klass/russkiy/sintaksis',
-  '/4-klass/literatura/klassika',
-  '/4-klass/literatura/analiz-teksta',
-];
+// Контент из БД меняется через админку — не кешируем sitemap статически.
+export const dynamic = 'force-dynamic';
+
+// Темы, свёрстанные в коде (52 «цветные» страницы).
+const TOPIC_ROUTES: string[] = CODE_TOPIC_ROUTES;
 
 const TRAINER_ROUTES: string[] = [
   '/trenazher',
@@ -67,6 +22,17 @@ const TRAINER_ROUTES: string[] = [
   '/trenazher/pogovorki',
   '/trenazher/shapes-colors',
   '/trenazher/pristavki',
+  '/trenazher/angliyskiy-alfavit',
+  '/trenazher/angliyskiy-schet',
+  '/trenazher/tablitsa-umnozheniya',
+  '/trenazher/slovarnye-slova',
+  '/trenazher/naydi-lishnee',
+  '/trenazher/naydi-paru',
+  '/trenazher/chto-izmenilos',
+  '/trenazher/sobery-po-poryadku',
+  '/trenazher/english-colors',
+  '/trenazher/english-shapes',
+  '/trenazher/sravnenie',
 ];
 
 const STATIC_ROUTES: string[] = [
@@ -74,26 +40,52 @@ const STATIC_ROUTES: string[] = [
   '/podpiska',
   '/privacy',
   '/terms',
+  '/oferta',
   '/login',
   '/register',
   '/generator',
   '/generator/primery',
   '/generator/propisi',
+  '/generator/propisi-ru',
+  '/generator/krossvordy',
   '/generator/math',
-  '/generator/sravnenie',
+  '/generator/filvordy',
+  '/generator/anagrammy',
+  '/generator/diktanty',
+  '/generator/slovarnye-slova',
+  '/generator/zadachi',
+  '/generator/sostav-chisla',
+  '/generator/schet-predmetov',
+  '/generator/graficheskiy-diktant',
   '/plakaty',
+  '/dlya-roditeley',
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const segmentRoutes = SEGMENTS.map((segment) => `/${segment.id}`);
+
+  // Раздел ВПР: хаб + страницы предметов + все варианты (генерируются из данных)
+  const vprRoutes = [
+    '/vpr',
+    ...getAllVprSubjectParams().map((p) => `/vpr/${p.klass}/${p.subject}`),
+    ...getAllVprParams().map((p) => `/vpr/${p.klass}/${p.subject}/${p.variant}`),
+  ];
+
+  const articleRoutes = (await getAllArticleSlugs()).map((slug) => `/dlya-roditeley/${slug}`);
+
+  // Новые темы из админки/БД живут под /tema/[slug]
+  const cmsTopicRoutes = (await getPublishedTopics()).map((t) => `/tema/${t.slug}`);
 
   const allRoutes = [
     ...STATIC_ROUTES,
     ...segmentRoutes,
     ...TRAINER_ROUTES,
     ...TOPIC_ROUTES,
+    ...vprRoutes,
+    ...articleRoutes,
+    ...cmsTopicRoutes,
   ];
 
   return allRoutes.map((route) => ({

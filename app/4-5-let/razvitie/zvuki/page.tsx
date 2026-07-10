@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Звуки — теория и тренажёр для детей 4–5 лет',
@@ -27,7 +28,7 @@ export default function ZvukiPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-4">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <div className="max-w-6xl mx-auto flex gap-2 text-sm">
           <Link href="/" className="text-orange hover:underline">Главная</Link>
           <span className="text-gray-400">/</span>
@@ -48,7 +49,7 @@ export default function ZvukiPage() {
           <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
         </div>
 
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-6">Что такое звуки речи?</h2>
 
           <div className="space-y-6 text-lg">
@@ -82,11 +83,7 @@ export default function ZvukiPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold mb-4">Готов тренироваться?</h3>
-          <p className="text-gray-300 mb-6">Нажми на кнопку ниже и начни интерактивный тренажер</p>
-          <button className="btn-primary text-lg px-8 py-4">🎮 Открыть тренажер</button>
-        </div>
+        <TopicQuiz topic="4-5-let/razvitie/zvuki" />
       </div>
     </div>
   );

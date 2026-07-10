@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import SegmentResourcesSection from '@/components/SegmentResourcesSection';
 
 export default function Segment4To5Page() {
   const [activeSubject, setActiveSubject] = useState('matematika');
@@ -23,6 +24,7 @@ export default function Segment4To5Page() {
       topics: [
         { slug: 'zvuki', title: 'Звуки', description: 'Слышим и говорим' },
         { slug: 'slova', title: 'Слова', description: 'Словарный запас' },
+        { slug: 'pereskaz-po-kartinkam', title: 'Пересказ по картинкам', description: 'Составляем историю по картинке' },
       ],
     },
     gramota: {
@@ -31,6 +33,24 @@ export default function Segment4To5Page() {
       topics: [
         { slug: 'bukvy', title: 'Буквы', description: 'Алфавит' },
         { slug: 'slogov', title: 'Слоги', description: 'Учимся читать слоги' },
+        { slug: 'shtrikhovka-i-graficheskie-diktanty', title: 'Штриховка и графические диктанты', description: 'Тренируем руку перед письмом' },
+      ],
+    },
+    logika: {
+      name: 'Логика и мышление',
+      icon: '🧩',
+      topics: [
+        { slug: 'naydi-lishnee', title: 'Найди лишнее', description: 'Учимся находить общее и лишнее' },
+        { slug: 'sravnenie-predmetov', title: 'Сравнение предметов', description: 'Больше-меньше, одинаковое-разное' },
+        { slug: 'zagadki', title: 'Загадки', description: 'Простые загадки для малышей' },
+      ],
+    },
+    okruzhayushchiy: {
+      name: 'Окружающий мир',
+      icon: '🌍',
+      topics: [
+        { slug: 'vremena-goda', title: 'Времена года', description: 'Зима, весна, лето, осень' },
+        { slug: 'domashnie-i-dikie-zhivotnye', title: 'Домашние и дикие животные', description: 'Кто живёт рядом с человеком, а кто в лесу' },
       ],
     },
   };
@@ -53,7 +73,7 @@ export default function Segment4To5Page() {
       </div>
 
       {/* Subject Navigation */}
-      <div className="bg-[#0A0812] sticky top-0 z-10 border-b border-[#2D2350]">
+      <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex gap-4 overflow-x-auto">
             {Object.entries(subjects).map(([key, subject]) => (
@@ -82,7 +102,7 @@ export default function Segment4To5Page() {
             <Link
               key={topic.slug}
               href={`/4-5-let/${activeSubject}/${topic.slug}`}
-              className="group bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
+              className="group bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
             >
               <h3 className="text-2xl font-bold mb-2 group-hover:text-orange transition-colors">
                 {topic.title}
@@ -97,29 +117,7 @@ export default function Segment4To5Page() {
         </div>
       </div>
 
-      {/* Featured Trainers */}
-      <div className="bg-[#16102A] border-t border-[#2D2350] py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8">✨ Популярные тренажеры</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Азбука', icon: '🅰️', desc: 'Учим буквы' },
-              { title: 'Числа', icon: '1️⃣', desc: 'Изучаем цифры' },
-              { title: 'Цвета', icon: '🌈', desc: 'Распознаём цвета' },
-            ].map((trainer, i) => (
-              <button
-                key={i}
-                className="bg-[#0A0812] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
-              >
-                <div className="text-5xl mb-4">{trainer.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
-                <span className="text-orange font-bold">Играть →</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SegmentResourcesSection segmentId="4-5-let" gradeTitle="4–5 лет" />
     </div>
   );
 }

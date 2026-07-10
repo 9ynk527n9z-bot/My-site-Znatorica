@@ -82,9 +82,9 @@ export default function DataManagementPage() {
   };
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="legal-page">
       {/* Header */}
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-6">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-4xl mx-auto">
           <Link href="/account" className="text-orange hover:underline text-sm mb-4 inline-block">
             ← Назад в личный кабинет
@@ -97,7 +97,7 @@ export default function DataManagementPage() {
       {/* Content */}
       <div className="max-w-4xl mx-auto py-12 px-6">
         {/* Export Data Section */}
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-4">📥 Экспорт моих данных</h2>
           <p className="text-gray-400 mb-6">
             Скачайте полную копию ваших персональных данных в формате JSON для своих записей.
@@ -123,7 +123,7 @@ export default function DataManagementPage() {
         </div>
 
         {/* Data Storage Section */}
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-4">📊 Какие данные мы собираем?</h2>
 
           <div className="space-y-6">
@@ -164,13 +164,13 @@ export default function DataManagementPage() {
         </div>
 
         {/* Data Retention Section */}
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-4">⏰ Как долго мы храним данные?</h2>
 
           <div className="space-y-3 text-gray-400">
             <p>📋 <span className="font-bold">При активной подписке:</span> Все данные хранятся, пока вы используете сервис</p>
             <p>📋 <span className="font-bold">После удаления аккаунта:</span> Данные удаляются в течение 30 дней</p>
-            <p>📋 <span className="font-bold">Логи безопасности:</span> Хранятся 7 лет (ФЗ-54)</p>
+            <p>📋 <span className="font-bold">Логи безопасности:</span> Хранятся 1 год</p>
             <p>📋 <span className="font-bold">Платежи:</span> Хранятся 7 лет согласно налоговому кодексу РФ</p>
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function DataManagementPage() {
               🗑️ Удалить все мои данные
             </button>
           ) : (
-            <div className="bg-[#0A0812] border border-red-500/30 rounded-lg p-6">
+            <div className="bg-[#1E1035] border border-red-500/30 rounded-lg p-6">
               <h3 className="font-bold text-red-400 mb-4">⚠️ Подтверждение удаления</h3>
 
               <p className="text-gray-400 mb-6 text-sm">
@@ -206,7 +206,7 @@ export default function DataManagementPage() {
                   value={deleteConfirmCode}
                   onChange={(e) => setDeleteConfirmCode(e.target.value)}
                   placeholder="Код подтверждения"
-                  className="w-full px-4 py-3 rounded-lg bg-[#16102A] border border-[#2D2350] text-white focus:border-orange"
+                  className="w-full px-4 py-3 rounded-lg bg-[#2A1B4D] border border-[#2D2350] text-white focus:border-orange"
                 />
                 <p className="text-gray-400 text-xs mt-2">
                   Код отправлен на ваш email для проверки подлинности
@@ -241,7 +241,7 @@ export default function DataManagementPage() {
           <h3 className="text-lg font-bold mb-4">📜 Нормативная база</h3>
           <ul className="text-gray-400 text-sm space-y-2 ml-4">
             <li>✓ <span className="font-bold">ФЗ-152</span> "О защите персональных данных" - Статьи 27-29 (права субъектов)</li>
-            <li>✓ <span className="font-bold">ФЗ-54</span> "О применении ККМ" - Хранение платежей</li>
+            <li>✓ <span className="font-bold">ФЗ-422</span> "О налоге на профессиональный доход" - расчётные чеки через «Мой налог»</li>
             <li>✓ <span className="font-bold">ГОСТ Р 56860</span> - Безопасность электронных платежей</li>
             <li>✓ <span className="font-bold">НК РФ</span> - Хранение платежных данных 7 лет</li>
           </ul>

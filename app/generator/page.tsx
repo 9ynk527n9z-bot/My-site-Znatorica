@@ -2,116 +2,45 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Генераторы заданий — примеры, прописи, кроссворды',
-  description: 'Создавайте примеры по математике, прописи, кроссворды и другие учебные задания. 10 бесплатных генераций в день.',
+  description: 'Создавайте примеры по математике, прописи, кроссворды и другие развивающие задания. 5 бесплатных генераций в день.',
   alternates: { canonical: '/generator' },
 };
 
+const GENERATORS = [
+  { url: '/primery', emoji: '📊', title: 'Примеры', desc: 'До 10 / 100 / 1000 — 6 режимов' },
+  { url: '/krossvordy', emoji: '🔤', title: 'Кроссворды', desc: 'Еда, животные, спорт и другие темы' },
+  { url: '/filvordy', emoji: '🔍', title: 'Филворды', desc: 'Найди слова в сетке букв' },
+  { url: '/anagrammy', emoji: '🔤', title: 'Анаграммы', desc: 'Разгадай слово из букв' },
+  { url: '/propisi-ru', emoji: '✍️', title: 'Прописи (рус.)', desc: 'Буквы русского алфавита' },
+  { url: '/propisi', emoji: '✏️', title: 'Прописи (англ.)', desc: 'Английские буквы' },
+  { url: '/math', emoji: '🧮', title: 'Примеры в столбик', desc: 'Вычитание и деление' },
+  { url: '/diktanty', emoji: '🎤', title: 'Диктанты', desc: '1–4 класс' },
+  { url: '/slovarnye-slova', emoji: '📖', title: 'Словарные слова', desc: '1–4 класс' },
+  { url: '/zadachi', emoji: '🧩', title: 'Задачи', desc: '3–4 класс' },
+  { url: '/sostav-chisla', emoji: '🏠', title: 'Состав числа', desc: '«Домики» для 1 класса' },
+  { url: '/schet-predmetov', emoji: '🔢', title: 'Счёт предметов', desc: 'Для дошкольников и 1 класса' },
+  { url: '/graficheskiy-diktant', emoji: '✏️', title: 'Графический диктант', desc: 'Рисунок по клеточкам' },
+];
+
 export default function GeneratorPage() {
   return (
-    <div className="bg-black min-h-screen py-20 px-6">
+    <div className="min-h-screen py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-4">Генераторы заданий</h1>
-        <p className="text-center text-gray-400 mb-12">
-          10 раз бесплатно в день. Без лимита по подписке.
-        </p>
+        <p className="text-center text-white/75 mb-12">5 раз бесплатно в день. Без лимита по подписке.</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Примеры */}
-          <Link
-            href="/generator/primery"
-            className="card hover:border-orange transition-colors group"
-          >
-            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
-              📊 Примеры
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Создай примеры на сложение, вычитание или умножение
-            </p>
-            <div className="flex gap-2 text-xs">
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">
-                +
-              </span>
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">
-                −
-              </span>
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">
-                ×
-              </span>
-            </div>
-          </Link>
-
-          {/* Прописи */}
-          <Link
-            href="/generator/propisi"
-            className="card hover:border-orange transition-colors group"
-          >
-            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
-              ✏️ Прописи
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Прописи английских букв для улучшения почерка
-            </p>
-            <div className="flex gap-2 text-xs">
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">
-                Заглавные
-              </span>
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">
-                Строчные
-              </span>
-            </div>
-          </Link>
-
-          {/* Математика: деление, столбик */}
-          <Link
-            href="/generator/math"
-            className="card hover:border-orange transition-colors group"
-          >
-            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
-              🧮 Деление и столбик
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Примеры на вычитание, деление и счёт в столбик
-            </p>
-            <div className="flex gap-2 text-xs">
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">−</span>
-              <span className="bg-orange/20 text-orange px-2 py-1 rounded">÷</span>
-            </div>
-          </Link>
-
-          {/* Сравнение чисел */}
-          <Link
-            href="/generator/sravnenie"
-            className="card hover:border-orange transition-colors group"
-          >
-            <h3 className="text-2xl font-bold mb-2 group-hover:text-orange">
-              ⚖️ Сравнение чисел
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Примеры на сравнение: больше, меньше, равно
-            </p>
-          </Link>
-
-          {/* Кроссворды */}
-          <div className="card opacity-50">
-            <h3 className="text-2xl font-bold mb-2">🔤 Кроссворды</h3>
-            <p className="text-gray-400 mb-4">
-              Интерактивные кроссворды по темам (скоро)
-            </p>
-            <span className="inline-block bg-gray-700/50 text-gray-300 px-2 py-1 rounded text-xs">
-              Скоро
-            </span>
-          </div>
-
-          {/* Диктанты */}
-          <div className="card opacity-50">
-            <h3 className="text-2xl font-bold mb-2">🎤 Диктанты</h3>
-            <p className="text-gray-400 mb-4">
-              Наборы слов для диктовки (скоро)
-            </p>
-            <span className="inline-block bg-gray-700/50 text-gray-300 px-2 py-1 rounded text-xs">
-              Скоро
-            </span>
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {GENERATORS.map((g) => (
+            <Link
+              key={g.url}
+              href={`/generator${g.url}`}
+              className="card hover:border-white/50 transition-colors group text-center !p-3"
+            >
+              <div className="text-3xl mb-2">{g.emoji}</div>
+              <h3 className="text-sm font-bold mb-1 group-hover:text-orange leading-snug">{g.title}</h3>
+              <p className="text-white/60 text-xs line-clamp-2">{g.desc}</p>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

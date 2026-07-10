@@ -1,7 +1,7 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 export const SITE_NAME = 'Знаторика';
 export const SITE_DESCRIPTION =
-  'Образовательная платформа для детей 4–11 лет: интерактивные тренажёры, генераторы заданий, шпаргалки и материалы для учителей.';
+  'Развивающая платформа для детей 4–11 лет: интерактивные тренажёры, генераторы заданий, шпаргалки и материалы для учителей.';
 
 interface BreadcrumbItem {
   name: string;
@@ -72,6 +72,35 @@ export function learningResourceJsonLd(course: CourseInfo) {
     educationalLevel: course.educationalLevel,
     inLanguage: 'ru-RU',
     isAccessibleForFree: true,
+  };
+}
+
+interface ArticleInfo {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+}
+
+export function articleJsonLd(article: ArticleInfo) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    url: `${SITE_URL}${article.url}`,
+    datePublished: article.datePublished,
+    inLanguage: 'ru-RU',
+    author: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   };
 }
 

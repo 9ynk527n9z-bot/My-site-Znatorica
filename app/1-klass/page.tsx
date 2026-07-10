@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import SegmentResourcesSection from '@/components/SegmentResourcesSection';
 
 export default function Grade1Page() {
   const [activeSubject, setActiveSubject] = useState('matematika');
@@ -14,6 +15,7 @@ export default function Grade1Page() {
         { slug: 'slozhenie-5-10', title: 'Сложение 5-10', description: 'Примеры в пределах 10' },
         { slug: 'vychitanie-5-10', title: 'Вычитание 5-10', description: 'Вычитаем в пределах 10' },
         { slug: 'zadachi', title: 'Задачи', description: 'Простые текстовые задачи' },
+        { slug: 'sostav-chisla', title: 'Состав числа', description: 'Из каких частей складывается число' },
       ],
     },
     russkiy: {
@@ -22,6 +24,9 @@ export default function Grade1Page() {
       topics: [
         { slug: 'pisanie', title: 'Письмо', description: 'Правильное написание' },
         { slug: 'punktuaciya', title: 'Пунктуация', description: 'Знаки препинания' },
+        { slug: 'glasnye-i-soglasnye', title: 'Гласные и согласные', description: 'Учимся различать звуки и буквы' },
+        { slug: 'udarenie', title: 'Ударение в слове', description: 'Какой слог произносим сильнее' },
+        { slug: 'shtrikhovka-i-graficheskie-diktanty', title: 'Штриховка и графические диктанты', description: 'Тренируем руку перед письмом' },
       ],
     },
     chtenie: {
@@ -30,6 +35,23 @@ export default function Grade1Page() {
       topics: [
         { slug: 'proza', title: 'Проза', description: 'Рассказы и повести' },
         { slug: 'stihi', title: 'Стихи', description: 'Поэтические произведения' },
+      ],
+    },
+    logika: {
+      name: 'Логика и мышление',
+      icon: '🧩',
+      topics: [
+        { slug: 'analogii', title: 'Аналогии', description: 'Находим связи между словами' },
+        { slug: 'orientaciya-v-prostranstve', title: 'Ориентация в пространстве', description: 'Лево, право, между, за' },
+        { slug: 'zagadki', title: 'Загадки', description: 'Тренируем сообразительность' },
+      ],
+    },
+    okruzhayushchiy: {
+      name: 'Окружающий мир',
+      icon: '🌍',
+      topics: [
+        { slug: 'zhivaya-i-nezhivaya-priroda', title: 'Живая и неживая природа', description: 'Учимся различать и приводить примеры' },
+        { slug: 'pravila-bezopasnosti', title: 'Правила безопасности', description: 'Дорога, огонь и незнакомцы' },
       ],
     },
   };
@@ -50,7 +72,7 @@ export default function Grade1Page() {
         </div>
       </div>
 
-      <div className="bg-[#0A0812] sticky top-0 z-10 border-b border-[#2D2350]">
+      <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex gap-4 overflow-x-auto">
             {Object.entries(subjects).map(([key, subject]) => (
@@ -78,7 +100,7 @@ export default function Grade1Page() {
             <Link
               key={topic.slug}
               href={`/1-klass/${activeSubject}/${topic.slug}`}
-              className="group bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
+              className="group bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
             >
               <h3 className="text-2xl font-bold mb-2 group-hover:text-orange transition-colors">
                 {topic.title}
@@ -93,28 +115,7 @@ export default function Grade1Page() {
         </div>
       </div>
 
-      <div className="bg-[#16102A] border-t border-[#2D2350] py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8">✨ Тренажеры для 1 класса</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Сложение', icon: '➕', desc: 'Примеры в пределах 20' },
-              { title: 'Вычитание', icon: '➖', desc: 'Вычитание в пределах 20' },
-              { title: 'Задачи', icon: '❓', desc: 'Решаем текстовые задачи' },
-            ].map((trainer, i) => (
-              <button
-                key={i}
-                className="bg-[#0A0812] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
-              >
-                <div className="text-5xl mb-4">{trainer.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
-                <span className="text-orange font-bold">Играть →</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SegmentResourcesSection segmentId="1-klass" gradeTitle="1 класса" />
     </div>
   );
 }

@@ -22,7 +22,7 @@ export default function TrainerEmbed({ title, description, htmlContent }: Traine
         <p className="text-gray-400">{description}</p>
       </div>
 
-      <div className="bg-[#16102A] border border-[#2D2350] rounded-lg overflow-hidden">
+      <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg overflow-hidden">
         <iframe
           key={iframeKey}
           srcDoc={htmlContent}

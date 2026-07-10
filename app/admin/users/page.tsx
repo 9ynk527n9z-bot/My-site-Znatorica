@@ -56,7 +56,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="bg-black min-h-screen">
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-6">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <Link href="/admin/dashboard" className="text-orange hover:underline">
             ← Назад в админку
@@ -70,10 +70,10 @@ export default function AdminUsersPage() {
           <div className="text-center text-gray-400">Загрузка...</div>
         ) : (
           <>
-            <div className="bg-[#16102A] border border-[#2D2350] rounded-lg overflow-hidden">
+            <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-[#0A0812]">
+                  <thead className="bg-[#1E1035]">
                     <tr>
                       <th className="px-6 py-4 text-left text-gray-400 font-semibold">Email</th>
                       <th className="px-6 py-4 text-left text-gray-400 font-semibold">Роль</th>
@@ -84,7 +84,7 @@ export default function AdminUsersPage() {
                   </thead>
                   <tbody>
                     {users.map((user) => (
-                      <tr key={user.id} className="border-t border-[#2D2350] hover:bg-[#0A0812] transition-colors">
+                      <tr key={user.id} className="border-t border-[#2D2350] hover:bg-[#1E1035] transition-colors">
                         <td className="px-6 py-4 text-white">{user.email}</td>
                         <td className="px-6 py-4">
                           <span className={`px-3 py-1 rounded text-sm font-semibold ${

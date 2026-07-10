@@ -12,13 +12,6 @@ export default function PaymentMethods({ onSelect, loading = false }: PaymentMet
   const [selectedMethod, setSelectedMethod] = useState<string>('bank_card');
   const methods = getAllowedMethods();
 
-  const methodGroups = {
-    Карты: methods.filter(m => m.id === 'bank_card'),
-    'Системы платежей': methods.filter(m => ['sbp', 'yandex_kassa', 'qiwi'].includes(m.id)),
-    Банки: methods.filter(m => m.id === 'sberbank'),
-    'Мобильные операторы': methods.filter(m => m.id === 'mobile_payment'),
-  };
-
   const handleSelect = (methodId: string) => {
     setSelectedMethod(methodId);
     onSelect(methodId);
@@ -32,48 +25,23 @@ export default function PaymentMethods({ onSelect, loading = false }: PaymentMet
           ✅ Все способы разрешены в РФ и защищены ГОСТ
         </p>
 
-        <div className="space-y-6">
-          {Object.entries(methodGroups).map(
-            ([groupName, groupMethods]) =>
-              groupMethods.length > 0 && (
-                <div key={groupName}>
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{groupName}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {groupMethods.map((method) => (
-                      <button
-                        key={method.id}
-                        onClick={() => handleSelect(method.id)}
-                        disabled={loading}
-                        className={`p-4 rounded-lg border-2 transition-all text-left ${
-                          selectedMethod === method.id
-                            ? 'border-orange bg-orange/10 shadow-lg shadow-orange/30'
-                            : 'border-[#2D2350] hover:border-orange/50 bg-[#16102A]'
-                        } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{method.icon}</span>
-                          <div>
-                            <p className="font-bold text-white">{method.name}</p>
-                            {method.id === 'sbp' && (
-                              <p className="text-xs text-gray-400">Моментальный перевод по номеру телефона</p>
-                            )}
-                            {method.id === 'bank_card' && (
-                              <p className="text-xs text-gray-400">Национальная платёжная система MIR</p>
-                            )}
-                            {method.id === 'yandex_kassa' && (
-                              <p className="text-xs text-gray-400">Электронный кошелёк Яндекса</p>
-                            )}
-                          </div>
-                        </div>
-                        {selectedMethod === method.id && (
-                          <div className="mt-2 text-orange text-sm font-bold">✓ Выбрано</div>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )
-          )}
+        <div className="grid grid-cols-3 gap-2">
+          {methods.map((method) => (
+            <button
+              key={method.id}
+              onClick={() => handleSelect(method.id)}
+              disabled={loading}
+              className={`p-2 rounded-lg border-2 transition-all flex flex-col items-center text-center gap-1 ${
+                selectedMethod === method.id
+                  ? 'border-orange bg-orange/10 shadow-md shadow-orange/30'
+                  : 'border-[#2D2350] hover:border-orange/50 bg-[#2A1B4D]'
+              } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            >
+              <span className="text-base">{method.icon}</span>
+              <p className="font-bold text-white text-[11px] leading-tight">{method.name}</p>
+              {selectedMethod === method.id && <span className="text-orange text-[10px]">✓ Выбрано</span>}
+            </button>
+          ))}
         </div>
       </div>
 

@@ -13,15 +13,8 @@
 body {
   font-family: 'Nunito', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff9de2 0%, #ffda77 25%, #a8edea 50%, #b5ffe1 75%, #ffc3a0 100%);
-  background-size: 400% 400%;
-  animation: bgShift 12s ease infinite;
+  background: linear-gradient(135deg, #2A1B4D 0%, #1E1035 100%);
   overflow-x: hidden;
-}
-@keyframes bgShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 .app {
@@ -195,6 +188,18 @@ select:focus { border-color: #ff6fb7; }
 }
 .btn-download:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 40px rgba(78,205,196,.55); }
 .btn-download:active { transform: scale(1); }
+
+/* ── ПАНЕЛЬ ЭКСПОРТА ── */
+.dl-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.dl-toolbar .btn-download { width: auto; flex: 1 1 140px; padding: 16px; font-size: 16px; margin-top: 0; }
+.dl-toolbar .btn-download.secondary { background: linear-gradient(135deg, #8e9eab, #5f6c7b); box-shadow: 0 8px 30px rgba(95,108,123,.4); }
+
+@media print {
+  body * { visibility: hidden; }
+  #worksheetPreview, #worksheetPreview * { visibility: visible; }
+  #worksheetPreview { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+  @page { size: A4; margin: 15mm; }
+}
 
 @keyframes shimmer {
   0%   { background-position: 0% 50%; }
@@ -385,6 +390,8 @@ select:focus { border-color: #ff6fb7; }
     </div>
   </div>
 
+  <div id="quotaBanner" style="display:none;margin-bottom:12px;padding:10px 16px;border-radius:12px;font-size:14px;text-align:center;"></div>
+
   <button class="btn-generate" id="generateBtn" onclick="generateWorksheet()">
     <span>🌟 Создать прописи!</span>
     <div class="spinner" id="btnSpinner"></div>
@@ -393,10 +400,15 @@ select:focus { border-color: #ff6fb7; }
   <div id="previewSection">
     <div class="preview-header"><h2>📄 Предпросмотр</h2></div>
     <div id="worksheetPreview"></div>
-    <button class="btn-download" onclick="downloadPDF()">
-      📥 Скачать PDF
-      <div class="spinner" id="dlSpinner"></div>
-    </button>
+    <div class="dl-toolbar">
+      <button class="btn-download secondary" onclick="window.print()">🖨️ Печать</button>
+      <button class="btn-download" onclick="downloadPDF()">
+        📥 PDF
+        <div class="spinner" id="dlSpinner"></div>
+      </button>
+      <button class="btn-download secondary" onclick="downloadWord()">📝 Word</button>
+      <button class="btn-download secondary" onclick="downloadPNG()">🖼️ PNG</button>
+    </div>
   </div>
 
 </div>
@@ -443,6 +455,7 @@ function updateDynStyles() {
 updateDynStyles();
 
 function generateWorksheet() {
+  if (znQuota.loaded && !znQuota.unlimited && znQuota.remaining <= 0) return;
   const text = document.getElementById('textInput').value.trim();
   if (!text) {
     const ta = document.getElementById('textInput');
@@ -519,15 +532,100 @@ function generateWorksheet() {
   section.style.display = 'block';
   section.classList.add('fade-in');
   setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+
+  const token = localStorage.getItem('token');
+  fetch('/api/track', {
+    method: 'POST',
+    headers: Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: 'Bearer ' + token } : {}),
+    body: JSON.stringify({ type: 'generator:propisi' }),
+  }).catch(() => {});
+  consumeQuota();
+}
+
+// Защита материалов: временная подпись на экспортируемом листе — убирается сразу
+// после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
+// из localStorage — тот же токен, что использует остальной сайт) — только мелкое
+// доменное имя без «юридической» формулировки, для остальных — полная подпись.
+let znIsSubscriber = false;
+(function checkSubscriber() {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
+      .catch(() => {});
+  } catch (e) {}
+})();
+
+function addWatermark(el) {
+  const wm = document.createElement('div');
+  wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
+  wm.style.cssText = znIsSubscriber
+    ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
+    : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
+  el.appendChild(wm);
+  return wm;
+}
+
+// Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
+// без лимита у подписчиков) — та же серверная проверка /api/generator/quota,
+// что используют React-генераторы.
+let znQuota = { remaining: 5, limit: 5, unlimited: false, loaded: false };
+
+function renderQuotaBanner() {
+  const el = document.getElementById('quotaBanner');
+  const btn = document.getElementById('generateBtn');
+  if (!znQuota.loaded || znQuota.unlimited) {
+    el.style.display = 'none';
+    btn.disabled = false;
+    return;
+  }
+  el.style.display = 'block';
+  if (znQuota.remaining <= 0) {
+    el.style.background = '#fefce8';
+    el.style.color = '#a16207';
+    el.innerHTML = `Бесплатный лимит на сегодня исчерпан (${znQuota.limit} из ${znQuota.limit}). Лимит обновится завтра, или <a href="/podpiska" target="_top" style="color:#ea580c;font-weight:bold;">оформите подписку</a>.`;
+    btn.disabled = true;
+  } else {
+    el.style.background = '#f3f4f6';
+    el.style.color = '#555';
+    el.innerHTML = `Осталось ${znQuota.remaining} из ${znQuota.limit} бесплатных генераций сегодня · <a href="/podpiska" target="_top" style="color:#ea580c;">снять лимит</a>`;
+    btn.disabled = false;
+  }
+}
+
+function refreshQuota() {
+  const token = localStorage.getItem('token');
+  fetch('/api/generator/quota', { headers: token ? { Authorization: 'Bearer ' + token } : {} })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => {
+      if (!d) return;
+      znQuota = { remaining: d.unlimited ? Infinity : d.remaining, limit: d.limit, unlimited: !!d.unlimited, loaded: true };
+      renderQuotaBanner();
+    })
+    .catch(() => {});
+}
+refreshQuota();
+
+// Вызывать сразу после генерации вместо refreshQuota(): трекинг в /api/track
+// пишется асинхронно, и немедленный refreshQuota() иногда обгоняет ещё не
+// закоммиченную запись (виден старый счётчик). Уменьшаем remaining локально
+// сразу — счётчик на экране верный мгновенно, а через секунду сверяем с сервером.
+function consumeQuota() {
+  if (!znQuota.unlimited) znQuota.remaining = Math.max(0, znQuota.remaining - 1);
+  renderQuotaBanner();
+  setTimeout(refreshQuota, 1000);
 }
 
 async function downloadPDF() {
   const btn = document.querySelector('.btn-download');
   const sp  = document.getElementById('dlSpinner');
   btn.disabled = true; sp.style.display = 'block';
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
   try {
     const { jsPDF } = window.jspdf;
-    const el = document.getElementById('worksheetPreview');
     const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
@@ -537,8 +635,48 @@ async function downloadPDF() {
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
     pdf.save('прописи.pdf');
   } catch(e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
+  wm.remove();
   btn.disabled = false; sp.style.display = 'none';
 }
+
+async function downloadPNG() {
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
+  const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+  wm.remove();
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'прописи.png'; a.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+}
+
+function downloadWord() {
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
+  const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+  <head><meta charset="utf-8"><title>Прописи</title></head>
+  <body>${el.innerHTML}</body></html>`;
+  wm.remove();
+  const blob = new Blob(['﻿', html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'прописи.doc'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+window.addEventListener('beforeprint', () => {
+  const el = document.getElementById('worksheetPreview');
+  if (el && !el.querySelector('[data-print-watermark]')) {
+    const wm = addWatermark(el);
+    wm.setAttribute('data-print-watermark', 'true');
+  }
+});
+window.addEventListener('afterprint', () => {
+  const wm = document.querySelector('[data-print-watermark]');
+  if (wm) wm.remove();
+});
 </script>
 </body>
 </html>

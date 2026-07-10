@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import SegmentResourcesSection from '@/components/SegmentResourcesSection';
 
 export default function Segment6To7Page() {
   const [activeSubject, setActiveSubject] = useState('matematika');
@@ -15,6 +16,7 @@ export default function Segment6To7Page() {
         { slug: 'slozhenie', title: 'Сложение', description: 'Первые примеры' },
         { slug: 'vychitanie', title: 'Вычитание', description: 'Учимся вычитать' },
         { slug: 'vremya', title: 'Время', description: 'Часы и минуты' },
+        { slug: 'sostav-chisla', title: 'Состав числа', description: 'Из каких частей складывается число' },
       ],
     },
     razvitie: {
@@ -23,6 +25,7 @@ export default function Segment6To7Page() {
       topics: [
         { slug: 'dialogi', title: 'Диалоги', description: 'Общение' },
         { slug: 'rasskazy', title: 'Рассказы', description: 'Составляем истории' },
+        { slug: 'pereskaz-po-kartinkam', title: 'Пересказ по картинкам', description: 'Составляем рассказ по серии картинок' },
       ],
     },
     gramota: {
@@ -31,6 +34,23 @@ export default function Segment6To7Page() {
       topics: [
         { slug: 'chtenie', title: 'Чтение', description: 'Текстовые задания' },
         { slug: 'pisanie', title: 'Письмо', description: 'Пишем слова' },
+        { slug: 'shtrikhovka-i-graficheskie-diktanty', title: 'Штриховка и графические диктанты', description: 'Готовим руку к письму в школе' },
+      ],
+    },
+    logika: {
+      name: 'Логика и мышление',
+      icon: '🧩',
+      topics: [
+        { slug: 'zakonomernosti', title: 'Закономерности', description: 'Что будет дальше в ряду' },
+        { slug: 'zagadki', title: 'Загадки', description: 'Тренируем сообразительность' },
+      ],
+    },
+    okruzhayushchiy: {
+      name: 'Окружающий мир',
+      icon: '🌍',
+      topics: [
+        { slug: 'prirodnye-yavleniya', title: 'Природные явления', description: 'Дождь, снег, ветер, радуга и гроза' },
+        { slug: 'telo-cheloveka', title: 'Тело человека', description: 'Из чего мы устроены и зачем беречь здоровье' },
       ],
     },
   };
@@ -53,7 +73,7 @@ export default function Segment6To7Page() {
       </div>
 
       {/* Subject Navigation */}
-      <div className="bg-[#0A0812] sticky top-0 z-10 border-b border-[#2D2350]">
+      <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex gap-4 overflow-x-auto">
             {Object.entries(subjects).map(([key, subject]) => (
@@ -82,7 +102,7 @@ export default function Segment6To7Page() {
             <Link
               key={topic.slug}
               href={`/6-7-let/${activeSubject}/${topic.slug}`}
-              className="group bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
+              className="group bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
             >
               <h3 className="text-2xl font-bold mb-2 group-hover:text-orange transition-colors">
                 {topic.title}
@@ -97,29 +117,7 @@ export default function Segment6To7Page() {
         </div>
       </div>
 
-      {/* Featured Trainers */}
-      <div className="bg-[#16102A] border-t border-[#2D2350] py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8">✨ Популярные тренажеры</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Сложение', icon: '➕', desc: 'Учимся складывать' },
-              { title: 'Вычитание', icon: '➖', desc: 'Основы вычитания' },
-              { title: 'Умножение', icon: '✖️', desc: 'Таблица умножения' },
-            ].map((trainer, i) => (
-              <button
-                key={i}
-                className="bg-[#0A0812] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
-              >
-                <div className="text-5xl mb-4">{trainer.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
-                <span className="text-orange font-bold">Играть →</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SegmentResourcesSection segmentId="6-7-let" gradeTitle="6–7 лет" />
     </div>
   );
 }

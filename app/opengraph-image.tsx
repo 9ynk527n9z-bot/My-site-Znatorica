@@ -1,9 +1,14 @@
 import { ImageResponse } from 'next/og';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default function OpengraphImage() {
+  const logoData = readFileSync(join(process.cwd(), 'public', 'logo.png'));
+  const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`;
+
   return new ImageResponse(
     (
       <div
@@ -14,25 +19,15 @@ export default function OpengraphImage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #0A0812 0%, #16102A 100%)',
+          background: 'linear-gradient(135deg, #1E1035 0%, #2A1B4D 100%)',
         }}
       >
-        <div style={{ fontSize: 120, marginBottom: 20, display: 'flex' }}>🐿️</div>
-        <div
-          style={{
-            fontSize: 80,
-            fontWeight: 900,
-            color: '#ffffff',
-            display: 'flex',
-          }}
-        >
-          Знаторика
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoBase64} width="280" height="280" style={{ borderRadius: '50%', marginBottom: 24 }} alt="" />
         <div
           style={{
             fontSize: 32,
             color: '#F97316',
-            marginTop: 16,
             display: 'flex',
           }}
         >

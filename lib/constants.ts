@@ -22,11 +22,12 @@ export const FORMATS = [
   { id: 'trenazher', name: 'Тренажёр', free: false, paid: true },
   { id: 'igra', name: 'Игра', free: false, paid: true },
   { id: 'kartochki', name: 'Карточки', free: false, paid: true },
-  { id: 'generator', name: 'Генератор', free: true, paid: true }, // 10 раз бесплатно
+  { id: 'generator', name: 'Генератор', free: true, paid: true }, // 5 раз бесплатно
   { id: 'plakat', name: 'Плакат', free: false, paid: true },
   { id: 'material-teacher', name: 'Материал для учителя', free: false, paid: true },
   { id: 'vpr', name: 'ВПР', free: false, paid: true },
 ];
 
-export const SUBSCRIPTION_PRICE = 29900; // в копейках (299 ₽)
-export const FREE_GENERATOR_LIMIT = 10; // раз в день для неавторизованных
+export const SUBSCRIPTION_PRICE = 39900; // в копейках (399 ₽/мес)
+export const LIFETIME_PRICE = 299000; // в копейках (2990 ₽ разово, навсегда)
+export const FREE_GENERATOR_LIMIT = 5; // раз в день суммарно по всем генераторам для неподписчиков

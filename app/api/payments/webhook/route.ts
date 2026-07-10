@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sendPaymentSuccessEmail } from '@/lib/email';
+import { isYooKassaIp, getClientIp } from '@/lib/yookassa-ip';
 
-// TODO для продакшена: проверять, что запрос реально пришёл от YuKassa
-// (сверка по IP-диапазонам ЮKassa, т.к. подписи запросов у них нет — см. их документацию по вебхукам).
+// YuKassa не подписывает уведомления вебхука — единственная защита, которую они
+// сами рекомендуют, это сверка IP отправителя со списком их серверов (см. lib/yookassa-ip.ts).
+// Без этой проверки кто угодно, узнав URL, мог бы прислать поддельное «payment.succeeded»
+// и получить подписку бесплатно.
 export async function POST(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request);
+    if (!clientIp || !isYooKassaIp(clientIp)) {
+      console.warn(`Webhook отклонён: запрос не с IP YuKassa (${clientIp})`);
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const body = await request.text();
     const data = JSON.parse(body) as any;
 
@@ -39,22 +48,30 @@ export async function POST(request: NextRequest) {
     });
 
     // Create subscription
+    const plan = metadata?.plan === 'lifetime' ? 'lifetime' : 'monthly';
     const endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + 1);
+    if (plan === 'lifetime') {
+      endDate.setFullYear(endDate.getFullYear() + 100);
+    } else {
+      endDate.setMonth(endDate.getMonth() + 1);
+    }
+    const autoRenew = plan === 'monthly';
 
     await db.subscription.upsert({
       where: { userId },
       update: {
+        plan,
         status: 'active',
         endDate,
-        autoRenew: true,
+        autoRenew,
         paymentId: payment.id,
       },
       create: {
         userId,
+        plan,
         status: 'active',
         endDate,
-        autoRenew: true,
+        autoRenew,
         paymentId: payment.id,
       },
     });

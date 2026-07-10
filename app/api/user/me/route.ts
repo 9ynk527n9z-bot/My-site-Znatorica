@@ -35,9 +35,11 @@ export async function GET(request: NextRequest) {
         role: user.role,
         emailConfirmed: user.emailConfirmed,
         createdAt: user.createdAt,
+        starsBalance: user.starsBalance,
       },
       subscription: subscription
         ? {
+            plan: subscription.plan,
             status: subscription.status,
             endDate: subscription.endDate,
             autoRenew: subscription.autoRenew,

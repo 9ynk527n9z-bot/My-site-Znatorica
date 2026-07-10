@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import SegmentResourcesSection from '@/components/SegmentResourcesSection';
 
 export default function Grade3Page() {
   const [activeSubject, setActiveSubject] = useState('matematika');
@@ -14,6 +15,7 @@ export default function Grade3Page() {
         { slug: 'trekhznachnye', title: 'Трёхзначные числа', description: 'Числа от 100 до 1000' },
         { slug: 'slozhnie-primery', title: 'Сложные примеры', description: 'Примеры в столбик' },
         { slug: 'doli', title: 'Доли и дроби', description: 'Понимаем дроби' },
+        { slug: 'delenie-s-ostatkom', title: 'Деление с остатком', description: 'Когда числа не делятся нацело' },
       ],
     },
     russkiy: {
@@ -22,6 +24,7 @@ export default function Grade3Page() {
       topics: [
         { slug: 'spryazhenie', title: 'Спряжение', description: 'Глаголы и их формы' },
         { slug: 'slozhnie-predlozheniya', title: 'Сложные предложения', description: 'Объединяем предложения' },
+        { slug: 'razbor-slova-po-sostavu', title: 'Разбор слова по составу', description: 'Приставка, корень, суффикс, окончание' },
       ],
     },
     angliyskiy: {
@@ -30,6 +33,14 @@ export default function Grade3Page() {
       topics: [
         { slug: 'vocabulary', title: 'Словарь', description: 'Новые слова' },
         { slug: 'grammatika', title: 'Грамматика', description: 'Present, Past Simple' },
+      ],
+    },
+    logika: {
+      name: 'Логика и мышление',
+      icon: '🧩',
+      topics: [
+        { slug: 'kombinatorika', title: 'Комбинаторика', description: 'Считаем количество вариантов' },
+        { slug: 'zadachi-na-vzveshivanie', title: 'Задачи на взвешивание', description: 'Находим нужный предмет весами' },
       ],
     },
   };
@@ -50,7 +61,7 @@ export default function Grade3Page() {
         </div>
       </div>
 
-      <div className="bg-[#0A0812] sticky top-0 z-10 border-b border-[#2D2350]">
+      <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex gap-4 overflow-x-auto">
             {Object.entries(subjects).map(([key, subject]) => (
@@ -78,7 +89,7 @@ export default function Grade3Page() {
             <Link
               key={topic.slug}
               href={`/3-klass/${activeSubject}/${topic.slug}`}
-              className="group bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
+              className="group bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
             >
               <h3 className="text-2xl font-bold mb-2 group-hover:text-orange transition-colors">
                 {topic.title}
@@ -93,28 +104,7 @@ export default function Grade3Page() {
         </div>
       </div>
 
-      <div className="bg-[#16102A] border-t border-[#2D2350] py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8">✨ Тренажеры для 3 класса</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Сложные примеры', icon: '🧮', desc: 'Примеры в столбик' },
-              { title: 'Дроби', icon: '📊', desc: 'Части целого' },
-              { title: 'Задачи', icon: '❓', desc: 'Сложные задачи' },
-            ].map((trainer, i) => (
-              <button
-                key={i}
-                className="bg-[#0A0812] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
-              >
-                <div className="text-5xl mb-4">{trainer.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
-                <span className="text-orange font-bold">Играть →</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SegmentResourcesSection segmentId="3-klass" gradeTitle="3 класса" />
     </div>
   );
 }

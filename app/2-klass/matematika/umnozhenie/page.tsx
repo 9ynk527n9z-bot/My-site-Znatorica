@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Умножение — теория и тренажёр для 2 класса',
@@ -27,7 +28,7 @@ export default function UmnozheniePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-4">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <div className="max-w-6xl mx-auto flex gap-2 text-sm">
           <Link href="/" className="text-orange hover:underline">Главная</Link>
           <span className="text-gray-400">/</span>
@@ -48,7 +49,7 @@ export default function UmnozheniePage() {
           <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
         </div>
 
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-6">Что такое умножение?</h2>
 
           <div className="space-y-6 text-lg">
@@ -84,11 +85,7 @@ export default function UmnozheniePage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold mb-4">Готов тренироваться?</h3>
-          <p className="text-gray-300 mb-6">Нажми на кнопку ниже и начни интерактивный тренажер</p>
-          <Link href="/trenazher/multiplication" className="btn-primary text-lg px-8 py-4 inline-block">🎮 Открыть тренажер</Link>
-        </div>
+        <TopicQuiz topic="2-klass/matematika/umnozhenie" />
       </div>
     </div>
   );

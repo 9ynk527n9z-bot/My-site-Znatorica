@@ -23,6 +23,11 @@ RUN npx prisma generate
 ENV JWT_SECRET="build-time-placeholder"
 ENV DATA_ENCRYPTION_KEY="build-time-placeholder"
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
+
+# NEXT_PUBLIC_* переменные Next.js встраивает в код на этапе сборки, а не в рантайме,
+# поэтому реальный домен должен быть передан как build-arg, а не только через env_file контейнера.
+ARG NEXT_PUBLIC_SITE_URL="https://znatorica.ru"
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 RUN npm run build
 
 # --- Финальный минимальный образ ---

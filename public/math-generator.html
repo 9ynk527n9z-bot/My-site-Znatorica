@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Знаторика — Генератор примеров</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Russo+One&display=swap');
 
@@ -36,7 +38,7 @@
 
   /* ── HEADER ── */
   .header {
-    background: linear-gradient(135deg, #2d1b55 0%, #1a0e2e 100%);
+    background: linear-gradient(135deg, #2A1B4D 0%, #1E1035 100%);
     padding: 14px 16px 10px;
     display: flex;
     align-items: center;
@@ -260,6 +262,7 @@
     color: var(--accent2);
     border-color: var(--accent);
   }
+  .print-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* Sheet itself */
   .sheet {
@@ -423,6 +426,7 @@
     .name-line { border-color: #999 !important; }
     .ex-answer.show { color: #5c2d99 !important; }
     .modal-overlay { display: none !important; }
+    @page { size: A4; margin: 15mm; }
   }
 </style>
 </head>
@@ -527,7 +531,9 @@
 
     </div>
 
-    <button class="generate-btn" onclick="generate()">
+    <div id="quotaBanner" style="display:none;margin-bottom:12px;padding:10px 16px;border-radius:12px;font-size:14px;text-align:center;"></div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generate()">
       <span class="btn-icon">✨</span> Создать карточку
     </button>
 
@@ -540,6 +546,9 @@
       <div class="ws-actions">
         <button class="back-btn" onclick="goBack()">← Назад</button>
         <button class="print-btn" onclick="openPrint()">🖨 Печать</button>
+        <button class="print-btn" id="pdfBtn" onclick="downloadPDF()">📄 PDF</button>
+        <button class="print-btn" onclick="downloadWord()">📝 Word</button>
+        <button class="print-btn" id="pngBtn" onclick="downloadPNG()">🖼 PNG</button>
       </div>
     </div>
 
@@ -634,6 +643,8 @@
   }
 
   function generate() {
+    if (znQuota.loaded && !znQuota.unlimited && znQuota.remaining <= 0) return;
+
     const mode = MODES[currentMode];
     const count = parseInt(document.getElementById('countSlider').value);
     const showAns = document.getElementById('ansToggle').classList.contains('on');
@@ -644,6 +655,14 @@
     }
     answersShown = showAns;
     renderSheet(mode.label, count, showAns);
+
+    const token = localStorage.getItem('token');
+    fetch('/api/track', {
+      method: 'POST',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: 'Bearer ' + token } : {}),
+      body: JSON.stringify({ type: 'generator:math' }),
+    }).catch(() => {});
+    consumeQuota();
   }
 
   function regenerate() {
@@ -718,9 +737,140 @@
     document.getElementById('printModal').classList.remove('open');
   }
 
+  // Защита материалов: временная подпись на экспортируемом листе — убирается сразу
+  // после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
+  // из localStorage — тот же токен, что использует остальной сайт) — только мелкое
+  // доменное имя без «юридической» формулировки, для остальных — полная подпись.
+  let znIsSubscriber = false;
+  (function checkSubscriber() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
+        .catch(() => {});
+    } catch (e) {}
+  })();
+
+  function addWatermark(el) {
+    const wm = document.createElement('div');
+    wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
+    wm.style.cssText = znIsSubscriber
+      ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
+      : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
+    el.appendChild(wm);
+    return wm;
+  }
+
+  // Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
+  // без лимита у подписчиков) — та же серверная проверка /api/generator/quota,
+  // что используют React-генераторы.
+  let znQuota = { remaining: 5, limit: 5, unlimited: false, loaded: false };
+
+  function renderQuotaBanner() {
+    const el = document.getElementById('quotaBanner');
+    const btn = document.getElementById('generateBtn');
+    if (!znQuota.loaded || znQuota.unlimited) {
+      el.style.display = 'none';
+      if (btn) btn.disabled = false;
+      return;
+    }
+    el.style.display = 'block';
+    if (znQuota.remaining <= 0) {
+      el.style.background = '#fefce8';
+      el.style.color = '#a16207';
+      el.innerHTML = `Бесплатный лимит на сегодня исчерпан (${znQuota.limit} из ${znQuota.limit}). Лимит обновится завтра, или <a href="/podpiska" target="_top" style="color:#ea580c;font-weight:bold;">оформите подписку</a>.`;
+      if (btn) btn.disabled = true;
+    } else {
+      el.style.background = '#f3f4f6';
+      el.style.color = '#555';
+      el.innerHTML = `Осталось ${znQuota.remaining} из ${znQuota.limit} бесплатных генераций сегодня · <a href="/podpiska" target="_top" style="color:#ea580c;">снять лимит</a>`;
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  function refreshQuota() {
+    const token = localStorage.getItem('token');
+    fetch('/api/generator/quota', { headers: token ? { Authorization: 'Bearer ' + token } : {} })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d) return;
+        znQuota = { remaining: d.unlimited ? Infinity : d.remaining, limit: d.limit, unlimited: !!d.unlimited, loaded: true };
+        renderQuotaBanner();
+      })
+      .catch(() => {});
+  }
+  refreshQuota();
+
+  // Вызывать сразу после генерации вместо refreshQuota(): трекинг в /api/track
+  // пишется асинхронно, и немедленный refreshQuota() иногда обгоняет ещё не
+  // закоммиченную запись (виден старый счётчик). Уменьшаем remaining локально
+  // сразу — счётчик на экране верный мгновенно, а через секунду сверяем с сервером.
+  function consumeQuota() {
+    if (!znQuota.unlimited) znQuota.remaining = Math.max(0, znQuota.remaining - 1);
+    renderQuotaBanner();
+    setTimeout(refreshQuota, 1000);
+  }
+
   function doPrint() {
     closePrint();
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    window.addEventListener('afterprint', () => wm.remove(), { once: true });
     setTimeout(() => window.print(), 100);
+  }
+
+  async function downloadPDF() {
+    const btn = document.getElementById('pdfBtn');
+    btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    try {
+      const { jsPDF } = window.jspdf;
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
+      const r = canvas.width / canvas.height;
+      let dW = aW, dH = dW / r;
+      if (dH > aH) { dH = aH; dW = dH * r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
+      pdf.save('примеры.pdf');
+    } catch (e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
+    wm.remove();
+    btn.disabled = false; btn.textContent = label;
+  }
+
+  async function downloadPNG() {
+    const btn = document.getElementById('pngBtn');
+    btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    try {
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'примеры.png'; a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    } catch (e) { alert('Ошибка при создании PNG. Попробуйте ещё раз.'); }
+    wm.remove();
+    btn.disabled = false; btn.textContent = label;
+  }
+
+  function downloadWord() {
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8"><title>Примеры</title></head>
+    <body>${el.innerHTML}</body></html>`;
+    wm.remove();
+    const blob = new Blob(['﻿', html], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'примеры.doc'; a.click();
+    URL.revokeObjectURL(url);
   }
 </script>
 </body>

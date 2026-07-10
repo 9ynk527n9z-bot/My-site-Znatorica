@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import SegmentResourcesSection from '@/components/SegmentResourcesSection';
 
 export default function Grade2Page() {
   const [activeSubject, setActiveSubject] = useState('matematika');
@@ -14,6 +15,7 @@ export default function Grade2Page() {
         { slug: 'umnozhenie', title: 'Умножение', description: 'Основы умножения' },
         { slug: 'delenie', title: 'Деление', description: 'Делим числа' },
         { slug: 'dvuznachnye', title: 'Двузначные числа', description: 'Числа от 10 до 100' },
+        { slug: 'sravnenie-chisel', title: 'Сравнение чисел', description: 'Больше, меньше или равно' },
       ],
     },
     russkiy: {
@@ -22,6 +24,9 @@ export default function Grade2Page() {
       topics: [
         { slug: 'chasti-rechi', title: 'Части речи', description: 'Существительные, глаголы' },
         { slug: 'predlozhenie', title: 'Предложение', description: 'Структура предложения' },
+        { slug: 'koren-slova', title: 'Корень слова', description: 'Общая часть родственных слов' },
+        { slug: 'bezudarnye-glasnye', title: 'Безударные гласные', description: 'Проверяем ударением' },
+        { slug: 'shtrikhovka-i-graficheskie-diktanty', title: 'Штриховка и графические диктанты', description: 'Точность и аккуратность письма' },
       ],
     },
     okruzhayushchiy: {
@@ -30,6 +35,15 @@ export default function Grade2Page() {
       topics: [
         { slug: 'priroda', title: 'Природа', description: 'Экосистемы и животные' },
         { slug: 'chelovek', title: 'Человек', description: 'Здоровье и гигиена' },
+      ],
+    },
+    logika: {
+      name: 'Логика и мышление',
+      icon: '🧩',
+      topics: [
+        { slug: 'logicheskie-zadachi', title: 'Логические задачи', description: 'Рассуждаем и делаем выводы' },
+        { slug: 'rebusy', title: 'Ребусы', description: 'Разгадываем слова по картинкам и буквам' },
+        { slug: 'zagadki', title: 'Загадки', description: 'Тренируем сообразительность на новом уровне' },
       ],
     },
   };
@@ -50,7 +64,7 @@ export default function Grade2Page() {
         </div>
       </div>
 
-      <div className="bg-[#0A0812] sticky top-0 z-10 border-b border-[#2D2350]">
+      <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex gap-4 overflow-x-auto">
             {Object.entries(subjects).map(([key, subject]) => (
@@ -78,7 +92,7 @@ export default function Grade2Page() {
             <Link
               key={topic.slug}
               href={`/2-klass/${activeSubject}/${topic.slug}`}
-              className="group bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
+              className="group bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange hover:shadow-lg hover:shadow-orange/20 transition-all"
             >
               <h3 className="text-2xl font-bold mb-2 group-hover:text-orange transition-colors">
                 {topic.title}
@@ -93,28 +107,7 @@ export default function Grade2Page() {
         </div>
       </div>
 
-      <div className="bg-[#16102A] border-t border-[#2D2350] py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8">✨ Тренажеры для 2 класса</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Умножение', icon: '✖️', desc: 'Таблица умножения' },
-              { title: 'Деление', icon: '➗', desc: 'Примеры на деление' },
-              { title: 'Задачи', icon: '❓', desc: 'Сложные задачи' },
-            ].map((trainer, i) => (
-              <button
-                key={i}
-                className="bg-[#0A0812] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
-              >
-                <div className="text-5xl mb-4">{trainer.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
-                <span className="text-orange font-bold">Играть →</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SegmentResourcesSection segmentId="2-klass" gradeTitle="2 класса" />
     </div>
   );
 }

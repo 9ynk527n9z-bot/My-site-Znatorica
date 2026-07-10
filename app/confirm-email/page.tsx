@@ -69,7 +69,7 @@ export default function ConfirmEmailPage() {
           <p className="text-gray-400 text-sm mt-2">ФЗ-152: Согласие на обработку данных активируется после подтверждения</p>
         </div>
 
-        <form onSubmit={handleConfirm} className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8">
+        <form onSubmit={handleConfirm} className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
           {error && (
             <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-4 mb-6">
               <p className="text-red-400 text-sm">{error}</p>
@@ -89,7 +89,7 @@ export default function ConfirmEmailPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#0A0812] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="your@email.com"
             />
           </div>
@@ -101,7 +101,7 @@ export default function ConfirmEmailPage() {
               type="text"
               value={confirmationCode}
               onChange={(e) => setConfirmationCode(e.target.value.toUpperCase())}
-              className="w-full px-4 py-3 rounded-lg bg-[#0A0812] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="XXXX-XXXX-XXXX"
               maxLength={16}
             />

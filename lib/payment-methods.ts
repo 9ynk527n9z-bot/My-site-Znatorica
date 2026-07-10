@@ -41,17 +41,13 @@ export const ALLOWED_PAYMENT_METHODS = {
     enabled: true,
   },
 
-  // Мобильные операторы
-  mts: {
+  // Мобильные операторы — МТС, Beeline и др. проходят через один и тот же
+  // способ оплаты YuKassa (mobile_payment), поэтому это один пункт, а не два:
+  // раньше два отдельных объекта с одинаковым id ломали React key и приводили
+  // к тому, что выбор одного оператора визуально подсвечивал оба сразу.
+  mobile: {
     id: 'mobile_payment',
-    name: 'МТС (счёт оператора)',
-    icon: '📞',
-    enabled: true,
-  },
-
-  beeline: {
-    id: 'mobile_payment',
-    name: 'Beeline (счёт оператора)',
+    name: 'Счёт мобильного оператора (МТС, Beeline и др.)',
     icon: '📞',
     enabled: true,
   },

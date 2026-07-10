@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Геометрические фигуры — теория и тренажёр для детей 4–5 лет',
@@ -32,7 +33,7 @@ export default function FiguryPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }}
       />
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-4">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <div className="max-w-6xl mx-auto flex gap-2 text-sm">
           <Link href="/" className="text-orange hover:underline">
             Главная
@@ -65,7 +66,7 @@ export default function FiguryPage() {
           </button>
         </div>
 
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8 mb-8">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-6">Какие бывают фигуры?</h2>
 
           <div className="space-y-6 text-lg">
@@ -75,22 +76,22 @@ export default function FiguryPage() {
                 Вокруг нас много разных предметов. Все они имеют свою форму!
               </p>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-[#0A0812] p-6 rounded border border-[#2D2350]">
+                <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">⭕</div>
                   <h4 className="font-bold text-orange text-center">Круг</h4>
                   <p className="text-gray-400 text-sm text-center">Похож на мяч</p>
                 </div>
-                <div className="bg-[#0A0812] p-6 rounded border border-[#2D2350]">
+                <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">⬜</div>
                   <h4 className="font-bold text-orange text-center">Квадрат</h4>
                   <p className="text-gray-400 text-sm text-center">У него 4 стороны</p>
                 </div>
-                <div className="bg-[#0A0812] p-6 rounded border border-[#2D2350]">
+                <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">▲</div>
                   <h4 className="font-bold text-orange text-center">Треугольник</h4>
                   <p className="text-gray-400 text-sm text-center">Как крыша дома</p>
                 </div>
-                <div className="bg-[#0A0812] p-6 rounded border border-[#2D2350]">
+                <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">▭</div>
                   <h4 className="font-bold text-orange text-center">Прямоугольник</h4>
                   <p className="text-gray-400 text-sm text-center">Как окно</p>
@@ -100,15 +101,7 @@ export default function FiguryPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold mb-4">Давай играть!</h3>
-          <p className="text-gray-300 mb-6">
-            Узнавай фигуры в интерактивном тренажере
-          </p>
-          <button className="btn-primary text-lg px-8 py-4">
-            🎮 Открыть тренажер
-          </button>
-        </div>
+        <TopicQuiz topic="4-5-let/matematika/figury" />
       </div>
     </div>
   );

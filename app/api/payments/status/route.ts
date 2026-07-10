@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         subscription: subscription
           ? {
+              plan: subscription.plan,
               status: subscription.status,
               endDate: subscription.endDate,
               autoRenew: subscription.autoRenew,
@@ -71,6 +72,7 @@ export async function GET(request: NextRequest) {
       paymentId: payment.id,
       status: paymentData.status,
       subscription: subscription ? {
+        plan: subscription.plan,
         status: subscription.status,
         endDate: subscription.endDate,
         autoRenew: subscription.autoRenew,

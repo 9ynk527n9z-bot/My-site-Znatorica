@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import TrackPageView from '@/components/TrackPageView';
 
 export const metadata = {
   title: 'Числа — интерактивный тренажёр для изучения цифр',
@@ -9,7 +10,8 @@ export const metadata = {
 export default function NumbersTrainerPage() {
   return (
     <div className="bg-black min-h-screen">
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
+      <TrackPageView type="trainer:numbers" />
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">
             ← Все тренажеры

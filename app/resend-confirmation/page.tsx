@@ -40,7 +40,7 @@ export default function ResendConfirmationPage() {
           <h1 className="text-3xl font-bold">📧 Отправить код повторно</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8">
+        <form onSubmit={handleSubmit} className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
           {message && (
             <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-6">
               <p className="text-blue-400 text-sm">{message}</p>
@@ -53,7 +53,7 @@ export default function ResendConfirmationPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#0A0812] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="your@email.com"
               required
             />

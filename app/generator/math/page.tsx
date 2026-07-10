@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import TrackPageView from '@/components/TrackPageView';
 
 export const metadata = {
   title: 'Генератор примеров по математике — деление, столбик',
@@ -9,7 +10,8 @@ export const metadata = {
 export default function MathGeneratorPage() {
   return (
     <div className="bg-black min-h-screen">
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
+      <TrackPageView type="generator:math" />
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>
           <Link href="/generator" className="text-orange hover:underline text-sm">
             ← Все генераторы

@@ -72,7 +72,7 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center px-6">
-        <div className="bg-[#16102A] border border-green-500/30 rounded-lg p-8 max-w-md text-center">
+        <div className="bg-[#2A1B4D] border border-green-500/30 rounded-lg p-8 max-w-md text-center">
           <p className="text-green-400 text-lg font-bold mb-4">✅ Регистрация успешна!</p>
           <p className="text-gray-400 mb-6">
             Проверьте ваш email для подтверждения учётной записи
@@ -96,7 +96,7 @@ export default function RegisterPage() {
           <p className="text-gray-400 text-sm mt-2">Создайте новый аккаунт</p>
         </div>
 
-        <form onSubmit={handleRegister} className="bg-[#16102A] border border-[#2D2350] rounded-lg p-8">
+        <form onSubmit={handleRegister} className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
           {error && (
             <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-4 mb-6">
               <p className="text-red-400 text-sm">{error}</p>
@@ -110,8 +110,8 @@ export default function RegisterPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#0A0812] border border-[#2D2350] text-white focus:border-orange transition-colors"
-              placeholder="your@email.com"
+              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              placeholder="you@mail.ru"
             />
           </div>
 
@@ -122,7 +122,7 @@ export default function RegisterPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#0A0812] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="Минимум 6 символов"
             />
           </div>
@@ -137,11 +137,13 @@ export default function RegisterPage() {
                 className="w-5 h-5 mt-1 cursor-pointer"
               />
               <span className="text-sm text-gray-300">
-                Я согласен(на) с обработкой моих персональных данных в соответствии с{' '}
+                Мне есть 18 лет, я регистрируюсь как родитель или законный представитель ребёнка и
+                соглашаюсь с обработкой персональных данных согласно{' '}
                 <Link href="/privacy" className="text-orange hover:underline">
-                  Политикой конфиденциальности
-                </Link>{' '}
-                и Федеральным законом №152-ФЗ
+                  Политике конфиденциальности
+                </Link>
+                , <Link href="/terms" className="text-orange hover:underline">Условиям использования</Link> и{' '}
+                <Link href="/oferta" className="text-orange hover:underline">Публичной оферте</Link>
               </span>
             </label>
 

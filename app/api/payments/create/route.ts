@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getUserFromToken } from '@/lib/auth';
 import { isMethodAllowed } from '@/lib/payment-methods';
+import { getNumberSetting } from '@/lib/settings';
+import { SUBSCRIPTION_PRICE, LIFETIME_PRICE } from '@/lib/constants';
 
 const YOOKASSA_SHOP_ID = process.env.YOOKASSA_SHOP_ID || '';
 const YOOKASSA_API_KEY = process.env.YOOKASSA_API_KEY || '';
+
+type Plan = 'monthly' | 'lifetime';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +22,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
-    const { returnUrl, paymentMethod = 'bank_card' } = await request.json();
+    const { returnUrl, paymentMethod = 'bank_card', plan = 'monthly' } = await request.json();
+
+    if (plan !== 'monthly' && plan !== 'lifetime') {
+      return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
+    }
+    const selectedPlan: Plan = plan;
 
     // Проверить, разрешён ли способ оплаты в РФ
     if (!isMethodAllowed(paymentMethod)) {
@@ -28,10 +37,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const monthlyPrice = await getNumberSetting('monthlyPrice', SUBSCRIPTION_PRICE / 100);
+    const lifetimePrice = await getNumberSetting('lifetimePrice', LIFETIME_PRICE / 100);
+
+    const amount = selectedPlan === 'lifetime' ? lifetimePrice : monthlyPrice;
+    const description =
+      selectedPlan === 'lifetime'
+        ? `Пожизненный доступ к Знаторике (разовый платёж ${lifetimePrice}₽)`
+        : `Подписка на Знаторика на 1 месяц (${monthlyPrice}₽/месяц)`;
+
     // Create YuKassa payment - ТОЛЬКО разрешённые методы
     const paymentData = {
       amount: {
-        value: '299.00',
+        value: amount.toFixed(2),
         currency: 'RUB',
       },
       payment_method_data: {
@@ -41,10 +59,11 @@ export async function POST(request: NextRequest) {
         type: 'redirect',
         return_url: returnUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/podpiska`,
       },
-      description: 'Подписка на Знаторика на 1 месяц (299₽/месяц)',
+      description,
       metadata: {
         userId: user.id,
         paymentMethod: paymentMethod,
+        plan: selectedPlan,
         country: 'RU',
       },
     };
@@ -70,7 +89,7 @@ export async function POST(request: NextRequest) {
       data: {
         userId: user.id,
         kassaId: paymentResponse.id,
-        amount: 299,
+        amount,
         currency: 'RUB',
         status: 'pending',
       },

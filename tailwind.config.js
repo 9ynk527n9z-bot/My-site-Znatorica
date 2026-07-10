@@ -10,9 +10,10 @@ module.exports = {
         violet: '#7C3AED',
         'violet-mid': '#6B21A8',
         orange: '#F97316',
-        bg: '#0A0812',
-        'bg-card': '#16102A',
+        bg: '#1E1035',
+        'bg-card': '#2A1B4D',
         border: '#2D2350',
+        black: '#1E1035',
       },
       borderRadius: {
         DEFAULT: '16px',

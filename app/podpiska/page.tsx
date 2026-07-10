@@ -2,14 +2,27 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import PaymentMethods from '@/components/PaymentMethods';
+
+type Plan = 'monthly' | 'lifetime';
 
 export default function SubscriptionPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionPlan, setSubscriptionPlan] = useState<Plan>('monthly');
   const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('bank_card');
+  const [selectedPlan, setSelectedPlan] = useState<Plan>('monthly');
+  const [pricing, setPricing] = useState({ monthlyPrice: 399, lifetimePrice: 2990 });
+
+  useEffect(() => {
+    fetch('/api/pricing')
+      .then((res) => res.json())
+      .then((data) => setPricing(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     // Check if user is already subscribed
@@ -26,6 +39,7 @@ export default function SubscriptionPage() {
           const data = await response.json();
           if (data.subscription?.isActive) {
             setIsSubscribed(true);
+            setSubscriptionPlan(data.subscription.plan === 'lifetime' ? 'lifetime' : 'monthly');
             setSubscriptionEndDate(data.subscription.endDate);
           }
         }
@@ -56,6 +70,7 @@ export default function SubscriptionPage() {
         body: JSON.stringify({
           returnUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/podpiska`,
           paymentMethod: selectedPaymentMethod,
+          plan: selectedPlan,
         }),
       });
 
@@ -87,9 +102,52 @@ export default function SubscriptionPage() {
 
         {/* Pricing Card */}
         <div className="card border-orange mb-12 max-w-2xl mx-auto">
+          {!isSubscribed && (
+            <div className="flex gap-3 mb-8 justify-center">
+              <button
+                onClick={() => setSelectedPlan('monthly')}
+                className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+                  selectedPlan === 'monthly'
+                    ? 'bg-orange text-white'
+                    : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
+                }`}
+              >
+                Помесячно
+              </button>
+              <button
+                onClick={() => setSelectedPlan('lifetime')}
+                className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+                  selectedPlan === 'lifetime'
+                    ? 'bg-orange text-white'
+                    : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
+                }`}
+              >
+                Навсегда
+              </button>
+            </div>
+          )}
+
           <div className="text-center mb-8">
-            <p className="text-6xl font-bold text-orange">299 ₽</p>
-            <p className="text-gray-400 text-lg">в месяц</p>
+            {isSubscribed ? (
+              <>
+                <p className="text-6xl font-bold text-orange">
+                  {subscriptionPlan === 'lifetime' ? '∞' : `${pricing.monthlyPrice} ₽`}
+                </p>
+                <p className="text-gray-400 text-lg">
+                  {subscriptionPlan === 'lifetime' ? 'пожизненный доступ' : 'в месяц'}
+                </p>
+              </>
+            ) : selectedPlan === 'lifetime' ? (
+              <>
+                <p className="text-6xl font-bold text-orange">{pricing.lifetimePrice} ₽</p>
+                <p className="text-gray-400 text-lg">один раз, доступ навсегда</p>
+              </>
+            ) : (
+              <>
+                <p className="text-6xl font-bold text-orange">{pricing.monthlyPrice} ₽</p>
+                <p className="text-gray-400 text-lg">в месяц</p>
+              </>
+            )}
           </div>
 
           <ul className="space-y-4 mb-12">
@@ -125,10 +183,14 @@ export default function SubscriptionPage() {
 
           {isSubscribed ? (
             <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4 text-center">
-              <p className="text-green-400 font-bold mb-1">✅ Подписка активна</p>
-              <p className="text-green-400 text-sm">
-                До {new Date(subscriptionEndDate || '').toLocaleDateString('ru-RU')}
+              <p className="text-green-400 font-bold mb-1">
+                {subscriptionPlan === 'lifetime' ? '✅ Пожизненный доступ активен' : '✅ Подписка активна'}
               </p>
+              {subscriptionPlan !== 'lifetime' && (
+                <p className="text-green-400 text-sm">
+                  До {new Date(subscriptionEndDate || '').toLocaleDateString('ru-RU')}
+                </p>
+              )}
             </div>
           ) : (
             <>
@@ -144,11 +206,24 @@ export default function SubscriptionPage() {
                 disabled={loading}
                 className="btn-primary w-full text-lg mb-4 disabled:opacity-50"
               >
-                {loading ? 'Обработка...' : 'Оформить подписку'}
+                {loading
+                  ? 'Обработка...'
+                  : selectedPlan === 'lifetime'
+                    ? 'Купить навсегда'
+                    : 'Оформить подписку'}
               </button>
 
               <p className="text-center text-sm text-gray-500">
-                Автопродление. Отмену можно оформить в личном кабинете в любой момент.
+                {selectedPlan === 'lifetime'
+                  ? 'Разовый платёж. Доступ не заканчивается и не требует продления.'
+                  : 'Автопродление. Отмену можно оформить в личном кабинете в любой момент.'}
+              </p>
+              <p className="text-center text-xs text-gray-600 mt-2">
+                Нажимая кнопку оплаты, вы принимаете условия{' '}
+                <Link href="/oferta" className="text-orange hover:underline">
+                  Публичной оферты
+                </Link>
+                , включая порядок возврата денежных средств.
               </p>
             </>
           )}
@@ -195,7 +270,34 @@ export default function SubscriptionPage() {
                 <span className="group-open:rotate-180 transition-transform">⌄</span>
               </summary>
               <p className="mt-4 text-gray-400">
-                Сейчас пробного периода нет, но вы можете попробовать бесплатный контент (теория, шпаргалки, генератор 10 раз в день).
+                Сейчас пробного периода нет, но вы можете попробовать бесплатный контент (теория, шпаргалки, генератор 5 раз в день суммарно по всем генераторам).
+              </p>
+            </details>
+
+            <details className="card group">
+              <summary className="cursor-pointer font-bold text-lg flex justify-between items-center">
+                В чём разница между «Помесячно» и «Навсегда»?
+                <span className="group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <p className="mt-4 text-gray-400">
+                Доступ к материалам одинаковый в обоих случаях. «Помесячно» — {pricing.monthlyPrice} ₽ каждый месяц с автопродлением,
+                можно отменить в любой момент. «Навсегда» — один платёж {pricing.lifetimePrice} ₽, без повторных списаний и без необходимости отменять что-либо.
+              </p>
+            </details>
+
+            <details className="card group">
+              <summary className="cursor-pointer font-bold text-lg flex justify-between items-center">
+                Можно ли вернуть деньги?
+                <span className="group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <p className="mt-4 text-gray-400">
+                Да. Если вы ещё не пользовались оплаченным доступом — полный возврат в течение 7 дней с
+                момента оплаты. Если уже пользовались — возврат за вычетом фактически использованного
+                периода. Подробности — в{' '}
+                <Link href="/oferta" className="text-orange hover:underline">
+                  Публичной оферте
+                </Link>
+                , обращение — на email из оферты.
               </p>
             </details>
           </div>

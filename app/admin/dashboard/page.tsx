@@ -84,7 +84,7 @@ export default function AdminDashboard() {
   return (
     <div className="bg-black min-h-screen">
       {/* Header */}
-      <div className="bg-[#0A0812] border-b border-[#2D2350] px-6 py-6">
+      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
             <Link href="/" className="font-black text-2xl text-orange hover:opacity-80">
@@ -108,41 +108,41 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto py-12 px-6">
         {/* Stats Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-          <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6">
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Всего пользователей</p>
             <p className="text-4xl font-bold text-white">{stats?.totalUsers || 0}</p>
           </div>
 
-          <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6">
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Активных подписок</p>
             <p className="text-4xl font-bold text-orange">{stats?.subscribers || 0}</p>
           </div>
 
-          <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6">
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Общий доход</p>
             <p className="text-4xl font-bold text-violet">₽{(stats?.totalRevenue || 0).toLocaleString('ru-RU')}</p>
           </div>
 
-          <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6">
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Просмотров страниц</p>
             <p className="text-4xl font-bold text-white">{stats?.pageViews || 0}</p>
           </div>
 
-          <div className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6">
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Использований генератора</p>
             <p className="text-4xl font-bold text-white">{stats?.generatorUses || 0}</p>
           </div>
         </div>
 
         {/* Recent Payments */}
-        <div className="bg-[#16102A] border border-[#2D2350] rounded-lg overflow-hidden">
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg overflow-hidden">
           <div className="px-6 py-6 border-b border-[#2D2350]">
             <h2 className="text-2xl font-bold">Последние платежи</h2>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#0A0812]">
+              <thead className="bg-[#1E1035]">
                 <tr>
                   <th className="px-6 py-4 text-left text-gray-400 font-semibold">Email</th>
                   <th className="px-6 py-4 text-left text-gray-400 font-semibold">Сумма</th>
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
               </thead>
               <tbody>
                 {payments.map((payment) => (
-                  <tr key={payment.id} className="border-t border-[#2D2350] hover:bg-[#0A0812] transition-colors">
+                  <tr key={payment.id} className="border-t border-[#2D2350] hover:bg-[#1E1035] transition-colors">
                     <td className="px-6 py-4 text-white">{payment.email}</td>
                     <td className="px-6 py-4 text-white">₽{payment.amount}</td>
                     <td className="px-6 py-4">
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           <Link
             href="/admin/users"
-            className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
           >
             <h3 className="text-xl font-bold mb-2">👥 Управление пользователями</h3>
             <p className="text-gray-400">Просмотр и управление аккаунтами</p>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/payments"
-            className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
           >
             <h3 className="text-xl font-bold mb-2">💳 Платежи</h3>
             <p className="text-gray-400">История платежей и подписок</p>
@@ -204,15 +204,31 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/content"
-            className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
           >
             <h3 className="text-xl font-bold mb-2">📚 Управление контентом</h3>
             <p className="text-gray-400">Добавление и редактирование тем</p>
           </Link>
 
           <Link
+            href="/admin/analytics"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+          >
+            <h3 className="text-xl font-bold mb-2">📊 Аналитика</h3>
+            <p className="text-gray-400">Трафик, популярные разделы, конверсия — без Google</p>
+          </Link>
+
+          <Link
+            href="/admin/logs"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+          >
+            <h3 className="text-xl font-bold mb-2">🧾 Журнал действий</h3>
+            <p className="text-gray-400">Кто и что менял — для отчётности по ФЗ-152</p>
+          </Link>
+
+          <Link
             href="/admin/settings"
-            className="bg-[#16102A] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
           >
             <h3 className="text-xl font-bold mb-2">⚙️ Настройки</h3>
             <p className="text-gray-400">Конфигурация платформы</p>

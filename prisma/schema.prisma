@@ -17,6 +17,10 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  starsBalance    Int       @default(0) // бонусные звёзды (например, за ежедневный подарок)
+  lastDailyGiftAt DateTime?
+  dailyGiftStreak Int       @default(0)
+
   subscriptions Subscription[]
   payments      Payment[]
   generatorUses GeneratorUse[]
@@ -31,6 +35,7 @@ model Subscription {
   userId        String    @unique
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  plan          String    @default("monthly") // 'monthly' | 'lifetime'
   status        String    @default("active")
   startDate     DateTime  @default(now())
   endDate       DateTime
@@ -129,6 +134,7 @@ model GeneratorUse {
 
   createdAt DateTime  @default(now())
 
+  @@index([createdAt])
   @@map("generator_uses")
 }
 
@@ -136,9 +142,11 @@ model PageView {
   id        String    @id @default(cuid())
   url       String
   userId    String?
+  sessionId String?   // анонимный идентификатор из cookie znatorika_sid (без привязки к личности)
 
   createdAt DateTime  @default(now())
 
+  @@index([createdAt])
   @@map("page_views")
 }
 
@@ -154,6 +162,65 @@ model EmailVerificationCode {
   createdAt DateTime  @default(now())
 
   @@map("email_verification_codes")
+}
+
+model Setting {
+  key       String    @id
+  value     String
+  updatedAt DateTime  @updatedAt
+
+  @@map("settings")
+}
+
+// Редактируемый контент сайта: статьи для родителей и НОВЫЕ темы, создаваемые
+// через админку. 52 старые «цветные» темы остаются в коде и здесь НЕ хранятся.
+// Источник правды в рантайме — эта таблица; я (Claude) правлю тот же контент
+// через prisma/content-seed.json, который на деплое доливается сюда по (kind, slug),
+// НО пропускает строки с manualEdit=true — ручная правка через админку побеждает.
+model ContentPage {
+  id          String   @id @default(cuid())
+  kind        String   // 'article' | 'topic'
+  slug        String
+  title       String
+  description String   @default("")
+
+  // Организационные поля для тем (у статей — null)
+  segment     String?
+  subject     String?
+
+  // Поля статей (у тем обычно null)
+  tag         String?
+  readTime    String?
+  date        String?  // YYYY-MM-DD — дата публикации статьи
+
+  intro       String   @default("")
+  body        Json     // [{ heading: string, body: string[] }]
+  related     Json?    // [{ title: string, url: string }]
+
+  published   Boolean  @default(true)
+  manualEdit  Boolean  @default(false) // true → seed на деплое НЕ трогает эту запись
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([kind, slug])
+  @@map("content_pages")
+}
+
+// Журнал действий администратора — подотчётность по ФЗ-152 (особенно действия
+// с персональными данными: просмотр/экспорт/удаление пользователей).
+model AdminLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  adminEmail String
+  action     String   // 'content.create' | 'content.update' | 'content.delete' | 'user.export' | 'user.delete' | ...
+  entity     String   // 'content' | 'user' | 'payment' | 'settings'
+  entityId   String?
+  detail     String?  // краткое человекочитаемое описание
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("admin_logs")
 }
 
 model UserConsent {
