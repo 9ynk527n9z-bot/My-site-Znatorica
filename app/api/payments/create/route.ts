@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
         value: amount.toFixed(2),
         currency: 'RUB',
       },
+      capture: true,
       payment_method_data: {
         type: paymentMethod === 'sbp' ? 'sbp' : 'bank_card',
       },
