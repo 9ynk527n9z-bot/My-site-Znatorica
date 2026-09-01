@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "users" ADD COLUMN "starsBalance" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "users" ADD COLUMN "lastDailyGiftAt" TIMESTAMP(3);
+ALTER TABLE "users" ADD COLUMN "dailyGiftStreak" INTEGER NOT NULL DEFAULT 0;

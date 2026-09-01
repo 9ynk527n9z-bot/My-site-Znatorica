@@ -1,0 +1,261 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("user")
+  emailConfirmed Boolean  @default(false)
+  emailConfirmedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  starsBalance    Int       @default(0) // бонусные звёзды (например, за ежедневный подарок)
+  lastDailyGiftAt DateTime?
+  dailyGiftStreak Int       @default(0)
+
+  subscriptions Subscription[]
+  payments      Payment[]
+  generatorUses GeneratorUse[]
+  consents      UserConsent[]
+  verificationCodes EmailVerificationCode[]
+  passwordResetCodes PasswordResetCode[]
+
+  @@map("users")
+}
+
+model Subscription {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  plan          String    @default("monthly") // 'monthly' | 'lifetime'
+  status        String    @default("active")
+  startDate     DateTime  @default(now())
+  endDate       DateTime
+  autoRenew     Boolean   @default(true)
+  paymentId     String?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("subscriptions")
+}
+
+model Payment {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  kassaId       String    @unique
+  amount        Float
+  currency      String    @default("RUB")
+  status        String
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("payments")
+}
+
+model Segment {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      String
+
+  subjects  Subject[]
+  topics    Topic[]
+
+  @@map("segments")
+}
+
+model Subject {
+  id        String    @id @default(cuid())
+  slug      String
+  name      String
+  icon      String?
+
+  segmentId String
+  segment   Segment   @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+
+  topics    Topic[]
+
+  @@unique([slug, segmentId])
+  @@map("subjects")
+}
+
+model Topic {
+  id          String    @id @default(cuid())
+  slug        String
+  title       String
+  description String?
+
+  segmentId   String
+  segment     Segment   @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+
+  subjectId   String
+  subject     Subject   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  formats     Format[]
+
+  @@unique([slug, subjectId, segmentId])
+  @@map("topics")
+}
+
+model Format {
+  id        String    @id @default(cuid())
+  type      String
+  content   String?
+  isPublic  Boolean   @default(true)
+  isPaid    Boolean   @default(false)
+
+  topicId   String
+  topic     Topic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+
+  @@unique([topicId, type])
+  @@map("formats")
+}
+
+model GeneratorUse {
+  id        String    @id @default(cuid())
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  sessionId String?
+  type      String
+
+  createdAt DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("generator_uses")
+}
+
+model PageView {
+  id        String    @id @default(cuid())
+  url       String
+  userId    String?
+  sessionId String?   // анонимный идентификатор из cookie znatorika_sid (без привязки к личности)
+
+  createdAt DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("page_views")
+}
+
+model EmailVerificationCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  createdAt DateTime  @default(now())
+
+  @@map("email_verification_codes")
+}
+
+model PasswordResetCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_codes")
+}
+
+model Setting {
+  key       String    @id
+  value     String
+  updatedAt DateTime  @updatedAt
+
+  @@map("settings")
+}
+
+// Редактируемый контент сайта: статьи для родителей и НОВЫЕ темы, создаваемые
+// через админку. 52 старые «цветные» темы остаются в коде и здесь НЕ хранятся.
+// Источник правды в рантайме — эта таблица; я (Claude) правлю тот же контент
+// через prisma/content-seed.json, который на деплое доливается сюда по (kind, slug),
+// НО пропускает строки с manualEdit=true — ручная правка через админку побеждает.
+model ContentPage {
+  id          String   @id @default(cuid())
+  kind        String   // 'article' | 'topic'
+  slug        String
+  title       String
+  description String   @default("")
+
+  // Организационные поля для тем (у статей — null)
+  segment     String?
+  subject     String?
+
+  // Поля статей (у тем обычно null)
+  tag         String?
+  readTime    String?
+  date        String?  // YYYY-MM-DD — дата публикации статьи
+
+  intro       String   @default("")
+  body        Json     // [{ heading: string, body: string[] }]
+  related     Json?    // [{ title: string, url: string }]
+
+  published   Boolean  @default(true)
+  manualEdit  Boolean  @default(false) // true → seed на деплое НЕ трогает эту запись
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([kind, slug])
+  @@map("content_pages")
+}
+
+// Журнал действий администратора — подотчётность по ФЗ-152 (особенно действия
+// с персональными данными: просмотр/экспорт/удаление пользователей).
+model AdminLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  adminEmail String
+  action     String   // 'content.create' | 'content.update' | 'content.delete' | 'user.export' | 'user.delete' | ...
+  entity     String   // 'content' | 'user' | 'payment' | 'settings'
+  entityId   String?
+  detail     String?  // краткое человекочитаемое описание
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("admin_logs")
+}
+
+model UserConsent {
+  id                  String    @id @default(cuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  policyVersion       String    @default("1.0")
+  consentedAt         DateTime  @default(now())
+  emailConfirmedAt    DateTime?
+  revokedAt           DateTime?
+
+  ipHashAuth          String?   // Хеш IP при согласии
+  ipHashEmail         String?   // Хеш IP при подтверждении email
+
+  consentType         String    @default("general") // general, payment, marketing
+  isActive            Boolean   @default(false)     // true только после email подтверждения
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("user_consents")
+}

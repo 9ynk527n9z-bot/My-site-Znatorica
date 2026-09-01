@@ -1,0 +1,107 @@
+{
+  "grade": 3,
+  "subject": "angliyskiy",
+  "subjectTitle": "Английский язык",
+  "variants": [
+    {
+      "id": 1,
+      "tasks": [
+        { "n": 1, "audio": "Hi! My name is Ben. I have a cat. Her name is Molly. Molly is black and white.", "text": "Прослушай текст дважды. Ответь: What is the name of Ben's cat? Options: 1. Molly  2. Max  3. Fluffy", "answer": "Molly (1)." },
+        { "n": 2, "reading": "This is Lily. Lily has a dog. The dog is brown. Lily likes to play with her dog in the park.", "text": "Прочитай текст. Верно (True) или неверно (False): «Lily has a cat».", "answer": "False — у Лили собака, а не кошка." },
+        { "n": 3, "text": "Complete the sentence: «I ___ (like) apples.»", "answer": "like" },
+        { "n": 4, "text": "Choose the correct plural form: «I have two ___ (cat).»", "answer": "cats" },
+        { "n": 5, "reading": "My name is Tom. I am 8 years old. My favourite colour is blue.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite colour: ___", "answer": "Name: Tom. Age: 8. Favourite colour: blue." }
+      ]
+    },
+    {
+      "id": 2,
+      "tasks": [
+        { "n": 1, "audio": "Hello! My name is Kate. I have a brother. His name is Jack. Jack is 7 years old.", "text": "Прослушай текст дважды. Ответь: How old is Jack? Options: 1. 6  2. 7  3. 8", "answer": "7 (2)." },
+        { "n": 2, "reading": "This is Sam. Sam has a sister. Her name is Amy. They like to play together in the garden.", "text": "Прочитай текст. Верно (True) или неверно (False): «Sam has a brother».", "answer": "False — у Сэма сестра, а не брат." },
+        { "n": 3, "text": "Complete the sentence: «She ___ (play) with her sister.»", "answer": "plays" },
+        { "n": 4, "text": "Choose the correct plural form: «I have three ___ (brother).»", "answer": "brothers" },
+        { "n": 5, "reading": "My name is Emily. I am 9 years old. My favourite animal is a rabbit.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite animal: ___", "answer": "Name: Emily. Age: 9. Favourite animal: rabbit." }
+      ]
+    },
+    {
+      "id": 3,
+      "tasks": [
+        { "n": 1, "audio": "Hi! I am Alex. I go to school every day. My favourite lesson is Art.", "text": "Прослушай текст дважды. Ответь: What is Alex's favourite lesson? Options: 1. Maths  2. Art  3. Music", "answer": "Art (2)." },
+        { "n": 2, "reading": "This is Nina. Her school starts at nine o'clock. Nina likes her teacher very much.", "text": "Прочитай текст. Верно (True) или неверно (False): «Nina's school starts at eight o'clock».", "answer": "False — школа начинается в девять, а не в восемь." },
+        { "n": 3, "text": "Complete the sentence: «I ___ (go) to school every day.»", "answer": "go" },
+        { "n": 4, "text": "Choose the correct plural form: «There are twenty ___ (pupil) in the class.»", "answer": "pupils" },
+        { "n": 5, "reading": "My name is Jack. I am 8 years old. My favourite subject is Music.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite subject: ___", "answer": "Name: Jack. Age: 8. Favourite subject: Music." }
+      ]
+    },
+    {
+      "id": 4,
+      "tasks": [
+        { "n": 1, "audio": "Hello! My name is Molly. Last weekend I visited my grandmother. We baked a cake together.", "text": "Прослушай текст дважды. Ответь: Who did Molly visit? Options: 1. her friend  2. her grandmother  3. her teacher", "answer": "her grandmother (2)." },
+        { "n": 2, "reading": "Last Saturday, Leo went to the park with his father. They played football. Leo was very happy.", "text": "Прочитай текст. Верно (True) или неверно (False): «Leo went to the park with his mother».", "answer": "False — Лео ходил в парк с отцом, а не с матерью." },
+        { "n": 3, "text": "Complete the sentence with the past form: «Leo ___ (play) football.»", "answer": "played" },
+        { "n": 4, "text": "Choose the correct plural form: «We baked two ___ (cake).»", "answer": "cakes" },
+        { "n": 5, "reading": "My name is Grace. I am 9 years old. My favourite hobby is drawing.", "text": "Заполни анкету: Name: ___, Age: ___, Hobby: ___", "answer": "Name: Grace. Age: 9. Hobby: drawing." }
+      ]
+    },
+    {
+      "id": 5,
+      "tasks": [
+        { "n": 1, "audio": "Hi! My name is Oliver. I love winter. I like to make a snowman with my friends.", "text": "Прослушай текст дважды. Ответь: What is Oliver's favourite season? Options: 1. summer  2. winter  3. spring", "answer": "winter (2)." },
+        { "n": 2, "reading": "Today it is snowing. Ella is wearing a warm hat and a coat. She likes cold weather.", "text": "Прочитай текст. Верно (True) или неверно (False): «It is raining today».", "answer": "False — сегодня идёт снег, а не дождь." },
+        { "n": 3, "text": "Complete the sentence: «It ___ (snow) in winter.»", "answer": "snows" },
+        { "n": 4, "text": "Choose the correct plural form: «I have two warm ___ (hat).»", "answer": "hats" },
+        { "n": 5, "reading": "My name is Daisy. I am 8 years old. My favourite season is summer.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite season: ___", "answer": "Name: Daisy. Age: 8. Favourite season: summer." }
+      ]
+    },
+    {
+      "id": 6,
+      "tasks": [
+        { "n": 1, "audio": "Hello! I am Max. My favourite sport is football. I play with my friends every Friday.", "text": "Прослушай текст дважды. Ответь: When does Max play football? Options: 1. every Monday  2. every Friday  3. every Sunday", "answer": "every Friday (2)." },
+        { "n": 2, "reading": "Zoe loves swimming. She goes to the pool with her mother. Zoe can swim very well.", "text": "Прочитай текст. Верно (True) или неверно (False): «Zoe goes to the pool with her father».", "answer": "False — Зоя ходит в бассейн с матерью, а не с отцом." },
+        { "n": 3, "text": "Complete the sentence: «Zoe ___ (swim) very well.»", "answer": "swims" },
+        { "n": 4, "text": "Choose the correct plural form: «There are two ___ (ball) in the garden.»", "answer": "balls" },
+        { "n": 5, "reading": "My name is Ryan. I am 9 years old. My favourite sport is basketball.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite sport: ___", "answer": "Name: Ryan. Age: 9. Favourite sport: basketball." }
+      ]
+    },
+    {
+      "id": 7,
+      "tasks": [
+        { "n": 1, "audio": "Hi! My name is Isla. My favourite food is pizza. I eat it every Friday with my family.", "text": "Прослушай текст дважды. Ответь: What is Isla's favourite food? Options: 1. pasta  2. pizza  3. soup", "answer": "pizza (2)." },
+        { "n": 2, "reading": "Noah likes apples. He eats one every day. His mother says apples are very healthy.", "text": "Прочитай текст. Верно (True) или неверно (False): «Noah likes bananas».", "answer": "False — Ноа любит яблоки, а не бананы." },
+        { "n": 3, "text": "Complete the sentence: «Noah ___ (eat) an apple every day.»", "answer": "eats" },
+        { "n": 4, "text": "Choose the correct plural form: «I have two ___ (apple).»", "answer": "apples" },
+        { "n": 5, "reading": "My name is Poppy. I am 8 years old. My favourite food is pasta.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite food: ___", "answer": "Name: Poppy. Age: 8. Favourite food: pasta." }
+      ]
+    },
+    {
+      "id": 8,
+      "tasks": [
+        { "n": 1, "audio": "Hello! My name is George. My room is small but cosy. I have a red bed and many books.", "text": "Прослушай текст дважды. Ответь: What colour is George's bed? Options: 1. blue  2. red  3. green", "answer": "red (2)." },
+        { "n": 2, "reading": "Ivy's room has a big window. There is a shelf for her toys. Ivy likes her room very much.", "text": "Прочитай текст. Верно (True) или неверно (False): «Ivy's room has a small window».", "answer": "False — в комнате Айви большое окно, а не маленькое." },
+        { "n": 3, "text": "Complete with is/are: «There ___ a shelf in Ivy's room.»", "answer": "is" },
+        { "n": 4, "text": "Choose the correct plural form: «George has five ___ (book).»", "answer": "books" },
+        { "n": 5, "reading": "My name is Freddie. I am 9 years old. My favourite colour is green.", "text": "Заполни анкету: Name: ___, Age: ___, Favourite colour: ___", "answer": "Name: Freddie. Age: 9. Favourite colour: green." }
+      ]
+    },
+    {
+      "id": 9,
+      "tasks": [
+        { "n": 1, "audio": "Hi! My name is Ruby. My birthday is in June. Last year I had a party with my friends.", "text": "Прослушай текст дважды. Ответь: When is Ruby's birthday? Options: 1. in May  2. in June  3. in July", "answer": "in June (2)." },
+        { "n": 2, "reading": "William's party was on Saturday. His friends came at four o'clock. They ate a big cake.", "text": "Прочитай текст. Верно (True) или неверно (False): «The party was on Sunday».", "answer": "False — вечеринка была в субботу, а не в воскресенье." },
+        { "n": 3, "text": "Complete the sentence with the past form: «They ___ (eat) a big cake.»", "answer": "ate" },
+        { "n": 4, "text": "Choose the correct plural form: «There were ten ___ (child) at the party.»", "answer": "children" },
+        { "n": 5, "reading": "My name is Nancy. I am 8 years old. My birthday is in September.", "text": "Заполни анкету: Name: ___, Age: ___, Birthday month: ___", "answer": "Name: Nancy. Age: 8. Birthday month: September." }
+      ]
+    },
+    {
+      "id": 10,
+      "tasks": [
+        { "n": 1, "audio": "Hello! My name is Charlie. Last summer my family went to the seaside. I swam every day.", "text": "Прослушай текст дважды. Ответь: Where did Charlie's family go? Options: 1. to the mountains  2. to the seaside  3. to the city", "answer": "to the seaside (2)." },
+        { "n": 2, "reading": "Zoe's family travelled to Scotland. They visited an old castle. Zoe took a lot of photos.", "text": "Прочитай текст. Верно (True) или неверно (False): «Zoe's family travelled to France».", "answer": "False — семья ездила в Шотландию, а не во Францию." },
+        { "n": 3, "text": "Complete the sentence with the past form: «Zoe's family ___ (travel) to Scotland.»", "answer": "travelled" },
+        { "n": 4, "text": "Choose the correct plural form: «Zoe took a lot of ___ (photo).»", "answer": "photos" },
+        { "n": 5, "reading": "My name is Ethan. I am 9 years old. Last summer I went to Spain.", "text": "Заполни анкету: Name: ___, Age: ___, Holiday destination: ___", "answer": "Name: Ethan. Age: 9. Holiday destination: Spain." }
+      ]
+    }
+  ]
+}

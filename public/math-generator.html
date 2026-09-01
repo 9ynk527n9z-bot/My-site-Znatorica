@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Знаторика — Генератор примеров</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Russo+One&display=swap');
+
+  :root {
+    --bg: #1a0e2e;
+    --bg2: #221540;
+    --card: #2d1b55;
+    --card2: #3a2268;
+    --accent: #b57bee;
+    --accent2: #d4a8ff;
+    --gold: #f5c842;
+    --text: #f0e8ff;
+    --text2: #c9aef5;
+    --muted: #7a5faa;
+    --white: #ffffff;
+    --radius: 16px;
+    --shadow: 0 8px 32px rgba(100,40,200,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #2A1B4D 0%, #1E1035 100%);
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1.5px solid rgba(181,123,238,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  /* SVG LOGO */
+  .logo-svg { flex-shrink: 0; }
+
+  .header-titles { flex: 1; }
+  .header-titles h1 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 18px;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+  .header-titles span {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── MAIN ── */
+  .main { padding: 16px 12px 100px; max-width: 480px; margin: 0 auto; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 18px 0 8px 4px;
+  }
+
+  /* ── MODE GRID ── */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .mode-btn {
+    background: var(--card);
+    border: 1.5px solid rgba(181,123,238,0.15);
+    border-radius: var(--radius);
+    padding: 12px 10px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .mode-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(181,123,238,0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .mode-btn:active::before { opacity: 1; }
+  .mode-btn.active {
+    background: linear-gradient(135deg, #5c2d99 0%, #3a2268 100%);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(181,123,238,0.25), var(--shadow);
+  }
+  .mode-btn .mode-icon { font-size: 22px; margin-bottom: 4px; display: block; }
+  .mode-btn .mode-name { font-size: 11px; font-weight: 700; color: var(--text2); line-height: 1.3; }
+  .mode-btn .mode-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .mode-btn.active .mode-name { color: var(--accent2); }
+
+  /* wide button for last mode */
+  .modes-grid .mode-btn.wide { grid-column: 1 / -1; }
+
+  /* ── SETTINGS CARD ── */
+  .settings-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid rgba(181,123,238,0.15);
+    padding: 14px 14px;
+    margin-bottom: 8px;
+  }
+
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .setting-row:last-child { margin-bottom: 0; }
+  .setting-label { font-size: 13px; font-weight: 700; color: var(--text2); }
+  .setting-hint { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+  /* Range slider */
+  .slider-wrap { display: flex; align-items: center; gap: 8px; }
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 110px;
+    height: 4px;
+    background: var(--card2);
+    border-radius: 4px;
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(181,123,238,0.5);
+  }
+  .slider-val {
+    min-width: 32px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent2);
+  }
+
+  /* Number buttons */
+  .num-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .num-btn {
+    background: var(--card2);
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    padding: 6px 11px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .num-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent2);
+  }
+
+  /* Toggle */
+  .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+  .toggle {
+    position: relative;
+    width: 40px; height: 22px;
+    background: var(--card2);
+    border-radius: 11px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--accent); }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .toggle.on::after { transform: translateX(18px); }
+
+  /* ── GENERATE BTN ── */
+  .generate-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #8b3fd4 0%, #5c2d99 100%);
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(140,60,220,0.45);
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+  .generate-btn:active { transform: scale(0.97); }
+  .generate-btn .btn-icon { margin-right: 6px; }
+
+  /* ── WORKSHEET ── */
+  #worksheet { display: none; }
+
+  .ws-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .ws-title { font-size: 15px; font-weight: 800; color: var(--accent2); }
+  .ws-actions { display: flex; gap: 8px; }
+
+  .back-btn, .print-btn {
+    background: var(--card);
+    border: 1.5px solid rgba(181,123,238,0.2);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .back-btn:active, .print-btn:active { opacity: 0.8; }
+  .print-btn {
+    background: linear-gradient(135deg, #5c2d99, #3a2268);
+    color: var(--accent2);
+    border-color: var(--accent);
+  }
+  .print-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Sheet itself */
+  .sheet {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid rgba(181,123,238,0.15);
+    padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .sheet-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(181,123,238,0.15);
+  }
+  .sheet-info { flex: 1; }
+  .sheet-subject {
+    font-family: 'Russo One', sans-serif;
+    font-size: 13px;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .sheet-meta { font-size: 10px; color: var(--muted); }
+  .name-line {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    border-bottom: 1px dotted var(--muted);
+    width: 100%;
+    max-width: 140px;
+    padding-bottom: 2px;
+  }
+  .sheet-logo { flex-shrink: 0; margin-left: 10px; }
+
+  /* 2-column grid */
+  .examples-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+  }
+  .example-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 6px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(181,123,238,0.08);
+    min-height: 34px;
+  }
+  .ex-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    min-width: 16px;
+    text-align: right;
+  }
+  .ex-expr {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    flex: 1;
+    letter-spacing: 0.3px;
+  }
+  .ex-answer {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 28px;
+    text-align: right;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .ex-answer.show { opacity: 1; }
+  .ex-line {
+    flex: 0 0 28px;
+    height: 1px;
+    background: var(--muted);
+    opacity: 0.4;
+  }
+
+  /* Answer toggle */
+  .answer-toggle-btn {
+    margin-top: 12px;
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid rgba(181,123,238,0.25);
+    border-radius: 10px;
+    padding: 9px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .answer-toggle-btn:active { opacity: 0.7; }
+
+  /* ── PRINT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,4,22,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 18px;
+    border: 1.5px solid rgba(181,123,238,0.25);
+    padding: 22px 18px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .modal h3 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 16px;
+    color: var(--accent2);
+    margin-bottom: 6px;
+  }
+  .modal p { font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .modal-btns { display: flex; flex-direction: column; gap: 8px; }
+  .modal-btn {
+    background: linear-gradient(135deg, #5c2d99, #3a2268);
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--accent2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-btn:active { transform: scale(0.97); }
+  .modal-btn.sec {
+    background: transparent;
+    border: 1.5px solid rgba(181,123,238,0.2);
+    color: var(--muted);
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: white !important; color: black !important; }
+    .header, .main > *:not(#worksheet) { display: none !important; }
+    #worksheet { display: block !important; }
+    .ws-header, .answer-toggle-btn, .back-btn, .print-btn { display: none !important; }
+    .sheet { background: white !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+    .sheet-top { border-color: #ccc !important; }
+    .sheet-subject { color: #5c2d99 !important; }
+    .sheet-meta, .ex-num { color: #999 !important; }
+    .ex-expr { color: black !important; font-size: 16px !important; }
+    .example-item { border-color: #eee !important; background: white !important; }
+    .name-line { border-color: #999 !important; }
+    .ex-answer.show { color: #5c2d99 !important; }
+    .modal-overlay { display: none !important; }
+    @page { size: A4; margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <svg class="logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="12" fill="url(#lg)"/>
+    <text x="20" y="27" text-anchor="middle" font-family="Russo One, sans-serif" font-size="16" fill="white" letter-spacing="-0.5">З</text>
+    <circle cx="31" cy="10" r="5" fill="#f5c842"/>
+    <text x="31" y="14" text-anchor="middle" font-family="Nunito, sans-serif" font-size="7" font-weight="900" fill="#2d1b55">★</text>
+    <defs>
+      <linearGradient id="lg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#7c3fc4"/>
+        <stop offset="100%" stop-color="#3a1e7a"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="header-titles">
+    <h1>Знаторика</h1>
+    <span>генератор примеров</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- SETUP PANEL -->
+  <div id="setup">
+
+    <div class="section-label">Режим примеров</div>
+    <div class="modes-grid">
+      <button class="mode-btn active" data-mode="add" onclick="selectMode(this)">
+        <span class="mode-icon">➕</span>
+        <div class="mode-name">Сложение</div>
+      </button>
+      <button class="mode-btn" data-mode="sub" onclick="selectMode(this)">
+        <span class="mode-icon">➖</span>
+        <div class="mode-name">Вычитание</div>
+      </button>
+      <button class="mode-btn" data-mode="addsub" onclick="selectMode(this)">
+        <span class="mode-icon">➕➖</span>
+        <div class="mode-name">Сложение и вычитание</div>
+        <div class="mode-sub">смешанные</div>
+      </button>
+      <button class="mode-btn" data-mode="mul" onclick="selectMode(this)">
+        <span class="mode-icon">✖️</span>
+        <div class="mode-name">Умножение</div>
+      </button>
+      <button class="mode-btn" data-mode="div" onclick="selectMode(this)">
+        <span class="mode-icon">➗</span>
+        <div class="mode-name">Деление</div>
+      </button>
+      <button class="mode-btn" data-mode="muldiv" onclick="selectMode(this)">
+        <span class="mode-icon">✖️➗</span>
+        <div class="mode-name">Умножение и деление</div>
+        <div class="mode-sub">смешанные</div>
+      </button>
+      <button class="mode-btn wide" data-mode="all" onclick="selectMode(this)">
+        <span class="mode-icon">🔀</span>
+        <div class="mode-name">Все действия</div>
+        <div class="mode-sub">+, −, ×, ÷ — смешанные</div>
+      </button>
+    </div>
+
+    <div class="section-label">Настройки</div>
+    <div class="settings-card">
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Количество примеров</div>
+          <div class="setting-hint">2 столбика × N строк</div>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="countSlider" min="10" max="40" step="2" value="20"
+            oninput="document.getElementById('countVal').textContent=this.value">
+          <div class="slider-val" id="countVal">20</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Числа до</div>
+          <div class="setting-hint">максимальное значение</div>
+        </div>
+        <div class="num-btns" id="maxBtns">
+          <button class="num-btn" onclick="setMax(this,10)">10</button>
+          <button class="num-btn" onclick="setMax(this,20)">20</button>
+          <button class="num-btn active" onclick="setMax(this,100)">100</button>
+          <button class="num-btn" onclick="setMax(this,1000)">1000</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Показывать ответы</div>
+          <div class="setting-hint">для проверки работы</div>
+        </div>
+        <button class="toggle" id="ansToggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+
+    </div>
+
+    <div id="quotaBanner" style="display:none;margin-bottom:12px;padding:10px 16px;border-radius:12px;font-size:14px;text-align:center;"></div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generate()">
+      <span class="btn-icon">✨</span> Создать карточку
+    </button>
+
+  </div><!-- /setup -->
+
+  <!-- WORKSHEET PANEL -->
+  <div id="worksheet">
+    <div class="ws-header">
+      <div class="ws-title" id="wsTitle">Математика</div>
+      <div class="ws-actions">
+        <button class="back-btn" onclick="goBack()">← Назад</button>
+        <button class="print-btn" onclick="openPrint()">🖨 Печать</button>
+        <button class="print-btn" id="pdfBtn" onclick="downloadPDF()">📄 PDF</button>
+        <button class="print-btn" onclick="downloadWord()">📝 Word</button>
+        <button class="print-btn" id="pngBtn" onclick="downloadPNG()">🖼 PNG</button>
+      </div>
+    </div>
+
+    <div class="sheet" id="sheetContent">
+      <!-- generated dynamically -->
+    </div>
+
+    <button class="answer-toggle-btn" id="ansToggleBtn" onclick="toggleAnswers()">
+      👁 Показать ответы
+    </button>
+
+    <button class="generate-btn" style="margin-top:10px" onclick="regenerate()">
+      🔄 Новый вариант
+    </button>
+  </div>
+
+</main><!-- /main -->
+
+<!-- PRINT MODAL -->
+<div class="modal-overlay" id="printModal">
+  <div class="modal">
+    <h3>🖨 Печать карточки</h3>
+    <p>Откроется диалог печати браузера.<br>Рекомендуем: альбомная ориентация, без полей.</p>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="doPrint()">Распечатать</button>
+      <button class="modal-btn sec" onclick="closePrint()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMode = 'add';
+  let currentMax = 100;
+  let answersShown = false;
+  let lastExamples = [];
+
+  const MODES = {
+    add:    { label: 'Сложение', ops: ['+'] },
+    sub:    { label: 'Вычитание', ops: ['-'] },
+    addsub: { label: 'Сложение и вычитание', ops: ['+', '-'] },
+    mul:    { label: 'Умножение', ops: ['*'] },
+    div:    { label: 'Деление', ops: ['/'] },
+    muldiv: { label: 'Умножение и деление', ops: ['*', '/'] },
+    all:    { label: 'Все действия', ops: ['+', '-', '*', '/'] },
+  };
+
+  function selectMode(el) {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentMode = el.dataset.mode;
+  }
+
+  function setMax(el, val) {
+    document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentMax = val;
+  }
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function makeExample(ops, max) {
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    let a, b, ans, expr;
+
+    if (op === '+') {
+      a = rand(1, max - 1);
+      b = rand(1, max - a);
+      ans = a + b;
+      expr = `${a} + ${b} =`;
+    } else if (op === '-') {
+      a = rand(2, max);
+      b = rand(1, a - 1);
+      ans = a - b;
+      expr = `${a} − ${b} =`;
+    } else if (op === '*') {
+      // limit multipliers sensibly
+      const limit = Math.min(max, 20);
+      a = rand(2, limit);
+      b = rand(2, limit);
+      ans = a * b;
+      expr = `${a} × ${b} =`;
+    } else if (op === '/') {
+      b = rand(2, Math.min(max, 12));
+      ans = rand(1, Math.min(max, 12));
+      a = b * ans;
+      expr = `${a} ÷ ${b} =`;
+    }
+
+    return { expr, ans };
+  }
+
+  function generate() {
+    if (znQuota.loaded && !znQuota.unlimited && znQuota.remaining <= 0) return;
+
+    const mode = MODES[currentMode];
+    const count = parseInt(document.getElementById('countSlider').value);
+    const showAns = document.getElementById('ansToggle').classList.contains('on');
+
+    lastExamples = [];
+    for (let i = 0; i < count; i++) {
+      lastExamples.push(makeExample(mode.ops, currentMax));
+    }
+    answersShown = showAns;
+    renderSheet(mode.label, count, showAns);
+
+    const token = localStorage.getItem('token');
+    fetch('/api/track', {
+      method: 'POST',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: 'Bearer ' + token } : {}),
+      body: JSON.stringify({ type: 'generator:math' }),
+    }).catch(() => {});
+    consumeQuota();
+  }
+
+  function regenerate() {
+    generate();
+  }
+
+  function renderSheet(modeLabel, count, showAns) {
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('worksheet').style.display = 'block';
+    document.getElementById('wsTitle').textContent = modeLabel;
+
+    const btn = document.getElementById('ansToggleBtn');
+    btn.textContent = showAns ? '🙈 Скрыть ответы' : '👁 Показать ответы';
+
+    const today = new Date().toLocaleDateString('ru-RU');
+
+    let exHtml = '';
+    lastExamples.forEach((ex, i) => {
+      exHtml += `
+        <div class="example-item">
+          <span class="ex-num">${i+1}.</span>
+          <span class="ex-expr">${ex.expr}</span>
+          <span class="ex-answer ${showAns ? 'show' : ''}" data-ans="${ex.ans}">${ex.ans}</span>
+        </div>`;
+    });
+
+    document.getElementById('sheetContent').innerHTML = `
+      <div class="sheet-top">
+        <div class="sheet-info">
+          <div class="sheet-subject">Математика · ${modeLabel}</div>
+          <div class="sheet-meta">Числа до ${currentMax} · ${count} примеров · ${today}</div>
+          <div class="name-line">Имя: ___________</div>
+        </div>
+        <div class="sheet-logo">
+          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="12" fill="url(#lg2)"/>
+            <text x="20" y="27" text-anchor="middle" font-family="Russo One, sans-serif" font-size="16" fill="white" letter-spacing="-0.5">З</text>
+            <circle cx="31" cy="10" r="5" fill="#f5c842"/>
+            <text x="31" y="14" text-anchor="middle" font-family="Nunito, sans-serif" font-size="7" font-weight="900" fill="#2d1b55">★</text>
+            <defs>
+              <linearGradient id="lg2" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#7c3fc4"/>
+                <stop offset="100%" stop-color="#3a1e7a"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="examples-grid">${exHtml}</div>
+    `;
+  }
+
+  function toggleAnswers() {
+    answersShown = !answersShown;
+    document.querySelectorAll('.ex-answer').forEach(el => {
+      el.classList.toggle('show', answersShown);
+    });
+    document.getElementById('ansToggleBtn').textContent =
+      answersShown ? '🙈 Скрыть ответы' : '👁 Показать ответы';
+  }
+
+  function goBack() {
+    document.getElementById('worksheet').style.display = 'none';
+    document.getElementById('setup').style.display = 'block';
+  }
+
+  function openPrint() {
+    document.getElementById('printModal').classList.add('open');
+  }
+
+  function closePrint() {
+    document.getElementById('printModal').classList.remove('open');
+  }
+
+  // Защита материалов: временная подпись на экспортируемом листе — убирается сразу
+  // после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
+  // из localStorage — тот же токен, что использует остальной сайт) — только мелкое
+  // доменное имя без «юридической» формулировки, для остальных — полная подпись.
+  let znIsSubscriber = false;
+  (function checkSubscriber() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
+        .catch(() => {});
+    } catch (e) {}
+  })();
+
+  function addWatermark(el) {
+    const wm = document.createElement('div');
+    wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
+    wm.style.cssText = znIsSubscriber
+      ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
+      : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
+    el.appendChild(wm);
+    return wm;
+  }
+
+  // Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
+  // без лимита у подписчиков) — та же серверная проверка /api/generator/quota,
+  // что используют React-генераторы.
+  let znQuota = { remaining: 5, limit: 5, unlimited: false, loaded: false };
+
+  function renderQuotaBanner() {
+    const el = document.getElementById('quotaBanner');
+    const btn = document.getElementById('generateBtn');
+    if (!znQuota.loaded || znQuota.unlimited) {
+      el.style.display = 'none';
+      if (btn) btn.disabled = false;
+      return;
+    }
+    el.style.display = 'block';
+    if (znQuota.remaining <= 0) {
+      el.style.background = '#fefce8';
+      el.style.color = '#a16207';
+      el.innerHTML = `Бесплатный лимит на сегодня исчерпан (${znQuota.limit} из ${znQuota.limit}). Лимит обновится завтра, или <a href="/podpiska" target="_top" style="color:#ea580c;font-weight:bold;">оформите подписку</a>.`;
+      if (btn) btn.disabled = true;
+    } else {
+      el.style.background = '#f3f4f6';
+      el.style.color = '#555';
+      el.innerHTML = `Осталось ${znQuota.remaining} из ${znQuota.limit} бесплатных генераций сегодня · <a href="/podpiska" target="_top" style="color:#ea580c;">снять лимит</a>`;
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  function refreshQuota() {
+    const token = localStorage.getItem('token');
+    fetch('/api/generator/quota', { headers: token ? { Authorization: 'Bearer ' + token } : {} })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d) return;
+        znQuota = { remaining: d.unlimited ? Infinity : d.remaining, limit: d.limit, unlimited: !!d.unlimited, loaded: true };
+        renderQuotaBanner();
+      })
+      .catch(() => {});
+  }
+  refreshQuota();
+
+  // Вызывать сразу после генерации вместо refreshQuota(): трекинг в /api/track
+  // пишется асинхронно, и немедленный refreshQuota() иногда обгоняет ещё не
+  // закоммиченную запись (виден старый счётчик). Уменьшаем remaining локально
+  // сразу — счётчик на экране верный мгновенно, а через секунду сверяем с сервером.
+  function consumeQuota() {
+    if (!znQuota.unlimited) znQuota.remaining = Math.max(0, znQuota.remaining - 1);
+    renderQuotaBanner();
+    setTimeout(refreshQuota, 1000);
+  }
+
+  function doPrint() {
+    closePrint();
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    window.addEventListener('afterprint', () => wm.remove(), { once: true });
+    setTimeout(() => window.print(), 100);
+  }
+
+  async function downloadPDF() {
+    const btn = document.getElementById('pdfBtn');
+    btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    try {
+      const { jsPDF } = window.jspdf;
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
+      const r = canvas.width / canvas.height;
+      let dW = aW, dH = dW / r;
+      if (dH > aH) { dH = aH; dW = dH * r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
+      pdf.save('примеры.pdf');
+    } catch (e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
+    wm.remove();
+    btn.disabled = false; btn.textContent = label;
+  }
+
+  async function downloadPNG() {
+    const btn = document.getElementById('pngBtn');
+    btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    try {
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'примеры.png'; a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    } catch (e) { alert('Ошибка при создании PNG. Попробуйте ещё раз.'); }
+    wm.remove();
+    btn.disabled = false; btn.textContent = label;
+  }
+
+  function downloadWord() {
+    const el = document.getElementById('sheetContent');
+    const wm = addWatermark(el);
+    const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8"><title>Примеры</title></head>
+    <body>${el.innerHTML}</body></html>`;
+    wm.remove();
+    const blob = new Blob(['﻿', html], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'примеры.doc'; a.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>

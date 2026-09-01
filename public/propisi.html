@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор прописей — Английский</title>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Nunito:wght@700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2A1B4D 0%, #1E1035 100%);
+  overflow-x: hidden;
+}
+
+.app {
+  position: relative; z-index: 1;
+  max-width: 820px; margin: 0 auto;
+  padding: 28px 18px 70px;
+}
+
+/* ── ШАПКА ── */
+.header { text-align: center; margin-bottom: 28px; }
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #ff6fb7, #ff9f43);
+  color: #fff; font-size: 16px; font-weight: 900;
+  padding: 8px 24px; border-radius: 30px; margin-bottom: 14px;
+  box-shadow: 0 4px 18px rgba(255,110,180,.45); letter-spacing: .5px;
+}
+.header h1 {
+  font-family: 'Russo One', sans-serif;
+  font-size: clamp(30px, 6.5vw, 50px); color: #fff;
+  text-shadow: 0 4px 20px rgba(0,0,0,.18), 0 2px 0 rgba(0,0,0,.1);
+  line-height: 1.1;
+}
+.header h1 em {
+  font-style: normal; color: #fff700;
+  text-shadow: 0 4px 20px rgba(200,150,0,.4), 0 2px 0 #e09400;
+}
+/* подзаголовок — в 2 раза крупнее базового 16px */
+.header p {
+  margin-top: 12px; font-size: 22px;
+  color: rgba(255,255,255,.93); font-weight: 800;
+}
+
+/* ── КАРТОЧКИ ── */
+.card {
+  background: rgba(255,255,255,.91);
+  backdrop-filter: blur(14px);
+  border-radius: 26px; padding: 24px 26px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.11), 0 2px 8px rgba(0,0,0,.06);
+  margin-bottom: 18px;
+  border: 2.5px solid rgba(255,255,255,.78);
+}
+/* заголовок карточки — в 2 раза крупнее старого 13px */
+.card-title {
+  font-size: 26px; font-weight: 900; color: #555;
+  letter-spacing: .3px; margin-bottom: 16px;
+}
+
+/* ── ПОЛЕ ВВОДА (английский текст для родителей) ── */
+textarea {
+  width: 100%; min-height: 110px; max-height: 240px;
+  border: 3px solid #e0e0e0; border-radius: 16px;
+  padding: 14px 18px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 26px;
+  color: #333; resize: vertical; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  background: #fff; line-height: 1.55;
+}
+textarea:focus { border-color: #ff6fb7; box-shadow: 0 0 0 4px rgba(255,111,183,.15); }
+textarea::placeholder { color: #ccc; font-family: 'Patrick Hand', cursive; font-size: 22px; }
+/* счётчик строк — в 2 раза крупнее старого 13px */
+.char-counter { text-align: right; font-size: 20px; font-weight: 700; margin-top: 6px; color: #aaa; }
+.char-counter.warn { color: #ff6b6b; }
+
+/* ── КНОПКИ РЕЖИМА ── */
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
+
+.option-card {
+  border: 3.5px solid transparent; border-radius: 20px; padding: 18px 20px;
+  cursor: pointer; position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+  transition: transform .15s, box-shadow .2s;
+}
+.option-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.14); }
+
+.option-card[data-mode="light"]   { background: linear-gradient(135deg, #ffe259, #ffa751); border-color: #ffa751; }
+.option-card[data-mode="dotted"]  { background: linear-gradient(135deg, #56ccf2, #2f80ed); border-color: #2f80ed; }
+.option-card[data-mode="outline"] { background: linear-gradient(135deg, #f857a6, #ff5858); border-color: #ff5858; }
+.option-card[data-mode="none"]    { background: linear-gradient(135deg, #a18cd1, #fbc2eb); border-color: #a18cd1; }
+
+.option-card .option-icon  { font-size: 34px; margin-bottom: 6px; }
+/* подписи кнопок режима — в 2 раза крупнее старого 16px */
+.option-card .option-label { font-size: 22px; font-weight: 900; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.18); }
+/* описание кнопок — в 2 раза крупнее старого 12px */
+.option-card .option-desc  { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.88); margin-top: 4px; }
+
+.option-card.active {
+  border-color: #fff !important;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.6), 0 8px 28px rgba(0,0,0,.15);
+  transform: translateY(-2px) scale(1.03);
+}
+.option-card.active::after {
+  content: '✓';
+  position: absolute; top: 10px; right: 12px;
+  width: 30px; height: 30px;
+  background: #fff; color: #333; border-radius: 50%;
+  font-size: 17px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+/* ── ВЫПАДАЮЩИЕ СПИСКИ ── */
+.selects-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+@media (max-width: 500px) { .selects-row { grid-template-columns: 1fr; } }
+
+/* метки над списками — в 2 раза крупнее старого 12px */
+.field-group label {
+  display: block; font-size: 18px; font-weight: 900; color: #888;
+  letter-spacing: .3px; margin-bottom: 8px;
+}
+/* текст внутри списков — в 2 раза крупнее старого 15px */
+select {
+  width: 100%; border: 3px solid #e8e8e8; border-radius: 14px;
+  padding: 14px 40px 14px 16px;
+  font-family: 'Nunito', sans-serif; font-size: 20px; font-weight: 800; color: #333;
+  background: #fff; outline: none; cursor: pointer; transition: border-color .2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23ff6fb7' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+select:focus { border-color: #ff6fb7; }
+
+.divider { border: none; border-top: 2.5px dashed #e0e0e0; margin: 20px 0; }
+
+/* ── ТУМБЛЕР ── */
+.repeat-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+/* текст тумблера — в 2 раза крупнее старого 15px */
+.repeat-row > span { font-size: 20px; font-weight: 800; color: #444; }
+.toggle { position: relative; width: 60px; height: 34px; cursor: pointer; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track { position: absolute; inset: 0; background: #ddd; border-radius: 17px; transition: background .25s; }
+.toggle input:checked ~ .toggle-track { background: linear-gradient(90deg, #ff6fb7, #ff9f43); }
+.toggle-thumb {
+  position: absolute; top: 4px; left: 4px; width: 26px; height: 26px;
+  background: #fff; border-radius: 50%; transition: transform .25s;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+.toggle input:checked ~ .toggle-thumb { transform: translateX(26px); }
+
+/* ── КНОПКА СОЗДАТЬ ── */
+.btn-generate {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #ff9f43, #ffd93d);
+  background-size: 200% 200%; animation: shimmer 3s ease infinite;
+  color: #fff; border: none; border-radius: 22px; padding: 24px;
+  font-family: 'Russo One', sans-serif; font-size: 26px;
+  cursor: pointer; letter-spacing: .4px;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 8px 32px rgba(255,107,107,.55);
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.15); margin-bottom: 18px;
+}
+.btn-generate:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 42px rgba(255,107,107,.6); }
+.btn-generate:active { transform: scale(1); }
+.btn-generate:disabled { opacity: .6; cursor: not-allowed; transform: none; animation: none; }
+
+/* ── КНОПКА СКАЧАТЬ ── */
+.btn-download {
+  width: 100%;
+  background: linear-gradient(135deg, #4ecdc4, #44a08d, #2ecc71);
+  background-size: 200% 200%; animation: shimmer 4s ease infinite reverse;
+  color: #fff; border: none; border-radius: 22px; padding: 22px;
+  font-family: 'Russo One', sans-serif; font-size: 24px;
+  cursor: pointer; letter-spacing: .4px;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 8px 30px rgba(78,205,196,.5);
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.12); margin-top: 14px;
+}
+.btn-download:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 40px rgba(78,205,196,.55); }
+.btn-download:active { transform: scale(1); }
+
+/* ── ПАНЕЛЬ ЭКСПОРТА ── */
+.dl-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.dl-toolbar .btn-download { width: auto; flex: 1 1 140px; padding: 16px; font-size: 16px; margin-top: 0; }
+.dl-toolbar .btn-download.secondary { background: linear-gradient(135deg, #8e9eab, #5f6c7b); box-shadow: 0 8px 30px rgba(95,108,123,.4); }
+
+@media print {
+  body * { visibility: hidden; }
+  #worksheetPreview, #worksheetPreview * { visibility: visible; }
+  #worksheetPreview { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+  @page { size: A4; margin: 15mm; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── ПРЕДПРОСМОТР ── */
+#previewSection { display: none; }
+.preview-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+/* заголовок предпросмотра — в 2 раза крупнее старого 22px */
+.preview-header h2 {
+  font-family: 'Russo One', sans-serif; font-size: 28px; color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.15);
+}
+#worksheetPreview {
+  background: #fff; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.16);
+}
+
+/* ═══════════ ЛИСТ ПРОПИСЕЙ ═══════════ */
+.ws-page { background: white; width: 100%; padding: 28px 36px 36px; }
+
+.ws-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px dotted #ddd;
+}
+.ws-title { font-family: 'Patrick Hand', cursive; font-size: 20px; color: #666; }
+.ws-name-line {
+  font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: #bbb;
+  display: flex; align-items: center; gap: 8px;
+}
+.ws-name-line span { display: inline-block; width: 120px; border-bottom: 1.5px solid #ccc; }
+
+.ws-line-group { margin-bottom: 4px; }
+
+/* строка-образец */
+.ws-sample-line {
+  position: relative; display: flex; align-items: flex-end;
+  border-bottom: 2px solid #7a8fa0;
+}
+.ws-sample-line::before {
+  content: ''; position: absolute; left: 0; right: 0;
+  border-bottom: 1px dashed #b8c6d0;
+}
+.ws-sample-line::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0;
+  border-top: 1px solid #dce6eb;
+}
+
+/* текст образца */
+.ws-text-content {
+  position: absolute; bottom: 4px; left: 0;
+  white-space: pre-wrap; word-break: break-all; width: 100%;
+  font-family: 'Patrick Hand', cursive; font-weight: 400; line-height: 1;
+}
+.ws-text-content.mode-light   { color: #c8c8c8; }
+.ws-text-content.mode-dotted  {
+  color: transparent;
+  background: repeating-linear-gradient(90deg, #aaa 0px, #aaa 4px, transparent 4px, transparent 11px);
+  -webkit-background-clip: text; background-clip: text;
+}
+.ws-text-content.mode-outline { color: transparent; -webkit-text-stroke: 2px #bbb; }
+
+/* строка для письма ребёнком */
+.ws-write-block { position: relative; width: 100%; }
+.ws-write-block::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    #dce6eb 0px, #dce6eb 1px,
+    transparent 1px, transparent calc(var(--lh) * 0.33 - 1px),
+    #b8c6d0 calc(var(--lh) * 0.33 - 1px), #b8c6d0 calc(var(--lh) * 0.33),
+    transparent calc(var(--lh) * 0.33), transparent calc(var(--lh) * 0.665),
+    #7a8fa0 calc(var(--lh) * 0.665), #7a8fa0 calc(var(--lh) * 0.667),
+    #f0f4f6 calc(var(--lh) * 0.667), #f0f4f6 calc(var(--lh) * 0.999),
+    #b8c6d0 calc(var(--lh) * 0.999), #b8c6d0 calc(var(--lh))
+  );
+  pointer-events: none;
+}
+.ws-ghost {
+  position: relative; z-index: 1;
+  font-family: 'Patrick Hand', cursive; color: #efefef;
+  white-space: pre-wrap; word-break: break-all;
+  line-height: 1; padding-bottom: 4px;
+  display: flex; align-items: flex-end;
+}
+.ws-spacer { height: 10px; }
+
+.ws-footer {
+  margin-top: 18px; padding-top: 10px; border-top: 2px dotted #eee;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.ws-footer-text { font-family: 'Patrick Hand', cursive; font-size: 16px; color: #ccc; }
+.ws-stars { font-size: 22px; letter-spacing: 3px; }
+
+/* спиннер */
+.spinner {
+  width: 24px; height: 24px;
+  border: 3px solid rgba(255,255,255,.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin .7s linear infinite; display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.fade-in { animation: fadeUp .4s ease both; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Шапка -->
+  <div class="header">
+    <div class="header-badge">✏️ Английские прописи</div>
+    <h1>Генератор <em>прописей</em></h1>
+    <p>Введите текст — получите прописи для печати!</p>
+  </div>
+
+  <!-- Ввод текста (английский) -->
+  <div class="card">
+    <div class="card-title">📝 Текст для прописей</div>
+    <textarea id="textInput"
+      placeholder="Type English words or sentences here...&#10;e.g. The cat sat on the mat&#10;Maximum 10 lines"
+      oninput="onTextInput()"></textarea>
+    <div class="char-counter" id="lineCounter">0 / 10 строк</div>
+  </div>
+
+  <!-- Стиль -->
+  <div class="card">
+    <div class="card-title">🎨 Стиль обводки</div>
+    <div class="options-grid">
+      <div class="option-card active" data-mode="light" onclick="selectMode(this,'light')">
+        <div class="option-icon">🔅</div>
+        <div class="option-label">Светло-серый</div>
+        <div class="option-desc">Обводить поверх серого</div>
+      </div>
+      <div class="option-card" data-mode="dotted" onclick="selectMode(this,'dotted')">
+        <div class="option-icon">〰️</div>
+        <div class="option-label">Пунктирный</div>
+        <div class="option-desc">Соединять точки</div>
+      </div>
+      <div class="option-card" data-mode="outline" onclick="selectMode(this,'outline')">
+        <div class="option-icon">⭕</div>
+        <div class="option-label">Контурный</div>
+        <div class="option-desc">Заполнять контур</div>
+      </div>
+      <div class="option-card" data-mode="none" onclick="selectMode(this,'none')">
+        <div class="option-icon">📝</div>
+        <div class="option-label">Только строчки</div>
+        <div class="option-desc">Пустые линии</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Настройки -->
+  <div class="card">
+    <div class="card-title">⚙️ Настройки</div>
+    <div class="selects-row">
+      <div class="field-group">
+        <label>Размер шрифта</label>
+        <select id="fontSizeSelect" onchange="updateDynStyles()">
+          <option value="52">Маленький</option>
+          <option value="78" selected>Средний</option>
+          <option value="100">Большой</option>
+          <option value="124">Очень большой</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Строк для письма</label>
+        <select id="writeLinesSelect">
+          <option value="1" selected>1 строка</option>
+          <option value="2">2 строки</option>
+          <option value="3">3 строки</option>
+        </select>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="repeat-row">
+      <span>Показывать подсказку в строке</span>
+      <label class="toggle">
+        <input type="checkbox" id="repeatToggle" checked>
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+  </div>
+
+  <div id="quotaBanner" style="display:none;margin-bottom:12px;padding:10px 16px;border-radius:12px;font-size:14px;text-align:center;"></div>
+
+  <button class="btn-generate" id="generateBtn" onclick="generateWorksheet()">
+    <span>🌟 Создать прописи!</span>
+    <div class="spinner" id="btnSpinner"></div>
+  </button>
+
+  <div id="previewSection">
+    <div class="preview-header"><h2>📄 Предпросмотр</h2></div>
+    <div id="worksheetPreview"></div>
+    <div class="dl-toolbar">
+      <button class="btn-download secondary" onclick="window.print()">🖨️ Печать</button>
+      <button class="btn-download" onclick="downloadPDF()">
+        📥 PDF
+        <div class="spinner" id="dlSpinner"></div>
+      </button>
+      <button class="btn-download secondary" onclick="downloadWord()">📝 Word</button>
+      <button class="btn-download secondary" onclick="downloadPNG()">🖼️ PNG</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let currentMode = 'light';
+const MAX_LINES = 10;
+
+function onTextInput() {
+  const ta = document.getElementById('textInput');
+  let lines = ta.value.split('\n');
+  if (lines.length > MAX_LINES) {
+    ta.value = lines.slice(0, MAX_LINES).join('\n');
+    lines = ta.value.split('\n');
+  }
+  const n = lines.filter(l => l.trim() !== '').length;
+  const el = document.getElementById('lineCounter');
+  el.textContent = n + ' / 10 строк';
+  el.className = 'char-counter' + (n >= MAX_LINES ? ' warn' : '');
+}
+
+function selectMode(el, mode) {
+  document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentMode = mode;
+}
+
+const dynStyle = document.createElement('style');
+document.head.appendChild(dynStyle);
+
+function getFontSize() { return parseInt(document.getElementById('fontSizeSelect').value); }
+
+function updateDynStyles() {
+  const fs = getFontSize();
+  const sampleH = Math.round(fs * 1.45) + 10;
+  const writeH  = sampleH;
+  dynStyle.textContent = `
+    .ws-sample-line         { height: ${sampleH}px; }
+    .ws-sample-line::before { bottom: ${Math.round(sampleH * 0.335)}px; }
+    .ws-write-block         { height: ${writeH}px; --lh: ${writeH}px; }
+    .ws-ghost               { height: ${writeH}px; font-size: ${Math.round(fs * 0.44)}px; }
+  `;
+}
+updateDynStyles();
+
+function generateWorksheet() {
+  if (znQuota.loaded && !znQuota.unlimited && znQuota.remaining <= 0) return;
+  const text = document.getElementById('textInput').value.trim();
+  if (!text) {
+    const ta = document.getElementById('textInput');
+    ta.focus();
+    ta.style.borderColor = '#ff5858';
+    ta.style.boxShadow = '0 0 0 4px rgba(255,88,88,.2)';
+    setTimeout(() => { ta.style.borderColor = '#e0e0e0'; ta.style.boxShadow = ''; }, 1600);
+    return;
+  }
+
+  const fs         = getFontSize();
+  const writeLines = parseInt(document.getElementById('writeLinesSelect').value);
+  const doHint     = document.getElementById('repeatToggle').checked;
+  const sampleH    = Math.round(fs * 1.45) + 10;
+  const writeH     = sampleH;
+
+  const rawLines = text.split('\n').filter(l => l.trim() !== '').slice(0, MAX_LINES);
+  const preview  = document.getElementById('worksheetPreview');
+  preview.innerHTML = '';
+
+  const page = document.createElement('div');
+  page.className = 'ws-page';
+  page.innerHTML = `
+    <div class="ws-header">
+      <div class="ws-title">✏️ Handwriting Practice</div>
+      <div class="ws-name-line">Имя: <span></span></div>
+    </div>`;
+
+  rawLines.forEach(lineText => {
+    const group = document.createElement('div');
+    group.className = 'ws-line-group';
+
+    if (currentMode !== 'none') {
+      const sl = document.createElement('div');
+      sl.className = 'ws-sample-line';
+      sl.style.height = sampleH + 'px';
+      const tc = document.createElement('div');
+      tc.className = 'ws-text-content mode-' + currentMode;
+      tc.style.fontSize = fs + 'px';
+      tc.textContent = lineText;
+      sl.appendChild(tc);
+      group.appendChild(sl);
+    }
+
+    const count = (currentMode === 'none') ? Math.max(writeLines, 1) : writeLines;
+    for (let i = 0; i < count; i++) {
+      const wb = document.createElement('div');
+      wb.className = 'ws-write-block';
+      wb.style.setProperty('--lh', writeH + 'px');
+      wb.style.height = writeH + 'px';
+      if (doHint && currentMode !== 'none') {
+        const ghost = document.createElement('div');
+        ghost.className = 'ws-ghost';
+        ghost.style.fontSize = Math.round(fs * 0.44) + 'px';
+        ghost.textContent = lineText;
+        wb.appendChild(ghost);
+      }
+      group.appendChild(wb);
+    }
+
+    const sp = document.createElement('div');
+    sp.className = 'ws-spacer';
+    group.appendChild(sp);
+    page.appendChild(group);
+  });
+
+  const footer = document.createElement('div');
+  footer.className = 'ws-footer';
+  footer.innerHTML = '<div class="ws-footer-text">Молодец! 🎉</div><div class="ws-stars">⭐⭐⭐</div>';
+  page.appendChild(footer);
+  preview.appendChild(page);
+
+  const section = document.getElementById('previewSection');
+  section.style.display = 'block';
+  section.classList.add('fade-in');
+  setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+
+  const token = localStorage.getItem('token');
+  fetch('/api/track', {
+    method: 'POST',
+    headers: Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: 'Bearer ' + token } : {}),
+    body: JSON.stringify({ type: 'generator:propisi' }),
+  }).catch(() => {});
+  consumeQuota();
+}
+
+// Защита материалов: временная подпись на экспортируемом листе — убирается сразу
+// после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
+// из localStorage — тот же токен, что использует остальной сайт) — только мелкое
+// доменное имя без «юридической» формулировки, для остальных — полная подпись.
+let znIsSubscriber = false;
+(function checkSubscriber() {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
+      .catch(() => {});
+  } catch (e) {}
+})();
+
+function addWatermark(el) {
+  const wm = document.createElement('div');
+  wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
+  wm.style.cssText = znIsSubscriber
+    ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
+    : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
+  el.appendChild(wm);
+  return wm;
+}
+
+// Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
+// без лимита у подписчиков) — та же серверная проверка /api/generator/quota,
+// что используют React-генераторы.
+let znQuota = { remaining: 5, limit: 5, unlimited: false, loaded: false };
+
+function renderQuotaBanner() {
+  const el = document.getElementById('quotaBanner');
+  const btn = document.getElementById('generateBtn');
+  if (!znQuota.loaded || znQuota.unlimited) {
+    el.style.display = 'none';
+    btn.disabled = false;
+    return;
+  }
+  el.style.display = 'block';
+  if (znQuota.remaining <= 0) {
+    el.style.background = '#fefce8';
+    el.style.color = '#a16207';
+    el.innerHTML = `Бесплатный лимит на сегодня исчерпан (${znQuota.limit} из ${znQuota.limit}). Лимит обновится завтра, или <a href="/podpiska" target="_top" style="color:#ea580c;font-weight:bold;">оформите подписку</a>.`;
+    btn.disabled = true;
+  } else {
+    el.style.background = '#f3f4f6';
+    el.style.color = '#555';
+    el.innerHTML = `Осталось ${znQuota.remaining} из ${znQuota.limit} бесплатных генераций сегодня · <a href="/podpiska" target="_top" style="color:#ea580c;">снять лимит</a>`;
+    btn.disabled = false;
+  }
+}
+
+function refreshQuota() {
+  const token = localStorage.getItem('token');
+  fetch('/api/generator/quota', { headers: token ? { Authorization: 'Bearer ' + token } : {} })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => {
+      if (!d) return;
+      znQuota = { remaining: d.unlimited ? Infinity : d.remaining, limit: d.limit, unlimited: !!d.unlimited, loaded: true };
+      renderQuotaBanner();
+    })
+    .catch(() => {});
+}
+refreshQuota();
+
+// Вызывать сразу после генерации вместо refreshQuota(): трекинг в /api/track
+// пишется асинхронно, и немедленный refreshQuota() иногда обгоняет ещё не
+// закоммиченную запись (виден старый счётчик). Уменьшаем remaining локально
+// сразу — счётчик на экране верный мгновенно, а через секунду сверяем с сервером.
+function consumeQuota() {
+  if (!znQuota.unlimited) znQuota.remaining = Math.max(0, znQuota.remaining - 1);
+  renderQuotaBanner();
+  setTimeout(refreshQuota, 1000);
+}
+
+async function downloadPDF() {
+  const btn = document.querySelector('.btn-download');
+  const sp  = document.getElementById('dlSpinner');
+  btn.disabled = true; sp.style.display = 'block';
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
+  try {
+    const { jsPDF } = window.jspdf;
+    const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
+    const r = canvas.width / canvas.height;
+    let dW = aW, dH = dW / r;
+    if (dH > aH) { dH = aH; dW = dH * r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
+    pdf.save('прописи.pdf');
+  } catch(e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
+  wm.remove();
+  btn.disabled = false; sp.style.display = 'none';
+}
+
+async function downloadPNG() {
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
+  const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+  wm.remove();
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'прописи.png'; a.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+}
+
+function downloadWord() {
+  const el = document.getElementById('worksheetPreview');
+  const wm = addWatermark(el);
+  const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+  <head><meta charset="utf-8"><title>Прописи</title></head>
+  <body>${el.innerHTML}</body></html>`;
+  wm.remove();
+  const blob = new Blob(['﻿', html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'прописи.doc'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+window.addEventListener('beforeprint', () => {
+  const el = document.getElementById('worksheetPreview');
+  if (el && !el.querySelector('[data-print-watermark]')) {
+    const wm = addWatermark(el);
+    wm.setAttribute('data-print-watermark', 'true');
+  }
+});
+window.addEventListener('afterprint', () => {
+  const wm = document.querySelector('[data-print-watermark]');
+  if (wm) wm.remove();
+});
+</script>
+</body>
+</html>
