@@ -303,6 +303,42 @@
             transform: scale(0.95);
         }
 
+        .share-badge {
+            background: rgba(255, 140, 0, 0.12);
+            border: 1px solid rgba(255, 140, 0, 0.4);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .share-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .share-label {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .share-btn:active { transform: scale(0.9); }
+
         /* КОНФЕТТИ */
         .confetti {
             position: fixed;
@@ -366,6 +402,13 @@
             <div class="result-emoji">🎉</div>
             <div class="result-text">Отлично!</div>
             <div class="result-score" id="resultScore"></div>
+            <div class="share-badge">🏆 Магистр игры «Формы и цвета»!</div>
+            <div class="share-row">
+                <span class="share-label">Поделиться:</span>
+                <a class="share-btn" id="shareVk" href="#" target="_blank" rel="noopener noreferrer" title="ВКонтакте">🔵</a>
+                <a class="share-btn" id="shareTg" href="#" target="_blank" rel="noopener noreferrer" title="Telegram">✈️</a>
+                <button class="share-btn" id="shareCopy" title="Скопировать ссылку">🔗</button>
+            </div>
             <button class="result-button" onclick="backToMenu()">Назад в меню</button>
         </div>
     </div>
@@ -381,7 +424,7 @@
             { name: 'Розовый', hex: '#FF69B4' },
             { name: 'Голубой', hex: '#00BFFF' },
             { name: 'Коричневый', hex: '#8B4513' },
-            { name: 'Чёрный', hex: '#2C3E50' },
+            { name: 'Чёрный', hex: '#1A1A1A' },
             { name: 'Серый', hex: '#95A5A6' },
             { name: 'Белый', hex: '#FFFFFF' },
         ];
@@ -775,6 +818,22 @@
             document.getElementById('game').classList.add('hidden');
             document.getElementById('result').classList.remove('hidden');
             document.getElementById('resultScore').textContent = `Правильных ответов: ${score}`;
+            setupShare();
+        }
+
+        function setupShare() {
+            const shareUrl = 'https://znatorica.ru/trenazher/shapes-colors';
+            const shareText = 'Я — Магистр игры «Формы и цвета» на Знаторике (znatorica.ru)! Сможешь лучше?';
+            document.getElementById('shareVk').href =
+                'https://vk.com/share.php?url=' + encodeURIComponent(shareUrl) + '&title=' + encodeURIComponent(shareText);
+            document.getElementById('shareTg').href =
+                'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareText);
+            const copyBtn = document.getElementById('shareCopy');
+            copyBtn.onclick = function () {
+                navigator.clipboard.writeText(shareText + ' ' + shareUrl).catch(() => {});
+                copyBtn.textContent = '✅';
+                setTimeout(() => { copyBtn.textContent = '🔗'; }, 2000);
+            };
         }
 
         function backToMenu() {

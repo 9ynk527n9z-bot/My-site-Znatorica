@@ -75,7 +75,7 @@ export default function Segment4To5Page() {
       {/* Subject Navigation */}
       <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-4 overflow-x-auto">
+          <div className="flex gap-4 overflow-x-auto pr-6">
             {Object.entries(subjects).map(([key, subject]) => (
               <button
                 key={key}

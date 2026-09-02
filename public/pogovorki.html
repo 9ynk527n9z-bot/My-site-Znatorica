@@ -37,6 +37,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:linear-g
 .rtxt{font-size:34px;font-weight:bold;color:white;margin-bottom:10px;}
 .rscr{font-size:26px;color:white;margin-bottom:30px;font-weight:bold;}
 .rbtn{background:white;color:#FF4757;border:none;padding:16px 44px;font-size:20px;font-weight:bold;border-radius:28px;cursor:pointer;}
+.sbadge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);border-radius:999px;padding:8px 18px;font-size:16px;font-weight:bold;color:white;margin-bottom:18px;}
+.srow{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.slabel{font-size:13px;color:rgba(255,255,255,0.8);}
+.sbtn2{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.25);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;}
+.sbtn2:active{transform:scale(0.9);}
 @keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
 .conf{position:fixed;pointer-events:none;font-size:22px;z-index:999;animation:fall 1.2s linear forwards;}
 .h{display:none!important;}
@@ -70,6 +75,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:linear-g
   <div class="remi" id="re">🎉</div>
   <div class="rtxt">Молодец!</div>
   <div class="rscr" id="rs"></div>
+  <div class="sbadge">🏆 Магистр игры «Поговорки»!</div>
+  <div class="srow">
+    <span class="slabel">Поделиться:</span>
+    <a class="sbtn2" id="shareVk" href="#" target="_blank" rel="noopener noreferrer" title="ВКонтакте">🔵</a>
+    <a class="sbtn2" id="shareTg" href="#" target="_blank" rel="noopener noreferrer" title="Telegram">✈️</a>
+    <button class="sbtn2" id="shareCopy" title="Скопировать ссылку">🔗</button>
+  </div>
   <button class="rbtn" onclick="backToMenu()">В меню</button>
 </div>
 
@@ -100,7 +112,7 @@ var P=[
   {t:"В гостях хорошо, а дома лучше.",s:"В гостях хорошо,",e:"а дома лучше.",m:"Дом — самое комфортное место",i:"🏠"},
   {t:"Поспешишь — людей насмешишь.",s:"Поспешишь —",e:"людей насмешишь.",m:"Спешка приводит к ошибкам",i:"🏃"},
   {t:"Мир не без добрых людей.",s:"Мир",e:"не без добрых людей.",m:"В мире есть хорошие люди",i:"🌍"},
-  {t:"Где дружба крепка, там дела идут на лад.",s:"Где дружба крепка,",e:"там дела идут на лад.",m:"В дружной команде всё получается",i:"🤜"},
+  {t:"Где дружба прочна, там хорошо идут дела.",s:"Где дружба прочна,",e:"там хорошо идут дела.",m:"В дружной команде всё получается",i:"🤜"},
   {t:"Любишь кататься — люби и саночки возить.",s:"Любишь кататься —",e:"люби и саночки возить.",m:"Хочешь удовольствия — будь готов к работе",i:"🛷"},
   {t:"Слово не воробей: вылетит — не поймаешь.",s:"Слово не воробей:",e:"вылетит — не поймаешь.",m:"Слова нельзя вернуть — говори осторожно",i:"🐦"}
 ];
@@ -228,6 +240,20 @@ function showRes(){
   var tot=mode==="connect"?cpairs.length:sel.length;
   document.getElementById("re").textContent=score>=tot?"🏆":score>=tot-1?"🎉":"😊";
   document.getElementById("rs").textContent="Правильно: "+score+" из "+tot;
+  setupShare();
+}
+
+function setupShare(){
+  var shareUrl="https://znatorica.ru/trenazher/pogovorki";
+  var shareText="Я — Магистр игры «Поговорки» на Знаторике (znatorica.ru)! Сможешь лучше?";
+  document.getElementById("shareVk").href="https://vk.com/share.php?url="+encodeURIComponent(shareUrl)+"&title="+encodeURIComponent(shareText);
+  document.getElementById("shareTg").href="https://t.me/share/url?url="+encodeURIComponent(shareUrl)+"&text="+encodeURIComponent(shareText);
+  var copyBtn=document.getElementById("shareCopy");
+  copyBtn.onclick=function(){
+    navigator.clipboard.writeText(shareText+" "+shareUrl).catch(function(){});
+    copyBtn.textContent="✅";
+    setTimeout(function(){copyBtn.textContent="🔗";},2000);
+  };
 }
 
 function conf(){

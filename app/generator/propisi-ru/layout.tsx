@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Генератор прописей — русский алфавит',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function PropisiRuLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageJsonLd metadata={metadata} section="generator" />
+      {children}
+    </>
+  );
 }

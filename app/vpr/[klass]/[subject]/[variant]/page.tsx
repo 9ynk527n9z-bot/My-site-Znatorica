@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, learningResourceJsonLd, shortSubject } from '@/lib/seo';
 import { getVprData, getVprVariant, getAllVprParams } from '@/lib/vpr';
 import PrintButton from '@/components/PrintButton';
 import ListenButton from '@/components/ListenButton';
 import MarkVprComplete from '@/components/MarkVprComplete';
+import TrainerGate from '@/components/TrainerGate';
 
 interface Props {
   params: { klass: string; subject: string; variant: string };
@@ -27,7 +28,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const variant = getVprVariant(params.klass, params.subject, id);
   if (!variant) return {};
   return {
-    title: `Подготовка к ВПР по предмету «${data.subjectTitle}», ${data.grade} класс — вариант ${id} с ответами`,
+    title: `ВПР: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — вариант ${id}`,
     description: `Тренировочный вариант ${id} для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса: ${variant.tasks.length} заданий с ответами и решениями.`,
     alternates: { canonical: `/vpr/${params.klass}/${params.subject}/${params.variant}` },
   };
@@ -83,13 +84,16 @@ export default function VprVariantPage({ params }: Props) {
       <div className="max-w-4xl mx-auto py-12 px-6">
         <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
           <h1 className="text-4xl font-bold">
-            Подготовка к ВПР · {data.subjectTitle} · {data.grade} класс
+            Подготовка к ВПР · {data.subjectTitle} · {data.grade} класс · вариант {id}
           </h1>
           <PrintButton />
         </div>
         <p className="text-gray-400 mb-10">
-          Вариант {id} · {variant.tasks.length} заданий · на выполнение отводится 45 минут
+          Вариант {id} · {variant.tasks.length} заданий · на выполнение отводится{' '}
+          {params.klass === '5-klass' && params.subject === 'matematika' ? '90 минут (2 урока)' : '45 минут'}
         </p>
+
+        <TrainerGate type={`vpr:${params.klass}:${params.subject}:${id}`}>
 
         {variant.dictation && (
           <div className="bg-[#2A1B4D] border border-orange/40 rounded-lg p-6 mb-8">
@@ -115,6 +119,11 @@ export default function VprVariantPage({ params }: Props) {
                   {task.points === 2 && (
                     <span className="inline-block bg-violet/20 text-violet text-xs font-bold px-2 py-1 rounded mb-2">
                       повышенная сложность · 2 балла
+                    </span>
+                  )}
+                  {task.points && task.points !== 2 && (
+                    <span className="inline-block bg-violet/20 text-violet text-xs font-bold px-2 py-1 rounded mb-2">
+                      до {task.points} баллов
                     </span>
                   )}
                   {task.audio && (
@@ -156,6 +165,7 @@ export default function VprVariantPage({ params }: Props) {
         </ol>
 
         <MarkVprComplete trackType={`vpr:${params.klass}:${params.subject}:${id}`} />
+        </TrainerGate>
 
         {/* Навигация между вариантами */}
         <div className="no-print mt-12 flex items-center justify-between gap-4">

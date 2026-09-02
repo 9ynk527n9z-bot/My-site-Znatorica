@@ -149,8 +149,9 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export function generateCrossword(theme: CrosswordTheme, targetCount = 8): CrosswordResult {
-  const pool = shuffle(CROSSWORD_THEMES[theme].words);
+export function generateCrossword(theme: CrosswordTheme, targetCount = 6): CrosswordResult {
+  targetCount = Math.max(4, Math.min(8, targetCount));
+  const pool = shuffle(CROSSWORD_THEMES[theme].words.filter(w => w.word.length >= 3));
   const SIZE = 21; // рабочая сетка с запасом, потом обрезаем по границам слов
   const CENTER = Math.floor(SIZE / 2);
 
@@ -165,6 +166,12 @@ export function generateCrossword(theme: CrosswordTheme, targetCount = 8): Cross
 
       const existing = cells[r][c];
       if (existing !== null && existing !== word[i]) return false;
+      // An occupied square may only be crossed, never reused in the same direction.
+      if (existing !== null && placed.some(p => p.direction === dir && (
+        dir === 'across'
+          ? p.row === r && c >= p.col && c < p.col + p.word.length
+          : p.col === c && r >= p.row && r < p.row + p.word.length
+      ))) return false;
 
       // Клетка не на пересечении — соседние по бокам клетки должны быть пустыми,
       // иначе слово случайно "слипнется" с соседней буквой чужого слова

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
 import { SHAPES, COLORS, ORDER_SIZES, shuffle, randItem, type ShapeKind } from '@/lib/shapes';
+import { praiseFor } from '@/lib/praise';
 
 const ROUNDS_PER_SESSION = 8;
 
@@ -145,7 +146,7 @@ export default function SoberyPoPoryadkuTrainerPage() {
 
         {finished && (
           <div className="card bg-white text-center py-10">
-            <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Молодец!</p>
+            <p className="text-3xl font-black text-[#3a1c6e] mb-2">{praiseFor(score.correct, ROUNDS_PER_SESSION).title}</p>
             <p className="text-gray-600 mb-1">Собрано раундов правильно:</p>
             <p className="text-6xl font-black text-orange mb-6">{score.correct}</p>
             <p className="text-gray-500 mb-8">из {ROUNDS_PER_SESSION}</p>

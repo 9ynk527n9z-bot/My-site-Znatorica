@@ -1,11 +1,14 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { drawMathSheet } from '@/lib/math-sheet';
 import { generateMathExamples, type MathRange, type MathMode } from '@/lib/generator';
 import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import PageAbout from '@/components/PageAbout';
 
 const RANGES: { value: MathRange; label: string }[] = [
   { value: 10, label: 'До 10' },
@@ -28,8 +31,11 @@ export default function GeneratorPrimeryPage() {
   const [count, setCount] = useState(20);
   const [examples, setExamples] = useState<{ text: string; answer: number }[]>([]);
   const [showAnswers, setShowAnswers] = useState(false);
-  const printRef = useRef<HTMLDivElement>(null);
+  const printRef = useRef<HTMLCanvasElement>(null);
   const quota = useGeneratorQuota();
+  useEffect(() => {
+    if (printRef.current && examples.length) drawMathSheet(printRef.current, examples, showAnswers);
+  }, [examples, showAnswers]);
 
   function handleGenerate() {
     if (!quota.guard()) return;
@@ -43,7 +49,10 @@ export default function GeneratorPrimeryPage() {
   return (
     <div className="bg-black min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Генератор примеров</h1>
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
+        <h1 className="text-3xl font-bold mt-2 mb-2">Генератор примеров</h1>
         <p className="text-gray-400 mb-8">
           Выбери диапазон и действие — примеры и правильные ответы посчитаются автоматически.
         </p>
@@ -112,9 +121,9 @@ export default function GeneratorPrimeryPage() {
 
         {/* Результат */}
         {examples.length > 0 && (
-          <div ref={printRef} className="card print-page">
+          <div className="examples-result card print-page bg-white">
             <div className="flex items-center justify-between mb-4 no-print">
-              <h2 className="text-xl font-bold">Результат ({examples.length} примеров)</h2>
+              <h2 className="text-xl font-bold text-black">Результат ({examples.length} примеров)</h2>
               <button
                 onClick={() => setShowAnswers((v) => !v)}
                 className="text-orange text-sm font-bold hover:underline"
@@ -123,20 +132,17 @@ export default function GeneratorPrimeryPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
-              {examples.map((ex, i) => (
-                <div key={i} className="font-mono">
-                  {showAnswers ? ex.text.replace('___', String(ex.answer)) : ex.text}
-                </div>
-              ))}
-            </div>
+            <canvas ref={printRef} className="examples-print-sheet" role="img"
+              aria-label={examples.map(ex => showAnswers ? ex.text.replace('___', String(ex.answer)) : ex.text).join('; ')} />
 
-            <div className="mt-8">
+            <div className="mt-6 no-print">
               <ExportToolbar targetRef={printRef} filename="primery" />
             </div>
           </div>
         )}
       </div>
+
+      <PageAbout route="/generator/primery" />
     </div>
   );
 }

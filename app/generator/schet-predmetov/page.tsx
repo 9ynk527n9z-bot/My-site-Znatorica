@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { generateCountingItems, type CountingItem } from '@/lib/counting';
 import { trackUsage } from '@/lib/track';
@@ -7,9 +8,11 @@ import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
 import ShapeSvg from '@/components/ShapeSvg';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const MAX_OPTIONS = [5, 10] as const;
 const COUNTS = [6, 8, 10] as const;
+const tasksCount = (n: number) => pluralizeCount(n, ['задание', 'задания', 'заданий']);
 
 export default function SchetPredmetovPage() {
   const [maxCount, setMaxCount] = useState<number>(5);
@@ -30,6 +33,9 @@ export default function SchetPredmetovPage() {
   return (
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-3xl mx-auto">
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
         <h1 className="text-3xl font-bold mt-2 mb-2">🔢 Счёт предметов</h1>
         <p className="text-white/75 mb-8">
           Посчитай фигурки в каждой строке и впиши число в клетку — базовое упражнение для
@@ -69,7 +75,7 @@ export default function SchetPredmetovPage() {
                       : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
                   }`}
                 >
-                  {c} заданий
+                  {tasksCount(c)}
                 </button>
               ))}
             </div>
@@ -85,11 +91,11 @@ export default function SchetPredmetovPage() {
         {items && (
           <div ref={printRef} className="card print-page bg-white">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
-              <span className="text-sm text-gray-500">{items.length} заданий · до {maxCount}</span>
+              <span className="text-sm text-gray-500">{tasksCount(items.length)} · до {maxCount}</span>
               <ExportToolbar targetRef={printRef} filename={`schet-predmetov-do-${maxCount}`} />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-6">Посчитай и напиши число</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-6">Посчитай и напиши число</h2>
             <div className="space-y-5">
               {items.map((item, i) => (
                 <div key={i} className="flex items-center gap-4">

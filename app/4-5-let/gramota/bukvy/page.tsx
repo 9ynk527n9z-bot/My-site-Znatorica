@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: 'Дошкольники 4–5', url: '/4-5-let' },
-  { name: 'Грамота', url: '/4-5-let/gramota' },
+  { name: 'Грамота', url: '/4-5-let' },
   { name: 'Буквы', url: '/4-5-let/gramota/bukvy' },
 ]);
 
@@ -34,7 +34,7 @@ export default function BukvyPage() {
           <span className="text-gray-400">/</span>
           <Link href="/4-5-let" className="text-orange hover:underline">Дошкольники 4–5</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/4-5-let/gramota" className="text-orange hover:underline">Грамота</Link>
+          <Link href="/4-5-let" className="text-orange hover:underline">Грамота</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Буквы</span>
         </div>
@@ -45,8 +45,7 @@ export default function BukvyPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/russkiy-alfavit" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

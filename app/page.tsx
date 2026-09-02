@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
-import SearchBar from '@/components/SearchBar';
+import EnglishMenu from '@/components/EnglishMenu';
 import { breadcrumbJsonLd } from '@/lib/seo';
 import { getPublishedArticles } from '@/lib/content';
+import { getSectionPageCounts } from '@/lib/site-stats';
 
 // Свежие статьи берутся из БД (правятся через админку) — рендерим динамически.
 export const dynamic = 'force-dynamic';
@@ -16,18 +18,21 @@ export const metadata: Metadata = {
 
 const homeBreadcrumbs = breadcrumbJsonLd([{ name: 'Главная', url: '/' }]);
 
-// Шесть главных разделов сайта
+// Главные разделы сайта
 const SECTIONS = [
   { href: '#ucheba', emoji: '📚', title: 'Учеба', desc: 'Темы по возрастам: 4–5 лет … 4 класс', from: '#4DABF7', to: '#4263EB' },
   { href: '/generator', emoji: '⚙️', title: 'Генераторы', desc: 'Примеры, прописи, кроссворды — каждый раз новые', from: '#69DB7C', to: '#2F9E44' },
   { href: '/trenazher', emoji: '🎮', title: 'Тренажеры', desc: 'Интерактивные игры для закрепления', from: '#DA77F2', to: '#9C36B5' },
-  { href: '#shpargalki', emoji: '📋', title: 'Шпаргалки', desc: 'Плакаты-подсказки по предметам', from: '#FFA94D', to: '#E8590C' },
-  { href: '/vpr', emoji: '📋', title: 'Подготовка к ВПР', desc: '3 и 4 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
+  { href: '/igry', emoji: '🕹️', title: 'Игры', desc: 'Судоку, змейка, морской бой и другие', from: '#FFD43B', to: '#F59F00' },
+  { href: '/plakaty', emoji: '📋', title: 'Плакаты', desc: 'Плакаты-подсказки по предметам', from: '#FFA94D', to: '#E8590C' },
+  { href: '/vpr', emoji: '📝', title: 'Подготовка к ВПР', desc: '3–5 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
+  { href: '/podgotovka-k-mcko', emoji: '🏙️', title: 'Подготовка к МЦКО', desc: 'Москва и МО — 4 класс', from: '#9775FA', to: '#7048E8' },
   { href: '#dlya-roditeley', emoji: '👪', title: 'Для родителей', desc: 'Статьи о школе, режиме и подготовке', from: '#3BC9DB', to: '#1098AD' },
 ];
 
 export default async function Home() {
   const latestArticles = (await getPublishedArticles()).slice(0, 3);
+  const { sections: pageCounts, other: otherPages, total: totalPages } = await getSectionPageCounts();
   return (
     <div className="min-h-screen relative">
       <script
@@ -35,75 +40,164 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeBreadcrumbs) }}
       />
 
-      {/* Hero */}
-      <section className="py-20 px-6 relative">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-black mb-4">
-            <span className="bg-gradient-to-r from-orange via-[#f72585] to-[#FFD43B] bg-clip-text text-transparent">
-              Знаторика
-            </span>
-          </h1>
-          <p className="text-white/85 text-lg mb-8">
-            Тренажёры, задания и подготовка к ВПР — всё для учёбы ребёнка от 4 до 11 лет
-          </p>
-
-          <div className="mb-8">
-            <SearchBar />
-          </div>
-
-          <div className="mb-6">
-            <Link href="/podpiska" className="btn-primary px-10 py-4 text-lg inline-block">
-              Оформить подписку — 399 ₽/мес
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
-            {[
-              { href: '/4-5-let', label: '4–5 лет' },
-              { href: '/6-7-let', label: '6–7 лет' },
-              { href: '/1-klass', label: '1 класс' },
-              { href: '/2-klass', label: '2 класс' },
-              { href: '/3-klass', label: '3 класс' },
-              { href: '/4-klass', label: '4 класс' },
-            ].map((g) => (
-              <Link key={g.href} href={g.href} className="btn-secondary px-2 py-2 text-sm text-center">
-                {g.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Меню разделов */}
-      <section className="px-6 pb-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-3 gap-2 sm:gap-4">
+      {/* Категории — компактной строкой сверху */}
+      <section className="px-6 pt-4 pb-1">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2">
           {SECTIONS.map((s) => (
             <Link
               key={s.title}
               href={s.href}
-              className="card group flex flex-col items-center text-center gap-1 hover:border-white/50 hover:-translate-y-1 transition-all !p-2 sm:!p-3"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 hover:border-white/40 hover:bg-white/15 transition-all text-sm font-semibold text-white whitespace-nowrap"
             >
-              <span
-                className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-base sm:text-lg shadow-lg"
-                style={{ background: `linear-gradient(135deg, ${s.from}, ${s.to})` }}
-              >
-                {s.emoji}
-              </span>
-              <span className="block text-xs sm:text-sm font-bold text-white leading-tight">{s.title}</span>
-              <span className="hidden sm:block text-white/70 text-xs leading-tight">{s.desc}</span>
+              <span>{s.emoji}</span>
+              {s.title}
+            </Link>
+          ))}
+          <EnglishMenu />
+        </div>
+      </section>
+
+      {/* Hero */}
+      <section className="pt-6 pb-6 px-6 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 items-center">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl font-black mb-3 text-white leading-tight">
+              Учиться интереснее вместе!
+            </h1>
+            <p className="text-white/80 text-base md:text-lg mb-6">
+              Тренажёры, задания и подготовка к ВПР — для детей от 4 до 11 лет
+            </p>
+            <p className="font-bold text-white mb-2">С чего начнём?</p>
+            <Link href="/turnir" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
+              🏆 Турнир Знаторики →
+            </Link>
+          </div>
+          <div className="flex justify-center md:justify-end">
+            <Image
+              src="/mascot-hero.png"
+              alt="Белка Знаторика"
+              width={485}
+              height={268}
+              className="w-64 md:w-80 h-auto drop-shadow-2xl"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 3 основные плашки */}
+      <section className="px-6 pb-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
+          <div className="rounded-2xl p-5 bg-gradient-to-br from-[#7048E8] to-[#5f3dc4] flex flex-col gap-1">
+            <span className="text-3xl">🎮</span>
+            <h2 className="font-bold text-white text-lg">Заниматься и играть</h2>
+            <p className="text-white/75 text-sm mb-3">Темы и тренажёры по возрасту</p>
+            <Link href="#ucheba" className="btn-secondary text-sm text-center mt-auto">
+              Выбрать занятие →
+            </Link>
+          </div>
+          <div className="rounded-2xl p-5 bg-gradient-to-br from-[#2F9E44] to-[#237032] flex flex-col gap-1">
+            <span className="text-3xl">🖨️</span>
+            <h2 className="font-bold text-white text-lg">Создать и распечатать</h2>
+            <p className="text-white/75 text-sm mb-3">Прописи, примеры, кроссворды и филворды</p>
+            <Link href="/generator" className="btn-secondary text-sm text-center mt-auto">
+              Открыть генераторы →
+            </Link>
+          </div>
+          <div className="rounded-2xl p-5 bg-gradient-to-br from-[#E8590C] to-[#c92a2a] flex flex-col gap-1">
+            <span className="text-3xl">📋</span>
+            <h2 className="font-bold text-white text-lg">Подготовиться к ВПР / МЦКО</h2>
+            <p className="text-white/75 text-sm mb-3">Авторские варианты с ответами</p>
+            <Link href="/vpr" className="btn-secondary text-sm text-center mt-auto">
+              Выбрать класс →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Возраст/класс */}
+      <section className="px-6 pb-4">
+        <div className="max-w-4xl mx-auto grid grid-cols-3 md:grid-cols-6 gap-2">
+          {[
+            { href: '/4-5-let', label: '4–5 лет' },
+            { href: '/6-7-let', label: '6–7 лет' },
+            { href: '/1-klass', label: '1 класс' },
+            { href: '/2-klass', label: '2 класс' },
+            { href: '/3-klass', label: '3 класс' },
+            { href: '/4-klass', label: '4 класс' },
+          ].map((g) => (
+            <Link key={g.href} href={g.href} className="btn-secondary px-2 py-2 text-sm text-center">
+              {g.label}
             </Link>
           ))}
         </div>
       </section>
 
+      {/* Тесты */}
+      <section className="px-6 pb-8">
+        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4">
+          <Link
+            href="/kakoy-ty-roditel"
+            className="card flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
+          >
+            <span className="text-4xl flex-shrink-0">🧭</span>
+            <span>
+              <span className="block font-bold text-white">Какой ты родитель?</span>
+              <span className="block text-white/60 text-sm">Пройти тест →</span>
+            </span>
+          </Link>
+          <Link
+            href="/gotovnost"
+            className="card flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
+          >
+            <span className="text-4xl flex-shrink-0">🎒</span>
+            <span>
+              <span className="block font-bold text-white">Готов ли ты к школе</span>
+              <span className="block text-white/60 text-sm">Пройти тест →</span>
+            </span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Страницы по разделам */}
+      <section className="px-6 pb-8">
+        <div className="max-w-5xl mx-auto border-t border-white/10 pt-5">
+          <p className="text-white/50 text-xs mb-3">Страницы по разделам</p>
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {pageCounts.map((s) => (
+              <Link key={s.label} href={s.href} className="group">
+                <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+                  {s.count}
+                </span>
+                <span className="block text-white/60 text-xs">{s.label}</span>
+              </Link>
+            ))}
+            <div>
+              <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent">
+                {otherPages}
+              </span>
+              <span className="block text-white/60 text-xs">Другие страницы</span>
+            </div>
+            <div>
+              <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent">
+                {totalPages}
+              </span>
+              <span className="block text-white/60 text-xs">Всего</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats */}
       <section className="py-12 px-6 border-y border-white/15">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-6 text-center">
           {[
-            { n: '82', l: 'темы по возрастам' },
-            { n: '33', l: 'тренажёров и генераторов' },
-            { n: '80', l: 'авторских вариантов ВПР' },
-            { n: '89', l: 'статей для родителей' },
+            { n: '710', l: 'страниц на сайте' },
+            { n: '98', l: 'темы по возрастам' },
+            { n: '121', l: 'тренажёров и генераторов' },
+            { n: '16', l: 'игр' },
+            { n: '340', l: 'авторских вариантов ВПР и МЦКО' },
+            { n: '105', l: 'статей для родителей' },
             { n: '3', l: 'бесплатных генераций в день' },
           ].map((s) => (
             <div key={s.l}>
@@ -178,7 +272,7 @@ export default async function Home() {
               { href: '/generator/primery', title: '📊 Примеры', desc: 'До 10, до 100, до 1000 — сложение, вычитание, умножение, деление' },
               { href: '/generator/krossvordy', title: '🔤 Кроссворды', desc: 'Еда, животные, насекомые, цветы, одежда, спорт' },
               { href: '/generator/propisi-ru', title: '✍️ Прописи (русский)', desc: 'Буквы русского алфавита для обводки и письма' },
-              { href: '/generator/propisi', title: '✏️ Прописи (английский)', desc: 'Английские буквы для тренировки почерка' },
+              { href: '/generator/propisi-angliyskiy', title: '✏️ Прописи (английский)', desc: 'Английские буквы для тренировки почерка' },
               { href: '/generator/math', title: '🧮 Примеры в столбик', desc: 'Вычитание и деление в столбик, как в тетради' },
               { href: '/generator/diktanty', title: '🎤 Диктанты', desc: 'Тексты для диктанта по классам (1–4)' },
               { href: '/generator/slovarnye-slova', title: '📖 Словарные слова', desc: 'Непроверяемые слова по классам — списком или с пропуском буквы' },
@@ -208,7 +302,7 @@ export default async function Home() {
               { href: '/trenazher/azbuky', emoji: '🔤', label: 'Азбука' },
               { href: '/trenazher/multiplication', emoji: '✖️', label: 'Таблица умножения' },
               { href: '/trenazher/english-words', emoji: '🇬🇧', label: 'Английские слова' },
-              { href: '/trenazher/pristavki', emoji: '📝', label: 'Приставки' },
+              { href: '/trenazher/russkiy-alfavit', emoji: '🔤', label: 'Русский алфавит' },
               { href: '/trenazher', emoji: '🎮', label: 'Все тренажёры' },
             ].map((t) => (
               <Link key={t.href} href={t.href} className="card text-center hover:border-white/50 transition-colors">
@@ -220,40 +314,28 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Шпаргалки */}
-      <section id="shpargalki" className="py-20 px-6 scroll-mt-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-2">📋 Шпаргалки</h2>
-          <p className="text-white/75 mb-8">
-            Наглядные плакаты-подсказки по математике, русскому и английскому — смотри на экране или печатай и вешай на стену
-          </p>
-          <Link href="/plakaty" className="btn-primary px-8 py-3 inline-block">Открыть плакаты</Link>
-        </div>
-      </section>
-
-
       {/* Подписка */}
       <section className="py-20 px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Получи полный доступ</h2>
-          <p className="text-white/75 mb-8">Все тренажёры, генераторы и материалы для учителей</p>
+          <h2 className="text-3xl font-bold mb-4">Знаторика PRO</h2>
+          <p className="text-white/75 mb-8">После регистрации — 20 занятий в день бесплатно. Знаторика PRO снимает все ограничения</p>
 
           <div className="card border-orange mb-8">
-            <p className="text-5xl font-bold text-orange mb-2">399 ₽</p>
-            <p className="text-white/70 mb-6">в месяц</p>
+            <p className="text-5xl font-bold text-orange mb-2">2390 ₽</p>
+            <p className="text-white/70 mb-6">за год (или <span className="text-orange font-semibold">399 ₽</span> помесячно)</p>
 
             <ul className="text-left space-y-3 mb-8">
-              <li>✅ Все тренажёры без ограничений</li>
-              <li>✅ Генератор примеров, прописей</li>
-              <li>✅ Рабочие листы и плакаты</li>
-              <li>✅ Материалы для учителей</li>
+              <li>✅ Тренажёры, игры и ВПР — без дневного лимита</li>
+              <li>✅ Генераторы прописей, примеров, кроссвордов — без лимита</li>
+              <li>✅ Рабочие листы и плакаты для печати без водяного знака</li>
+              <li>✅ Отчёт об успехах ребёнка в личном кабинете</li>
             </ul>
 
             <Link href="/podpiska" className="btn-primary w-full text-lg">Оформить подписку</Link>
           </div>
 
           <p className="text-sm text-white/60">
-            Бесплатный доступ к теории, шпаргалкам и 10 генерациям в день
+            Тренажёры, игры и ВПР — 20 в день после регистрации. Генераторы — 3 в день. Со Знаторика PRO ограничений нет.
           </p>
         </div>
       </section>

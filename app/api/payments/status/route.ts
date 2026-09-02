@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
               status: subscription.status,
               endDate: subscription.endDate,
               autoRenew: subscription.autoRenew,
+              willAutoCharge: !!subscription.paymentMethodId && subscription.autoRenew,
               isActive: subscription.status === 'active' && subscription.endDate > new Date(),
             }
           : null,
@@ -76,6 +77,7 @@ export async function GET(request: NextRequest) {
         status: subscription.status,
         endDate: subscription.endDate,
         autoRenew: subscription.autoRenew,
+        willAutoCharge: !!subscription.paymentMethodId && subscription.autoRenew,
         isActive: subscription.status === 'active' && subscription.endDate > new Date(),
       } : null,
     });

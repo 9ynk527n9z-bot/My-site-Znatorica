@@ -1,11 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get('next');
+  const safeNext = next && next.startsWith('/') && !next.startsWith('//') ? next : null;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +42,7 @@ export default function LoginPage() {
       const data = await res.json();
       localStorage.setItem('token', data.token);
 
-      router.push('/account');
+      router.push(safeNext || '/account');
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -89,7 +100,7 @@ export default function LoginPage() {
 
         <p className="text-center text-gray-400 mt-6">
           Нет аккаунта?{' '}
-          <Link href="/register" className="text-orange hover:underline">
+          <Link href={safeNext ? `/register?next=${encodeURIComponent(safeNext)}` : '/register'} className="text-orange hover:underline">
             Зарегистрироваться
           </Link>
         </p>

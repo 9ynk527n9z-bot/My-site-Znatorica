@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Задачи на переливание — логика для 4 класса',
@@ -42,8 +43,12 @@ export default function ZadachiNaPerelivaniePage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/perelivanie-4klass"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -120,7 +125,13 @@ export default function ZadachiNaPerelivaniePage() {
             Попробуйте решить эту задачу дома с настоящими стаканами или бутылками — так гораздо легче
             понять логику переливания, чем просто читая текст.
           </p>
-          <button className="btn-primary text-lg px-8 py-4">🎮 Открыть тренажер</button>
+          <Link href="/trenazher/perelivanie-4klass" className="btn-primary text-lg px-8 py-4 inline-block">
+            🎮 Открыть тренажер
+          </Link>
+        </div>
+
+        <div className="mt-8">
+          <TopicQuiz topic="4-klass/logika/zadachi-na-perelivanie" />
         </div>
       </div>
     </div>

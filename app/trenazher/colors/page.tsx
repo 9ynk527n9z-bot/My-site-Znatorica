@@ -1,21 +1,24 @@
 import Link from 'next/link';
 import TrainerGate from '@/components/TrainerGate';
+import PageJsonLd from '@/components/PageJsonLd';
+import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
-  title: 'Цвета — интерактивный тренажёр для изучения цветов',
-  description: 'Бесплатный интерактивный тренажёр «Цвета»: учимся различать и называть цвета в игровой форме для детей 4–7 лет.',
+  title: 'Цвета по-английски — тренажёр с транскрипцией',
+  description: 'Бесплатный тренажёр английских названий цветов: слово, перевод и транскрипция. Red, blue, green и другие цвета для детей 4–8 лет.',
   alternates: { canonical: '/trenazher/colors' },
 };
 
 export default function ColorsTrainerPage() {
   return (
     <div className="bg-black min-h-screen">
+      <PageJsonLd metadata={metadata} section="trenazher" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">
             ← Все тренажеры
           </Link>
-          <h1 className="text-2xl font-bold mt-2">🌈 Цвета</h1>
+          <h1 className="text-2xl font-bold mt-2">🌈 Цвета по-английски</h1>
         </div>
       </div>
 
@@ -29,6 +32,8 @@ export default function ColorsTrainerPage() {
           />
         </div>
       </TrainerGate>
+
+      <PageAbout route="/trenazher/colors" />
     </div>
   );
 }

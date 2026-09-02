@@ -74,22 +74,73 @@ export default function PrivacyPage() {
               </div>
 
               <div>
-                <h3 className="font-bold text-orange mb-2">🍪 Cookies:</h3>
+                <h3 className="font-bold text-orange mb-2">💬 При отправке отзыва:</h3>
                 <ul className="list-disc list-inside text-gray-400 space-y-1 ml-2">
-                  <li>Служебная cookie аутентификации — для входа в личный кабинет</li>
+                  <li>Текст отзыва (обязательно)</li>
+                  <li>Имя и оценка (по желанию)</li>
+                  <li>Email — только если вы вошли в аккаунт при отправке отзыва</li>
+                </ul>
+                <p className="text-gray-500 text-xs mt-1 ml-2">
+                  Отзыв публикуется на странице «Отзывы» только после проверки модератором.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-orange mb-2">🏆 При участии в «Турнире Знаторики»:</h3>
+                <ul className="list-disc list-inside text-gray-400 space-y-1 ml-2">
+                  <li>Само участие в турнире анонимно — данные не сохраняются</li>
                   <li>
-                    Анонимная техническая cookie <code className="text-gray-300">znatorika_sid</code> — только для
-                    внутренней статистики использования Платформы (без входа в аккаунт). Не содержит персональных
-                    данных, не передаётся третьим лицам и не используется для рекламы или отслеживания на других сайтах
+                    Если оформляется именной диплом (платно) — сохраняются имя ребёнка, указанное
+                    родителем, тема турнира и результат (для отображения на дипломе)
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
+              <div>
+                <h3 className="font-bold text-orange mb-2">🍪 Cookies:</h3>
+                <p className="text-gray-500 text-xs mb-2 ml-2">
+                  Необходимые cookie работают всегда и не требуют согласия — без них сайт не
+                  функционирует. Cookie Яндекс.Метрики включаются только после вашего явного
+                  согласия в баннере внизу экрана — вы можете выбрать «Только необходимые», чтобы
+                  их отключить.
+                </p>
+                <ul className="list-disc list-inside text-gray-400 space-y-1 ml-2">
+                  <li>
+                    <span className="text-gray-300">Необходимые:</span> служебная cookie
+                    аутентификации — для входа в личный кабинет
+                  </li>
+                  <li>
+                    <span className="text-gray-300">Необходимые:</span> анонимная техническая cookie{' '}
+                    <code className="text-gray-300">znatorika_sid</code> — только для внутренней
+                    статистики использования Платформы (без входа в аккаунт). Не содержит
+                    персональных данных, не передаётся третьим лицам и не используется для рекламы
+                  </li>
+                  <li>
+                    <span className="text-gray-300">По согласию:</span> cookie Яндекс.Метрики — см.
+                    ниже
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3 space-y-2">
                 <p className="text-yellow-400 text-sm">
-                  ❌ <span className="font-bold">Не собираем:</span> IP адреса, данные о браузере, геолокацию, не используем
-                  сторонние рекламные и аналитические сервисы (например, Google Analytics) — вся статистика считается
-                  собственными средствами Платформы
+                  📊 <span className="font-bold">Яндекс.Метрика:</span> используем для оценки эффективности рекламы
+                  и работы сайта. Сервис получает технические данные о визите (IP-адрес, тип браузера и устройства,
+                  поведение на страницах) и обрабатывает их по{' '}
+                  <a
+                    href="https://yandex.ru/legal/confidential/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-yellow-300"
+                  >
+                    политике конфиденциальности Яндекса
+                  </a>
+                  . Персональные данные (имя, email) в Метрику не передаются.
+                </p>
+                <p className="text-yellow-400 text-sm">
+                  ❌ <span className="font-bold">Не используем:</span> прочие сторонние рекламные и аналитические
+                  сервисы (например, Google Analytics) — остальная статистика считается собственными средствами
+                  Платформы
                 </p>
               </div>
             </div>

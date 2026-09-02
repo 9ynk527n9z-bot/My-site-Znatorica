@@ -14,12 +14,16 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadStats() {
       try {
-        // На MVP это будут mock данные
-        setStats({
-          totalUsers: 0,
-          subscribers: 0,
-          revenue: 0,
-        });
+        const token = localStorage.getItem('token');
+        const res = await fetch('/api/admin/analytics', { headers: { Authorization: `Bearer ${token}` } });
+        if (res.ok) {
+          const data = await res.json();
+          setStats({
+            totalUsers: data.totals.totalUsers,
+            subscribers: data.totals.subscribers,
+            revenue: data.totals.revenue30,
+          });
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -60,7 +64,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="card">
-            <p className="text-gray-400 mb-2 text-sm">Доход</p>
+            <p className="text-gray-400 mb-2 text-sm">Доход за 30 дней</p>
             <p className="text-4xl font-bold">
               {loading ? '-' : `₽${stats.revenue}`}
             </p>

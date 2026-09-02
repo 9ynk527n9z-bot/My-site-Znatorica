@@ -43,8 +43,12 @@ export default function SostavChislaPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/sostav-chisla"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -55,10 +59,10 @@ export default function SostavChislaPage() {
               <h3 className="font-bold text-orange mb-2">Шаг 1: Число можно разложить на два числа</h3>
               <p className="text-gray-300">
                 Любое число больше 1 можно представить как сумму двух чисел. Например, число 5 — это
-                4 и 1, или 3 и 2, или 5 и 0.
+                4 и 1, или 3 и 2.
               </p>
               <div className="mt-4 p-4 bg-orange/10 rounded">
-                <p className="text-2xl mb-1">5 = 4 + 1 = 3 + 2 = 5 + 0</p>
+                <p className="text-2xl mb-1">5 = 4 + 1 = 3 + 2 = 2 + 3 = 1 + 4</p>
               </div>
             </div>
 

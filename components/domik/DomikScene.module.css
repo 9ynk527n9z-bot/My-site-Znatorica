@@ -1,0 +1,18 @@
+.panel{border-radius:24px;overflow:hidden;background:#f3ecff;color:#493362;border:1px solid #d6c4ea}
+.scene{position:relative;aspect-ratio:3/2;isolation:isolate;overflow:hidden}
+.background{display:block;width:100%;height:100%;object-fit:contain}
+.art{display:block;width:100%;aspect-ratio:1;background-image:url('/images/domik/items-white-v2.png');background-size:500% 400%;background-repeat:no-repeat}
+.item,.squirrel{position:absolute;transform:translate(-50%,-100%);pointer-events:none}
+.item{z-index:1}.squirrel{z-index:2;transition:left 650ms linear,top 650ms linear,width 650ms linear;filter:drop-shadow(0 3px 2px #54402f30)}
+.item[data-decoration="podushka"]::before{content:"";position:absolute;z-index:-1;left:8%;bottom:1%;width:86%;height:12%;border-radius:50%;background:radial-gradient(ellipse,#76502a55 0%,#76502a22 48%,transparent 72%);transform:rotate(4deg)}
+.item[data-decoration="podushka"] .art{transform:rotate(-4deg);transform-origin:50% 95%}
+.happy{animation:celebrate .6s ease-in-out 2}
+.hotspot{position:absolute;z-index:3;background:transparent;border:2px solid transparent;border-radius:20px;cursor:pointer}
+.hotspot:hover{background:#ffffff12;border-color:#ffffff70}.hotspot:focus-visible{outline:3px solid #7950b0;outline-offset:2px}
+.bedroom{left:33%;top:18%;width:37%;height:23%}.living{left:33%;top:44%;width:31%;height:23%}.garden{left:10%;top:75%;width:66%;height:23%}
+.controls{text-align:center;padding:14px 12px 18px}.controls p{margin:0 0 10px;font-weight:700}.buttons{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.buttons button{padding:10px 19px;border:1px solid #c8b5df;background:white;border-radius:14px;font-weight:700;min-height:44px}.buttons button[aria-pressed=true]{background:#77529b;color:#fff;border-color:#77529b}.buttons button:focus-visible{outline:3px solid #df9548;outline-offset:2px}.controls .status{font-size:13px;font-weight:400;margin:12px 0 0;min-height:20px}
+@keyframes celebrate{50%{transform:translateY(-8%) rotate(5deg)}}
+@media(prefers-reduced-motion:reduce){.squirrel{transition:none}.happy{animation:none}}
+
+.scene .art{filter:url(#domik-cutout)}
+.filterDefs{position:absolute;pointer-events:none}

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { requireAdmin } from '@/lib/admin';
+import { getProduct } from '@/lib/products';
 
 export const dynamic = 'force-dynamic';
 
@@ -79,6 +80,14 @@ export async function GET(request: NextRequest) {
   const since7 = new Date(now.getTime() - 7 * DAY_MS);
   const since1 = new Date(now.getTime() - 1 * DAY_MS);
 
+  // Период для блока "Источники трафика / топ страниц" ниже — по умолчанию 30 дней,
+  // можно переключить на "сегодня" (1) или "неделю" (7) через ?period=. Остальные
+  // метрики (регистрации, выручка, ВПР) период не учитывают — они всегда за 30 дней,
+  // это явно подписано в их заголовках/лейблах.
+  const periodParam = request.nextUrl.searchParams.get('period');
+  const periodDays = periodParam === '1' ? 1 : periodParam === '7' ? 7 : 30;
+  const periodSince = periodDays === 1 ? since1 : periodDays === 7 ? since7 : since30;
+
   const [
     totalUsers,
     subscribers,
@@ -86,14 +95,16 @@ export async function GET(request: NextRequest) {
     payments30,
     pageViews30Raw,
     generatorUses30,
-    searchQueries30,
+    decorationsBought,
+    usersWithDecorations,
+    tournamentDiplomasPaid,
   ] = await Promise.all([
     db.user.count(),
     db.subscription.count({ where: { status: 'active', endDate: { gt: now } } }),
     db.user.findMany({ where: { createdAt: { gte: since30 } }, select: { createdAt: true } }),
     db.payment.findMany({
       where: { status: 'succeeded', createdAt: { gte: since30 } },
-      select: { createdAt: true, amount: true },
+      select: { id: true, createdAt: true, amount: true },
     }),
     db.pageView.findMany({
       where: { createdAt: { gte: since30 } },
@@ -103,10 +114,9 @@ export async function GET(request: NextRequest) {
       where: { createdAt: { gte: since30 } },
       select: { createdAt: true, type: true, userId: true, sessionId: true },
     }),
-    db.searchQuery.findMany({
-      where: { createdAt: { gte: since30 } },
-      select: { query: true, resultsCount: true },
-    }),
+    db.userDecoration.count(),
+    db.userDecoration.findMany({ select: { userId: true }, distinct: ['userId'] }),
+    db.tournamentResult.count({ where: { paid: true } }),
   ]);
 
   // Ботов/сканеров и собственные визиты (залогинена как admin) исключаем из всех
@@ -116,6 +126,9 @@ export async function GET(request: NextRequest) {
   const botPageViews30 = pageViews30Raw.filter((v) => v.isBot).length;
   const ownerPageViews30 = pageViews30Raw.filter((v) => !v.isBot && v.isOwner).length;
   const pageViews30 = pageViews30Raw.filter((v) => !v.isBot && !v.isOwner);
+  const pageViewsForPeriod = periodDays === 30 ? pageViews30 : pageViews30.filter((v) => v.createdAt >= periodSince);
+  const generatorUsesForPeriod =
+    periodDays === 30 ? generatorUses30 : generatorUses30.filter((v) => v.createdAt >= periodSince);
 
   // Регистрации и выручка по дням
   const registrationsSeries = countByDay(
@@ -145,7 +158,7 @@ export async function GET(request: NextRequest) {
   // Источники трафика (?utm_source=... в ссылке) — по уникальным сессиям/визитам,
   // не по просмотрам страниц, иначе один посетитель с 10 просмотрами перевесит статистику.
   const sourceVisitors = new Map<string, Set<string>>();
-  for (const v of pageViews30) {
+  for (const v of pageViewsForPeriod) {
     const key = visitorKey(v);
     if (!key) continue;
     const source = v.utmSource || 'Прямые заходы / без метки';
@@ -160,7 +173,7 @@ export async function GET(request: NextRequest) {
   // Referrer (document.referrer с первой страницы визита) — сырой домен-источник,
   // в отличие от trafficSources не зависит от того, размечена ли ссылка вручную.
   const referrerVisitors = new Map<string, Set<string>>();
-  for (const v of pageViews30) {
+  for (const v of pageViewsForPeriod) {
     const key = visitorKey(v);
     if (!key) continue;
     const source = v.referrer || 'direct';
@@ -195,7 +208,7 @@ export async function GET(request: NextRequest) {
     ['🔍 Поиск (органика)', new Set()],
     ['➡️ Прямой заход / приложение', new Set()],
   ]);
-  for (const v of pageViews30) {
+  for (const v of pageViewsForPeriod) {
     const key = visitorKey(v);
     if (!key) continue;
     const type = classifyTraffic(v);
@@ -231,20 +244,8 @@ export async function GET(request: NextRequest) {
 
   // Топ страниц
   const pageCounts = new Map<string, number>();
-  for (const v of pageViews30) pageCounts.set(v.url, (pageCounts.get(v.url) ?? 0) + 1);
+  for (const v of pageViewsForPeriod) pageCounts.set(v.url, (pageCounts.get(v.url) ?? 0) + 1);
   const topPages = topEntries(pageCounts, 10);
-
-  // Что реально ищут на сайте, и что не находится — для понимания спроса и
-  // пробелов в контенте (запрос, на который ничего не нашлось, — сигнал сделать тему).
-  const searchCounts = new Map<string, number>();
-  const zeroResultCounts = new Map<string, number>();
-  for (const s of searchQueries30) {
-    const q = s.query.toLowerCase();
-    searchCounts.set(q, (searchCounts.get(q) ?? 0) + 1);
-    if (s.resultsCount === 0) zeroResultCounts.set(q, (zeroResultCounts.get(q) ?? 0) + 1);
-  }
-  const topSearchQueries = topEntries(searchCounts, 15);
-  const zeroResultQueries = topEntries(zeroResultCounts, 15);
 
   // Что смотрели и сколько посещений по разделам сайта — отдельно за день/неделю/месяц.
   const pageViewsDay = pageViews30.filter((v) => v.createdAt >= since1);
@@ -260,12 +261,16 @@ export async function GET(request: NextRequest) {
   const trainerCounts = new Map<string, number>();
   const vprEvents: { type: string }[] = [];
 
-  for (const u of generatorUses30) {
+  for (const u of generatorUsesForPeriod) {
     const [category, ...rest] = u.type.split(':');
     const slug = rest.join(':');
     if (category === 'generator') generatorCounts.set(slug, (generatorCounts.get(slug) ?? 0) + 1);
     else if (category === 'trainer') trainerCounts.set(slug, (trainerCounts.get(slug) ?? 0) + 1);
-    else if (category === 'vpr') vprEvents.push(u);
+  }
+  // ВПР считаем всегда за полные 30 дней, не за выбранный период — так и подписано
+  // в totals.vprCompletions30 ("30 дн."), не хотим расходиться с собственной подписью.
+  for (const u of generatorUses30) {
+    if (u.type.startsWith('vpr:')) vprEvents.push(u);
   }
 
   const topGenerators = topEntries(generatorCounts, 10);
@@ -332,8 +337,11 @@ export async function GET(request: NextRequest) {
         pages: sorted.map((p) => ({ url: p.url, at: p.createdAt })),
       };
     })
+    // "Последние посетители" в админке — это про СЕГОДНЯ (кто заходил за последние сутки),
+    // а не про весь 30-дневный охват остальной статистики на этой странице.
+    .filter((s) => (s.lastSeen?.getTime() ?? 0) >= since1.getTime())
     .sort((a, b) => (b.lastSeen?.getTime() ?? 0) - (a.lastSeen?.getTime() ?? 0))
-    .slice(0, 50);
+    .slice(0, 100);
 
   // Активность (страницы + генераторы/тренажёры) по дням — общий график
   const activitySeries = days.map((date) => {
@@ -342,11 +350,124 @@ export async function GET(request: NextRequest) {
     return { date, pageViews: pv, usage: gu };
   });
 
+  // Payment сам по себе не хранит "за что заплатили" (подписка/сборник/тест/диплом) —
+  // это есть только в metadata запроса к ЮKassa, которая не сохраняется в БД. Вместо
+  // миграции восстанавливаем тип по факту: если paymentId встречается в Purchase — это
+  // разовая покупка конкретного товара (lib/products.ts), если в TournamentResult.paid —
+  // диплом турнира, иначе — подписка (единственный оставшийся вариант).
+  const paymentIds30 = payments30.map((p) => p.id);
+  const [purchasesForPayments, tournamentResultsForPayments] = await Promise.all([
+    db.purchase.findMany({
+      where: { paymentId: { in: paymentIds30 } },
+      select: { paymentId: true, productSlug: true },
+    }),
+    db.tournamentResult.findMany({
+      where: { paymentId: { in: paymentIds30 }, paid: true },
+      select: { paymentId: true, trackTitle: true },
+    }),
+  ]);
+  const purchaseByPaymentId = new Map(purchasesForPayments.map((p) => [p.paymentId, p.productSlug]));
+  const tournamentByPaymentId = new Map(tournamentResultsForPayments.map((t) => [t.paymentId!, t.trackTitle]));
+
+  const paymentBreakdown = new Map<string, { count: number; revenue: number }>();
+  for (const p of payments30) {
+    let label: string;
+    const productSlug = purchaseByPaymentId.get(p.id);
+    const trackTitle = tournamentByPaymentId.get(p.id);
+    if (productSlug) {
+      label = getProduct(productSlug)?.title || productSlug;
+    } else if (trackTitle) {
+      label = `Диплом турнира — ${trackTitle}`;
+    } else {
+      label = 'Подписка Знаторика PRO';
+    }
+    const cur = paymentBreakdown.get(label) || { count: 0, revenue: 0 };
+    cur.count += 1;
+    cur.revenue += p.amount;
+    paymentBreakdown.set(label, cur);
+  }
+  const paymentBreakdownList = Array.from(paymentBreakdown.entries())
+    .map(([label, v]) => ({ label, ...v }))
+    .sort((a, b) => b.revenue - a.revenue);
+  const oneTimeRevenue30 = paymentBreakdownList
+    .filter((x) => x.label !== 'Подписка Знаторика PRO')
+    .reduce((sum, x) => sum + x.revenue, 0);
+
+  // Использование новых фич (тесты готовности, тест про родителя, турнир, домик,
+  // шеринг) — всегда за 30 дней, не завязано на period-переключатель выше: это
+  // отдельный срез "прижилось ли вообще", а не посуточная посещаемость.
+  function pageStats(url: string) {
+    const views = pageViews30.filter((v) => v.url === url);
+    const uniqueVisitors = new Set(views.map(visitorKey).filter(Boolean)).size;
+    return { views: views.length, uniqueVisitors };
+  }
+  function countEvents(predicate: (type: string) => boolean) {
+    return generatorUses30.filter((u) => predicate(u.type)).length;
+  }
+
+  const READINESS_TESTS = [
+    { slug: 'gotovnost-k-shkole', label: 'Готов к 1 классу?' },
+    { slug: 'gotovnost-k-2-klassu', label: 'Готов ко 2 классу?' },
+    { slug: 'gotovnost-k-3-klassu', label: 'Готов к 3 классу?' },
+    { slug: 'gotovnost-k-4-klassu', label: 'Готов к 4 классу?' },
+    { slug: 'gotovnost-k-5-klassu', label: 'Готов к 5 классу?' },
+  ];
+  const readinessStats = READINESS_TESTS.map((t) => {
+    const page = pageStats(`/${t.slug}`);
+    // Формат событий менялся: у самого первого теста (к 1 классу) до рефакторинга
+    // на общий компонент были голые "readiness:start"/"readiness:finish:N" без
+    // слага — считаем их тоже, но только для gotovnost-k-shkole.
+    const isLegacyGrade1 = t.slug === 'gotovnost-k-shkole';
+    const starts = countEvents(
+      (type) => type === `readiness:${t.slug}:start` || (isLegacyGrade1 && type === 'readiness:start'),
+    );
+    const finishes = countEvents(
+      (type) =>
+        type.startsWith(`readiness:${t.slug}:finish:`) ||
+        (isLegacyGrade1 && /^readiness:finish:\d+$/.test(type)),
+    );
+    return { ...t, ...page, starts, finishes };
+  });
+
+  const parentStyleStats = {
+    ...pageStats('/kakoy-ty-roditel'),
+    starts: countEvents((type) => type === 'parent-style:start'),
+    finishes: countEvents((type) => type.startsWith('parent-style:finish:')),
+  };
+
+  const tournamentListPage = pageStats('/turnir');
+  const tournamentTrackViews = pageViews30.filter((v) => v.url.startsWith('/turnir/') && v.url !== '/turnir/diplom');
+  const tournamentStats = {
+    listViews: tournamentListPage.views,
+    listUniqueVisitors: tournamentListPage.uniqueVisitors,
+    trackViews: tournamentTrackViews.length,
+    trackUniqueVisitors: new Set(tournamentTrackViews.map(visitorKey).filter(Boolean)).size,
+    starts: countEvents((type) => type.startsWith('tournament:start:')),
+    finishes: countEvents((type) => type.startsWith('tournament:finish:')),
+    diplomasPaid: tournamentDiplomasPaid,
+  };
+
+  const domikStats = {
+    ...pageStats('/domik'),
+    usersWithDecorations: usersWithDecorations.length,
+    decorationsBought,
+  };
+
+  const shareCounts = new Map<string, number>();
+  for (const u of generatorUses30) {
+    if (!u.type.includes('share:')) continue;
+    const platform = u.type.includes(':vk') ? 'ВКонтакте' : u.type.includes(':telegram') ? 'Telegram' : u.type.includes(':copy') ? 'Скопировать ссылку' : 'Другое';
+    shareCounts.set(platform, (shareCounts.get(platform) ?? 0) + 1);
+  }
+  const shareStats = Array.from(shareCounts.entries()).map(([key, count]) => ({ key, count }));
+
   return NextResponse.json({
+    period: periodDays,
     totals: {
       totalUsers,
       subscribers,
       revenue30,
+      oneTimeRevenue30,
       conversionRate: totalUsers > 0 ? Math.round((subscribers / totalUsers) * 1000) / 10 : 0,
       dau,
       wau,
@@ -358,6 +479,7 @@ export async function GET(request: NextRequest) {
     },
     registrationsSeries,
     revenueSeries,
+    paymentBreakdown: paymentBreakdownList,
     activitySeries,
     referrerSources,
     trafficTypes,
@@ -368,7 +490,12 @@ export async function GET(request: NextRequest) {
     topTrainers,
     recentSessions,
     sectionsByPeriod,
-    topSearchQueries,
-    zeroResultQueries,
+    newFeatures: {
+      readinessTests: readinessStats,
+      parentStyleQuiz: parentStyleStats,
+      tournament: tournamentStats,
+      domik: domikStats,
+      shareClicks: shareStats,
+    },
   });
 }

@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { db } from './db';
 
 // Слой доступа к редактируемому контенту (статьи + новые темы) из БД.
@@ -58,23 +59,30 @@ function toRelated(related: any): RelatedLink[] | undefined {
 
 // ── Статьи для родителей ──────────────────────────────────────────────
 
-export async function getPublishedArticles(): Promise<ContentArticle[]> {
-  const rows = await db.contentPage.findMany({
-    where: { kind: 'article', published: true },
-    orderBy: { date: 'desc' },
-  });
-  return rows.map((r) => ({
-    slug: r.slug,
-    title: r.title,
-    description: r.description,
-    date: r.date ?? '',
-    readTime: r.readTime ?? '',
-    tag: r.tag ?? '',
-    intro: r.intro,
-    sections: toSections(r.body),
-    related: toRelated(r.related),
-  }));
-}
+// Кеш на 60с: раньше каждый заход на главную дёргал БД просто за 3 карточки
+// внизу страницы, что добавляло ~1.5с к первой загрузке. Правки в админке
+// теперь видны с задержкой до минуты, а не мгновенно — разумный компромисс.
+export const getPublishedArticles = unstable_cache(
+  async (): Promise<ContentArticle[]> => {
+    const rows = await db.contentPage.findMany({
+      where: { kind: 'article', published: true },
+      orderBy: { date: 'desc' },
+    });
+    return rows.map((r) => ({
+      slug: r.slug,
+      title: r.title,
+      description: r.description,
+      date: r.date ?? '',
+      readTime: r.readTime ?? '',
+      tag: r.tag ?? '',
+      intro: r.intro,
+      sections: toSections(r.body),
+      related: toRelated(r.related),
+    }));
+  },
+  ['published-articles'],
+  { revalidate: 60 },
+);
 
 export async function getArticleBySlug(slug: string): Promise<ContentArticle | null> {
   const r = await db.contentPage.findUnique({
@@ -120,6 +128,22 @@ export async function getPublishedTopics(): Promise<ContentTopic[]> {
     related: toRelated(r.related),
   }));
 }
+
+// Кешированный вариант для страниц классов: секция «Дополнительные темы»
+// рендерится на каждом заходе в раздел, дёргать за ней БД каждый раз незачем.
+// Ошибку глушим намеренно — если БД недоступна (например, во время сборки
+// образа), раздел просто не покажется, а страница класса останется рабочей.
+export const getPublishedTopicsCached = unstable_cache(
+  async (): Promise<ContentTopic[]> => {
+    try {
+      return await getPublishedTopics();
+    } catch {
+      return [];
+    }
+  },
+  ['published-topics'],
+  { revalidate: 60 },
+);
 
 export async function getTopicBySlug(slug: string): Promise<ContentTopic | null> {
   const r = await db.contentPage.findUnique({

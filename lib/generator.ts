@@ -35,24 +35,58 @@ function makeMinus(range: MathRange): MathExample {
   return { text: `${a} − ${b} = ___`, answer: a - b };
 }
 
-function makeMultiply(range: MathRange): MathExample {
-  // Множитель всегда небольшой (2-9), как в таблице умножения;
-  // второй множитель подбирается так, чтобы произведение не превышало range.
+// Полный список всех уникальных пар (a, b), которые может сгенерировать
+// умножение/деление для данного range. При маленьком range
+// (например, "До 10") этот пул очень мал (~8 примеров на умножение), и при
+// count=20-100 случайная генерация неизбежно даёт повторы на распечатанном
+// листе. Поэтому используем пул: сначала проходим по всем уникальным примерам
+// в случайном порядке, и только когда пул исчерпан — начинаем заново
+// (с новым перемешиванием), а не повторяемся раньше времени.
+function buildMultiplyPool(range: MathRange): MathExample[] {
+  const pool: MathExample[] = [];
   const maxB = Math.min(9, Math.floor(range / 2));
-  const b = randInt(2, Math.max(2, maxB));
-  const maxA = Math.floor(range / b);
-  const a = randInt(2, Math.max(2, maxA));
-  return { text: `${a} × ${b} = ___`, answer: a * b };
+  for (let b = 2; b <= Math.max(2, maxB); b++) {
+    const maxA = Math.floor(range / b);
+    for (let a = 2; a <= Math.max(2, maxA); a++) {
+      pool.push({ text: `${a} × ${b} = ___`, answer: a * b });
+    }
+  }
+  return pool;
 }
 
-function makeDivide(range: MathRange): MathExample {
-  // Делитель небольшой (2-9), частное подбирается так, чтобы делимое не превышало range.
+function buildDividePool(range: MathRange): MathExample[] {
+  const pool: MathExample[] = [];
   const maxDivisor = Math.min(9, Math.floor(range / 2));
-  const divisor = randInt(2, Math.max(2, maxDivisor));
-  const maxQuotient = Math.floor(range / divisor);
-  const quotient = randInt(2, Math.max(2, maxQuotient));
-  const dividend = divisor * quotient;
-  return { text: `${dividend} ÷ ${divisor} = ___`, answer: quotient };
+  for (let divisor = 2; divisor <= Math.max(2, maxDivisor); divisor++) {
+    const maxQuotient = Math.floor(range / divisor);
+    for (let quotient = 2; quotient <= Math.max(2, maxQuotient); quotient++) {
+      const dividend = divisor * quotient;
+      pool.push({ text: `${dividend} ÷ ${divisor} = ___`, answer: quotient });
+    }
+  }
+  return pool;
+}
+
+// Тянет примеры из пула без повторов, пока пул не исчерпан; после этого
+// перемешивает пул заново и продолжает — гарантирует, что дубли появляются
+// только когда весь уникальный набор уже использован.
+function createPoolDrawer(pool: MathExample[]): () => MathExample {
+  let queue: MathExample[] = [];
+  return function draw(): MathExample {
+    if (queue.length === 0) {
+      queue = shuffle(pool);
+    }
+    return queue.pop()!;
+  };
+}
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 export function generateMathExamples(params: {
@@ -62,6 +96,13 @@ export function generateMathExamples(params: {
 }): MathExample[] {
   const { range, mode, count } = params;
   const examples: MathExample[] = [];
+
+  // Умножение/деление берут примеры из полного пула уникальных пар для
+  // данного range (см. buildMultiplyPool/buildDividePool выше) — так при
+  // маленьком range ("До 10") лист не печатает заведомые дубли раньше, чем
+  // исчерпан весь доступный набор примеров.
+  const drawMultiply = createPoolDrawer(buildMultiplyPool(range));
+  const drawDivide = createPoolDrawer(buildDividePool(range));
 
   for (let i = 0; i < count; i++) {
     switch (mode) {
@@ -75,13 +116,13 @@ export function generateMathExamples(params: {
         examples.push(Math.random() < 0.5 ? makePlus(range) : makeMinus(range));
         break;
       case 'multiply':
-        examples.push(makeMultiply(range));
+        examples.push(drawMultiply());
         break;
       case 'divide':
-        examples.push(makeDivide(range));
+        examples.push(drawDivide());
         break;
       case 'multiply_divide':
-        examples.push(Math.random() < 0.5 ? makeMultiply(range) : makeDivide(range));
+        examples.push(Math.random() < 0.5 ? drawMultiply() : drawDivide());
         break;
     }
   }

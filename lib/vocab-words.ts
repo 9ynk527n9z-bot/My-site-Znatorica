@@ -12,7 +12,7 @@ export interface VocabWord {
 // пропуска указана вручную для каждого слова, а не подобрана случайно.
 export const VOCAB_WORDS: Record<VocabGrade, VocabWord[]> = {
   1: [
-    { word: 'Яблоня', blanks: [0] },
+    { word: 'Яблоня', blanks: [3] },
     { word: 'Учительница', blanks: [4] },
     { word: 'Ученик', blanks: [2] },
     { word: 'Класс', blanks: [3, 4] },
@@ -32,7 +32,7 @@ export const VOCAB_WORDS: Record<VocabGrade, VocabWord[]> = {
     { word: 'Площадь', blanks: [5] },
     { word: 'Кремль', blanks: [2] },
     { word: 'Здравствуйте', blanks: [4, 5, 6] },
-    { word: 'Свидания', blanks: [2] },
+    { word: 'До свидания', blanks: [5] },
     { word: 'Спасибо', blanks: [2] },
     { word: 'Пожалуйста', blanks: [1] },
     { word: 'Извините', blanks: [3] },

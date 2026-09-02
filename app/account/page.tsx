@@ -103,6 +103,7 @@ interface Profile {
     status: string;
     endDate: string;
     autoRenew: boolean;
+    willAutoCharge: boolean;
     isActive: boolean;
   } | null;
   payments: {
@@ -112,6 +113,14 @@ interface Profile {
     createdAt: string;
   }[];
   generatorUsesCount: number;
+  tournamentDiplomas: {
+    id: string;
+    trackTitle: string;
+    childName: string;
+    score: number;
+    total: number;
+    createdAt: string;
+  }[];
 }
 
 interface DailyGiftStatus {
@@ -279,10 +288,14 @@ export default function AccountPage() {
             <p className="text-gray-400 text-sm mt-1">{user.email}</p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="bg-orange/20 border border-orange/40 rounded-full px-4 py-2 flex items-center gap-2">
+            <Link
+              href="/domik"
+              className="bg-orange/20 border border-orange/40 rounded-full px-4 py-2 flex items-center gap-2 hover:bg-orange/30 transition-colors"
+            >
               <span className="text-2xl">⭐</span>
               <span className="font-bold text-orange text-lg">{totalStars}</span>
-            </div>
+              <span className="text-xs text-orange/80 ml-1">🏡 Домик →</span>
+            </Link>
             <button
               onClick={handleLogout}
               className="text-gray-400 hover:text-white transition-colors text-sm"
@@ -327,9 +340,13 @@ export default function AccountPage() {
                     Действует до {new Date(subscription.endDate).toLocaleDateString('ru-RU')}
                   </p>
                   <p className="text-green-400 text-sm mt-1">
-                    {subscription.autoRenew
-                      ? 'Автопродление включено'
-                      : 'Автопродление отключено — после окончания периода подписка не продлится'}
+                    {subscription.plan === 'yearly'
+                      ? 'Оплачен год вперёд. Перед автопродлением предупредим письмом за 7 дней'
+                      : !subscription.autoRenew
+                        ? 'Автопродление отключено — после окончания периода подписка не продлится'
+                        : subscription.willAutoCharge
+                          ? 'Автопродление включено — карта сохранена, спишем автоматически'
+                          : 'Автопродление включено, но карта не сохранена — продлите вручную до конца периода, иначе доступ закончится'}
                   </p>
                 </div>
 
@@ -532,6 +549,28 @@ export default function AccountPage() {
             })}
           </div>
         </div>
+
+        {/* Tournament diplomas */}
+        {profile.tournamentDiplomas.length > 0 && (
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-2">🏆 Дипломы «Турнира Знаторики»</h2>
+            <p className="text-gray-500 text-sm mb-6">Именные дипломы за участие в турнире — можно открыть и распечатать снова в любой момент</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {profile.tournamentDiplomas.map((d) => (
+                <Link
+                  key={d.id}
+                  href={`/turnir/diplom/${d.id}`}
+                  className="rounded-lg p-6 border bg-black border-[#2D2350] hover:border-orange transition-colors block"
+                >
+                  <div className="text-4xl mb-2">🏅</div>
+                  <h3 className="text-lg font-bold mb-1">{d.trackTitle}</h3>
+                  <p className="text-gray-400 text-sm mb-2">{d.childName} — {d.score} из {d.total}</p>
+                  <p className="text-orange font-bold text-sm">🖨️ Открыть диплом →</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Payment History */}
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg overflow-hidden">

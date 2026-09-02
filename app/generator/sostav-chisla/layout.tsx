@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Состав числа — генератор «домиков» для 1 класса',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function SostavChislaLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageJsonLd metadata={metadata} section="generator" />
+      {children}
+    </>
+  );
 }

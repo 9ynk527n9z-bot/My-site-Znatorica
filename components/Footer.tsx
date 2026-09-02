@@ -23,6 +23,22 @@ export default function Footer() {
             <h4 className="font-bold text-white mb-4">Наши каналы</h4>
             <div className="flex flex-col gap-2">
               <a
+                href="https://t.me/znatorica_bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-orange transition-colors text-sm"
+              >
+                🤖 Открыть в Telegram
+              </a>
+              <a
+                href="https://vk.com/club142589783"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-orange transition-colors text-sm"
+              >
+                🔵 Мы ВКонтакте
+              </a>
+              <a
                 href="https://t.me/englsimplepro"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -37,6 +53,24 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-white mb-4">Информация</h4>
             <div className="flex flex-col gap-2">
+              <Link
+                href="/sborniki"
+                className="text-gray-400 hover:text-orange transition-colors text-sm"
+              >
+                Сборник к 1 классу
+              </Link>
+              <Link
+                href="/pamyatki"
+                className="text-gray-400 hover:text-orange transition-colors text-sm"
+              >
+                Памятки
+              </Link>
+              <Link
+                href="/otzyvy"
+                className="text-gray-400 hover:text-orange transition-colors text-sm"
+              >
+                Отзывы
+              </Link>
               <Link
                 href="/privacy"
                 className="text-gray-400 hover:text-orange transition-colors text-sm"

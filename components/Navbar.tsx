@@ -1,16 +1,26 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import { searchSite, type SearchEntry } from '@/lib/search-index';
+import { useSiteSearch } from '@/lib/useSiteSearch';
+import type { SearchEntry } from '@/lib/search-index';
 
-function SearchResults({ results, onNavigate }: { results: SearchEntry[]; onNavigate: () => void }) {
+function SearchResults({
+  results,
+  onNavigate,
+  onShowAll,
+}: {
+  results: SearchEntry[];
+  onNavigate: () => void;
+  onShowAll: () => void;
+}) {
   if (results.length === 0) return null;
   return (
     <div className="absolute top-full left-0 right-0 mt-2 bg-[#3a1c6e]/95 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden z-50 max-h-96 overflow-y-auto">
       {results.map((entry) => (
         <Link
-          key={entry.url}
+          key={`${entry.type}-${entry.url}-${entry.title}`}
           href={entry.url}
           onClick={onNavigate}
           className="block px-4 py-3 hover:bg-white/15 transition-colors border-b border-white/10 last:border-0"
@@ -19,14 +29,21 @@ function SearchResults({ results, onNavigate }: { results: SearchEntry[]; onNavi
           <p className="text-xs text-gray-400">{entry.category}</p>
         </Link>
       ))}
+      <button
+        type="button"
+        onClick={onShowAll}
+        className="block w-full text-center px-4 py-3 text-orange font-semibold text-sm hover:bg-white/15 transition-colors"
+      >
+        Показать все результаты →
+      </button>
     </div>
   );
 }
 
 export default function Navbar() {
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchEntry[]>([]);
+  const { query, setQuery, results, setResults } = useSiteSearch(2, 300, 8);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
@@ -42,17 +59,27 @@ export default function Navbar() {
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  function handleQueryChange(value: string) {
-    setQuery(value);
-    setResults(searchSite(value));
-  }
+  }, [setResults]);
 
   function clearSearch() {
     setQuery('');
     setResults([]);
     setMobileSearchOpen(false);
+  }
+
+  function goToSearchPage() {
+    const q = query.trim();
+    if (!q) return;
+    setResults([]);
+    setMobileSearchOpen(false);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+  }
+
+  function handleSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      goToSearchPage();
+    }
   }
 
   return (
@@ -72,10 +99,11 @@ export default function Navbar() {
             type="text"
             placeholder="Поиск по темам, тренажёрам, генераторам..."
             value={query}
-            onChange={(e) => handleQueryChange(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
             className="w-full px-4 py-2 rounded-lg bg-white/15 backdrop-blur-md text-white placeholder-white/60 border border-white/25 focus:border-orange transition-colors"
           />
-          <SearchResults results={results} onNavigate={clearSearch} />
+          <SearchResults results={results} onNavigate={clearSearch} onShowAll={goToSearchPage} />
         </div>
 
         {/* Search icon (Mobile) */}
@@ -117,10 +145,11 @@ export default function Navbar() {
             autoFocus
             placeholder="Поиск по темам, тренажёрам, генераторам..."
             value={query}
-            onChange={(e) => handleQueryChange(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
             className="w-full px-4 py-2 rounded-lg bg-white/15 backdrop-blur-md text-white placeholder-white/60 border border-white/25 focus:border-orange transition-colors"
           />
-          <SearchResults results={results} onNavigate={clearSearch} />
+          <SearchResults results={results} onNavigate={clearSearch} onShowAll={goToSearchPage} />
         </div>
       )}
     </nav>

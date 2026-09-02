@@ -14,7 +14,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
   3: [
     {
       text: 'В корзине лежало 24 яблока и 18 груш. Сколько всего фруктов было в корзине?',
-      answer: `${24 + 18} фруктов`,
+      answer: `${24 + 18} фрукта`,
       solution: `24 + 18 = ${24 + 18}`,
       category: 'plus_minus',
     },
@@ -26,7 +26,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'В одной коробке 6 карандашей. Сколько карандашей в 7 таких коробках?',
-      answer: `${6 * 7} карандашей`,
+      answer: `${6 * 7} карандаша`,
       solution: `6 × 7 = ${6 * 7}`,
       category: 'multiply_divide',
     },
@@ -50,7 +50,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'Швея сшила 8 платьев, расходуя на каждое по 3 метра ткани. Сколько метров ткани она использовала?',
-      answer: `${8 * 3} метров`,
+      answer: `${8 * 3} метра`,
       solution: `8 × 3 = ${8 * 3}`,
       category: 'multiply_divide',
     },
@@ -158,7 +158,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'У бабушки было 40 кур. Она продала 15 кур, а потом купила ещё 8. Сколько кур стало у бабушки?',
-      answer: `${40 - 15 + 8} кур`,
+      answer: `${40 - 15 + 8} курицы`,
       solution: `40 − 15 + 8 = ${40 - 15 + 8}`,
       category: 'plus_minus',
     },
@@ -182,7 +182,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'Стоимость одной ручки 12 рублей. Сколько будут стоить 6 таких ручек?',
-      answer: `${12 * 6} рублей`,
+      answer: `${12 * 6} рубля`,
       solution: `12 × 6 = ${12 * 6}`,
       category: 'multiply_divide',
     },
@@ -280,7 +280,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'В типографии напечатали 24800 экземпляров книги и разложили их в пачки по 200 штук. Сколько получилось пачек?',
-      answer: `${24800 / 200} пачек`,
+      answer: `${24800 / 200} пачки`,
       solution: `24800 ÷ 200 = ${24800 / 200}`,
       category: 'multiply_divide',
     },
@@ -364,7 +364,7 @@ export const WORD_PROBLEMS: Record<ProblemGrade, WordProblem[]> = {
     },
     {
       text: 'Купили 24 упаковки тетрадей по 48 рублей за упаковку. Сколько денег заплатили за всю покупку?',
-      answer: `${24 * 48} рублей`,
+      answer: `${24 * 48} рубля`,
       solution: `24 × 48 = ${24 * 48}`,
       category: 'multiply_divide',
     },

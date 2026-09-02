@@ -7,6 +7,7 @@ import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const GRADES: ProblemGrade[] = [3, 4];
 const COUNTS = [1, 2, 3] as const;
@@ -20,7 +21,7 @@ const CATEGORIES: { value: Category; label: string }[] = [
 ];
 
 function countLabel(c: number): string {
-  return c === 1 ? '1 задача' : `${c} задачи`;
+  return pluralizeCount(c, ['задача', 'задачи', 'задач']);
 }
 
 export default function ZadachiGeneratorPage() {
@@ -128,7 +129,7 @@ export default function ZadachiGeneratorPage() {
               <ExportToolbar targetRef={printRef} filename={`zadachi-${grade}-klass`} />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-4">Задачи — {grade} класс</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-4">Задачи — {grade} класс</h2>
             <ol className="space-y-4 list-decimal list-inside">
               {problems.map((p, i) => (
                 <li key={i} className="text-black text-lg">

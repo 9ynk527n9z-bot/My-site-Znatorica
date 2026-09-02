@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '1 класс', url: '/1-klass' },
-  { name: 'Математика', url: '/1-klass/matematika' },
+  { name: 'Математика', url: '/1-klass' },
   { name: 'Сложение 5-10', url: '/1-klass/matematika/slozhenie-5-10' },
 ]);
 
@@ -34,7 +34,7 @@ export default function Slozhenie510Page() {
           <span className="text-gray-400">/</span>
           <Link href="/1-klass" className="text-orange hover:underline">1 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/1-klass/matematika" className="text-orange hover:underline">Математика</Link>
+          <Link href="/1-klass" className="text-orange hover:underline">Математика</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Сложение 5-10</span>
         </div>
@@ -45,8 +45,7 @@ export default function Slozhenie510Page() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/slozhenie-5-10" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -63,7 +62,7 @@ export default function Slozhenie510Page() {
             <div>
               <h3 className="font-bold text-orange mb-2">Приём «прибавить по одному»</h3>
               <p className="text-gray-300 mb-4">
-                Если нужно прибавить маленькое число (1, 2, 3), можно прибавлять по одному: 6 + 3 = 6, 7, 8, 9.
+                Если нужно прибавить маленькое число (1, 2, 3), можно прибавлять по одному: считаем 6 → 7 → 8 → 9, значит 6 + 3 = 9.
               </p>
               <div className="grid grid-cols-3 gap-3 text-xl font-bold">
                 <span className="bg-orange/20 px-4 py-3 rounded text-center">4 + 3 = 7</span>

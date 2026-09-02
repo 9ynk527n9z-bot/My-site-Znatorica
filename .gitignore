@@ -34,6 +34,9 @@ yarn-error.log*
 /deploy/backups
 /backups
 
+# платный контент — не должен светиться в публичном репозитории
+/private-content/
+
 # editor
 .vscode/
 .idea/
@@ -44,3 +47,23 @@ yarn-error.log*
 
 # typescript build artifacts
 tsconfig.tsbuildinfo
+
+# Capacitor / Android / iOS build artifacts and signing material
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/app/*.apk
+android/app/*.aab
+public/downloads/*.apk
+ios/App/Pods/
+ios/App/build/
+ios/App/DerivedData/
+ios/App/App.xcworkspace/xcuserdata/
+# Дубль веб-сборки, копируется сюда автоматически командой `cap sync`
+ios/App/App/public/
+*.keystore
+*.jks
+*.p12
+*.mobileprovision

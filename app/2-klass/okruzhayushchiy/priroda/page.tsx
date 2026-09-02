@@ -4,20 +4,20 @@ import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Природа — теория и тренажёр для 2 класса',
-  description: 'Экосистемы и животные в программе окружающего мира для 2 класса.',
+  description: 'Живая и неживая природа в программе окружающего мира для 2 класса.',
   alternates: { canonical: '/2-klass/okruzhayushchiy/priroda' },
 };
 
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '2 класс', url: '/2-klass' },
-  { name: 'Окружающий мир', url: '/2-klass/okruzhayushchiy' },
+  { name: 'Окружающий мир', url: '/2-klass' },
   { name: 'Природа', url: '/2-klass/okruzhayushchiy/priroda' },
 ]);
 
 const learningResource = learningResourceJsonLd({
   name: 'Природа',
-  description: 'Экосистемы и животные для 2 класса',
+  description: 'Живая и неживая природа для 2 класса',
   url: '/2-klass/okruzhayushchiy/priroda',
   educationalLevel: '2 класс начальной школы',
 });
@@ -34,7 +34,7 @@ export default function PrirodaPage() {
           <span className="text-gray-400">/</span>
           <Link href="/2-klass" className="text-orange hover:underline">2 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/2-klass/okruzhayushchiy" className="text-orange hover:underline">Окружающий мир</Link>
+          <Link href="/2-klass" className="text-orange hover:underline">Окружающий мир</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Природа</span>
         </div>
@@ -45,8 +45,12 @@ export default function PrirodaPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/priroda-zhivaya-nezhivaya-2klass"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

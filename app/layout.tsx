@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingDecor from '@/components/FloatingDecor';
+import FloatingBackButton from '@/components/FloatingBackButton';
 import PageViewTracker from '@/components/PageViewTracker';
 import RegisterServiceWorker from '@/components/RegisterServiceWorker';
+import CapacitorBridge from '@/components/CapacitorBridge';
+import VkBridge from '@/components/VkBridge';
+import TelegramBridge from '@/components/TelegramBridge';
+import YandexMetrika from '@/components/YandexMetrika';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import '@/styles/globals.css';
 
@@ -22,6 +29,7 @@ export const metadata: Metadata = {
     'начальная школа',
     'генератор примеров',
     'ВПР',
+    'МЦКО',
     'занятия для дошкольников',
   ],
   authors: [{ name: SITE_NAME }],
@@ -86,12 +94,20 @@ export default function RootLayout({
         />
       </head>
       <body className="text-white">
-        <PageViewTracker />
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         <RegisterServiceWorker />
+        <CapacitorBridge />
+        <VkBridge />
+        <TelegramBridge />
+        <YandexMetrika />
         <FloatingDecor />
+        <FloatingBackButton />
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <CookieConsentBanner />
       </body>
     </html>
   );

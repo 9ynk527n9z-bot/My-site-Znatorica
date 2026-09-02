@@ -18,11 +18,31 @@
           "text": "Прочитай текст и отметь, верны ли утверждения (True) или неверны (False):\na) Kate has a dog.\nb) Fluffy is orange.\nc) Fluffy sleeps a lot in the evening.\nd) Kate loves her cat.",
           "answer": "a) False (у Кейт кошка, не собака). b) True. c) False (спит днём, играет вечером). d) True."
         },
-        { "n": 3, "text": "Complete the sentence with the correct form of the verb: «My dog ___ (like) to play in the garden.»", "answer": "likes" },
-        { "n": 4, "text": "Choose the correct plural form: «I have two ___ (dog).»", "answer": "dogs" },
-        { "n": 5, "text": "Complete with is/are: «There ___ a cat in the garden.»", "answer": "is" },
-        { "n": 6, "text": "Choose the correct word: «I have a sister. ___ (Her/His) name is Anna.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «My dog is big, but my friend's dog is ___ (big).»", "answer": "bigger" },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the correct form of the verb: «My dog ___ (like) to play in the garden.»",
+          "answer": "likes"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «I have two ___ (dog).»",
+          "answer": "dogs"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «There ___ a cat in the garden.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «I have a sister. ___ (Her/His) name is Anna.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «My dog is big, but my friend's dog is ___ (big).»",
+          "answer": "bigger"
+        },
         {
           "n": 8,
           "reading": "My name is Alice. I am 9 years old. I live in London. My favourite animal is a rabbit. My hobby is drawing.",
@@ -46,11 +66,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Sam is Emma's older brother.\nb) Emma's grandmother lives with the family.\nc) Emma's father works at a school.\nd) The family plays games on Sundays.",
           "answer": "a) False (Sam младше Эммы). b) True. c) False (работает в больнице). d) True."
         },
-        { "n": 3, "text": "Complete the sentence: «My brother ___ (play) football every weekend.»", "answer": "plays" },
-        { "n": 4, "text": "Choose the correct plural form: «I have three ___ (sister).»", "answer": "sisters" },
-        { "n": 5, "text": "Complete with is/are: «There ___ five people in my family.»", "answer": "are" },
-        { "n": 6, "text": "Choose the correct word: «This is my father. ___ (His/Its) job is a teacher.»", "answer": "His" },
-        { "n": 7, "text": "Choose the correct comparative form: «My house is small, but my friend's house is ___ (small).»", "answer": "smaller" },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «My brother ___ (play) football every weekend.»",
+          "answer": "plays"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «I have three ___ (sister).»",
+          "answer": "sisters"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «There ___ five people in my family.»",
+          "answer": "are"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «This is my father. ___ (His/Its) job is a teacher.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «My house is small, but my friend's house is ___ (small).»",
+          "answer": "smaller"
+        },
         {
           "n": 8,
           "reading": "My name is Ben. I am 10 years old. I live in Manchester. My favourite subject is Maths. My hobby is playing chess.",
@@ -74,11 +114,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Peter's school starts at eight o'clock.\nb) Peter's first lesson is English.\nc) Peter eats a banana at break time.\nd) School finishes at three o'clock.",
           "answer": "a) False (начинается в половине девятого). b) True. c) False (ест яблоко). d) True."
         },
-        { "n": 3, "text": "Complete the sentence: «Peter ___ (like) his English lesson.»", "answer": "likes" },
-        { "n": 4, "text": "Choose the correct plural form: «There are twenty ___ (pupil) in our class.»", "answer": "pupils" },
-        { "n": 5, "text": "Complete with is/are: «My school bag ___ very heavy today.»", "answer": "is" },
-        { "n": 6, "text": "Choose the correct word: «This is my teacher. ___ (Her/His) name is Mrs Green.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «Maths is difficult, but Science is ___ (difficult).»", "answer": "more difficult" },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Peter ___ (like) his English lesson.»",
+          "answer": "likes"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There are twenty ___ (pupil) in our class.»",
+          "answer": "pupils"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «My school bag ___ very heavy today.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «This is my teacher. ___ (Her/His) name is Mrs Green.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Maths is difficult, but Science is ___ (difficult).»",
+          "answer": "more difficult"
+        },
         {
           "n": 8,
           "reading": "My name is Sophie. I am 9 years old. I live in Bristol. My favourite subject is Art. My hobby is dancing.",
@@ -102,11 +162,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Molly went to the zoo alone.\nb) She saw elephants and lions.\nc) Her favourite animal was the lion.\nd) They ate ice cream after the zoo.",
           "answer": "a) False (ходила с родителями). b) True. c) False (любимое животное — обезьяна). d) True."
         },
-        { "n": 3, "text": "Complete the sentence with the past form of the verb: «Molly ___ (see) elephants at the zoo.»", "answer": "saw" },
-        { "n": 4, "text": "Choose the correct plural form: «There were three ___ (monkey) at the zoo.»", "answer": "monkeys" },
-        { "n": 5, "text": "Complete with was/were: «The animals ___ very interesting.»", "answer": "were" },
-        { "n": 6, "text": "Choose the correct word: «Molly liked the monkey. ___ (Its/His) tail was very long.»", "answer": "Its" },
-        { "n": 7, "text": "Choose the correct comparative form: «The elephant is big, but the whale is ___ (big).»", "answer": "bigger" },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the past form of the verb: «Molly ___ (see) elephants at the zoo.»",
+          "answer": "saw"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There were three ___ (monkey) at the zoo.»",
+          "answer": "monkeys"
+        },
+        {
+          "n": 5,
+          "text": "Complete with was/were: «The animals ___ very interesting.»",
+          "answer": "were"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Molly liked the monkey. ___ (Its/His) tail was very long.»",
+          "answer": "Its"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The elephant is big, but the whale is ___ (big).»",
+          "answer": "bigger"
+        },
         {
           "n": 8,
           "reading": "My name is Oliver. I am 10 years old. I live in Leeds. My favourite animal is a lion. My hobby is photography.",
@@ -130,11 +210,31 @@
           "text": "Прочитай текст и отметь True или False:\na) The weather is hot today.\nb) It is snowing.\nc) Daniel is wearing a warm coat.\nd) Daniel doesn't like cold weather.",
           "answer": "a) False (погода холодная). b) True. c) True. d) False (ему нравится холодная погода)."
         },
-        { "n": 3, "text": "Complete the sentence: «It ___ (snow) a lot in winter.»", "answer": "snows" },
-        { "n": 4, "text": "Choose the correct plural form: «Daniel has two ___ (glove).»", "answer": "gloves" },
-        { "n": 5, "text": "Complete with is/are: «The weather ___ very cold today.»", "answer": "is" },
-        { "n": 6, "text": "Choose the correct word: «Daniel has a dog. ___ (Its/His) dog likes the snow.»", "answer": "His" },
-        { "n": 7, "text": "Choose the correct comparative form: «Winter is cold, but the North Pole is ___ (cold).»", "answer": "colder" },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «It ___ (snow) a lot in winter.»",
+          "answer": "snows"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Daniel has two ___ (glove).»",
+          "answer": "gloves"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «The weather ___ very cold today.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Daniel has a dog. ___ (Its/His) dog likes the snow.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Winter is cold, but the North Pole is ___ (cold).»",
+          "answer": "colder"
+        },
         {
           "n": 8,
           "reading": "My name is Grace. I am 9 years old. I live in Edinburgh. My favourite season is autumn. My hobby is collecting leaves.",
@@ -158,11 +258,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Chloe likes running.\nb) She goes swimming twice a week.\nc) She swims with her brother.\nd) Her dream is a swimming competition.",
           "answer": "a) False (ей нравится плавание, не бег). b) True. c) False (плавает с сестрой). d) True."
         },
-        { "n": 3, "text": "Complete the sentence: «Chloe ___ (swim) very fast.»", "answer": "swims" },
-        { "n": 4, "text": "Choose the correct plural form: «There are two ___ (competition) this year.»", "answer": "competitions" },
-        { "n": 5, "text": "Complete with is/are: «Football ___ a popular sport in England.»", "answer": "is" },
-        { "n": 6, "text": "Choose the correct word: «Chloe has a sister. ___ (Her/His) sister swims too.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «Swimming is fun, but football is ___ (fun) for Alex.»", "answer": "more fun" },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Chloe ___ (swim) very fast.»",
+          "answer": "swims"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There are two ___ (competition) this year.»",
+          "answer": "competitions"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «Football ___ a popular sport in England.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Chloe has a sister. ___ (Her/His) sister swims too.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Swimming is fun, but football is ___ (fun) for Alex.»",
+          "answer": "more fun"
+        },
         {
           "n": 8,
           "reading": "My name is Harry. I am 10 years old. I live in Liverpool. My favourite sport is basketball. My hobby is playing video games.",
@@ -186,11 +306,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Noah eats an apple every day.\nb) His favourite vegetable is potato.\nc) He drinks milk.\nd) Noah never eats chocolate.",
           "answer": "a) True. b) False (любимый овощ — морковь). c) True. d) False (иногда ест шоколад)."
         },
-        { "n": 3, "text": "Complete the sentence: «Noah ___ (like) healthy food.»", "answer": "likes" },
-        { "n": 4, "text": "Choose the correct plural form: «Ella has two ___ (tomato) on her pizza.»", "answer": "tomatoes" },
-        { "n": 5, "text": "Complete with is/are: «Apples ___ good for your health.»", "answer": "are" },
-        { "n": 6, "text": "Choose the correct word: «Noah has a sister. ___ (Her/His) favourite fruit is banana.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «Pizza is tasty, but ice cream is ___ (tasty) for Ella.»", "answer": "tastier" },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Noah ___ (like) healthy food.»",
+          "answer": "likes"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Ella has two ___ (tomato) on her pizza.»",
+          "answer": "tomatoes"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «Apples ___ good for your health.»",
+          "answer": "are"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Noah has a sister. ___ (Her/His) favourite fruit is banana.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Pizza is tasty, but ice cream is ___ (tasty) for Ella.»",
+          "answer": "tastier"
+        },
         {
           "n": 8,
           "reading": "My name is Mia. I am 9 years old. I live in Birmingham. My favourite food is pasta. My hobby is cooking.",
@@ -214,11 +354,31 @@
           "text": "Прочитай текст и отметь True или False:\na) Isla's bedroom has a blue door.\nb) There is a wardrobe in her room.\nc) She has a shelf for her toys.\nd) Isla likes to read in the kitchen.",
           "answer": "a) False (дверь розовая). b) True. c) True. d) False (читает в кресле у себя в комнате)."
         },
-        { "n": 3, "text": "Complete with is/are: «There ___ a big window in Isla's room.»", "answer": "is" },
-        { "n": 4, "text": "Choose the correct plural form: «Leo has three ___ (poster) on the wall.»", "answer": "posters" },
-        { "n": 5, "text": "Complete the sentence: «Isla ___ (like) to read books.»", "answer": "likes" },
-        { "n": 6, "text": "Choose the correct word: «This is Leo's room. ___ (His/Its) bed is blue.»", "answer": "His" },
-        { "n": 7, "text": "Choose the correct comparative form: «Leo's room is small, but Isla's room is ___ (big).»", "answer": "bigger" },
+        {
+          "n": 3,
+          "text": "Complete with is/are: «There ___ a big window in Isla's room.»",
+          "answer": "is"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Leo has three ___ (poster) on the wall.»",
+          "answer": "posters"
+        },
+        {
+          "n": 5,
+          "text": "Complete the sentence: «Isla ___ (like) to read books.»",
+          "answer": "likes"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «This is Leo's room. ___ (His/Its) bed is blue.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Leo's room is small, but Isla's room is ___ (big).»",
+          "answer": "bigger"
+        },
         {
           "n": 8,
           "reading": "My name is Jacob. I am 10 years old. I live in Sheffield. My favourite colour is green. My hobby is building models.",
@@ -242,11 +402,31 @@
           "text": "Прочитай текст и отметь True или False:\na) The party was on Sunday.\nb) Friends came at four o'clock.\nc) There was a magic show.\nd) William's mother made the cake.",
           "answer": "a) False (вечеринка была в субботу). b) True. c) True. d) False (торт испекла бабушка)."
         },
-        { "n": 3, "text": "Complete the sentence with the past form of the verb: «William's grandmother ___ (make) a cake.»", "answer": "made" },
-        { "n": 4, "text": "Choose the correct plural form: «There were ten ___ (child) at the party.»", "answer": "children" },
-        { "n": 5, "text": "Complete with was/were: «The magic show ___ amazing.»", "answer": "was" },
-        { "n": 6, "text": "Choose the correct word: «Ruby got a bicycle. ___ (Her/Its) new bicycle is red.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «This birthday was good, but last year's birthday was ___ (good).»", "answer": "better" },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the past form of the verb: «William's grandmother ___ (make) a cake.»",
+          "answer": "made"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There were ten ___ (child) at the party.»",
+          "answer": "children"
+        },
+        {
+          "n": 5,
+          "text": "Complete with was/were: «The magic show ___ amazing.»",
+          "answer": "was"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Ruby got a bicycle. ___ (Her/Its) new bicycle is red.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «This birthday was good, but last year's birthday was ___ (good).»",
+          "answer": "better"
+        },
         {
           "n": 8,
           "reading": "My name is Amelia. I am 9 years old. I live in York. My birthday is in September. My hobby is baking cakes.",
@@ -270,16 +450,516 @@
           "text": "Прочитай текст и отметь True или False:\na) Zoe's family travelled to France.\nb) They visited an old castle.\nc) Zoe took photos with her phone.\nd) They cooked dinner together.",
           "answer": "a) False (путешествовали в Шотландию). b) True. c) False (фотографировала камерой, не телефоном). d) True."
         },
-        { "n": 3, "text": "Complete the sentence with the past form of the verb: «Zoe's family ___ (travel) to Scotland.»", "answer": "travelled" },
-        { "n": 4, "text": "Choose the correct plural form: «Zoe took a lot of ___ (photo).»", "answer": "photos" },
-        { "n": 5, "text": "Complete with was/were: «The lake ___ very beautiful.»", "answer": "was" },
-        { "n": 6, "text": "Choose the correct word: «Zoe has a camera. ___ (Her/Its) camera is new.»", "answer": "Her" },
-        { "n": 7, "text": "Choose the correct comparative form: «The castle was old, but the lake was ___ (beautiful).»", "answer": "more beautiful" },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the past form of the verb: «Zoe's family ___ (travel) to Scotland.»",
+          "answer": "travelled"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Zoe took a lot of ___ (photo).»",
+          "answer": "photos"
+        },
+        {
+          "n": 5,
+          "text": "Complete with was/were: «The lake ___ very beautiful.»",
+          "answer": "was"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Zoe has a camera. ___ (Her/Its) camera is new.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The castle was old, but the lake was ___ (beautiful).»",
+          "answer": "more beautiful"
+        },
         {
           "n": 8,
           "reading": "My name is Thomas. I am 10 years old. I live in Cardiff. Last summer I went to Spain. My hobby is taking photos.",
           "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Holiday destination: ___, Hobby: ___",
           "answer": "Name: Thomas. Age: 10. City: Cardiff. Holiday destination: Spain. Hobby: taking photos."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello! My name is Mark. I have a green parrot. His name is Kiwi. Kiwi can say a few words. He lives in a big cage in my room. Every day I give him seeds and fresh water. I love my parrot very much.",
+          "text": "Прослушай текст дважды (нажми кнопку). Выбери правильный ответ на каждый вопрос:\n1) What is the name of Mark's parrot? — 1. Coco  2. Kiwi  3. Polly\n2) What colour is the parrot? — 1. green  2. blue  3. yellow\n3) Where does Kiwi live? — 1. in a cage  2. in a box  3. in a tree",
+          "answer": "1) Kiwi (2). 2) green (1). 3) in a cage (1)."
+        },
+        {
+          "n": 2,
+          "reading": "Lily has a fish. The fish's name is Bubble. Bubble is orange and lives in a small tank. Lily feeds him twice a day. She likes to watch him swim after school.",
+          "text": "Прочитай текст и отметь, верны ли утверждения (True) или неверны (False):\na) Lily has a bird.\nb) Bubble is orange.\nc) Lily feeds Bubble three times a day.\nd) Lily watches Bubble swim after school.",
+          "answer": "a) False (у Лили рыбка, не птица). b) True. c) False (кормит два раза в день). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the correct form of the verb: «Kiwi ___ (say) a few words.»",
+          "answer": "says"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Mark has two ___ (parrot).»",
+          "answer": "parrots"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «There ___ some seeds in the cage.»",
+          "answer": "are"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Lily has a fish. ___ (Her/His) fish is orange.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Kiwi is loud, but the neighbour's parrot is ___ (loud).»",
+          "answer": "louder"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Zara. I am 9 years old. I live in Oxford. My favourite animal is a parrot. My hobby is singing.",
+          "text": "Прочитай текст о девочке и заполни анкету: Name: ___, Age: ___, City: ___, Favourite animal: ___, Hobby: ___",
+          "answer": "Name: Zara. Age: 9. City: Oxford. Favourite animal: parrot. Hobby: singing."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi! I am Grace. On Saturday, I go shopping with my mother. We go to the market near our house. I like to buy apples and bananas. Sometimes my mother buys me a small toy. Shopping day is my favourite day.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) When does Grace go shopping? — 1. on Saturday  2. on Sunday  3. on Monday\n2) Where do they go? — 1. to the supermarket  2. to the market  3. to the mall\n3) What does Grace like to buy? — 1. apples and bananas  2. bread and milk  3. sweets and chips",
+          "answer": "1) on Saturday (1). 2) to the market (2). 3) apples and bananas (1)."
+        },
+        {
+          "n": 2,
+          "reading": "Yesterday, Ryan went to the shop with his father. They bought a new football and some orange juice. The shop assistant was very friendly. Ryan was happy with his new football.",
+          "text": "Прочитай текст и отметь True или False:\na) Ryan went to the shop with his mother.\nb) They bought a new football.\nc) They bought some orange juice.\nd) Ryan was unhappy with his football.",
+          "answer": "a) False (ходил с папой). b) True. c) True. d) False (был доволен)."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the past form of the verb: «Ryan ___ (buy) a new football.»",
+          "answer": "bought"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Grace bought two ___ (apple).»",
+          "answer": "apples"
+        },
+        {
+          "n": 5,
+          "text": "Complete with was/were: «The shop assistant ___ very friendly.»",
+          "answer": "was"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Ryan has a father. ___ (His/Her) father bought him a football.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The market is busy, but the supermarket is ___ (busy).»",
+          "answer": "busier"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Ethan. I am 10 years old. I live in Norwich. My favourite shop is a bookshop. My hobby is collecting stickers.",
+          "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Favourite shop: ___, Hobby: ___",
+          "answer": "Name: Ethan. Age: 10. City: Norwich. Favourite shop: bookshop. Hobby: collecting stickers."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello! My name is Isabella. I play the guitar. I practise every evening after dinner. My music teacher says I am getting better. Next month, I have a small concert at school. I am a little nervous but excited.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) What instrument does Isabella play? — 1. the piano  2. the guitar  3. the violin\n2) When does she practise? — 1. every morning  2. every evening  3. every afternoon\n3) How does she feel about the concert? — 1. bored  2. angry  3. nervous but excited",
+          "answer": "1) the guitar (2). 2) every evening (2). 3) nervous but excited (3)."
+        },
+        {
+          "n": 2,
+          "reading": "Jake learns to play the piano. He has lessons twice a week with Mrs Adams. His favourite song is a song about the sea. Jake wants to play at his grandmother's birthday party.",
+          "text": "Прочитай текст и отметь True или False:\na) Jake plays the drums.\nb) He has lessons twice a week.\nc) His teacher's name is Mrs Adams.\nd) Jake wants to play at a football match.",
+          "answer": "a) False (играет на пианино). b) True. c) True. d) False (хочет играть на дне рождения бабушки)."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Jake ___ (practise) the piano every day.»",
+          "answer": "practises"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Isabella has three ___ (lesson) a week.»",
+          "answer": "lessons"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «Music ___ important for Isabella.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Jake has a teacher. ___ (Her/His) teacher is Mrs Adams.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The guitar is heavy, but the piano is ___ (heavy).»",
+          "answer": "heavier"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Lucy. I am 9 years old. I live in Coventry. My favourite instrument is the violin. My hobby is singing in a choir.",
+          "text": "Прочитай текст о девочке и заполни анкету: Name: ___, Age: ___, City: ___, Favourite instrument: ___, Hobby: ___",
+          "answer": "Name: Lucy. Age: 9. City: Coventry. Favourite instrument: violin. Hobby: singing in a choir."
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi! I'm Daniel. Every Wednesday, I go to the library after school. I borrow two or three books. My favourite books are about space. The librarian, Mr Wilson, always helps me find good books. I love reading.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) When does Daniel go to the library? — 1. on Monday  2. on Wednesday  3. on Friday\n2) What are his favourite books about? — 1. animals  2. sport  3. space\n3) Who helps him find books? — 1. his teacher  2. the librarian  3. his sister",
+          "answer": "1) on Wednesday (2). 2) space (3). 3) the librarian (2)."
+        },
+        {
+          "n": 2,
+          "reading": "Emily loves the school library. It is a quiet, cosy room with many bookshelves. Last week, she read a book about dinosaurs. She wants to bring the book to show her little brother. Emily visits the library every break time.",
+          "text": "Прочитай текст и отметь True или False:\na) The library is noisy.\nb) Emily read a book about dinosaurs.\nc) She wants to show the book to her teacher.\nd) Emily visits the library every break time.",
+          "answer": "a) False (библиотека тихая). b) True. c) False (хочет показать младшему брату). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Emily ___ (read) books at break time.»",
+          "answer": "reads"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There are many ___ (bookshelf) in the library.»",
+          "answer": "bookshelves"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «The library ___ quiet and cosy.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Daniel has a book about space. ___ (His/Its) book has many pictures.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «A book about dinosaurs is interesting, but a book about space is ___ (interesting).»",
+          "answer": "more interesting"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Jack. I am 10 years old. I live in Plymouth. My favourite book type is adventure. My hobby is reading comics.",
+          "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Favourite book type: ___, Hobby: ___",
+          "answer": "Name: Jack. Age: 10. City: Plymouth. Favourite book type: adventure. Hobby: reading comics."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello! My name is Chloe. Today it is raining. I am wearing my yellow raincoat and my red boots. I like rainy days because I can jump in the puddles. After the rain, I often see a rainbow in the sky.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) What is Chloe wearing on her feet? — 1. red boots  2. black shoes  3. white trainers\n2) What does she like to do on rainy days? — 1. stay in bed  2. jump in puddles  3. watch TV\n3) What does she often see after the rain? — 1. the sun  2. a rainbow  3. snow",
+          "answer": "1) red boots (1). 2) jump in puddles (2). 3) a rainbow (2)."
+        },
+        {
+          "n": 2,
+          "reading": "It is spring now. The weather is warmer, and flowers are growing in the garden. Archie's mother plants tomatoes and carrots every spring. Archie likes to help her water the plants. Birds sing in the trees every morning.",
+          "text": "Прочитай текст и отметь True или False:\na) It is winter now.\nb) Archie's mother plants tomatoes and carrots.\nc) Archie never helps his mother.\nd) Birds sing in the trees every morning.",
+          "answer": "a) False (сейчас весна). b) True. c) False (помогает ей). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Archie ___ (help) his mother in the garden.»",
+          "answer": "helps"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Archie's mother plants many ___ (tomato).»",
+          "answer": "tomatoes"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «The flowers ___ beautiful in spring.»",
+          "answer": "are"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Chloe has a raincoat. ___ (Her/His) raincoat is yellow.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «Spring is warm, but summer is ___ (warm).»",
+          "answer": "warmer"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Noah. I am 9 years old. I live in Belfast. My favourite weather is sunny. My hobby is flying kites.",
+          "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Favourite weather: ___, Hobby: ___",
+          "answer": "Name: Noah. Age: 9. City: Belfast. Favourite weather: sunny. Hobby: flying kites."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi! I am Tyler. I ride my bicycle to school every day. It takes me ten minutes. My bicycle is red and has a small bell. On rainy days, my father drives me to school in the car. I like riding my bike best.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) How does Tyler usually get to school? — 1. by bus  2. by bicycle  3. by car\n2) How long does it take? — 1. five minutes  2. ten minutes  3. twenty minutes\n3) How does he get to school on rainy days? — 1. by bus  2. on foot  3. by car",
+          "answer": "1) by bicycle (2). 2) ten minutes (2). 3) by car (3)."
+        },
+        {
+          "n": 2,
+          "reading": "Sophie's family doesn't have a car. They travel by bus and train. Every morning, Sophie takes the number 12 bus to school with her brother. She likes looking out of the window during the journey. The bus stop is near her house.",
+          "text": "Прочитай текст и отметь True или False:\na) Sophie's family has two cars.\nb) Sophie takes the number 12 bus.\nc) She travels to school alone.\nd) The bus stop is near her house.",
+          "answer": "a) False (у семьи нет машины). b) True. c) False (едет с братом). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Sophie ___ (take) the bus every morning.»",
+          "answer": "takes"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There are two ___ (bus) at the bus stop.»",
+          "answer": "buses"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «The bus stop ___ near Sophie's house.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Tyler has a bicycle. ___ (His/Her) bicycle is red.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The bus is fast, but the train is ___ (fast).»",
+          "answer": "faster"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Ava. I am 10 years old. I live in Southampton. My favourite way to travel is by train. My hobby is drawing trains and cars.",
+          "text": "Прочитай текст о девочке и заполни анкету: Name: ___, Age: ___, City: ___, Favourite way to travel: ___, Hobby: ___",
+          "answer": "Name: Ava. Age: 10. City: Southampton. Favourite way to travel: by train. Hobby: drawing trains and cars."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello! My name is Oscar. My favourite lesson is Art. Every Thursday, we paint pictures in class. Last week, I painted a picture of a mountain. My teacher put it on the wall. I want to be an artist one day.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) What is Oscar's favourite lesson? — 1. Music  2. Art  3. PE\n2) When do they paint pictures? — 1. every Monday  2. every Thursday  3. every Friday\n3) What did Oscar paint last week? — 1. a mountain  2. a river  3. a forest",
+          "answer": "1) Art (2). 2) every Thursday (2). 3) a mountain (1)."
+        },
+        {
+          "n": 2,
+          "reading": "Freya loves drawing animals. In her last picture, she drew a horse in a green field. Her art teacher, Miss Baker, liked the picture very much. Freya wants to draw a picture of a lion next.",
+          "text": "Прочитай текст и отметь True или False:\na) Freya loves drawing cars.\nb) She drew a horse in a green field.\nc) Her art teacher's name is Miss Baker.\nd) Freya wants to draw a fish next.",
+          "answer": "a) False (любит рисовать животных). b) True. c) True. d) False (хочет нарисовать льва)."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Freya ___ (draw) pictures of animals.»",
+          "answer": "draws"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «Oscar painted three ___ (picture) this month.»",
+          "answer": "pictures"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «Art ___ Oscar's favourite lesson.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Freya has an art teacher. ___ (Her/His) teacher liked the picture.»",
+          "answer": "Her"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The horse picture is good, but the lion picture is ___ (good).»",
+          "answer": "better"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Freddie. I am 9 years old. I live in Derby. My favourite lesson is Art. My hobby is painting.",
+          "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Favourite lesson: ___, Hobby: ___",
+          "answer": "Name: Freddie. Age: 9. City: Derby. Favourite lesson: Art. Hobby: painting."
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi! My name is Finn. Last weekend, my family went camping in the forest. We slept in a big blue tent. In the evening, we made a campfire and cooked sausages. I heard an owl at night. It was an exciting adventure.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) Where did Finn's family go camping? — 1. by the sea  2. in the forest  3. in the mountains\n2) What colour was their tent? — 1. green  2. blue  3. yellow\n3) What did Finn hear at night? — 1. a dog  2. an owl  3. a car",
+          "answer": "1) in the forest (2). 2) blue (2). 3) an owl (2)."
+        },
+        {
+          "n": 2,
+          "reading": "Last summer, Holly's family went camping near a lake. They swam in the lake every morning. Holly's brother caught a small fish, but they put it back in the water. At night, they looked at the stars together.",
+          "text": "Прочитай текст и отметь True или False:\na) Holly's family camped near a mountain.\nb) They swam in the lake every morning.\nc) Holly's brother kept the fish.\nd) They looked at the stars at night.",
+          "answer": "a) False (у озера). b) True. c) False (отпустили рыбку обратно). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence with the past form of the verb: «Holly's brother ___ (catch) a small fish.»",
+          "answer": "caught"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «They saw many ___ (star) at night.»",
+          "answer": "stars"
+        },
+        {
+          "n": 5,
+          "text": "Complete with was/were: «The stars ___ very bright at night.»",
+          "answer": "were"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Finn has a tent. ___ (His/Its) tent is blue.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The lake was calm, but the sea was ___ (calm).»",
+          "answer": "calmer"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Ivy. I am 10 years old. I live in Exeter. My favourite camping activity is stargazing. My hobby is telling stories.",
+          "text": "Прочитай текст о девочке и заполни анкету: Name: ___, Age: ___, City: ___, Favourite camping activity: ___, Hobby: ___",
+          "answer": "Name: Ivy. Age: 10. City: Exeter. Favourite camping activity: stargazing. Hobby: telling stories."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello! My name is Dylan. I have a tablet. I use it to play games and watch videos. My favourite game is about building houses. My parents let me use the tablet for one hour a day. After that, I read books or play outside.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) What does Dylan use his tablet for? — 1. only games  2. games and videos  3. only videos\n2) What is his favourite game about? — 1. racing cars  2. building houses  3. cooking food\n3) How long can he use the tablet? — 1. thirty minutes  2. one hour  3. two hours",
+          "answer": "1) games and videos (2). 2) building houses (2). 3) one hour (2)."
+        },
+        {
+          "n": 2,
+          "reading": "Poppy's family has one computer at home. She uses it to do her homework and to talk to her cousin online. Poppy's favourite website has puzzles and quizzes. She isn't allowed to use the computer after eight o'clock.",
+          "text": "Прочитай текст и отметь True или False:\na) Poppy's family has three computers.\nb) She uses the computer to do homework.\nc) Poppy talks to her cousin online.\nd) She can use the computer after eight o'clock.",
+          "answer": "a) False (у семьи один компьютер). b) True. c) True. d) False (ей нельзя после восьми часов)."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Poppy ___ (use) the computer for homework.»",
+          "answer": "uses"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «The website has many ___ (puzzle).»",
+          "answer": "puzzles"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «There ___ one computer in Poppy's house.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «Dylan has a tablet. ___ (His/Her) tablet is new.»",
+          "answer": "His"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The tablet is expensive, but the computer is ___ (expensive).»",
+          "answer": "more expensive"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Nora. I am 9 years old. I live in Reading. My favourite app is a drawing app. My hobby is playing computer games.",
+          "text": "Прочитай текст о девочке и заполни анкету: Name: ___, Age: ___, City: ___, Favourite app: ___, Hobby: ___",
+          "answer": "Name: Nora. Age: 9. City: Reading. Favourite app: drawing app. Hobby: playing computer games."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi! My name is George. Last week, my class visited a farm. We saw cows, sheep and hens. I fed a small lamb with a bottle of milk. The farmer showed us how to collect eggs. It was a fun school trip.",
+          "text": "Прослушай текст дважды. Выбери правильный ответ:\n1) Where did George's class go? — 1. to the zoo  2. to a farm  3. to a museum\n2) What did George feed? — 1. a cow  2. a lamb  3. a hen\n3) What did the farmer show them? — 1. how to collect eggs  2. how to milk a cow  3. how to ride a horse",
+          "answer": "1) to a farm (2). 2) a lamb (2). 3) how to collect eggs (1)."
+        },
+        {
+          "n": 2,
+          "reading": "Layla's grandparents have a small farm in the countryside. They keep chickens, goats and two horses. Every morning, Layla helps her grandfather feed the goats. She rides one of the horses at the weekend.",
+          "text": "Прочитай текст и отметь True или False:\na) Layla's grandparents live in the city.\nb) They keep chickens and goats.\nc) Layla never helps her grandfather.\nd) Layla rides a horse at the weekend.",
+          "answer": "a) False (живут за городом). b) True. c) False (помогает каждое утро). d) True."
+        },
+        {
+          "n": 3,
+          "text": "Complete the sentence: «Layla ___ (feed) the goats every morning.»",
+          "answer": "feeds"
+        },
+        {
+          "n": 4,
+          "text": "Choose the correct plural form: «There are two ___ (horse) on the farm.»",
+          "answer": "horses"
+        },
+        {
+          "n": 5,
+          "text": "Complete with is/are: «The farm ___ in the countryside.»",
+          "answer": "is"
+        },
+        {
+          "n": 6,
+          "text": "Choose the correct word: «George fed a lamb. ___ (Its/His) mother was nearby.»",
+          "answer": "Its"
+        },
+        {
+          "n": 7,
+          "text": "Choose the correct comparative form: «The goat is big, but the horse is ___ (big).»",
+          "answer": "bigger"
+        },
+        {
+          "n": 8,
+          "reading": "My name is Toby. I am 10 years old. I live in Newcastle. My favourite farm animal is a lamb. My hobby is horse riding.",
+          "text": "Прочитай текст о мальчике и заполни анкету: Name: ___, Age: ___, City: ___, Favourite farm animal: ___, Hobby: ___",
+          "answer": "Name: Toby. Age: 10. City: Newcastle. Favourite farm animal: lamb. Hobby: horse riding."
         }
       ]
     }

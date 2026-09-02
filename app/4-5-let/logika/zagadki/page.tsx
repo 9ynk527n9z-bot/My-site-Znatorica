@@ -65,8 +65,12 @@ export default function ZagadkiPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/zagadki-4-5let"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         {RIDDLE_GROUPS.map((group) => (

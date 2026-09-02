@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CODE_TOPIC_ROUTES } from '@/lib/code-topics';
+import { SEGMENTS, SUBJECTS } from '@/lib/constants';
 
 type Kind = 'article' | 'topic';
 type Tab = Kind | 'code';
@@ -398,22 +399,33 @@ export default function AdminContentPage() {
             ) : (
               <div className="grid sm:grid-cols-2 gap-4">
                 <label className="block">
-                  <span className="text-sm text-gray-400">Возрастная группа (необязательно)</span>
-                  <input
+                  <span className="text-sm text-gray-400">Возрастная группа</span>
+                  {/* Выпадающий список, а не свободный ввод: значение должно точно
+                      совпадать с id раздела, иначе тема не попадёт в блок
+                      «Дополнительные темы» на странице класса. */}
+                  <select
                     value={form.segment}
                     onChange={(e) => setForm({ ...form, segment: e.target.value })}
-                    placeholder="2-klass"
                     className="w-full mt-1 px-3 py-2 rounded-lg bg-black border border-[#2D2350] focus:border-orange"
-                  />
+                  >
+                    <option value="">— не выбрано (тема не появится в разделе) —</option>
+                    {SEGMENTS.map((s) => (
+                      <option key={s.id} value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
                 </label>
                 <label className="block">
                   <span className="text-sm text-gray-400">Предмет (необязательно)</span>
-                  <input
+                  <select
                     value={form.subject}
                     onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                    placeholder="matematika"
                     className="w-full mt-1 px-3 py-2 rounded-lg bg-black border border-[#2D2350] focus:border-orange"
-                  />
+                  >
+                    <option value="">— не выбрано —</option>
+                    {SUBJECTS.map((s) => (
+                      <option key={s.id} value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
                 </label>
               </div>
             )}

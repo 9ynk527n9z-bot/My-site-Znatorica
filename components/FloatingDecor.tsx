@@ -3,16 +3,12 @@
 
 const BALLOONS = [
   { color: '#FF4D6D', top: '8%', left: '6%', size: 58, duration: '11s', delay: '0s' },
-  { color: '#FFD43B', top: '62%', left: '90%', size: 46, duration: '13s', delay: '1.5s' },
   { color: '#4DABF7', top: '78%', left: '14%', size: 52, duration: '15s', delay: '0.5s' },
-  { color: '#69DB7C', top: '20%', left: '84%', size: 42, duration: '12s', delay: '2s' },
   { color: '#FFA94D', top: '44%', left: '4%', size: 48, duration: '14s', delay: '1s' },
-  { color: '#DA77F2', top: '14%', left: '46%', size: 40, duration: '16s', delay: '3s' },
   { color: '#3BC9DB', top: '70%', left: '52%', size: 44, duration: '13s', delay: '0.8s' },
-  { color: '#FF8787', top: '38%', left: '72%', size: 50, duration: '17s', delay: '2.4s' },
 ];
 
-const STARS = Array.from({ length: 28 }, (_, i) => ({
+const STARS = Array.from({ length: 14 }, (_, i) => ({
   top: `${(i * 37) % 100}%`,
   left: `${(i * 53) % 100}%`,
   size: 8 + (i % 4) * 4,
@@ -42,7 +38,7 @@ export default function FloatingDecor() {
           style={{
             top: b.top,
             left: b.left,
-            opacity: 0.55,
+            opacity: 0.35,
             animationDuration: b.duration,
             animationDelay: b.delay,
           }}

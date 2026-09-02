@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Найди лишнее — тренажёр логики для дошкольников',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageJsonLd metadata={metadata} section="trenazher" />
+      {children}
+    </>
+  );
 }

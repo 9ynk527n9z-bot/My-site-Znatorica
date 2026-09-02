@@ -28,6 +28,8 @@ ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 # поэтому реальный домен должен быть передан как build-arg, а не только через env_file контейнера.
 ARG NEXT_PUBLIC_SITE_URL="https://znatorica.ru"
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ARG NEXT_PUBLIC_YANDEX_METRIKA_ID=""
+ENV NEXT_PUBLIC_YANDEX_METRIKA_ID=${NEXT_PUBLIC_YANDEX_METRIKA_ID}
 RUN npm run build
 
 # --- Финальный минимальный образ ---
@@ -39,6 +41,7 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/private-content ./private-content
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma

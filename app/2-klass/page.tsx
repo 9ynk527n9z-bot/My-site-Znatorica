@@ -16,6 +16,7 @@ export default function Grade2Page() {
         { slug: 'delenie', title: 'Деление', description: 'Делим числа' },
         { slug: 'dvuznachnye', title: 'Двузначные числа', description: 'Числа от 10 до 100' },
         { slug: 'sravnenie-chisel', title: 'Сравнение чисел', description: 'Больше, меньше или равно' },
+        { slug: 'perimetr', title: 'Периметр', description: 'Сумма длин сторон прямоугольника и квадрата' },
       ],
     },
     russkiy: {
@@ -25,6 +26,7 @@ export default function Grade2Page() {
         { slug: 'chasti-rechi', title: 'Части речи', description: 'Существительные, глаголы' },
         { slug: 'predlozhenie', title: 'Предложение', description: 'Структура предложения' },
         { slug: 'koren-slova', title: 'Корень слова', description: 'Общая часть родственных слов' },
+        { slug: 'sinonimy-antonimy', title: 'Синонимы и антонимы', description: 'Слова, близкие по значению, и слова-противоположности' },
         { slug: 'bezudarnye-glasnye', title: 'Безударные гласные', description: 'Проверяем ударением' },
         { slug: 'shtrikhovka-i-graficheskie-diktanty', title: 'Штриховка и графические диктанты', description: 'Точность и аккуратность письма' },
       ],
@@ -33,7 +35,7 @@ export default function Grade2Page() {
       name: 'Окружающий мир',
       icon: '🌍',
       topics: [
-        { slug: 'priroda', title: 'Природа', description: 'Экосистемы и животные' },
+        { slug: 'priroda', title: 'Природа', description: 'Растения, животные и природные сообщества' },
         { slug: 'chelovek', title: 'Человек', description: 'Здоровье и гигиена' },
       ],
     },
@@ -66,7 +68,7 @@ export default function Grade2Page() {
 
       <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-4 overflow-x-auto">
+          <div className="flex gap-4 overflow-x-auto pr-6">
             {Object.entries(subjects).map(([key, subject]) => (
               <button
                 key={key}

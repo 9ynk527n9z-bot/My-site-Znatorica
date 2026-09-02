@@ -57,7 +57,7 @@ export default function EnglishAlphabetTrainerPage() {
                   <div className="text-6xl mb-3">{item.emoji}</div>
                   <div className="font-bold text-lg">{item.word}</div>
                   <div className="text-gray-400 text-sm mb-1">{item.wordRu}</div>
-                  <div className="text-violet text-sm mb-3">{item.transcription}</div>
+                  <div className="text-white/60 text-sm mb-3">{item.transcription}</div>
                   <ListenButton text={`${item.letter}. ${item.word}.`} label="🔊 Слушать" />
                 </div>
               );

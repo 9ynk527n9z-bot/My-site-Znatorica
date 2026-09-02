@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import CmsTopicsSection from '@/components/CmsTopicsSection';
 
 export const metadata: Metadata = {
   title: '3 класс — сложные примеры, грамматика, английский',
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      {children}
+      <CmsTopicsSection segment="3-klass" />
+    </>
+  );
 }

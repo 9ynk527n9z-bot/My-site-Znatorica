@@ -7,9 +7,11 @@ import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const GRADES: VocabGrade[] = [1, 2, 3, 4];
 const COUNTS = [10, 15, 20] as const;
+const wordsCount = (n: number) => pluralizeCount(n, ['слово', 'слова', 'слов']);
 
 type Mode = 'list' | 'exercise';
 
@@ -88,7 +90,7 @@ export default function SlovarnyeSlovaGeneratorPage() {
                       : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
                   }`}
                 >
-                  {c} слов
+                  {wordsCount(c)}
                 </button>
               ))}
             </div>
@@ -131,12 +133,12 @@ export default function SlovarnyeSlovaGeneratorPage() {
           <div ref={printRef} className="card print-page bg-white">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
               <span className="text-sm text-gray-500">
-                {grade} класс · вставь пропущенную букву · {exercise.length} слов
+                {grade} класс · вставь пропущенную букву · {wordsCount(exercise.length)}
               </span>
               <ExportToolbar targetRef={printRef} filename={`slovarnye-slova-${grade}-klass`} />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-4">Вставь пропущенную букву</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-4">Вставь пропущенную букву</h2>
             <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside">
               {exercise.map((item, i) => (
                 <li key={i} className="text-black text-lg">
@@ -166,12 +168,12 @@ export default function SlovarnyeSlovaGeneratorPage() {
           <div ref={printRef} className="card print-page bg-white">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
               <span className="text-sm text-gray-500">
-                {grade} класс · список для заучивания · {list.length} слов
+                {grade} класс · список для заучивания · {wordsCount(list.length)}
               </span>
               <ExportToolbar targetRef={printRef} filename={`slovarnye-slova-spisok-${grade}-klass`} />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-4">Словарные слова — {grade} класс</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-4">Словарные слова — {grade} класс</h2>
             <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside">
               {list.map((word, i) => (
                 <li key={i} className="text-black text-lg">

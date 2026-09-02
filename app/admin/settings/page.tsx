@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminSettingsPage() {
   const router = useRouter();
   const [monthlyPrice, setMonthlyPrice] = useState(399);
+  const [yearlyPrice, setYearlyPrice] = useState(2390);
   const [lifetimePrice, setLifetimePrice] = useState(2990);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -37,6 +38,7 @@ export default function AdminSettingsPage() {
 
         const data = await response.json();
         setMonthlyPrice(data.monthlyPrice);
+        setYearlyPrice(data.yearlyPrice);
         setLifetimePrice(data.lifetimePrice);
       } catch (err) {
         console.error(err);
@@ -61,7 +63,7 @@ export default function AdminSettingsPage() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ monthlyPrice, lifetimePrice }),
+        body: JSON.stringify({ monthlyPrice, yearlyPrice, lifetimePrice }),
       });
 
       const data = await response.json();
@@ -126,6 +128,19 @@ export default function AdminSettingsPage() {
                 min={1}
                 value={monthlyPrice}
                 onChange={(e) => setMonthlyPrice(Number(e.target.value))}
+                className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-lg font-bold mb-2">
+                Подписка «На год» (₽ за год)
+              </label>
+              <input
+                type="number"
+                min={1}
+                value={yearlyPrice}
+                onChange={(e) => setYearlyPrice(Number(e.target.value))}
                 className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               />
             </div>

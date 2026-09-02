@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: 'Дошкольники 6–7', url: '/6-7-let' },
-  { name: 'Грамота', url: '/6-7-let/gramota' },
+  { name: 'Грамота', url: '/6-7-let' },
   { name: 'Чтение', url: '/6-7-let/gramota/chtenie' },
 ]);
 
@@ -34,7 +34,7 @@ export default function ChteniePage() {
           <span className="text-gray-400">/</span>
           <Link href="/6-7-let" className="text-orange hover:underline">Дошкольники 6–7</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/6-7-let/gramota" className="text-orange hover:underline">Грамота</Link>
+          <Link href="/6-7-let" className="text-orange hover:underline">Грамота</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Чтение</span>
         </div>
@@ -45,8 +45,12 @@ export default function ChteniePage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/chtenie-6-7let"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -56,7 +60,7 @@ export default function ChteniePage() {
             <div>
               <h3 className="font-bold text-orange mb-2">Шаг 1: Читаем слова целиком</h3>
               <p className="text-gray-300">
-                Ты уже умеешь читать слоги. Теперь соединяй их в слова: КО-Т = КОТ, МА-МА = МАМА.
+                Ты уже умеешь читать слоги. Теперь соединяй их в слова: РЫ-БА = РЫБА, МА-МА = МАМА.
               </p>
             </div>
 

@@ -1,4 +1,4 @@
-function send(payload: { type: string } | { url: string }) {
+function send(payload: { type: string } | { url: string; utmSource?: string; referrer?: string }) {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch('/api/track', {
@@ -21,6 +21,6 @@ export function trackUsage(type: string) {
 
 // Анонимный учёт просмотров страниц для внутренней аналитики (без Google Analytics
 // и без стороннего шаринга) — та же cookie znatorika_sid, что и trackUsage.
-export function trackPageView(url: string) {
-  send({ url });
+export function trackPageView(url: string, utmSource?: string, referrer?: string) {
+  send({ url, ...(utmSource ? { utmSource } : {}), ...(referrer ? { referrer } : {}) });
 }

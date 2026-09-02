@@ -43,8 +43,7 @@ export default function GlasnyeSoglasnyePage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/glasnye-soglasnye" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -55,7 +54,7 @@ export default function GlasnyeSoglasnyePage() {
               <h3 className="font-bold text-orange mb-2">Шаг 1: Гласный звук можно петь</h3>
               <p className="text-gray-300">
                 Гласный звук произносится свободно, без преград — рот открыт, воздух проходит легко.
-                Его можно долго тянуть голосом, как будто поёшь.
+                Его можно долго тянуть голосом, как будто поёшь. Всего в русском языке 10 гласных букв:
               </p>
               <div className="mt-4 flex gap-3 text-2xl font-bold flex-wrap">
                 {['А', 'О', 'У', 'Ы', 'Э', 'Я', 'Ё', 'Ю', 'И', 'Е'].map((l) => (
@@ -78,7 +77,9 @@ export default function GlasnyeSoglasnyePage() {
             <div>
               <h3 className="font-bold text-orange mb-2">Шаг 3: Согласные бывают звонкие и глухие</h3>
               <p className="text-gray-300">
-                Звонкие согласные произносятся с голосом (Б, В, Г, Д, Ж, З), а глухие — без голоса, одним шумом (П, Ф, К, Т, Ш, С).
+                Звонкие согласные произносятся голосом, глухие — без голоса, одним шумом.
+                У большинства согласных есть пара «звонкий-глухой»: Б-П, В-Ф, Г-К, Д-Т, Ж-Ш, З-С.
+                Но есть согласные без пары: Й, Л, М, Н, Р — всегда звонкие, а Х, Ц, Ч, Щ — всегда глухие.
                 Приложи руку к горлу — при звонком звуке чувствуется дрожание.
               </p>
             </div>
@@ -107,7 +108,7 @@ export default function GlasnyeSoglasnyePage() {
               <p className="mb-2">Звук «З» в слове «зима» — звонкий или глухой?</p>
               <details className="mt-2">
                 <summary className="cursor-pointer text-orange font-bold select-none">Показать ответ</summary>
-                <p className="text-gray-300 mt-2">Звонкий — произносится с голосом.</p>
+                <p className="text-gray-300 mt-2">Звонкий — произносится голосом.</p>
               </details>
             </div>
           </div>

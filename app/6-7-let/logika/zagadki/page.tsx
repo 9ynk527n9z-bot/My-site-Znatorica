@@ -46,8 +46,8 @@ const RIDDLE_GROUPS = [
     riddles: [
       { text: 'Из горячего колодца через нос водица льётся.', answer: 'Чайник' },
       { text: 'Одноногий Ивашка — с деревянной рубашкой; где носом ткнёт — там след кладёт.', answer: 'Карандаш' },
-      { text: 'Всех кормит, а сама есть не просит.', answer: 'Ложка' },
-      { text: 'Днём спит, ночью светит.', answer: 'Луна' },
+      { text: 'Всех кормит, а сама есть не просит.', answer: 'Земля' },
+      { text: 'Круглая, но не мяч, светит ночью на небе, а через две недели становится похожа на дольку апельсина.', answer: 'Луна' },
     ],
   },
 ];
@@ -76,8 +76,12 @@ export default function ZagadkiPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/zagadki-6-7let"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

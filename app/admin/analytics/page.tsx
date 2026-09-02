@@ -18,6 +18,8 @@ import {
 interface Totals {
   totalUsers: number;
   subscribers: number;
+  revenue30: number;
+  oneTimeRevenue30: number;
   conversionRate: number;
   dau: number;
   wau: number;
@@ -29,9 +31,11 @@ interface Totals {
 }
 
 interface Analytics {
+  period: number;
   totals: Totals;
   registrationsSeries: { date: string; count: number }[];
   revenueSeries: { date: string; amount: number }[];
+  paymentBreakdown: { label: string; count: number; revenue: number }[];
   activitySeries: { date: string; pageViews: number; usage: number }[];
   trafficSources: { key: string; count: number }[];
   trafficTypes: { key: string; count: number }[];
@@ -54,8 +58,21 @@ interface Analytics {
     week: { visits: number; sections: { key: string; count: number }[] };
     month: { visits: number; sections: { key: string; count: number }[] };
   };
-  topSearchQueries: { key: string; count: number }[];
-  zeroResultQueries: { key: string; count: number }[];
+  newFeatures: {
+    readinessTests: { slug: string; label: string; views: number; uniqueVisitors: number; starts: number; finishes: number }[];
+    parentStyleQuiz: { views: number; uniqueVisitors: number; starts: number; finishes: number };
+    tournament: {
+      listViews: number;
+      listUniqueVisitors: number;
+      trackViews: number;
+      trackUniqueVisitors: number;
+      starts: number;
+      finishes: number;
+      diplomasPaid: number;
+    };
+    domik: { views: number; uniqueVisitors: number; usersWithDecorations: number; decorationsBought: number };
+    shareClicks: { key: string; count: number }[];
+  };
 }
 
 function shortDate(d: string) {
@@ -94,6 +111,99 @@ function BarList({ title, items, emptyHint }: { title: string; items: { key: str
               </div>
               <span className="text-sm text-gray-400 w-10 text-right">{item.count}</span>
             </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FunnelRow({ label, steps }: { label: string; steps: { value: number; hint: string }[] }) {
+  return (
+    <div className="flex items-center justify-between text-sm border-b border-[#2D2350] pb-2 last:border-0 gap-2 flex-wrap">
+      <span className="text-white/80">{label}</span>
+      <div className="flex items-center gap-2 text-white/60">
+        {steps.map((s, i) => (
+          <span key={i} className="flex items-center gap-2">
+            {i > 0 && <span className="text-white/20">→</span>}
+            <span>
+              <b className="text-white">{s.value}</b> {s.hint}
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Приживаемость новых фич этой сессии — тесты готовности, тест про родителя,
+// турнир, домик и шеринг. Всегда за 30 дней (не завязано на переключатель периода
+// выше) — это срез "прижилось ли вообще", а не посуточная посещаемость.
+function NewFeaturesSection({ data }: { data: Analytics['newFeatures'] }) {
+  return (
+    <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-5 mb-6">
+      <h3 className="font-bold mb-1">🆕 Новые фичи (30 дней)</h3>
+      <p className="text-white/40 text-xs mb-4">Заходы → начали → дошли до результата. Всегда за 30 дней.</p>
+
+      <p className="text-white/50 text-xs font-bold uppercase tracking-wide mb-2 mt-4">Тесты готовности</p>
+      <div className="space-y-2 mb-4">
+        {data.readinessTests.map((t) => (
+          <FunnelRow
+            key={t.slug}
+            label={t.label}
+            steps={[
+              { value: t.uniqueVisitors, hint: 'посетителей' },
+              { value: t.starts, hint: 'начали' },
+              { value: t.finishes, hint: 'дошли до результата' },
+            ]}
+          />
+        ))}
+        <FunnelRow
+          label="Какой ты родитель?"
+          steps={[
+            { value: data.parentStyleQuiz.uniqueVisitors, hint: 'посетителей' },
+            { value: data.parentStyleQuiz.starts, hint: 'начали' },
+            { value: data.parentStyleQuiz.finishes, hint: 'дошли до результата' },
+          ]}
+        />
+      </div>
+
+      <p className="text-white/50 text-xs font-bold uppercase tracking-wide mb-2">Турнир</p>
+      <div className="space-y-2 mb-4">
+        <FunnelRow
+          label="Список турниров"
+          steps={[{ value: data.tournament.listUniqueVisitors, hint: 'посетителей' }]}
+        />
+        <FunnelRow
+          label="Треки турнира"
+          steps={[
+            { value: data.tournament.trackUniqueVisitors, hint: 'посетителей' },
+            { value: data.tournament.starts, hint: 'начали' },
+            { value: data.tournament.finishes, hint: 'дошли до результата' },
+            { value: data.tournament.diplomasPaid, hint: 'купили диплом' },
+          ]}
+        />
+      </div>
+
+      <p className="text-white/50 text-xs font-bold uppercase tracking-wide mb-2">Домик Знатика</p>
+      <div className="space-y-2 mb-4">
+        <FunnelRow
+          label="Домик"
+          steps={[
+            { value: data.domik.uniqueVisitors, hint: 'посетителей' },
+            { value: data.domik.usersWithDecorations, hint: 'купили хоть одно украшение' },
+            { value: data.domik.decorationsBought, hint: 'украшений куплено всего' },
+          ]}
+        />
+      </div>
+
+      <p className="text-white/50 text-xs font-bold uppercase tracking-wide mb-2">Шеринг (клики по кнопкам)</p>
+      {data.shareClicks.length === 0 ? (
+        <p className="text-white/50 text-sm">Пока ни одного клика.</p>
+      ) : (
+        <div className="space-y-2">
+          {data.shareClicks.map((s) => (
+            <FunnelRow key={s.key} label={s.key} steps={[{ value: s.count, hint: 'кликов' }]} />
           ))}
         </div>
       )}
@@ -225,33 +335,33 @@ function VisitorSessions({ sessions }: { sessions: Analytics['recentSessions'] }
       return next;
     });
 
-  const subscribers = sessions.filter((s) => s.isSubscriber);
-  const newVisitors = sessions.filter((s) => !s.isSubscriber);
+  const registered = sessions.filter((s) => s.isUser);
+  const guests = sessions.filter((s) => !s.isUser);
 
   return (
     <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-5">
-      <h3 className="font-bold mb-1">👥 Последние посетители</h3>
+      <h3 className="font-bold mb-1">👥 Посетители сегодня</h3>
       <p className="text-gray-500 text-xs mb-4">
-        Кто реально заходил и что смотрел — последние {sessions.length} визитов за 30 дней, слева новые и незалогиненные,
-        справа — с активной подпиской (обновляется по перезагрузке страницы).
+        Кто реально заходил и что смотрел — {sessions.length} визитов за последние сутки, слева
+        зарегистрированные, справа гости (обновляется по перезагрузке страницы).
       </p>
       {sessions.length === 0 ? (
-        <p className="text-gray-500 text-sm">Пока нет данных о визитах.</p>
+        <p className="text-gray-500 text-sm">Сегодня пока не заходили.</p>
       ) : (
         <div className="grid lg:grid-cols-2 gap-6">
           <VisitorColumn
-            title="🆕 Новые"
-            sessions={newVisitors}
+            title="👤 Зарегистрированные"
+            sessions={registered}
             expandedKeys={expandedKeys}
             onToggle={toggle}
-            emptyHint="За этот период новых визитов без подписки не было."
+            emptyHint="Сегодня зарегистрированные не заходили."
           />
           <VisitorColumn
-            title="⭐ Подписчики"
-            sessions={subscribers}
+            title="🕶️ Гости"
+            sessions={guests}
             expandedKeys={expandedKeys}
             onToggle={toggle}
-            emptyHint="Подписчики за этот период не заходили."
+            emptyHint="Сегодня гости не заходили."
           />
         </div>
       )}
@@ -264,6 +374,7 @@ export default function AdminAnalyticsPage() {
   const [data, setData] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [period, setPeriod] = useState<'1' | '7' | '30'>('30');
 
   useEffect(() => {
     (async () => {
@@ -273,7 +384,8 @@ export default function AdminAnalyticsPage() {
         return;
       }
       try {
-        const res = await fetch('/api/admin/analytics', { headers: { Authorization: `Bearer ${token}` } });
+        setLoading(true);
+        const res = await fetch(`/api/admin/analytics?period=${period}`, { headers: { Authorization: `Bearer ${token}` } });
         if (res.status === 403) {
           setError('Нет доступа к админ-панели');
           return;
@@ -286,7 +398,7 @@ export default function AdminAnalyticsPage() {
         setLoading(false);
       }
     })();
-  }, [router]);
+  }, [router, period]);
 
   return (
     <div className="bg-black min-h-screen">
@@ -323,6 +435,8 @@ export default function AdminAnalyticsPage() {
               />
               <StatCard label="Всего пользователей" value={data.totals.totalUsers} />
               <StatCard label="Активных подписок" value={data.totals.subscribers} />
+              <StatCard label="Выручка за 30 дней" value={`${data.totals.revenue30.toLocaleString('ru-RU')} ₽`} accent="text-green-400" />
+              <StatCard label="— из неё разовые покупки" value={`${data.totals.oneTimeRevenue30.toLocaleString('ru-RU')} ₽`} />
               <StatCard label="Решено вариантов ВПР (30 дн.)" value={data.totals.vprCompletions30} />
               <StatCard label="Разных вариантов ВПР" value={data.totals.vprDistinctVariants30} />
             </div>
@@ -363,6 +477,28 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
 
+            <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-5 mb-6">
+              <h3 className="font-bold mb-1">За что платят (30 дней)</h3>
+              <p className="text-white/40 text-xs mb-4">Подписка отдельно от разовых покупок — сборников, тестов и дипломов турнира.</p>
+              {data.paymentBreakdown.length === 0 ? (
+                <p className="text-white/50 text-sm">Платежей за 30 дней не было.</p>
+              ) : (
+                <div className="space-y-2">
+                  {data.paymentBreakdown.map((row) => (
+                    <div key={row.label} className="flex items-center justify-between text-sm border-b border-[#2D2350] pb-2 last:border-0">
+                      <span className="text-white/80">{row.label}</span>
+                      <span className="text-white/50">
+                        {row.count} {row.count === 1 ? 'платёж' : row.count < 5 ? 'платежа' : 'платежей'}
+                      </span>
+                      <span className="text-green-400 font-bold">{row.revenue.toLocaleString('ru-RU')} ₽</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <NewFeaturesSection data={data.newFeatures} />
+
             <SectionsByPeriod data={data.sectionsByPeriod} />
 
             {(data.totals.botPageViews30 > 0 || data.totals.ownerPageViews30 > 0) && (
@@ -394,28 +530,36 @@ export default function AdminAnalyticsPage() {
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-6 mb-6">
-              <BarList title="🧭 Тип визита" items={data.trafficTypes} emptyHint="Пока нет данных." />
-              <BarList title="🔗 Referrer (сайт-источник визита)" items={data.referrerSources} emptyHint="Пока нет данных." />
-            </div>
-            <div className="grid lg:grid-cols-3 gap-6 mb-6">
-              <BarList title="📣 Источники трафика (метка ?utm_source=...)" items={data.trafficSources} emptyHint="Пока нет визитов с меткой ?utm_source=... в ссылке." />
-              <BarList title="🔝 Топ страниц" items={data.topPages} emptyHint="Пока нет данных — учёт начался сегодня." />
-              <BarList title="⚙️ Топ генераторов" items={data.topGenerators} emptyHint="Пока нет использований." />
-              <BarList title="🎮 Топ тренажёров" items={data.topTrainers} emptyHint="Пока нет использований." />
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-white/50 text-sm">Период для источников трафика и топов ниже:</span>
+              <div className="flex gap-1">
+                {([
+                  ['1', 'Сегодня'],
+                  ['7', '7 дней'],
+                  ['30', '30 дней'],
+                ] as const).map(([value, label]) => (
+                  <button
+                    key={value}
+                    onClick={() => setPeriod(value)}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-colors ${
+                      period === value ? 'bg-orange text-white' : 'bg-[#2A1B4D] border border-[#2D2350] text-white/60 hover:text-white'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-6 mb-6">
-              <BarList
-                title="🔍 Что искали (30 дней)"
-                items={data.topSearchQueries}
-                emptyHint="Пока никто ничего не искал."
-              />
-              <BarList
-                title="🔍 Искали, но не нашли"
-                items={data.zeroResultQueries}
-                emptyHint="Все запросы находят результаты — отлично."
-              />
+              <BarList title="🧭 Тип визита (уникальных посетителей)" items={data.trafficTypes} emptyHint="Пока нет данных." />
+              <BarList title="🔗 Referrer — сайт-источник (уникальных посетителей)" items={data.referrerSources} emptyHint="Пока нет данных." />
+            </div>
+            <div className="grid lg:grid-cols-3 gap-6 mb-6">
+              <BarList title="📣 Источники трафика, ?utm_source=... (уникальных посетителей)" items={data.trafficSources} emptyHint="Пока нет визитов с меткой ?utm_source=... в ссылке." />
+              <BarList title="🔝 Топ страниц (просмотров, не посетителей)" items={data.topPages} emptyHint="Пока нет данных за этот период." />
+              <BarList title="⚙️ Топ генераторов (использований)" items={data.topGenerators} emptyHint="Пока нет использований." />
+              <BarList title="🎮 Топ тренажёров (использований)" items={data.topTrainers} emptyHint="Пока нет использований." />
             </div>
 
             <VisitorSessions sessions={data.recentSessions} />

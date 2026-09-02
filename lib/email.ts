@@ -73,6 +73,7 @@ export async function sendConfirmationEmail(email: string, code: string) {
         </p>
         <p>Введите его на странице <a href="${siteUrl}/confirm-email">подтверждения email</a>.</p>
         <p style="color: #888; font-size: 13px;">Код действителен 24 часа. Если вы не регистрировались на Знаторике — просто проигнорируйте это письмо.</p>
+        <p style="color: #aaa; font-size: 12px;">Кстати, со <a href="${siteUrl}/podpiska" style="color: #aaa;">Знаторика PRO</a> тренажёры и генераторы — без дневного лимита.</p>
       </div>
     `,
   });
@@ -111,6 +112,74 @@ export async function sendPaymentSuccessEmail(email: string, amount: number, end
         <p>Спасибо! Ваш платёж на сумму <strong>${amount} ₽</strong> успешно обработан.</p>
         <p>Подписка активна до <strong>${endDate.toLocaleDateString('ru-RU')}</strong>.</p>
         <p style="color: #888; font-size: 13px;">Управлять подпиской можно в личном кабинете.</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendRenewalReminderEmail(email: string, endDate: Date, willAutoCharge: boolean, amount?: number) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const dateStr = endDate.toLocaleDateString('ru-RU');
+
+  if (willAutoCharge) {
+    const amountStr = amount ? `${amount} ₽` : 'сумму подписки';
+    return sendEmail({
+      to: email,
+      subject: 'Подписка на Знаторике скоро продлится',
+      text: `Ваша подписка на Знаторике действует до ${dateStr}. После этой даты произойдёт автосписание ${amountStr} с сохранённой карты. Если не хотите продлевать — отключите автопродление в личном кабинете (${siteUrl}/account) до ${dateStr}.`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+          <h2 style="color: #F97316;">🐿️ Знаторика</h2>
+          <p>Ваша подписка действует до <strong>${dateStr}</strong>.</p>
+          <p>После этой даты мы автоматически спишем <strong>${amountStr}</strong> с сохранённой карты — доступ продлится ещё на месяц без каких-либо действий с вашей стороны.</p>
+          <p style="text-align: center; margin: 24px 0;">
+            <a href="${siteUrl}/account" style="background: #2A1B4D; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; border: 1px solid #F97316;">
+              Отключить автопродление
+            </a>
+          </p>
+          <p style="color: #888; font-size: 13px;">Если всё устраивает — ничего делать не нужно, письмо просто предупреждает заранее.</p>
+        </div>
+      `,
+    });
+  }
+
+  return sendEmail({
+    to: email,
+    subject: 'Подписка на Знаторике скоро закончится',
+    text: `Ваша подписка на Знаторике действует до ${dateStr}. Для этой подписки автосписание недоступно — чтобы сохранить доступ к генераторам и плакатам без ограничений, продлите подписку вручную на ${siteUrl}/podpiska.`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+        <h2 style="color: #F97316;">🐿️ Знаторика</h2>
+        <p>Ваша подписка действует до <strong>${dateStr}</strong>.</p>
+        <p>Для этой подписки автосписание недоступно — чтобы сохранить доступ к генераторам без дневного лимита и плакатам, продлите подписку вручную.</p>
+        <p style="text-align: center; margin: 24px 0;">
+          <a href="${siteUrl}/podpiska" style="background: #F97316; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            Продлить подписку
+          </a>
+        </p>
+        <p style="color: #888; font-size: 13px;">Если вы не хотите продлевать — ничего делать не нужно, доступ к тренажёрам и ВПР останется бесплатным и без ограничений.</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendRenewalFailedEmail(email: string, endDate: Date) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  return sendEmail({
+    to: email,
+    subject: 'Не удалось продлить подписку — Знаторика',
+    text: `Автосписание за продление подписки на Знаторике не прошло (истекла ${endDate.toLocaleDateString('ru-RU')}). Автопродление отключено. Чтобы сохранить доступ, продлите подписку вручную на ${siteUrl}/podpiska.`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+        <h2 style="color: #F97316;">🐿️ Знаторика</h2>
+        <p>Не удалось автоматически списать оплату за продление подписки (истекла <strong>${endDate.toLocaleDateString('ru-RU')}</strong>) — например, карта могла быть заблокирована или недостаточно средств.</p>
+        <p>Автопродление отключено, повторных попыток списания не будет.</p>
+        <p style="text-align: center; margin: 24px 0;">
+          <a href="${siteUrl}/podpiska" style="background: #F97316; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            Продлить подписку
+          </a>
+        </p>
+        <p style="color: #888; font-size: 13px;">Если вы не хотите продлевать — ничего делать не нужно, доступ к тренажёрам и ВПР останется бесплатным и без ограничений.</p>
       </div>
     `,
   });

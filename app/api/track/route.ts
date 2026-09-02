@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
 import { db } from '@/lib/db';
 import { getUserFromToken } from '@/lib/auth';
+import { isBotUserAgent } from '@/lib/bot-detect';
 
 const SESSION_COOKIE = 'znatorika_sid';
 
 export async function POST(request: NextRequest) {
   try {
-    const { type, url } = await request.json();
+    const { type, url, utmSource, referrer } = await request.json();
     if ((!type || typeof type !== 'string') && (!url || typeof url !== 'string')) {
       return NextResponse.json({ error: 'type or url is required' }, { status: 400 });
     }
@@ -43,6 +44,10 @@ export async function POST(request: NextRequest) {
           userId: user?.id,
           sessionId: user ? null : sessionId,
           url: url.slice(0, 300),
+          utmSource: typeof utmSource === 'string' && utmSource ? utmSource.slice(0, 100) : undefined,
+          referrer: typeof referrer === 'string' && referrer ? referrer.slice(0, 100) : undefined,
+          isBot: isBotUserAgent(request.headers.get('user-agent')),
+          isOwner: user?.role === 'admin',
         },
       });
     }

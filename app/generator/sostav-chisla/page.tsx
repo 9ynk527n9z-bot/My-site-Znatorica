@@ -1,14 +1,17 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { generateNumberBonds, type NumberBond } from '@/lib/number-bonds';
 import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const NUMBERS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 const COUNTS = [4, 6, 8, 10] as const;
+const domikovCount = (n: number) => pluralizeCount(n, ['домик', 'домика', 'домиков']);
 
 function House({ bond }: { bond: NumberBond }) {
   const aText = bond.blank === 'a' ? '' : String(bond.a);
@@ -60,6 +63,9 @@ export default function SostavChislaPage() {
   return (
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-3xl mx-auto">
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
         <h1 className="text-3xl font-bold mt-2 mb-2">🏠 Состав числа</h1>
         <p className="text-white/75 mb-8">
           «Домики» состава числа — классическое упражнение для 1 класса. Ребёнок находит недостающее
@@ -99,7 +105,7 @@ export default function SostavChislaPage() {
                       : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
                   }`}
                 >
-                  {c} домиков
+                  {domikovCount(c)}
                 </button>
               ))}
             </div>
@@ -119,11 +125,11 @@ export default function SostavChislaPage() {
         {bonds && (
           <div ref={printRef} className="card print-page bg-white">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
-              <span className="text-sm text-gray-500">{bonds.length} домиков</span>
+              <span className="text-sm text-gray-500">{domikovCount(bonds.length)}</span>
               <ExportToolbar targetRef={printRef} filename="sostav-chisla" />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-6">Состав числа</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-6">Состав числа</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
               {bonds.map((bond, i) => (
                 <House key={i} bond={bond} />

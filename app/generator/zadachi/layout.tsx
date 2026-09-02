@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Генератор задач по математике — 3 и 4 класс, с решением',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function ZadachiLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageJsonLd metadata={metadata} section="generator" />
+      {children}
+    </>
+  );
 }

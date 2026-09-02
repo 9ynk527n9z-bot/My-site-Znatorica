@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getDiploma, type ProgressStats } from '@/lib/diplomas';
@@ -84,24 +83,53 @@ export default function DiplomaPage({ params }: { params: { slug: string } }) {
           />
         </div>
 
-        <div className="print-page bg-white text-black rounded-lg p-16 text-center border-8 border-double border-orange">
-          <Image src="/logo.png" alt="Знаторика" width={72} height={72} className="mx-auto mb-2 rounded-full" />
-          <p className="text-2xl mb-8">Диплом</p>
+        <p className="no-print text-center text-gray-500 text-xs mb-3">
+          Совет: для печати выбери в диалоге печати «Печатать фон» / «Background graphics» — тогда цвет сохранится
+        </p>
 
-          <div className="text-6xl mb-8">{diploma.icon}</div>
+        <div
+          className="print-page-color relative overflow-hidden rounded-[20px] text-white text-center px-10 py-12 flex flex-col items-center"
+          style={{
+            aspectRatio: '210 / 297',
+            background: 'linear-gradient(160deg, #3a1c6e 0%, #6b21a8 45%, #f72585 100%)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          }}
+        >
+          <div className="pointer-events-none absolute inset-3.5 rounded-2xl border-2 border-white/55" />
+          <div className="pointer-events-none absolute w-24 h-24 rounded-full bg-[#FFD43B] opacity-35 -top-2 -left-2" />
+          <div className="pointer-events-none absolute w-16 h-16 rounded-full bg-orange opacity-35 bottom-10 right-6" />
+          <div className="pointer-events-none absolute w-10 h-10 rounded-full bg-white opacity-50 top-16 right-16" />
+          <div className="pointer-events-none absolute w-32 h-32 rounded-full bg-[#4DABF7] opacity-25 -bottom-8 -left-8" />
 
-          <h1 className="text-4xl font-bold mb-6">{diploma.title}</h1>
+          <div className="relative z-10 flex flex-col items-center gap-1.5">
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center text-4xl mb-2"
+              style={{
+                background: 'radial-gradient(circle at 35% 30%, #ffb27a, #F97316 60%, #d9480f 100%)',
+                boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
+              }}
+            >
+              🐿️
+            </div>
+            <p className="text-sm tracking-[2px] uppercase opacity-80">Диплом</p>
 
-          <p className="text-xl mb-2">Награждается</p>
-          <p className="text-3xl font-bold mb-8 border-b-2 border-black inline-block px-8 pb-2">
-            {name || '_______________________'}
-          </p>
+            <div className="text-6xl my-2" style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }}>{diploma.icon}</div>
 
-          <p className="text-lg text-gray-700 mb-8">{diploma.description}</p>
+            <h1 className="text-3xl font-black mb-5">{diploma.title}</h1>
 
-          <p className="text-gray-500 mb-4">{today}</p>
+            <p className="text-base opacity-85 mb-1.5">Награждается</p>
+            <p className="text-4xl font-black mb-5 border-b-[3px] border-white/70 px-6 pb-2">
+              {name || '_______________________'}
+            </p>
 
-          <p className="text-orange text-sm font-bold">🐿️ Белка-Знаторика гордится тобой!</p>
+            <div className="bg-white/15 border border-white/30 rounded-2xl px-7 py-4 mb-2 max-w-md">
+              <p className="text-base opacity-90">{diploma.description}</p>
+            </div>
+
+            <p className="text-sm opacity-75 mt-5">{today}</p>
+            <p className="text-sm font-extrabold text-[#FFD43B] mt-1.5">Ты отлично справился с заданиями! Вперёд, к новым победам!</p>
+            <p className="text-sm font-extrabold opacity-90 mt-1.5">🐿️ Знаторика · znatorica.ru</p>
+          </div>
         </div>
       </div>
     </div>

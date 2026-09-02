@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Анализ текста — теория и тренажёр для 4 класса',
@@ -10,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '4 класс', url: '/4-klass' },
-  { name: 'Литература', url: '/4-klass/literatura' },
+  { name: 'Литература', url: '/4-klass' },
   { name: 'Анализ текста', url: '/4-klass/literatura/analiz-teksta' },
 ]);
 
@@ -33,7 +34,7 @@ export default function AnalizTekstaPage() {
           <span className="text-gray-400">/</span>
           <Link href="/4-klass" className="text-orange hover:underline">4 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/4-klass/literatura" className="text-orange hover:underline">Литература</Link>
+          <Link href="/4-klass" className="text-orange hover:underline">Литература</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Анализ текста</span>
         </div>
@@ -44,8 +45,12 @@ export default function AnalizTekstaPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/analiz-teksta-4klass"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -81,7 +86,13 @@ export default function AnalizTekstaPage() {
         <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
           <h3 className="text-2xl font-bold mb-4">Готов тренироваться?</h3>
           <p className="text-gray-300 mb-6">Нажми на кнопку ниже и начни интерактивный тренажер</p>
-          <button className="btn-primary text-lg px-8 py-4">🎮 Открыть тренажер</button>
+          <Link href="/trenazher/analiz-teksta-4klass" className="btn-primary text-lg px-8 py-4 inline-block">
+            🎮 Открыть тренажер
+          </Link>
+        </div>
+
+        <div className="mt-8">
+          <TopicQuiz topic="4-klass/literatura/analiz-teksta" />
         </div>
       </div>
     </div>

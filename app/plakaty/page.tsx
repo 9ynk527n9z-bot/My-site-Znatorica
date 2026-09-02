@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import TrackPageView from '@/components/TrackPageView';
+import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Плакаты по предметам',
@@ -37,6 +38,8 @@ export default function PlakatyPage({
           sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
         />
       </div>
+
+      <PageAbout route="/plakaty" />
     </div>
   );
 }

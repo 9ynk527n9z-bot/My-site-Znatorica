@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { generateWordSearch, type WordSearchResult } from '@/lib/wordsearch';
 import { CROSSWORD_THEMES, type CrosswordTheme } from '@/lib/crossword';
@@ -38,7 +39,10 @@ export default function WordSearchGeneratorPage() {
   return (
     <div className="bg-black min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Генератор филвордов</h1>
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
+        <h1 className="text-3xl font-bold mt-2 mb-2">Генератор филвордов</h1>
         <p className="text-gray-400 mb-8">
           Слова спрятаны в сетке букв по горизонтали, вертикали и диагонали — найди их все!
         </p>
@@ -84,9 +88,9 @@ export default function WordSearchGeneratorPage() {
         </div>
 
         {result && (
-          <div ref={printRef} className="card print-page">
+          <div ref={printRef} className="card print-page bg-white">
             <div className="flex items-center justify-between mb-6 no-print">
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl font-bold text-black">
                 {CROSSWORD_THEMES[theme].icon} {CROSSWORD_THEMES[theme].title} — {result.words.length} слов
               </h2>
               <button
@@ -107,8 +111,10 @@ export default function WordSearchGeneratorPage() {
                         return (
                           <td
                             key={c}
-                            className={`w-8 h-8 text-center align-middle border border-[#2D2350] font-mono font-bold ${
-                              isHighlighted ? 'bg-orange/30 text-orange' : ''
+                            className={`w-8 h-8 text-center align-middle border font-mono font-bold ${
+                              isHighlighted
+                                ? 'bg-orange text-white border-orange'
+                                : 'border-gray-300 text-black'
                             }`}
                           >
                             {letter}
@@ -125,14 +131,14 @@ export default function WordSearchGeneratorPage() {
               <h3 className="font-bold text-orange mb-3">Найди слова:</h3>
               <div className="grid md:grid-cols-2 gap-2">
                 {result.words.map((w) => (
-                  <div key={w.word} className="text-sm">
+                  <div key={w.word} className="text-sm text-black">
                     {showAnswers ? <span className="font-bold">{w.word}</span> : '•'} — {w.clue}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-8">
+            <div className="no-print mt-8">
               <ExportToolbar targetRef={printRef} filename="filvordy" />
             </div>
           </div>

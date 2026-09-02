@@ -4,7 +4,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
+import GameShareBadge from '@/components/GameShareBadge';
 import { SHAPES, COLORS, SIZES, shuffle, randItem, type ShapeKind } from '@/lib/shapes';
+import ShareButtons from '@/components/ShareButtons';
+import { praiseFor, shareTextFor } from '@/lib/praise';
 
 const ITEMS_COUNT = 5;
 const ROUNDS_PER_SESSION = 10;
@@ -183,13 +186,25 @@ export default function ChtoIzmenilosTrainerPage() {
 
         {finished && (
           <div className="card bg-white text-center py-10">
-            <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Молодец!</p>
+            <p className="text-3xl font-black text-[#3a1c6e] mb-2">{praiseFor(score.correct, score.total).title}</p>
             <p className="text-gray-600 mb-1">Правильных ответов:</p>
             <p className="text-6xl font-black text-orange mb-6">{score.correct}</p>
-            <p className="text-gray-500 mb-8">из {score.total}</p>
+            <p className="text-gray-500 mb-6">из {score.total}</p>
+            {praiseFor(score.correct, score.total).master && (
+
+              <GameShareBadge gameTitle="Что изменилось?" statLine={`${score.correct} из ${score.total} правильных`} />
+
+            )}
             <button onClick={begin} className="btn-primary px-6 py-3">
               🔁 Играть ещё
             </button>
+            <div className="mt-6 pt-5 border-t border-gray-200">
+              <ShareButtons
+                text={shareTextFor('Что изменилось?', score.correct, score.total)}
+                url="https://znatorica.ru/trenazher/chto-izmenilos"
+                trackKey="game:chto-izmenilos"
+              />
+            </div>
           </div>
         )}
       </div>

@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: 'Дошкольники 4–5', url: '/4-5-let' },
-  { name: 'Грамота', url: '/4-5-let/gramota' },
+  { name: 'Грамота', url: '/4-5-let' },
   { name: 'Слоги', url: '/4-5-let/gramota/slogov' },
 ]);
 
@@ -34,7 +34,7 @@ export default function SlogovPage() {
           <span className="text-gray-400">/</span>
           <Link href="/4-5-let" className="text-orange hover:underline">Дошкольники 4–5</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/4-5-let/gramota" className="text-orange hover:underline">Грамота</Link>
+          <Link href="/4-5-let" className="text-orange hover:underline">Грамота</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Слоги</span>
         </div>
@@ -45,8 +45,12 @@ export default function SlogovPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/slogi-4-5let"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -56,7 +60,7 @@ export default function SlogovPage() {
             <div>
               <h3 className="font-bold text-orange mb-2">Шаг 1: Что такое слог?</h3>
               <p className="text-gray-300">
-                Слог — это согласная буква вместе с гласной, которые произносятся слитно, одним выдохом. Например, «МА» — это один слог.
+                Слог — это часть слова, которую мы произносим за один раз, на одном выдохе. В каждом слоге обязательно есть гласный звук. Например, «МА» — это один слог, а короткое слово «А-ист» тоже начинается с одного слога, хотя там нет согласной.
               </p>
             </div>
 
@@ -79,7 +83,7 @@ export default function SlogovPage() {
                 Соединяя слоги, получаем слова: МА + МА = МАМА. Попробуй прочитать слоги медленно, а потом быстрее.
               </p>
               <div className="mt-4 p-4 bg-orange/10 rounded">
-                📖 Прочитай слоги: ПА-ПА, КО-Т, ДО-М
+                📖 Прочитай слоги: ПА-ПА, МУ-ХА, ЛУ-НА
               </div>
             </div>
           </div>

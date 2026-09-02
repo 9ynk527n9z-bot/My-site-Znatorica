@@ -46,16 +46,23 @@ export function genCounting(max: number): QuizQuestion[] {
   return makeBatch(() => {
     const n = rand(1, max);
     const emoji = COUNT_EMOJI[rand(0, COUNT_EMOJI.length - 1)];
-    const { options, correct } = numberOptions(n, Math.min(3, max - 1));
+    const { options, correct } = numberOptions(n, Math.min(3, Math.max(2, max - 1)));
     return { prompt: `Посчитай: ${emoji.repeat(n)}`, options, correct };
   });
 }
 
 export function genAddition(min: number, max: number): QuizQuestion[] {
   return makeBatch(() => {
-    const a = rand(Math.max(1, Math.floor(min / 2)), max - 1);
-    const b = rand(1, max - a);
-    const sum = a + b;
+    // Подбираем слагаемые так, чтобы сумма гарантированно попадала в [min, max]
+    // (раньше сумма могла оказаться ниже min — например 2+1=3 при min=5).
+    let a = 0;
+    let b = 0;
+    let sum = 0;
+    do {
+      a = rand(1, max - 1);
+      b = rand(1, max - 1);
+      sum = a + b;
+    } while (sum < min || sum > max);
     const { options, correct } = numberOptions(sum);
     return { prompt: `${a} + ${b} = ?`, options, correct };
   });

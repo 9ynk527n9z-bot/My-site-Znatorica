@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, shortSubject } from '@/lib/seo';
 import { getVprData, getAllVprSubjectParams, VPR_KLASSES } from '@/lib/vpr';
 
 interface Props {
@@ -16,8 +16,8 @@ export function generateMetadata({ params }: Props): Metadata {
   const data = getVprData(params.klass, params.subject);
   if (!data) return {};
   return {
-    title: `Подготовка к ВПР по предмету «${data.subjectTitle}», ${data.grade} класс — ${data.variants.length} тренировочных вариантов с ответами`,
-    description: `Авторские варианты для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай.`,
+    title: `ВПР: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — ${data.variants.length} вариантов`,
+    description: `${data.variants.length} авторских вариантов ВПР с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
     alternates: { canonical: `/vpr/${params.klass}/${params.subject}` },
   };
 }

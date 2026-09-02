@@ -233,6 +233,14 @@ export default function AdminDashboard() {
             <h3 className="text-xl font-bold mb-2">⚙️ Настройки</h3>
             <p className="text-gray-400">Конфигурация платформы</p>
           </Link>
+
+          <Link
+            href="/admin/otzyvy"
+            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+          >
+            <h3 className="text-xl font-bold mb-2">💬 Модерация отзывов</h3>
+            <p className="text-gray-400">Одобрение и отклонение отзывов с сайта</p>
+          </Link>
         </div>
       </div>
     </div>

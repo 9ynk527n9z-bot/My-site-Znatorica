@@ -26,7 +26,7 @@ html {
 
 body {
   min-height: 100vh;
-  background: linear-gradient(-45deg, #4a148c, #6a1b9a, #b5179e, #c2185b, #1565c0);
+  background: linear-gradient(-45deg, #2D1B4E, #3a1c6e, #6B21A8, #4a148c);
   background-size: 400% 400%;
   background-attachment: fixed;
   animation: bg-shift 30s ease infinite;
@@ -55,7 +55,8 @@ a {
 }
 
 button {
-  border: none;
+  border-width: 0;
+  border-style: solid;
   cursor: pointer;
   font-family: inherit;
 }
@@ -134,25 +135,25 @@ input, textarea, select {
   background: #f8f9fb;
   color: #1a1a2e;
   min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .legal-page h1 {
-  font-size: 1.75rem; /* 28px — было 36px (text-4xl), избыточно для документа */
+  font-size: 1.5rem; /* 24px */
 }
 
 .legal-page h2 {
-  font-size: 1.125rem; /* 18px — было 24px (text-2xl) */
+  font-size: 1rem; /* 16px */
 }
 
 .legal-page h3 {
-  font-size: 1rem;
+  font-size: 0.9375rem; /* 15px */
 }
 
 .legal-page p,
 .legal-page li {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .legal-page .bg-black,
@@ -353,5 +354,158 @@ input, textarea, select {
      ".print-page *", поэтому побеждает при равном !important. */
   .print-page .crossword-clue-num {
     color: #888 !important;
+  }
+
+  /* Отдельный класс для страниц, которые ДОЛЖНЫ печататься в цвете (например,
+     именной диплом турнира) — в отличие от .print-page (рабочие листы),
+     здесь фон и цвета намеренно сохраняются при печати. */
+  .print-page-color,
+  .print-page-color * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* В генераторе прописей печатается только рабочий лист. SEO-текст, навигация
+     и элементы управления остаются в браузерной версии и не попадают на бумагу. */
+  .generator-propisi-page {
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .generator-propisi-page > div {
+    max-width: none !important;
+  }
+
+  .generator-propisi-page .propisi-sheet {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .generator-propisi-page .propisi-letter-block {
+    break-inside: avoid;
+  }
+}
+
+/* Кириллица: одинаковые ячейки, лёгкая разлиновка и место для письма. */
+.propisi-sheet {
+  max-width: 790px;
+  margin-inline: auto;
+  padding: 28px 32px !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 45px rgba(15, 23, 42, .16) !important;
+}
+.propisi-lines { display: grid; gap: 24px; }
+.propisi-letter-block { margin-bottom: 0 !important; break-inside: avoid; }
+.propisi-line { height: 104px; position: relative; margin-bottom: 12px; }
+.propisi-guide { position: absolute; left: 0; right: 0; pointer-events: none; }
+.propisi-guide-top { top: 20px; border-top: 1px solid #d6dce5; }
+.propisi-guide-middle { top: 49px; border-top: 1px dashed #d6dce5; }
+.propisi-guide-base { top: 80px; border-top: 1px solid #94a3b8; }
+.propisi-glyphs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) 2fr;
+  align-items: baseline;
+  padding: 26px 8px 0;
+  font-size: 72px;
+  line-height: 1;
+  text-align: center;
+}
+/* Строчные без выносных элементов помещаются между 49px и 80px. */
+.propisi-lower .propisi-glyphs { font-size: 56px; padding-top: 38px; }
+.propisi-model { color: #334155; }
+.propisi-trace { color: transparent; -webkit-text-stroke: 1px #a8b2c0; }
+@media screen and (max-width: 600px) {
+  .propisi-sheet { padding: 20px 12px !important; }
+  .propisi-glyphs { font-size: 48px; padding-top: 44px; }
+  .propisi-lower .propisi-glyphs { font-size: 40px; padding-top: 50px; }
+  .propisi-guide-top { top: 40px; }
+  .propisi-guide-middle { top: 58px; }
+}
+@media print {
+  .propisi-sheet { padding: 0 !important; max-width: none; }
+  .print-page .propisi-model { color: #222 !important; }
+  .print-page .propisi-trace { color: transparent !important; -webkit-text-stroke: 1px #999; }
+}
+
+/* Печатаем только материал: без оболочки сайта и пустого места от неё. */
+@media print {
+  body:has(.print-page) *:not(.print-page):not(.print-page *):not(:has(.print-page)) {
+    display: none !important;
+  }
+  body:has(.print-page), body *:has(.print-page) {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    background: white !important;
+  }
+  .print-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .print-page .propisi-trace { color: transparent !important; }
+  .print-page input::placeholder { color: transparent !important; }
+}
+
+.propisi-sheet .btn-secondary {
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+}
+.propisi-sheet .btn-secondary:hover { background: #e2e8f0; }
+
+/* Письменный алфавит: единый масштаб сохраняет пропорции заглавных и строчных. */
+.propisi-cursive .propisi-glyphs { font-size: 88px; padding-top: 3px; }
+@media screen and (max-width: 600px) {
+  .propisi-cursive .propisi-glyphs { font-size: 56px; padding-top: 31px; }
+}
+
+/* Только учебная область прописей; экранная страница и её SEO не меняются. */
+@media print {
+  .generator-propisi-page .propisi-sheet > :not(.propisi-lines) {
+    display: none !important;
+  }
+  .generator-propisi-page .propisi-sheet::before,
+  .generator-propisi-page .propisi-sheet::after {
+    content: none !important;
+  }
+  .generator-propisi-page .propisi-lines {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+.examples-print-sheet { display: block; width: 100%; height: auto; }
+.examples-result .btn-secondary { color: #475569; border: 1px solid #cbd5e1; background: #f8fafc; }
+@page examples { size: A4; margin: 0; }
+@media print {
+  .examples-result { page: examples; }
+  .examples-result > :not(.examples-print-sheet) { display: none !important; }
+  .examples-print-sheet { width: 210mm !important; height: 297mm !important; break-inside: avoid; }
+}
+
+.crossword-print-sheet { display: block; width: 100%; height: auto; }
+.crossword-result .btn-secondary { color: #475569; border: 1px solid #cbd5e1; background: #f8fafc; }
+@page crossword { size: A4; margin: 0; }
+@media print {
+  .crossword-result { page: crossword; }
+  .crossword-result > :not(.crossword-print-sheet) { display: none !important; }
+  .crossword-print-sheet { width: 210mm !important; height: 297mm !important; break-inside: avoid; }
+}
+
+@media print {
+  .print-page .coloring-legend-swatch {
+    background-color: var(--swatch) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

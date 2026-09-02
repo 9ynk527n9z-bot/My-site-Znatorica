@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import PaymentMethods from '@/components/PaymentMethods';
 
-type Plan = 'monthly' | 'lifetime';
+type Plan = 'monthly' | 'yearly' | 'lifetime';
 
 export default function SubscriptionPage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function SubscriptionPage() {
   const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('bank_card');
   const [selectedPlan, setSelectedPlan] = useState<Plan>('monthly');
-  const [pricing, setPricing] = useState({ monthlyPrice: 399, lifetimePrice: 2990 });
+  const [pricing, setPricing] = useState({ monthlyPrice: 399, yearlyPrice: 2390, lifetimePrice: 2990 });
 
   useEffect(() => {
     fetch('/api/pricing')
@@ -39,7 +39,13 @@ export default function SubscriptionPage() {
           const data = await response.json();
           if (data.subscription?.isActive) {
             setIsSubscribed(true);
-            setSubscriptionPlan(data.subscription.plan === 'lifetime' ? 'lifetime' : 'monthly');
+            setSubscriptionPlan(
+              data.subscription.plan === 'lifetime'
+                ? 'lifetime'
+                : data.subscription.plan === 'yearly'
+                  ? 'yearly'
+                  : 'monthly',
+            );
             setSubscriptionEndDate(data.subscription.endDate);
           }
         }
@@ -92,21 +98,28 @@ export default function SubscriptionPage() {
     }
   };
 
+  // Выгода годового тарифа и цена «в день» — считаем от реальных цен (их можно
+  // менять в админке), чтобы цифры на странице никогда не разъезжались с оплатой.
+  const yearlyPerMonth = Math.round(pricing.yearlyPrice / 12);
+  const yearlySavingsPercent = Math.max(
+    0,
+    Math.round((1 - pricing.yearlyPrice / (pricing.monthlyPrice * 12)) * 100),
+  );
+  const yearlyPerDay = Math.max(1, Math.round(pricing.yearlyPrice / 365));
+  const monthlyPerDay = Math.max(1, Math.round(pricing.monthlyPrice / 30));
+
   return (
     <div className="min-h-screen bg-black py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-4">Подписка Знаторика</h1>
-        <p className="text-center text-gray-400 mb-12">
-          Получи полный доступ ко всем материалам
-        </p>
+        <h1 className="text-4xl font-bold text-center mb-12">Знаторика PRO</h1>
 
         {/* Pricing Card */}
         <div className="card border-orange mb-12 max-w-2xl mx-auto">
           {!isSubscribed && (
-            <div className="flex gap-3 mb-8 justify-center">
+            <div className="flex gap-2 sm:gap-3 mb-8 justify-center flex-wrap">
               <button
                 onClick={() => setSelectedPlan('monthly')}
-                className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+                className={`px-5 py-3 rounded-lg font-bold transition-colors ${
                   selectedPlan === 'monthly'
                     ? 'bg-orange text-white'
                     : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
@@ -115,8 +128,21 @@ export default function SubscriptionPage() {
                 Помесячно
               </button>
               <button
+                onClick={() => setSelectedPlan('yearly')}
+                className={`relative px-5 py-3 rounded-lg font-bold transition-colors ${
+                  selectedPlan === 'yearly'
+                    ? 'bg-orange text-white'
+                    : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
+                }`}
+              >
+                На год
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full">
+                  −{yearlySavingsPercent}%
+                </span>
+              </button>
+              <button
                 onClick={() => setSelectedPlan('lifetime')}
-                className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+                className={`px-5 py-3 rounded-lg font-bold transition-colors ${
                   selectedPlan === 'lifetime'
                     ? 'bg-orange text-white'
                     : 'bg-black border border-[#2D2350] text-gray-400 hover:text-white'
@@ -131,10 +157,18 @@ export default function SubscriptionPage() {
             {isSubscribed ? (
               <>
                 <p className="text-6xl font-bold text-orange">
-                  {subscriptionPlan === 'lifetime' ? '∞' : `${pricing.monthlyPrice} ₽`}
+                  {subscriptionPlan === 'lifetime'
+                    ? '∞'
+                    : subscriptionPlan === 'yearly'
+                      ? `${pricing.yearlyPrice} ₽`
+                      : `${pricing.monthlyPrice} ₽`}
                 </p>
                 <p className="text-gray-400 text-lg">
-                  {subscriptionPlan === 'lifetime' ? 'пожизненный доступ' : 'в месяц'}
+                  {subscriptionPlan === 'lifetime'
+                    ? 'пожизненный доступ'
+                    : subscriptionPlan === 'yearly'
+                      ? 'в год'
+                      : 'в месяц'}
                 </p>
               </>
             ) : selectedPlan === 'lifetime' ? (
@@ -142,10 +176,21 @@ export default function SubscriptionPage() {
                 <p className="text-6xl font-bold text-orange">{pricing.lifetimePrice} ₽</p>
                 <p className="text-gray-400 text-lg">один раз, доступ навсегда</p>
               </>
+            ) : selectedPlan === 'yearly' ? (
+              <>
+                <p className="text-6xl font-bold text-orange">{pricing.yearlyPrice} ₽</p>
+                <p className="text-gray-400 text-lg">
+                  в год — это {yearlyPerMonth} ₽ в месяц, всего {yearlyPerDay} ₽ в день
+                </p>
+                <p className="text-green-400 text-sm font-bold mt-2">
+                  Выгоднее помесячной на {yearlySavingsPercent}% — экономия{' '}
+                  {pricing.monthlyPrice * 12 - pricing.yearlyPrice} ₽ за год
+                </p>
+              </>
             ) : (
               <>
                 <p className="text-6xl font-bold text-orange">{pricing.monthlyPrice} ₽</p>
-                <p className="text-gray-400 text-lg">в месяц</p>
+                <p className="text-gray-400 text-lg">в месяц — это {monthlyPerDay} ₽ в день</p>
               </>
             )}
           </div>
@@ -153,31 +198,32 @@ export default function SubscriptionPage() {
           <ul className="space-y-4 mb-12">
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Все тренажёры без ограничений</span>
+              <span>
+                Тренажёры, игры и варианты ВПР без дневного лимита — вместо 20 в день занимайтесь сколько угодно
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Генератор примеров, прописей, кроссвордов без лимита</span>
+              <span>Генераторы заданий без дневного лимита — примеры, прописи, кроссворды, диктанты и другие</span>
             </li>
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Рабочие листы и плакаты для печати</span>
+              <span>Все плакаты — печать без ограничений</span>
             </li>
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Материалы для учителей (конспекты, задания)</span>
+              <span>Печать без водяного знака</span>
             </li>
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Варианты ВПР с разбором решений</span>
+              <span>Именные PDF-дипломы Турнира Знаторики — без доплаты за каждый (обычно 99 ₽)</span>
             </li>
             <li className="flex gap-3">
               <span className="text-orange text-xl">✅</span>
-              <span>Карточки для запоминания слов и правил</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="text-orange text-xl">✅</span>
-              <span>Постоянное добавление новых тем</span>
+              <span>
+                Отчёт об успехах ребёнка в личном кабинете — что уже освоено, сколько занимался, график
+                динамики по дням
+              </span>
             </li>
           </ul>
 
@@ -210,13 +256,17 @@ export default function SubscriptionPage() {
                   ? 'Обработка...'
                   : selectedPlan === 'lifetime'
                     ? 'Купить навсегда'
-                    : 'Оформить подписку'}
+                    : selectedPlan === 'yearly'
+                      ? 'Оформить на год'
+                      : 'Оформить подписку'}
               </button>
 
               <p className="text-center text-sm text-gray-500">
                 {selectedPlan === 'lifetime'
                   ? 'Разовый платёж. Доступ не заканчивается и не требует продления.'
-                  : 'Автопродление. Отмену можно оформить в личном кабинете в любой момент.'}
+                  : selectedPlan === 'yearly'
+                    ? 'Оплата сразу за год. Автопродление через год — предупредим письмом за 7 дней, отменить можно в личном кабинете в любой момент.'
+                    : 'Автопродление. Отмену можно оформить в личном кабинете в любой момент.'}
               </p>
               <p className="text-center text-xs text-gray-600 mt-2">
                 Нажимая кнопку оплаты, вы принимаете условия{' '}
@@ -229,6 +279,13 @@ export default function SubscriptionPage() {
           )}
         </div>
 
+        <p className="text-center text-sm text-gray-500 mb-12">
+          Нужен только один конкретный набор заданий, без подписки?{' '}
+          <Link href="/sborniki" className="text-orange hover:underline font-bold">
+            Посмотреть PDF-сборники
+          </Link>
+        </p>
+
         {/* FAQ */}
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold mb-8">Часто задаваемые вопросы</h2>
@@ -240,7 +297,7 @@ export default function SubscriptionPage() {
                 <span className="group-open:rotate-180 transition-transform">⌄</span>
               </summary>
               <p className="mt-4 text-gray-400">
-                Подписка дает доступ к тренажёрам, генераторам, рабочим листам, плакатам, материалам для учителей и вариантам ВПР. Полное объяснение всех компонентов.
+                Статьи и теория открыты всем без регистрации. Тренажёры, игры и варианты ВПР — 3 в день без регистрации и 20 в день после неё (лимит общий на всё вместе). Знаторика PRO добавляет: тренажёры, игры и ВПР без дневного лимита, генераторы без дневного лимита, все плакаты, печать без водяного знака и отчёт об успехах ребёнка в личном кабинете.
               </p>
             </details>
 
@@ -270,18 +327,21 @@ export default function SubscriptionPage() {
                 <span className="group-open:rotate-180 transition-transform">⌄</span>
               </summary>
               <p className="mt-4 text-gray-400">
-                Сейчас пробного периода нет, но вы можете попробовать бесплатный контент (теория, шпаргалки, генераторы и тренажёры — 3 раза в день суммарно).
+                Сейчас пробного периода нет, но статьи и теория доступны без регистрации, а после неё — 20 занятий в день (тренажёры, игры и ВПР вместе) бесплатно. Генераторы заданий — 3 раза в день бесплатно.
               </p>
             </details>
 
             <details className="card group">
               <summary className="cursor-pointer font-bold text-lg flex justify-between items-center">
-                В чём разница между «Помесячно» и «Навсегда»?
+                В чём разница между тарифами?
                 <span className="group-open:rotate-180 transition-transform">⌄</span>
               </summary>
               <p className="mt-4 text-gray-400">
-                Доступ к материалам одинаковый в обоих случаях. «Помесячно» — {pricing.monthlyPrice} ₽ каждый месяц с автопродлением,
-                можно отменить в любой момент. «Навсегда» — один платёж {pricing.lifetimePrice} ₽, без повторных списаний и без необходимости отменять что-либо.
+                Доступ к материалам одинаковый во всех трёх случаях, отличается только оплата.
+                «Помесячно» — {pricing.monthlyPrice} ₽ каждый месяц с автопродлением, можно отменить в любой момент.
+                «На год» — один платёж {pricing.yearlyPrice} ₽ сразу за 12 месяцев (это {yearlyPerMonth} ₽ в месяц,
+                на {yearlySavingsPercent}% выгоднее помесячной). Через год продлевается автоматически, но мы заранее предупреждаем письмом за 7 дней — отменить можно в любой момент в личном кабинете.
+                «Навсегда» — один платёж {pricing.lifetimePrice} ₽, без повторных списаний и без необходимости отменять что-либо.
               </p>
             </details>
 

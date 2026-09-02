@@ -5,9 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Генератор прописей — Английский</title>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Nunito:wght@700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
+@font-face { font-family: 'English School'; src: url('/fonts/patrick-hand/PatrickHand-Regular.ttf') format('truetype'); font-display: block; }
+.english-sheet { display: block; width: 100%; height: auto; background: white; margin-bottom: 18px; border-radius: 10px; }
+@media print {
+  @page { size: A4; margin: 0; }
+  .english-sheet { width: 210mm !important; height: 297mm !important; max-width: none; margin: 0; border-radius: 0; break-after: page; }
+  .english-sheet:last-child { break-after: auto; }
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -195,10 +203,12 @@ select:focus { border-color: #ff6fb7; }
 .dl-toolbar .btn-download.secondary { background: linear-gradient(135deg, #8e9eab, #5f6c7b); box-shadow: 0 8px 30px rgba(95,108,123,.4); }
 
 @media print {
-  body * { visibility: hidden; }
-  #worksheetPreview, #worksheetPreview * { visibility: visible; }
-  #worksheetPreview { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
-  @page { size: A4; margin: 15mm; }
+  body *:not(#worksheetPreview):not(#worksheetPreview *):not(:has(#worksheetPreview)) { display: none !important; }
+  body, body *:has(#worksheetPreview) { margin: 0 !important; padding: 0 !important; background: white !important; min-height: 0 !important; width: auto !important; max-width: none !important; }
+  #worksheetPreview { width: 100%; box-shadow: none; border-radius: 0; overflow: visible; }
+  .ws-page { padding: 0 !important; }
+  .ws-line-group { break-inside: avoid; }
+  @page { size: A4; margin: 0; }
 }
 
 @keyframes shimmer {
@@ -363,7 +373,7 @@ select:focus { border-color: #ff6fb7; }
     <div class="selects-row">
       <div class="field-group">
         <label>Размер шрифта</label>
-        <select id="fontSizeSelect" onchange="updateDynStyles()">
+        <select id="fontSizeSelect" >
           <option value="52">Маленький</option>
           <option value="78" selected>Средний</option>
           <option value="100">Большой</option>
@@ -373,9 +383,16 @@ select:focus { border-color: #ff6fb7; }
       <div class="field-group">
         <label>Строк для письма</label>
         <select id="writeLinesSelect">
-          <option value="1" selected>1 строка</option>
+          <option value="1">1 строка</option>
           <option value="2">2 строки</option>
-          <option value="3">3 строки</option>
+          <option value="3" selected>3 строки</option>
+          <option value="4">4 строки</option>
+          <option value="5">5 строк</option>
+          <option value="6">6 строк</option>
+          <option value="7">7 строк</option>
+          <option value="8">8 строк</option>
+          <option value="9">9 строк</option>
+          <option value="10">10 строк</option>
         </select>
       </div>
     </div>
@@ -399,6 +416,7 @@ select:focus { border-color: #ff6fb7; }
 
   <div id="previewSection">
     <div class="preview-header"><h2>📄 Предпросмотр</h2></div>
+    <p id="sheetStatus" style="color:#d8d3e5;font-size:14px;margin-bottom:12px;"></p>
     <div id="worksheetPreview"></div>
     <div class="dl-toolbar">
       <button class="btn-download secondary" onclick="window.print()">🖨️ Печать</button>
@@ -436,25 +454,9 @@ function selectMode(el, mode) {
   currentMode = mode;
 }
 
-const dynStyle = document.createElement('style');
-document.head.appendChild(dynStyle);
-
 function getFontSize() { return parseInt(document.getElementById('fontSizeSelect').value); }
 
-function updateDynStyles() {
-  const fs = getFontSize();
-  const sampleH = Math.round(fs * 1.45) + 10;
-  const writeH  = sampleH;
-  dynStyle.textContent = `
-    .ws-sample-line         { height: ${sampleH}px; }
-    .ws-sample-line::before { bottom: ${Math.round(sampleH * 0.335)}px; }
-    .ws-write-block         { height: ${writeH}px; --lh: ${writeH}px; }
-    .ws-ghost               { height: ${writeH}px; font-size: ${Math.round(fs * 0.44)}px; }
-  `;
-}
-updateDynStyles();
-
-function generateWorksheet() {
+async function generateWorksheet() {
   if (znQuota.loaded && !znQuota.unlimited && znQuota.remaining <= 0) return;
   const text = document.getElementById('textInput').value.trim();
   if (!text) {
@@ -466,67 +468,16 @@ function generateWorksheet() {
     return;
   }
 
-  const fs         = getFontSize();
-  const writeLines = parseInt(document.getElementById('writeLinesSelect').value);
-  const doHint     = document.getElementById('repeatToggle').checked;
-  const sampleH    = Math.round(fs * 1.45) + 10;
-  const writeH     = sampleH;
-
-  const rawLines = text.split('\n').filter(l => l.trim() !== '').slice(0, MAX_LINES);
-  const preview  = document.getElementById('worksheetPreview');
-  preview.innerHTML = '';
-
-  const page = document.createElement('div');
-  page.className = 'ws-page';
-  page.innerHTML = `
-    <div class="ws-header">
-      <div class="ws-title">✏️ Handwriting Practice</div>
-      <div class="ws-name-line">Имя: <span></span></div>
-    </div>`;
-
-  rawLines.forEach(lineText => {
-    const group = document.createElement('div');
-    group.className = 'ws-line-group';
-
-    if (currentMode !== 'none') {
-      const sl = document.createElement('div');
-      sl.className = 'ws-sample-line';
-      sl.style.height = sampleH + 'px';
-      const tc = document.createElement('div');
-      tc.className = 'ws-text-content mode-' + currentMode;
-      tc.style.fontSize = fs + 'px';
-      tc.textContent = lineText;
-      sl.appendChild(tc);
-      group.appendChild(sl);
-    }
-
-    const count = (currentMode === 'none') ? Math.max(writeLines, 1) : writeLines;
-    for (let i = 0; i < count; i++) {
-      const wb = document.createElement('div');
-      wb.className = 'ws-write-block';
-      wb.style.setProperty('--lh', writeH + 'px');
-      wb.style.height = writeH + 'px';
-      if (doHint && currentMode !== 'none') {
-        const ghost = document.createElement('div');
-        ghost.className = 'ws-ghost';
-        ghost.style.fontSize = Math.round(fs * 0.44) + 'px';
-        ghost.textContent = lineText;
-        wb.appendChild(ghost);
-      }
-      group.appendChild(wb);
-    }
-
-    const sp = document.createElement('div');
-    sp.className = 'ws-spacer';
-    group.appendChild(sp);
-    page.appendChild(group);
-  });
-
-  const footer = document.createElement('div');
-  footer.className = 'ws-footer';
-  footer.innerHTML = '<div class="ws-footer-text">Молодец! 🎉</div><div class="ws-stars">⭐⭐⭐</div>';
-  page.appendChild(footer);
-  preview.appendChild(page);
+  const generateButton = document.getElementById('generateBtn');
+  generateButton.disabled = true;
+  try {
+    englishPages = await buildEnglishPages(text, getFontSize(), currentMode,
+      parseInt(document.getElementById('writeLinesSelect').value), document.getElementById('repeatToggle').checked);
+    document.getElementById('worksheetPreview').replaceChildren(...englishPages);
+  } catch (error) {
+    alert(error.message || 'Не удалось создать прописи. Попробуйте ещё раз.');
+    return;
+  } finally { generateButton.disabled = false; }
 
   const section = document.getElementById('previewSection');
   section.style.display = 'block';
@@ -540,32 +491,6 @@ function generateWorksheet() {
     body: JSON.stringify({ type: 'generator:propisi' }),
   }).catch(() => {});
   consumeQuota();
-}
-
-// Защита материалов: временная подпись на экспортируемом листе — убирается сразу
-// после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
-// из localStorage — тот же токен, что использует остальной сайт) — только мелкое
-// доменное имя без «юридической» формулировки, для остальных — полная подпись.
-let znIsSubscriber = false;
-(function checkSubscriber() {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
-      .catch(() => {});
-  } catch (e) {}
-})();
-
-function addWatermark(el) {
-  const wm = document.createElement('div');
-  wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
-  wm.style.cssText = znIsSubscriber
-    ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
-    : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
-  el.appendChild(wm);
-  return wm;
 }
 
 // Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
@@ -618,65 +543,7 @@ function consumeQuota() {
   setTimeout(refreshQuota, 1000);
 }
 
-async function downloadPDF() {
-  const btn = document.querySelector('.btn-download');
-  const sp  = document.getElementById('dlSpinner');
-  btn.disabled = true; sp.style.display = 'block';
-  const el = document.getElementById('worksheetPreview');
-  const wm = addWatermark(el);
-  try {
-    const { jsPDF } = window.jspdf;
-    const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
-    const r = canvas.width / canvas.height;
-    let dW = aW, dH = dW / r;
-    if (dH > aH) { dH = aH; dW = dH * r; }
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
-    pdf.save('прописи.pdf');
-  } catch(e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
-  wm.remove();
-  btn.disabled = false; sp.style.display = 'none';
-}
-
-async function downloadPNG() {
-  const el = document.getElementById('worksheetPreview');
-  const wm = addWatermark(el);
-  const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
-  wm.remove();
-  canvas.toBlob((blob) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'прописи.png'; a.click();
-    URL.revokeObjectURL(url);
-  }, 'image/png');
-}
-
-function downloadWord() {
-  const el = document.getElementById('worksheetPreview');
-  const wm = addWatermark(el);
-  const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-  <head><meta charset="utf-8"><title>Прописи</title></head>
-  <body>${el.innerHTML}</body></html>`;
-  wm.remove();
-  const blob = new Blob(['﻿', html], { type: 'application/msword' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'прописи.doc'; a.click();
-  URL.revokeObjectURL(url);
-}
-
-window.addEventListener('beforeprint', () => {
-  const el = document.getElementById('worksheetPreview');
-  if (el && !el.querySelector('[data-print-watermark]')) {
-    const wm = addWatermark(el);
-    wm.setAttribute('data-print-watermark', 'true');
-  }
-});
-window.addEventListener('afterprint', () => {
-  const wm = document.querySelector('[data-print-watermark]');
-  if (wm) wm.remove();
-});
 </script>
+<script src="/english-propisi.js"></script>
 </body>
 </html>

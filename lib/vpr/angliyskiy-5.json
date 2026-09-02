@@ -1,0 +1,647 @@
+{
+  "grade": 5,
+  "subject": "angliyskiy",
+  "subjectTitle": "Английский язык",
+  "variants": [
+    {
+      "id": 1,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Kate. I go to a school called Green Oak School. It's a big modern building with a nice playground. My favourite subject is Art because I love drawing and painting. I don't like Maths very much because it's difficult for me. Every day I have five lessons, and school starts at half past eight. I usually go to school by bus because I live quite far away. After lessons, I stay for the chess club twice a week — I've learned to play really well this year. At lunchtime, we have pizza in the canteen, but only on Fridays. My best friend Lucy is in my class, and we always sit together.",
+          "text": "Прослушайте текст. Определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Kate's favourite subject is Maths.\nB. Kate goes to school by bus.\nC. School has six lessons every day.\nD. Kate attends chess club twice a week.\nE. Pizza is served in the canteen every day.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Ben's school day starts at eight thirty in the morning. He has four lessons before lunch and two more after it. His favourite lesson is PE because he loves sport, especially football. At lunchtime, Ben and his friends eat in the school canteen, and after that they usually play in the yard for twenty minutes. Ben's school offers many clubs after lessons, such as drama, robotics and swimming. Ben goes to the robotics club every Wednesday, and he is building a small robot with his team. His teacher says the team might enter a competition next spring. Ben feels proud of his progress and hopes to win a prize. In the evening, Ben does his homework and then relaxes by reading comic books before bed.",
+          "text": "Прочитайте текст. Ответьте на вопросы 1–5, выбрав правильный вариант A, B или C.\n\n1. What is Ben's favourite lesson?\nA) Maths\nB) PE\nC) Art\n\n2. How many lessons does Ben have before lunch?\nA) Two\nB) Three\nC) Four\n\n3. Which club does Ben go to on Wednesdays?\nA) Drama\nB) Robotics\nC) Swimming\n\n4. What is Ben's team hoping to do next spring?\nA) Visit another school\nB) Enter a competition\nC) Meet a famous scientist\n\n5. What does Ben do before bed?\nA) Watch films\nB) Play football\nC) Read comic books",
+          "points": 5,
+          "answer": "1-B, 2-C, 3-B, 4-B, 5-C"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nTom (1. go / goes / going) to school every day by bike. Yesterday he (2. leave / left / leaves) his bike at home, so he (3. have / had / has) to walk. It usually (4. take / takes / took) him ten minutes to walk to school, but yesterday it (5. take / took / taking) twenty minutes.",
+          "points": 5,
+          "answer": "1-goes, 2-left, 3-had, 4-takes, 5-took"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50–60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! Thanks for your letter. I go to a small school in a town near London. I have Maths, English, Science and French every week — my favourite is French! I like my school because my teachers are kind and my classmates are friendly. What lessons do you have at school? Do you like your school? What do you usually do after school? Write soon! Best wishes, Oliver",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Oliver,\nThank you for your letter! At school I have Maths, Russian, Art and PE. I like my school because it is big and modern and I have many friends there. After school I usually do my homework and then play with my dog in the park. Write back soon!\nBest wishes,\nAnna"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Max. My hobby is collecting postcards from different countries. I started three years ago when my aunt gave me a postcard from Spain. Now I have more than eighty postcards in my collection. I keep them in a special album, and I look at them every weekend. My favourite postcard is from Japan because it has a picture of a beautiful mountain. I spend about two hours a week on my hobby, usually on Saturdays. My best friend Kate doesn't collect postcards, but she likes looking at my collection with me. Next year I want to visit a postcard exhibition in our city. My mum says my hobby teaches me about geography and different cultures.",
+          "text": "Прослушайте текст. Определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Max collects stamps.\nB. Max's aunt gave him his first postcard.\nC. Max has more than one hundred postcards.\nD. Max spends about two hours a week on his hobby.\nE. Kate also collects postcards.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Grace loves music, and her hobby is playing the guitar. She got her first guitar for her tenth birthday and started taking lessons soon after. Now she practises for thirty minutes every evening after homework. Grace's favourite song to play is a folk song her grandmother taught her. Last month, Grace performed at a small concert at her school, and everyone clapped loudly. She felt very nervous before she went on stage, but afterwards she felt proud of herself. Grace's teacher says she is improving quickly and could take an exam next year. In her free time, Grace also enjoys watching videos of famous guitarists online to learn new techniques. She hopes to form a band with her friends one day.",
+          "text": "Прочитайте текст. Ответьте на вопросы 1–5, выбрав правильный вариант A, B или C.\n\n1. What instrument does Grace play?\nA) Piano\nB) Guitar\nC) Violin\n\n2. When did Grace get her first guitar?\nA) On her birthday\nB) At Christmas\nC) At school\n\n3. How long does Grace practise every evening?\nA) Fifteen minutes\nB) Thirty minutes\nC) One hour\n\n4. Where did Grace perform last month?\nA) At a theatre\nB) At her school\nC) On television\n\n5. What does Grace want to do in the future?\nA) Become a teacher\nB) Sell her guitar\nC) Form a band",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-B, 4-B, 5-C"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nAnna (1. play / plays / playing) the piano every evening. Last year she (2. move / moved / moves) to a new music school. Her new teacher (3. help / helps / helping) her every week. Next month she (4. perform / performs / will perform) in a school concert for the first time. Her parents (5. is / am / are) very proud of her.",
+          "points": 5,
+          "answer": "1-plays, 2-moved, 3-helps, 4-will perform, 5-are"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50–60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! How are you? I want to tell you about my hobby. I collect postcards from different countries — I have more than fifty now! What is your hobby? How much time do you spend on it every week? Do your friends have the same hobby as you? Write back soon! Your friend, Max",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Max,\nThanks for your letter! My hobby is drawing animals. I spend about an hour on it every day after homework. My best friend Kate likes drawing too, so we often draw together and show our pictures to each other. Write soon!\nLove,\nSonya"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Vika. I have a hamster called Fluffy. I got him two months ago as a birthday present from my parents. Fluffy lives in a cage in my bedroom, and he loves running in his wheel at night — sometimes the noise wakes me up! I feed him every morning before school, and he especially likes sunflower seeds. Fluffy sleeps most of the day and becomes active in the evening. Last week, he escaped from his cage and hid behind my bookshelf for two hours. I was very worried, but my brother found him safe and sound. Now I always check that the cage door is properly closed. My friends think hamsters are boring, but I love watching Fluffy explore his cage.",
+          "text": "Прослушайте текст. Определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Vika got Fluffy as a birthday present.\nB. Fluffy is most active in the morning.\nC. Fluffy escaped from his cage last week.\nD. Vika's parents found Fluffy when he escaped.\nE. All Vika's friends love hamsters.",
+          "points": 5,
+          "answer": "A-True, B-False, C-True, D-False, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Denis has a big dog called Rex, and he loves taking him for walks every day. Rex is a friendly golden retriever who enjoys playing with a ball in the park. Every morning before school, Denis walks Rex for fifteen minutes near his house. In the evening, they go to the park together, where Rex runs and plays with other dogs. Last weekend, Rex found an old tennis ball in the bushes and refused to give it back! Denis laughed and let him keep it as a new toy. Rex also loves swimming in the small lake near the park during summer. Denis's family says Rex is the friendliest dog in the neighbourhood. Denis feeds Rex twice a day and always makes sure he has fresh water. Taking care of Rex has taught Denis to be responsible.",
+          "text": "Прочитайте текст. Ответьте на вопросы 1–5, выбрав правильный вариант A, B или C.\n\n1. What breed is Rex?\nA) A poodle\nB) A golden retriever\nC) A bulldog\n\n2. How long does Denis walk Rex before school?\nA) Ten minutes\nB) Fifteen minutes\nC) Thirty minutes\n\n3. What did Rex find last weekend?\nA) A stick\nB) A bone\nC) A tennis ball\n\n4. Where does Rex love swimming in summer?\nA) In the sea\nB) In a small lake\nC) In a swimming pool\n\n5. How often does Denis feed Rex?\nA) Once a day\nB) Twice a day\nC) Three times a day",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-C, 4-B, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMy sister (1. have / has / having) a small dog called Rex. She (2. walk / walks / walking) him every morning before school. Last week Rex (3. escape / escaped / escapes) under the fence and ran into the street. Luckily, my father (4. find / found / finds) him quickly and brought him home. Now we always (5. keep / keeps / kept) the gate closed.",
+          "points": 5,
+          "answer": "1-has, 2-walks, 3-escaped, 4-found, 5-keep"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50–60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I have some exciting news — my family got a new pet last month! Do you have a pet at home? What is its name? What do you like to do with your pet? Tell me all about it! Best wishes, Lily",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Lily,\nThanks for your letter! Yes, I have a pet — a grey cat called Misty. I chose her name because her fur looks like smoke. I love playing with her in the evening and stroking her when she sits on my lap. Write back soon!\nLove,\nVera"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Jack. My favourite season is winter because I love snow. Every year, my family goes skiing in the mountains during the New Year holidays. Last winter, it snowed so much that our school closed for two days! I built a huge snowman with my sister, and we used a carrot for its nose. I don't like summer very much because it gets too hot for me, and I prefer cold weather. In autumn, I enjoy walking in the park and collecting colourful leaves with my little brother. Spring is nice too, especially when the flowers start to bloom in our garden. My mum says the weather in our city changes very quickly, so we always check the forecast before going out.",
+          "text": "Прослушайте текст. Определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Jack's favourite season is summer.\nB. School closed for two days last winter because of snow.\nC. Jack prefers hot weather.\nD. Jack collects leaves with his little brother in autumn.\nE. The weather in Jack's city rarely changes.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Sophie loves observing the weather and keeps a special diary about it. Every morning before school, she writes down the temperature and whether it is sunny, cloudy or rainy. She started this hobby last spring after a school project about nature. Sophie noticed that April was the rainiest month this year, with rain almost every day. In July, the weather became very hot, and her family often went to the river to cool down. Sophie's favourite season is autumn because she loves the golden colours of the leaves and the cool, fresh air. She says winter is too cold for her, although she still enjoys the first snow of the year. Sophie's teacher was impressed with her weather diary and asked her to show it to the whole class.",
+          "text": "Прочитайте текст. Ответьте на вопросы 1–5, выбрав правильный вариант A, B или C.\n\n1. When did Sophie start her weather diary?\nA) Last winter\nB) Last spring\nC) Last summer\n\n2. Which month was the rainiest this year?\nA) April\nB) July\nC) October\n\n3. Where did Sophie's family go to cool down in July?\nA) To the mountains\nB) To the river\nC) To the swimming pool\n\n4. What is Sophie's favourite season?\nA) Summer\nB) Winter\nC) Autumn\n\n5. What did Sophie's teacher ask her to do?\nA) Write a new project\nB) Show her diary to the class\nC) Draw a picture of the weather",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-B, 4-C, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nThe weather in spring (1. is / are / be) very changeable. Yesterday it (2. is / was / were) warm and sunny in the morning, but in the afternoon it (3. change / changed / changes) suddenly. By evening it (4. rain / rains / was raining) hard, and everyone (5. run / ran / runs) home quickly.",
+          "points": 5,
+          "answer": "1-is, 2-was, 3-changed, 4-was raining, 5-ran"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50–60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! It's snowing here today, and I love it! What's the weather like where you live right now? What is your favourite season and why? What do you usually do when it rains? Write back soon! Your friend, Jack",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Jack,\nThanks for your letter! It's warm and sunny here today. My favourite season is summer because I can swim in the lake and play outside with my friends until late. When it rains, I usually read books or watch films at home. Write soon!\nBest wishes,\nNikita"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Leo. I joined a basketball club at school two months ago, and I train twice a week, on Tuesdays and Thursdays. Before that, I used to play football, but I found basketball more exciting. My coach says I'm improving quickly and might join the school team next season. Last Saturday, my club played a friendly match against another school, and we won by ten points! I was so happy because I scored six points myself. After training, I always feel tired but happy. My favourite basketball player is from an American team, and I watch his matches online whenever I can. My parents come to watch my matches sometimes, and they always cheer loudly for me. I hope to become a really good player one day.",
+          "text": "Прослушайте текст. Определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Leo trains three times a week.\nB. Leo used to play football before basketball.\nC. Leo's club lost the match last Saturday.\nD. Leo scored six points in the match.\nE. Leo's parents never come to watch his matches.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Ira gets up at half past five every morning to go swimming before school. Her coach believes that morning training helps swimmers build strong discipline. Ira joined the swimming club two years ago, and now she can swim four different strokes. Her favourite stroke is butterfly because it makes her feel powerful in the water, even though it is the hardest one to learn. Last month, Ira took part in a city competition and won a bronze medal in the one-hundred-metre freestyle race. She was very proud, especially because it was her first medal ever. Ira's parents drive her to the pool every morning before work. She hopes to compete in a regional competition next year and dreams of becoming a professional swimmer one day.",
+          "text": "Прочитайте текст. Ответьте на вопросы 1–5, выбрав правильный вариант A, B или C.\n\n1. What time does Ira get up to go swimming?\nA) Half past five\nB) Half past six\nC) Half past seven\n\n2. How long ago did Ira join the swimming club?\nA) One year ago\nB) Two years ago\nC) Three years ago\n\n3. Which stroke is Ira's favourite?\nA) Backstroke\nB) Breaststroke\nC) Butterfly\n\n4. What did Ira win last month?\nA) A gold medal\nB) A bronze medal\nC) A silver medal\n\n5. Who drives Ira to the pool every morning?\nA) Her coach\nB) Her parents\nC) Her older sister",
+          "points": 5,
+          "answer": "1-A, 2-B, 3-C, 4-B, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nOur class (1. play / plays / playing) football every Friday afternoon. Last Friday we (2. play / played / plays) against another class and (3. win / won / wins) the match. Our teacher (4. is / was / were) very happy with our team. Next week we (5. start / starts / will start) a new competition.",
+          "points": 5,
+          "answer": "1-plays, 2-played, 3-won, 4-was, 5-will start"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50–60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! Guess what — I joined a new sports club last week! Do you play any sport? How often do you train? What do you like most about sport? Tell me everything! Best wishes, Leo",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Leo,\nThanks for your letter! Yes, I play basketball at my school club. I train twice a week, on Tuesdays and Thursdays. I like sport most because I can spend time with my friends and feel strong and healthy. Write back soon!\nLove,\nKatya"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, my name is Emma. Let me tell you about food in my family. Every morning I have porridge and a cup of tea for breakfast — I never skip it because it gives me energy for school. At school, we have lunch in the canteen at half past twelve, and I usually choose soup and a salad. I don't really like cooking myself, but on Saturdays my grandmother comes over and we bake a cake together — I love mixing the flour and sugar with her. My little brother is different from me: he doesn't eat vegetables at all and only wants meat. In the evening, my whole family eats dinner together at six o'clock, and we always talk about our day.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Emma has a different breakfast every day.\nB. Emma eats lunch at school.\nC. Emma likes cooking on her own.\nD. Emma's brother refuses to eat vegetables.\nE. Emma's family never eats dinner together.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "(A) Every morning our family has breakfast together. My mother makes porridge or eggs, and we drink tea or juice. We eat quickly because school starts at eight o'clock and we don't want to be late.\n\n(B) At school we have lunch in the canteen at half past twelve. I usually eat soup, some meat or fish, and a salad. On Fridays there is always a sweet pudding, and all the children like that day.\n\n(C) In the evening all the family sits down together at six o'clock. We talk about our day and eat a hot meal like chicken with rice or pasta with vegetables. It is the best part of the day for me.\n\n(D) On Saturdays my grandmother comes to our house and we bake a cake together. She shows me how to mix the flour, sugar and eggs. I love these lessons because I am learning to cook new dishes.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A, B или C) на каждый из пяти вопросов.\n\n1. What time does school start?\nA) At eight o'clock\nB) At half past six\nC) At nine o'clock\n\n2. What do the children like about Fridays at school?\nA) They have a shorter day\nB) They have a sweet pudding\nC) They go on a trip\n\n3. What time does the family have dinner together?\nA) At five o'clock\nB) At seven o'clock\nC) At six o'clock\n\n4. Who comes to bake a cake on Saturdays?\nA) The speaker's grandmother\nB) The speaker's mother\nC) The speaker's sister\n\n5. What does the speaker learn from grandmother?\nA) How to set the table\nB) How to cook new dishes\nC) How to grow vegetables",
+          "points": 5,
+          "answer": "1-A, 2-B, 3-C, 4-A, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMy sister (1. love / loves / loving) cooking every weekend. Last Sunday she (2. make / made / makes) a chocolate cake for our mother's birthday. She always (3. use / uses / used) fresh fruit in her desserts. While she (4. bake / baked / was baking) the cake, I helped her clean the kitchen. Next weekend she (5. try / tries / will try) a new recipe from her cookbook.",
+          "points": 5,
+          "answer": "1-loves, 2-made, 3-uses, 4-was baking, 5-will try"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! Thank you for your last letter. I'm doing a project about food for my English class. What's your favourite food? Who usually cooks dinner in your family? What's your favourite meal of the day — breakfast, lunch or dinner? I'm collecting answers from my friends around the world! Write soon, Sam",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса (любимая еда / кто готовит дома / любимый прием пищи) — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Sam, Thanks for your letter! My favourite food is pizza with cheese and tomatoes. My mum usually cooks dinner, but on Sundays my dad makes pancakes for us. My favourite meal is dinner because the whole family sits together and talks about the day. Write back soon! Love, Anya"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Sophie. Let me tell you about the holidays in my family. New Year is my favourite time — on the thirty-first of December, my whole family gathers at home, and at midnight we watch fireworks outside before eating a big dinner together. My birthday is in May, and every year my parents invite my friends over; my mother always bakes a chocolate cake with candles for me. In summer, we go to my grandmother's village for two weeks, and I help her in the garden and pick apples. Last month our whole class went on a trip to the science museum, and I really enjoyed the experiments there. Christmas is not really celebrated in my family.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Sophie watches fireworks at midnight on New Year's Eve.\nB. Sophie's birthday is in December.\nC. Sophie's mother bakes a cake for her birthday.\nD. Sophie spends her summer holidays at the seaside.\nE. Sophie's class visited a museum last month.",
+          "points": 5,
+          "answer": "A-True, B-False, C-True, D-False, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "(A) New Year is my favourite holiday. On the thirty-first of December, my whole family gathers at our house. We watch fireworks outside at midnight and then eat a big dinner together. It is always a magical night.\n\n(B) My birthday is in May. Every year my parents invite my friends, and we play games in the garden. My mother always bakes a big chocolate cake with candles, and everyone sings a song for me.\n\n(C) In summer we go to my grandmother's village for two weeks. She has chickens and a big garden with apple trees. I help her pick vegetables, and in the evening we sit outside and drink tea together.\n\n(D) Last month our class went on a trip to the science museum. We saw many interesting machines and did fun experiments. Our teacher said it was a reward for our good work during the term.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A, B или C) на каждый из пяти вопросов.\n\n1. When does the family celebrate New Year?\nA) On the thirty-first of December\nB) On the first of January\nC) On the twenty-fifth of December\n\n2. What month is the speaker's birthday in?\nA) In April\nB) In May\nC) In June\n\n3. Where does the family spend two weeks in summer?\nA) At the seaside\nB) In the city\nC) At the grandmother's village\n\n4. What does the family do in the grandmother's garden?\nA) They plant flowers\nB) They pick vegetables\nC) They build a house\n\n5. Why did the class go to the science museum?\nA) As a reward for good work\nB) Because it was a holiday\nC) To meet new students",
+          "points": 5,
+          "answer": "1-A, 2-B, 3-C, 4-B, 5-A"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nNext Saturday it (1. is / was / will be) my brother's birthday. Last year we (2. have / had / has) a big party with all his friends. He usually (3. get / gets / got) a lot of presents from his family. While the guests (4. arrive / arrived / were arriving), my mother was decorating the room with balloons. This year we (5. have / had / will have) the party in the garden because the weather is warm.",
+          "points": 5,
+          "answer": "1-is, 2-had, 3-gets, 4-were arriving, 5-will have"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I hope you are well. We are learning about holidays around the world at school. What's your favourite holiday and why? How do you usually celebrate your birthday? What are your plans for the summer holidays this year? Please tell me everything! Best wishes, Mia",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса (любимый праздник / как празднуешь день рождения / планы на лето) — 6 баллов (по 2 за каждый); 2) правильный формат письма — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Mia, Thanks for your letter! My favourite holiday is New Year because we watch fireworks and have a big family dinner. On my birthday I invite my friends and we eat cake in the garden. This summer I am going to visit my grandmother in the village. Write soon! Love, Nikita"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Daniel. Let me tell you about my daily routine. I get up at seven o'clock every morning and do exercises before breakfast — it helps me wake up properly. Lessons at my school start at eight thirty, and we have five or six lessons every day, with lunch in the canteen at half past twelve. After school, I go to my sports club three times a week, but on other days I just relax at home or meet my friends in the park. In the evening, I do my homework before dinner. After that, I read a little before going to sleep at about ten o'clock. I never help with any housework at home.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Daniel does exercises before breakfast.\nB. Daniel's lessons start at nine o'clock.\nC. Daniel goes to his sports club every day of the week.\nD. Daniel does his homework before dinner.\nE. Daniel goes to bed at about ten o'clock.",
+          "points": 5,
+          "answer": "A-True, B-False, C-False, D-True, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "(A) I get up at seven o'clock every morning. First, I wash my face and get dressed, then I have breakfast with my family. At half past seven, I leave home and walk to school with my neighbour.\n\n(B) Lessons start at eight thirty and finish at two o'clock. We have five or six lessons every day. At lunchtime we eat in the school canteen, and then we have a short break to play in the yard.\n\n(C) After school I go to my sports club three times a week. On other days I meet my friends in the park or just relax at home. I really enjoy this free time before dinner.\n\n(D) In the evening I do my homework and then have dinner with my family. We often talk about our day. Before bed, I read a little and go to sleep at about ten o'clock.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A, B или C) на каждый из пяти вопросов.\n\n1. What time does the speaker get up?\nA) At six o'clock\nB) At seven o'clock\nC) At eight o'clock\n\n2. Who does the speaker walk to school with?\nA) A neighbour\nB) A brother\nC) A teacher\n\n3. What time do lessons finish?\nA) At one o'clock\nB) At half past one\nC) At two o'clock\n\n4. How many times a week does the speaker go to the sports club?\nA) Two times\nB) Three times\nC) Five times\n\n5. What does the speaker do before going to sleep?\nA) Watches TV\nB) Reads a little\nC) Does exercises",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-C, 4-B, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nEvery day Tom (1. get / gets / getting) up at seven o'clock. This morning he (2. eat / ate / eats) breakfast quickly because he was late for school. He usually (3. do / does / did) his homework after dinner. While his sister (4. watch / watched / was watching) TV yesterday evening, Tom was doing his English exercises. Tomorrow he (5. have / has / will have) football practice after school.",
+          "points": 5,
+          "answer": "1-gets, 2-ate, 3-does, 4-was watching, 5-will have"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! How are you? I'm curious about your daily life. What time do you usually get up on school days? What do you do after school finishes? What do you usually do before you go to bed? Tell me all about it! Your friend, Leo",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса (время подъёма / дела после школы / дела перед сном) — 6 баллов (по 2 за каждый); 2) правильный формат письма — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Leo, Thanks for writing! I usually get up at seven o'clock on school days. After school I do my homework and then play football with my friends. Before bed I read a book for twenty minutes. Write back soon! Love, Vera"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Nikita. Let me tell you about my family. My mother works as a teacher, and my father is an engineer; they are both busy, but they always find time for us in the evenings. I have two brothers and one sister — my older brother is eighteen and studies at university, my sister is younger than me, and my little brother is only three years old. My grandparents live in a small house not far from us, and I visit them every Wednesday after school. My grandmother always makes delicious pies for tea, and my grandfather teaches me to fix things. On Sundays, all our relatives come to our house for a big dinner, and we play games together.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. Nikita's mother is an engineer.\nB. Nikita has three siblings.\nC. Nikita's grandparents live far away in another country.\nD. Nikita visits his grandparents every Wednesday.\nE. Nikita's family never gets together on Sundays.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "(A) My mother works as a teacher, and my father is an engineer. They are both very busy, but they always find time for our family in the evenings. They help me with my homework and we often talk about our day.\n\n(B) I have two brothers and one sister. My older brother is eighteen and studies at university. My sister is younger than me, and we often play games together. My little brother is only three years old, and I love playing with him too.\n\n(C) My grandparents live in a small house not far from us. Every Wednesday I visit them after school. My grandfather teaches me to fix things, and my grandmother always makes delicious pies for tea.\n\n(D) On Sundays all our relatives come to our house for a big dinner. My aunts, uncles and cousins sit at one big table. We talk, laugh and play games together. It's the best day of the week for our family.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A, B или C) на каждый из пяти вопросов.\n\n1. What does the speaker's father do?\nA) He is a teacher\nB) He is an engineer\nC) He is a doctor\n\n2. How old is the speaker's older brother?\nA) Eighteen\nB) Fifteen\nC) Twenty\n\n3. How often does the speaker visit the grandparents?\nA) Every Sunday\nB) Every Wednesday\nC) Every Friday\n\n4. What does the grandfather teach the speaker?\nA) To cook\nB) To fix things\nC) To draw\n\n5. Who comes to the house on Sundays?\nA) Only the parents\nB) Classmates\nC) Aunts, uncles and cousins",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-B, 4-B, 5-C"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMy grandmother (1. live / lives / lived) in a small village near the river. Last year she (2. visit / visited / visits) us for the whole summer. She usually (3. bake / bakes / baked) delicious pies for our family. While she (4. work / worked / was working) in the garden yesterday, my grandfather was fixing the fence. Next month we (5. visit / visits / will visit) her for her birthday.",
+          "points": 5,
+          "answer": "1-lives, 2-visited, 3-bakes, 4-was working, 5-will visit"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I'm writing a story about families for my English homework. How many people are there in your family? Who are you closest to in your family? What do you like doing together as a family? I can't wait to read your answer! Best, Oliver",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса (состав семьи / с кем ближе всего / совместные занятия) — 6 баллов (по 2 за каждый); 2) правильный формат письма — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Oliver, Thanks for your letter! There are four people in my family: my mum, my dad, my sister and me. I am closest to my sister because we share a room and play together every day. We love watching films together on Fridays. Write soon! Love, Masha"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Artyom. Let me tell you about our summer trip. Before we left, our whole family packed our bags together, and my mother made a list of things we needed like swimsuits and sun cream. We travelled to the seaside by car, and the journey took about six hours, with two stops to eat and rest. We stayed at the seaside for ten days, swimming in the sea every morning and building sandcastles in the afternoon. In the evenings we walked along the coast and ate ice cream. Now that we are back home, I often look at the photos from our trip and remember the sound of the waves.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), а какие не соответствуют (False).\n\nA. The family travelled to the seaside by plane.\nB. The journey took about six hours.\nC. The family stayed at the seaside for ten days.\nD. The speaker built sandcastles in the morning.\nE. The speaker never looks at photos from the trip.",
+          "points": 5,
+          "answer": "A-False, B-True, C-True, D-False, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "(A) Before our trip, our whole family packed our bags together. My mother made a list of things we needed: swimsuits, hats and sun cream. I was very excited and could not sleep the night before we left.\n\n(B) We travelled to the seaside by car. The journey took about six hours, and we stopped twice to eat and rest. My little sister slept most of the way, but I looked out of the window at the fields and forests.\n\n(C) We stayed at the seaside for ten days. Every morning we swam in the warm sea, and in the afternoon we built sandcastles on the beach. In the evenings we walked along the coast and ate ice cream.\n\n(D) Now we are back home, but I often look at the photos from our trip. I remember the sound of the waves and the taste of fresh fish at the local café. It was the best holiday of my life.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A, B или C) на каждый из пяти вопросов.\n\n1. How did the family travel to the seaside?\nA) By train\nB) By car\nC) By plane\n\n2. How long did the journey take?\nA) About three hours\nB) About six hours\nC) About ten hours\n\n3. How many days did the family stay at the seaside?\nA) Five days\nB) Seven days\nC) Ten days\n\n4. What did the speaker do every morning at the seaside?\nA) Built sandcastles\nB) Swam in the sea\nC) Walked along the coast\n\n5. What does the speaker remember about the trip now?\nA) The sound of the waves\nB) The name of the hotel\nC) The price of the tickets",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-C, 4-B, 5-A"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nLast summer my family (1. go / went / goes) to the seaside. We (2. travel / travelled / travels) there by car, and the journey took six hours. My sister usually (3. get / gets / got) sick during long trips, so we stopped often. While we (4. eat / ate / were eating) our lunch at a café, it started to rain. Next year we (5. visit / visits / will visit) the mountains instead.",
+          "points": 5,
+          "answer": "1-went, 2-travelled, 3-gets, 4-were eating, 5-will visit"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I just came back from an amazing trip and want to hear about yours. Where did you go on your last holiday? How did you travel there? What was the best part of your trip? Write back and tell me everything! Your friend, Sasha",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса (куда ездил / как добирался / что понравилось больше всего) — 6 баллов (по 2 за каждый); 2) правильный формат письма — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Dear Sasha, Thanks for your letter! Last summer I went to the seaside with my family. We travelled there by car, and the journey took six hours. The best part was swimming in the sea every day with my sister. Write back soon! Love, Dima"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "My name is Alex and I want to tell you about my best friend. His name is Max, and we have known each other for four years. We met at school, and now we live in the same street, so we see each other almost every day. Max is very kind and funny, and he always helps me when I have problems with my homework. We both love football, and we play for the same team on Saturdays. In summer we usually ride our bikes together in the park near our houses. Max has a younger sister, but I don't have any brothers or sisters. Next year we want to go to the same summer camp together.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Alex and Max have known each other for four years.\nB. Max and Alex met each other at a sports club.\nC. Max lives far away from Alex's house.\nD. Alex and Max play football for the same team.\nE. Max doesn't have any brothers or sisters.",
+          "points": 5,
+          "answer": "A-True, B-False, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "I have a best friend. His name is Nikita, and he is eleven years old, just like me. We met three years ago in the second class, and since then we have never been apart. Every weekend we play football in the park near our houses. We also like riding our bikes and playing video games together. On rainy days we stay at home and build models from Lego. Nikita always helps me with my homework because he is very good at Maths. Last month, when I was ill, he brought me my school books and explained the new topics. Next summer we want to go to a sports camp together. We are also planning to learn to play chess so that we can enter a school competition next year.",
+          "text": "Прочитайте текст и выберите правильный вариант ответа на каждый вопрос (A/B/C).\n\n1. How old is Nikita?\nA) Ten  B) Eleven  C) Twelve\n\n2. When did the boys become friends?\nA) In nursery school  B) Three years ago  C) Last year\n\n3. What do they do on rainy days?\nA) Play football  B) Ride bikes  C) Build Lego models\n\n4. Why does Nikita help with homework?\nA) He likes Maths  B) He is the class monitor  C) His mother asked him to\n\n5. What do the boys want to do next year?\nA) Go to the seaside  B) Enter a chess competition  C) Change schools",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-C, 4-A, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nKate (1. has / have / go) a lot of friends at school. Her best friend (2. is / are / was) Olya. Yesterday they (3. had / have / has) a great time at the park. They (4. ate / eat / eating) ice cream together. Next weekend they (5. will go / went / go) to the cinema.",
+          "points": 5,
+          "answer": "1-has, 2-is, 3-had, 4-ate, 5-will go"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! Thanks for your last letter. Guess what — I've got a new friend! We do lots of fun things together. What about you? Who is your best friend? What do you usually do together after school? Why do you like your friend so much? Write back soon! Love, Jack",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Jack! Thanks for your letter. My best friend is Nikita. We usually play football or ride our bikes after school. Sometimes we do our homework together too. I like him because he is kind and always helps me when I have problems. Write back soon! Love, Olya"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, my name is Masha. I want to tell you about my summer holidays. This year my family and I went to visit my grandparents in a small village near the river. We stayed there for three weeks in July. Every morning I helped my grandmother feed the chickens and water the plants in the garden. In the afternoons I went swimming in the river with the other children from the village. My grandfather taught me how to catch fish, but I never caught a big one! In the evenings we sat outside and listened to his old stories. In August we went back home for school.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Masha spent her summer holidays at the seaside.\nB. She stayed with her grandparents for three weeks.\nC. Masha never helped in the garden.\nD. Masha's grandfather taught her to catch fish.\nE. Masha caught a very big fish.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "This summer was one of the best for me. My family and I went to the countryside to stay with my grandparents for three weeks in July. Every morning I woke up early and went fishing with my grandfather at the river. We usually caught a few fish, and my grandmother cooked them for dinner. In the afternoons I played with the other children from the village. We rode bicycles, played hide-and-seek and swam in the lake near the forest. At the end of August we came back home. I was a little sad to leave the village, but I was also happy to see my friends at school again.",
+          "text": "Прочитайте текст и выберите правильный вариант ответа на каждый вопрос (A/B/C).\n\n1. How long did the family stay with the grandparents?\nA) Two weeks  B) Three weeks  C) A whole month\n\n2. What did the writer do with his grandfather in the mornings?\nA) Went fishing  B) Worked in the garden  C) Rode a bicycle\n\n3. Who cooked the fish for dinner?\nA) The writer  B) The grandfather  C) The grandmother\n\n4. Where did the children swim?\nA) In the river  B) In the lake  C) In the sea\n\n5. How did the writer feel about leaving the village?\nA) Very happy  B) A little sad  C) Angry",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-C, 4-B, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nLast summer Dima (1. went / goes / go) to a camp by the sea. Every day he (2. swam / swim / swimming) in the sea and played volleyball. He (3. made / make / making) many new friends there. Now he often (4. calls / called / call) them on the phone. Next year he (5. will go / went / goes) to the same camp again.",
+          "points": 5,
+          "answer": "1-went, 2-swam, 3-made, 4-calls, 5-will go"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I'm back from my summer holidays and I want to tell you about them! Where did you spend your summer holidays? What did you do there? What was the best thing about your summer? Write back soon! Lisa",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Lisa! Thanks for your letter. I spent my summer holidays at my grandma's village. I helped in the garden and rode my bike every day. The best thing about my summer was swimming in the river with my cousins. It was so much fun! Write back soon! Love, Katya"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello, my name is Sasha. I want to tell you about my favourite book. It is called \"The Secret Garden\", and my grandmother gave it to me two years ago. The story is about a girl named Mary who finds a hidden garden behind her uncle's old house. Nobody has taken care of the garden for ten years. Mary makes friends with a boy called Dickon, and together they start to clean the garden and plant flowers. I have read this book three times because I love the story so much. My favourite character is Dickon because he knows a lot about plants and animals.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Sasha got the book from his grandmother.\nB. The story is about a boy who finds a garden.\nC. The garden had been empty for ten years.\nD. Sasha has read the book only once.\nE. Dickon knows a lot about plants and animals.",
+          "points": 5,
+          "answer": "A-True, B-False, C-True, D-False, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "My favourite book is called \"The Secret Garden\". I got it from my grandmother two years ago, and I have read it many times since then. The story is about a girl called Mary who finds a hidden garden behind her uncle's house. Nobody has taken care of the garden for ten years. Mary starts to clean the garden with her new friend Dickon. Together they plant flowers and vegetables, and slowly the garden becomes beautiful again. I like this book because it teaches that hard work can change everything. I would recommend it to anyone who loves stories about nature and friendship.",
+          "text": "Прочитайте текст и выберите правильный вариант ответа на каждый вопрос (A/B/C).\n\n1. Who gave the book to the writer?\nA) Her mother  B) Her grandmother  C) Her teacher\n\n2. What does Mary find behind her uncle's house?\nA) A hidden garden  B) An old book  C) A small dog\n\n3. How long had nobody taken care of the garden?\nA) Five years  B) Ten years  C) One year\n\n4. Who helps Mary look after the garden?\nA) Her uncle  B) Her grandmother  C) Dickon\n\n5. What does the writer say the book teaches?\nA) That hard work can change everything  B) That gardens are dangerous  C) That friendship is not important",
+          "points": 5,
+          "answer": "1-B, 2-A, 3-B, 4-C, 5-A"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMary (1. finds / find / found) a big garden behind the house. She (2. found / finds / find) it for the first time last spring. She and Dickon (3. plant / plants / planted) flowers there every week now. Yesterday they (4. planted / plant / plants) ten new plants. Next month the garden (5. will be / is / was) full of roses.",
+          "points": 5,
+          "answer": "1-finds, 2-found, 3-plant, 4-planted, 5-will be"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I've just finished reading a great new book! What is your favourite book or film? What is it about? Why do you like it so much? Write back soon! Ben",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Ben! Thanks for your letter. My favourite film is a cartoon about a lion who becomes king of the animals. It is about friendship and courage. I like it because it is funny and has a happy ending. I watch it every year with my family. Write back soon! Love, Masha"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, my name is Dima. I live in a small town called Zelenograd, not far from Moscow. My town isn't very big, but it is green and cosy, with a lot of trees and parks. In the centre there is an old church and a small square where people meet at the weekend. There is also a market where farmers sell fresh fruit and vegetables. My favourite place in the town is the river. In summer my friends and I swim there, and in winter we skate on the ice near the bank. I love my town because it is quiet, safe, and I know almost all my neighbours.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Zelenograd is a big, noisy city.\nB. There is an old church in the town centre.\nC. Farmers sell fruit and vegetables at the market.\nD. Dima's favourite place is the town library.\nE. Dima doesn't know his neighbours.",
+          "points": 5,
+          "answer": "A-False, B-True, C-True, D-False, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "I live in a small town called Zelenograd. It is not very big, but it is a very cosy and green place with many trees around. In the centre of the town there is an old church and a small square where people meet on weekends. There is also a market where farmers sell fruit and vegetables. My favourite place in the town is the river. In summer, my friends and I swim there, and in winter we skate on the ice near the bank. I love my town because it is quiet and safe. Everyone says hello to each other in the street, and I know almost all my neighbours.",
+          "text": "Прочитайте текст и выберите правильный вариант ответа на каждый вопрос (A/B/C).\n\n1. What is the name of the writer's town?\nA) Moscow  B) Zelenograd  C) Petersburg\n\n2. What is in the centre of the town?\nA) A big shopping centre  B) An old church  C) A football stadium\n\n3. What do people buy at the market?\nA) Clothes  B) Fruit and vegetables  C) Books\n\n4. What is the writer's favourite place in the town?\nA) The school  B) The market  C) The river\n\n5. Why does the writer love the town?\nA) It is big and noisy  B) It is quiet and safe  C) It has many shops",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-B, 4-C, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nZelenograd (1. is / was / were) a small, green town. There (2. is / are / was) an old church in the centre. Last weekend my family (3. visited / visit / visits) the market near the square. We (4. bought / buy / buys) fresh apples there. Next year the town (5. will open / opens / opened) a new park for children.",
+          "points": 5,
+          "answer": "1-is, 2-is, 3-visited, 4-bought, 5-will open"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I'm doing a school project about towns around the world. Can you help me? What is the name of your town? What is the most interesting place there? What do you like doing in your free time in your town? Write back soon! Emma",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Emma! Thanks for your letter. I live in a small town called Pushkino. The most interesting place here is the old park with a lake. In my free time I like riding my bike there with my friends. I really love my town! Write back soon! Love, Vanya"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hello, my name is Anya. I want to tell you about my music lessons. I started learning to play the violin two years ago, and at first it was very difficult. Now I practise for thirty minutes every day after my homework. My music teacher's name is Irina Petrovna, and she is very kind and patient. Last month our music school had a small concert for parents, and I played a piece by a famous composer. Everybody clapped for a long time, and I felt very proud. I am glad that I did not give up, and now I really love playing the violin. Next year I want to enter a music competition for the first time.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Anya started learning the violin two years ago.\nB. Anya practises for one hour every day.\nC. Anya's music teacher is strict and unkind.\nD. Anya played at a concert for parents last month.\nE. Anya wants to enter a music competition next year.",
+          "points": 5,
+          "answer": "A-True, B-False, C-False, D-True, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "I started learning to play the violin two years ago. At first it was very difficult, and the sounds I made were not very nice! Now I practise for thirty minutes every day after my homework. My music teacher, Irina Petrovna, is very kind and she always explains things clearly. Last month our music school had a small concert for parents. I played a piece by a famous composer, and everybody clapped for a long time. I am proud that I did not give up. Now I really love playing the violin, and I want to keep learning for many more years.",
+          "text": "Прочитайте текст и выберите правильный вариант ответа на каждый вопрос (A/B/C).\n\n1. How long ago did the writer start learning the violin?\nA) One year ago  B) Two years ago  C) Three years ago\n\n2. How long does the writer practise every day?\nA) Fifteen minutes  B) Thirty minutes  C) One hour\n\n3. What is the music teacher's name?\nA) Irina Petrovna  B) Anna Petrovna  C) Olga Ivanovna\n\n4. Where did the writer play a piece of music?\nA) At school  B) At a concert for parents  C) On the radio\n\n5. How does the writer feel about learning the violin now?\nA) He/she wants to stop  B) He/she wants to keep learning  C) He/she is bored",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-A, 4-B, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nAnya (1. plays / play / playing) the violin for two years now. She (2. practises / practise / practising) every day after school. Last month she (3. performed / perform / performs) in a school concert. Her parents (4. were / was / are) very proud of her. Next year she (5. will enter / enters / entered) a music competition for the first time.",
+          "points": 5,
+          "answer": "1-plays, 2-practises, 3-performed, 4-were, 5-will enter"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi! I've just started guitar lessons and I love them! Do you like music? What is your favourite kind of music or song? Do you play a musical instrument? Write back soon! Sophie",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Sophie! Thanks for your letter. That's great news about your guitar lessons! I love music too, especially pop songs. I don't play an instrument, but I sing in my school choir every week. My favourite song changes every month! Write back soon! Love, Dasha"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Kate, and I want to tell you about my birthdays. Every year my family celebrates my birthday at home, not in a café. We always invite just a few close friends, usually four or five, not a big crowd. My favourite part is the cake — my grandmother always bakes a strawberry cake because it's my favourite. We never buy a cake from a shop. After the cake, we usually play board games instead of watching a film. In the evening, my dad takes photos of everyone together. I love this tradition, and I hope we keep celebrating like this every year.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Kate's family celebrates her birthday in a café.\nB. Kate invites a large group of friends.\nC. Kate's grandmother bakes a strawberry cake.\nD. The family watches a film after the cake.\nE. Kate's dad takes photos in the evening.",
+          "points": 5,
+          "answer": "A-False, B-False, C-True, D-False, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "Last Saturday was my tenth birthday. My mum helped me plan a jungle-themed party. We hung green balloons in the living room and made a paper banner with my name on it.\n\nIn the morning, ten classmates came to my house. Everyone wore a paper animal mask. First we played hide-and-seek in the garden, then we had a treasure hunt with small prizes.\n\nAt two o'clock we had lunch. Mum made pizza, and dad baked a chocolate cake shaped like a lion. Everybody sang \"Happy Birthday\", and my friend Katya gave me a book about animals.\n\nIn the evening, when my friends went home, I helped clean the living room. I was tired but very happy. It was the best birthday party I've ever had!",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A/B/C) на каждый вопрос.\n\n1. What was the theme of the party?\nA) space\nB) jungle\nC) princess\n\n2. How many classmates came to the party?\nA) five\nB) eight\nC) ten\n\n3. What did the children do first?\nA) had lunch\nB) played hide-and-seek\nC) opened presents\n\n4. What shape was the birthday cake?\nA) a heart\nB) a star\nC) a lion\n\n5. What did Katya give as a present?\nA) a toy\nB) a book\nC) a game",
+          "points": 5,
+          "answer": "1-B, 2-C, 3-B, 4-C, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nNext Saturday it (1. is / was / will be) my sister's birthday. She (2. will be / is / was) ten years old. Last year we (3. had / have / has) a big party for her, and this year we are planning something even better. My mum (4. is making / made / makes) a cake right now, and I (5. will / is / was) help her decorate it later.",
+          "points": 5,
+          "answer": "1-is, 2-will be, 3-had, 4-is making, 5-will"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi!\nThanks for your last letter. Guess what — my birthday is next month! I want to invite you to my party, but first tell me about your birthday traditions. How do you usually celebrate your birthday? What is your favourite birthday food? Who do you usually invite to your party?\nWrite back soon!\nLove,\nAlex",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый: как празднует день рождения, любимая еда на праздник, кого приглашает); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Alex!\nThanks for your letter. I usually celebrate my birthday at home with my family and a few close friends. My favourite birthday food is pizza and a chocolate cake. I usually invite my best friends from school and my cousins. I hope your party will be great!\nLove,\nKate"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Ben. I want to tell you about my home. I live in a flat, not in a house, on the fourth floor of a big building. My flat has two bedrooms, so I share a room with my younger brother. We don't have a balcony, but we have a big window with a nice view of the park. My favourite room is the kitchen because my mum and I often bake cookies there together on Sundays. In the evening, my whole family usually gathers in the living room to watch TV. I really enjoy living here, even though our flat is quite small.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Ben lives in a house.\nB. Ben shares a bedroom with his brother.\nC. The flat has a balcony.\nD. Ben's favourite room is the kitchen.\nE. The family watches TV in the kitchen.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "I live in a two-storey house on the edge of town with my parents and my little brother. The house isn't big, but it has a nice garden with trees and flowers.\n\nDownstairs there is a kitchen and a cosy living room, where we watch films together in the evening. There is also a small office where my dad works.\n\nUpstairs there are three bedrooms. My room is my favourite place in the house. I have a comfortable bed, a desk for homework, and shelves full of books and toys.\n\nOutside, we have a small vegetable garden. In spring my mum and I plant tomatoes and cucumbers. In summer we often have breakfast outside. I really love our house.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A/B/C) на каждый вопрос.\n\n1. Where is the house located?\nA) in the city centre\nB) on the edge of town\nC) near the sea\n\n2. Who works in the small office downstairs?\nA) mum\nB) dad\nC) brother\n\n3. How many bedrooms are there upstairs?\nA) two\nB) three\nC) four\n\n4. What does the writer keep on the shelves in their room?\nA) clothes and shoes\nB) plates and cups\nC) books and toys\n\n5. What do the writer and mum plant in the garden?\nA) flowers\nB) tomatoes and cucumbers\nC) apple trees",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-B, 4-C, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMy family (1. lives / live / living) in a small house near the park. There (2. are / is / was) three bedrooms and a big kitchen. Last year we (3. painted / paint / paints) the living room — now it is blue and white. At the moment my dad (4. is building / built / builds) a new shelf for my books. Next weekend we (5. will / is / was) paint my bedroom too.",
+          "points": 5,
+          "answer": "1-lives, 2-are, 3-painted, 4-is building, 5-will"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi!\nHow are you? I want to tell you some news — we've just moved to a new house! It's bigger than our old flat. What does your house or flat look like? What is your favourite room at home? Do you have a garden or a balcony?\nWrite soon!\nLove,\nSam",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый: описание дома/квартиры, любимая комната, наличие сада/балкона); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Sam!\nThanks for your letter. That's exciting news about your new house! I live in a flat with three rooms. My favourite room is my bedroom because it has a big window. We don't have a garden, but we have a small balcony with flowers.\nLove,\nNina"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Max, and I want to tell you about my pet. I have a dog, not a cat, and his name is Buddy. He is a big, friendly dog with brown fur. Every morning, I take Buddy for a walk before school, not after school. He loves running in the park and playing with a ball. Buddy is quite noisy — he barks a lot when someone comes to the door. He sleeps in a small bed in the kitchen, not in my bedroom. At the weekend, my whole family takes Buddy to the countryside, and he loves swimming in the river there.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Max has a cat.\nB. Max walks his dog before school.\nC. Buddy is a quiet dog.\nD. Buddy sleeps in Max's bedroom.\nE. Buddy enjoys swimming in the river.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-False, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "Did you know some animals are real record-breakers? The cheetah is the fastest land animal in the world. It can run as fast as a car, but only for a short time.\n\nOther animals are famous for their strength. Ants are tiny, but they can carry things much heavier than their own body — about fifty times their own weight!\n\nSome animals have an excellent memory. Elephants remember other elephants and even people for many years. They also remember the way to water in dry places.\n\nFinally, some animals are champions of sleep. Koalas sleep about twenty hours a day. They eat special leaves that give very little energy, so they need a lot of rest.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A/B/C) на каждый вопрос.\n\n1. Which animal is the fastest on land?\nA) the ant\nB) the cheetah\nC) the koala\n\n2. How much can an ant carry compared to its own weight?\nA) about five times\nB) about twenty times\nC) about fifty times\n\n3. What are elephants especially good at?\nA) running fast\nB) remembering things\nC) climbing trees\n\n4. How many hours a day do koalas usually sleep?\nA) about ten hours\nB) about twenty hours\nC) about twenty-four hours\n\n5. Why do koalas need so much sleep?\nA) their leaves give little energy\nB) they are very old\nC) they don't like daylight",
+          "points": 5,
+          "answer": "1-B, 2-C, 3-B, 4-B, 5-A"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nDolphins (1. live / lived / living) in the sea and they are very intelligent. Yesterday I (2. watched / watch / watches) a documentary about dolphins on TV. In the film, a dolphin (3. was swimming / swims / swim) with some children in the water. Right now, scientists (4. are studying / studied / study) dolphins to understand how they communicate. In the future, people (5. will / is / was) learn even more about these amazing animals.",
+          "points": 5,
+          "answer": "1-live, 2-watched, 3-was swimming, 4-are studying, 5-will"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi!\nI've just come back from the zoo with my family — it was amazing! We saw lions, giraffes and monkeys. Do you have a pet, or would you like to have one? What is your favourite animal and why? Have you ever been to a zoo or a safari park?\nWrite back soon!\nLove,\nBen",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый: есть ли питомец, любимое животное и почему, был ли в зоопарке); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Ben!\nThanks for your letter. It sounds like you had a great day at the zoo! I have a cat called Misha, and I love her very much. My favourite animal is the dolphin because it's so clever. Yes, I went to the zoo last summer with my class.\nLove,\nVera"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Zoe. I want to tell you about my gaming habits. I usually play computer games on my tablet, not on a console. My favourite games are puzzle games, not racing games — I find them relaxing. I usually play in the evening before bed, because they help me fall asleep faster. I never play with my friends online; I prefer playing alone in a quiet room. My parents don't mind me playing games, but they always remind me to stop after thirty minutes. On rainy weekends, I sometimes play a bit longer, with my mum's permission.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Zoe plays games on a console.\nB. Zoe's favourite games are puzzle games.\nC. Zoe plays online with her friends.\nD. Zoe usually plays in the evening.\nE. Zoe's parents never let her play longer than thirty minutes, even on weekends.",
+          "points": 5,
+          "answer": "A-False, B-True, C-False, D-True, E-False"
+        },
+        {
+          "n": 2,
+          "reading": "Computer games are very popular with children today, and my family is no exception. My brother and I both enjoy playing after school, but our parents have made some rules for us.\n\nFirst of all, we can only play for one hour on school days. On weekends, we are allowed two hours, but only after we finish our homework and help with housework.\n\nSecondly, we are not allowed to play very late in the evening. Our parents say that games can make it hard to fall asleep, so we always stop by eight o'clock.\n\nI think these rules are fair. Thanks to them, I still have time for sport, reading and friends outside. Computer games are fun, but not the only thing in my life.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A/B/C) на каждый вопрос.\n\n1. Who made the rules about computer games?\nA) the writer's teacher\nB) the writer's parents\nC) the writer's brother\n\n2. How long can the children play on school days?\nA) half an hour\nB) one hour\nC) two hours\n\n3. What must the children do before playing at the weekend?\nA) go outside\nB) finish homework and help with housework\nC) eat dinner\n\n4. What time do the children stop playing in the evening?\nA) six o'clock\nB) seven o'clock\nC) eight o'clock\n\n5. How does the writer feel about the rules?\nA) angry\nB) that they are fair\nC) confused",
+          "points": 5,
+          "answer": "1-B, 2-B, 3-B, 4-C, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nMy brother Alex (1. plays / play / playing) computer games every day. Yesterday he (2. played / plays / play) a new game for two hours. At the moment he (3. is playing / plays / played) a strategy game with his friend online. Our parents (4. think / thinks / thought) that games are fine if we don't forget our homework. Next month Alex (5. will / is / was) take part in a small gaming competition at school.",
+          "points": 5,
+          "answer": "1-plays, 2-played, 3-is playing, 4-think, 5-will"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi!\nGuess what — I got a new computer game for my birthday, and it's brilliant! I play it every day after school. Do you like computer games? What is your favourite game to play? How much time do you usually spend playing games?\nWrite back soon!\nLove,\nJake",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый: нравятся ли компьютерные игры, любимая игра, сколько времени проводит за играми); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Jake!\nThanks for your letter and happy birthday! Yes, I like computer games very much. My favourite game is a football game that I play with my friends online. I usually play for about an hour after I finish my homework.\nLove,\nDima"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "tasks": [
+        {
+          "n": 1,
+          "audio": "Hi, I'm Sam, and I want to tell you about my winter. I love winter, not summer, because I enjoy cold weather and snow. Every weekend, I go ice skating on a frozen lake near my house, not skiing in the mountains. My favourite winter activity is building snowmen with my little sister. We usually do it in our garden, not in the park. In the evening, my family likes to drink hot chocolate and watch films together. My birthday is in winter too, in January, so we always celebrate it with a small party at home.",
+          "text": "Прослушайте текст и определите, какие из приведённых утверждений A–E соответствуют содержанию текста (True), какие не соответствуют (False).\n\nA. Sam prefers summer to winter.\nB. Sam goes skiing in the mountains every weekend.\nC. Sam's favourite activity is building snowmen with his sister.\nD. Sam builds snowmen in the park.\nE. Sam's birthday is in winter.",
+          "points": 5,
+          "answer": "A-False, B-False, C-True, D-False, E-True"
+        },
+        {
+          "n": 2,
+          "reading": "Winter is one of the coldest but most beautiful seasons. In many parts of Russia, snow covers the ground from November until March, and rivers and lakes freeze completely.\n\nDuring the holidays, many families go outside to enjoy the snow. Popular activities include skiing, sledging down hills, and skating on frozen ponds. Building a snowman is a favourite tradition too.\n\nNew Year is the biggest winter holiday. Families decorate a fir tree with lights and toys, and children wait for presents from Ded Moroz. Streets and houses are decorated with lights too.\n\nWinter can be difficult because days are short and dark, and it gets very cold. That's why warm clothes, hot tea, and cosy evenings at home are so important.",
+          "text": "Прочитайте текст. Выберите правильный вариант ответа (A/B/C) на каждый вопрос.\n\n1. How long does snow usually cover the ground in Russia?\nA) from November to March\nB) from December to February\nC) all year round\n\n2. Which activity is NOT mentioned as a popular winter activity?\nA) sledging\nB) skating\nC) swimming in the sea\n\n3. What is the biggest winter holiday?\nA) Christmas\nB) New Year\nC) Women's Day\n\n4. Who brings presents to children at New Year?\nA) Ded Moroz\nB) a magician\nC) their teacher\n\n5. Why is winter sometimes difficult, according to the text?\nA) there are too many holidays\nB) the days are short and it's cold\nC) there is too much snow to walk",
+          "points": 5,
+          "answer": "1-A, 2-C, 3-B, 4-A, 5-B"
+        },
+        {
+          "n": 3,
+          "text": "Прочитайте текст. Для каждого пропуска (1–5) выберите правильную форму слова из вариантов, данных в скобках.\n\nWinter (1. is / was / will be) my favourite season. It usually (2. starts / started / start) snowing in November. Last year it (3. snowed / snows / snowing) a lot, and we built a huge snowman in the yard. At the moment it (4. is snowing / snowed / snows) outside, so my brother and I want to go sledging. Next weekend we (5. will / is / was) visit our grandparents in the village and go skiing there.",
+          "points": 5,
+          "answer": "1-is, 2-starts, 3-snowed, 4-is snowing, 5-will"
+        },
+        {
+          "n": 4,
+          "text": "Прочитайте письмо от друга по переписке и напишите ответ (50-60 слов), ответив на все три вопроса. Соблюдайте формат личного письма.\n\nHi!\nIt's snowing a lot here, and I love it! Yesterday I went sledging with my friends, and we had a snowball fight too. What is winter like in your city? What do you usually do in winter? Do you like cold weather or do you prefer summer?\nWrite back soon!\nLove,\nNadia",
+          "points": 10,
+          "answer": "Критерии полного ответа (макс. 10 баллов): 1) раскрыты все 3 вопроса — 6 баллов (по 2 за каждый: какая зима в городе, чем обычно занимается зимой, холод или лето предпочитает); 2) правильный формат письма (приветствие/прощание) — 1 балл; 3) объём 50-60 слов — 1 балл; 4) грамматика и лексика без грубых ошибок — 2 балла.",
+          "solution": "Hi Nadia!\nThanks for your letter. Winter here is snowy and cold too. I usually go ice skating with my dad and build a snowman with my little sister. I like cold weather because I love winter sports, but I also enjoy warm summer days.\nLove,\nMasha"
+        }
+      ]
+    }
+  ]
+}

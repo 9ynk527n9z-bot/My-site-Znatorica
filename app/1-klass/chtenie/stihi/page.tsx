@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '1 класс', url: '/1-klass' },
-  { name: 'Литературное чтение', url: '/1-klass/chtenie' },
+  { name: 'Литературное чтение', url: '/1-klass' },
   { name: 'Стихи', url: '/1-klass/chtenie/stihi' },
 ]);
 
@@ -34,7 +34,7 @@ export default function StihiPage() {
           <span className="text-gray-400">/</span>
           <Link href="/1-klass" className="text-orange hover:underline">1 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/1-klass/chtenie" className="text-orange hover:underline">Литературное чтение</Link>
+          <Link href="/1-klass" className="text-orange hover:underline">Литературное чтение</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Стихи</span>
         </div>
@@ -45,8 +45,12 @@ export default function StihiPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/stihi-1klass"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

@@ -10,7 +10,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '3 класс', url: '/3-klass' },
-  { name: 'Английский язык', url: '/3-klass/angliyskiy' },
+  { name: 'Английский язык', url: '/3-klass' },
   { name: 'Словарь', url: '/3-klass/angliyskiy/vocabulary' },
 ]);
 
@@ -33,7 +33,7 @@ export default function VocabularyPage() {
           <span className="text-gray-400">/</span>
           <Link href="/3-klass" className="text-orange hover:underline">3 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/3-klass/angliyskiy" className="text-orange hover:underline">Английский язык</Link>
+          <Link href="/3-klass" className="text-orange hover:underline">Английский язык</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Словарь</span>
         </div>
@@ -44,8 +44,7 @@ export default function VocabularyPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/english-words" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -84,7 +83,7 @@ export default function VocabularyPage() {
         <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
           <h3 className="text-2xl font-bold mb-4">Готов тренироваться?</h3>
           <p className="text-gray-300 mb-6">Нажми на кнопку ниже и начни интерактивный тренажер</p>
-          <button className="btn-primary text-lg px-8 py-4">🎮 Открыть тренажер</button>
+          <Link href="/trenazher/english-words" className="btn-primary text-lg px-8 py-4 inline-block">🎮 Открыть тренажер</Link>
         </div>
       </div>
     </div>

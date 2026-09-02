@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { generateAnagrams, type Anagram } from '@/lib/anagrams';
 import { CROSSWORD_THEMES, type CrosswordTheme } from '@/lib/crossword';
@@ -29,7 +30,10 @@ export default function AnagramGeneratorPage() {
   return (
     <div className="bg-black min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Генератор анаграмм</h1>
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
+        <h1 className="text-3xl font-bold mt-2 mb-2">Генератор анаграмм</h1>
         <p className="text-gray-400 mb-8">
           Буквы в слове перемешаны — разгадай, какое слово спряталось, с помощью подсказки.
         </p>
@@ -75,9 +79,9 @@ export default function AnagramGeneratorPage() {
         </div>
 
         {anagrams.length > 0 && (
-          <div ref={printRef} className="card print-page">
+          <div ref={printRef} className="card print-page bg-white">
             <div className="flex items-center justify-between mb-6 no-print">
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl font-bold text-black">
                 {CROSSWORD_THEMES[theme].icon} {CROSSWORD_THEMES[theme].title} — {anagrams.length} слов
               </h2>
               <button
@@ -90,10 +94,10 @@ export default function AnagramGeneratorPage() {
 
             <div className="space-y-4">
               {anagrams.map((a, i) => (
-                <div key={i} className="p-4 bg-black/40 rounded-lg flex items-center justify-between gap-4 flex-wrap">
+                <div key={i} className="p-4 bg-gray-50 border border-gray-300 rounded-lg flex items-center justify-between gap-4 flex-wrap">
                   <div>
-                    <p className="text-2xl font-mono font-bold tracking-widest mb-1">{a.scrambled}</p>
-                    <p className="text-gray-400 text-sm">{a.clue}</p>
+                    <p className="text-2xl font-mono font-bold tracking-widest mb-1 text-black">{a.scrambled}</p>
+                    <p className="text-gray-600 text-sm">{a.clue}</p>
                   </div>
                   {showAnswers && (
                     <p className="text-orange font-bold text-xl">{a.word}</p>
@@ -102,7 +106,7 @@ export default function AnagramGeneratorPage() {
               ))}
             </div>
 
-            <div className="mt-8">
+            <div className="no-print mt-8">
               <ExportToolbar targetRef={printRef} filename="anagrammy" />
             </div>
           </div>

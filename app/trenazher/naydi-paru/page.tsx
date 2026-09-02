@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
+import GameShareBadge from '@/components/GameShareBadge';
 import { SHAPES, COLORS, shuffle, type ShapeKind } from '@/lib/shapes';
+import ShareButtons from '@/components/ShareButtons';
 
 const PAIRS_COUNT = 6; // 6 пар = 12 карточек
 
@@ -145,10 +147,18 @@ export default function NaydiParuTrainerPage() {
           <div className="card bg-white text-center py-10">
             <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Все пары найдены!</p>
             <p className="text-gray-600 mb-1">Понадобилось ходов:</p>
-            <p className="text-6xl font-black text-orange mb-8">{moves}</p>
+            <p className="text-6xl font-black text-orange mb-6">{moves}</p>
+            <GameShareBadge gameTitle="Найди пару" statLine={`Справился(-лась) за ${moves} ходов`} />
             <button onClick={begin} className="btn-primary px-6 py-3">
               🔁 Играть ещё
             </button>
+            <div className="mt-6 pt-5 border-t border-gray-200">
+              <ShareButtons
+                text={`Бесплатный тренажёр «Найди пару» для детей на Знаторике. Наш результат: за ${moves} ходов.`}
+                url="https://znatorica.ru/trenazher/naydi-paru"
+                trackKey="game:naydi-paru"
+              />
+            </div>
           </div>
         )}
       </div>

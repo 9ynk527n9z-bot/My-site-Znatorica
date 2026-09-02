@@ -16,6 +16,9 @@ export default function Grade4Page() {
         { slug: 'desyatichnie-drobi', title: 'Десятичные дроби', description: 'Работаем с запятой' },
         { slug: 'geometriya', title: 'Геометрия', description: 'Фигуры и объёмы' },
         { slug: 'poryadok-deystviy', title: 'Порядок действий', description: 'В каком порядке решать пример' },
+        { slug: 'skorost-vremya-rasstoyanie', title: 'Задачи на движение', description: 'Скорость, время, расстояние' },
+        { slug: 'edinitsy-izmereniya', title: 'Единицы измерения', description: 'Переводим км, кг, часы и минуты' },
+        { slug: 'umnozhenie-delenie-stolbikom', title: 'Умножение и деление столбиком', description: 'Письменные вычисления по разрядам' },
       ],
     },
     russkiy: {
@@ -63,7 +66,7 @@ export default function Grade4Page() {
 
       <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-4 overflow-x-auto">
+          <div className="flex gap-4 overflow-x-auto pr-6">
             {Object.entries(subjects).map(([key, subject]) => (
               <button
                 key={key}
@@ -101,6 +104,19 @@ export default function Grade4Page() {
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+
+      <div className="bg-[#2A1B4D] border-t border-[#2D2350] py-12 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">🎓 Готов ли ребёнок к 5 классу?</h2>
+          <p className="text-gray-400 mb-6">
+            Тест на закрепление базы 4 класса и чек-лист для родителя про самостоятельность перед переходом на
+            кабинетную систему, с разбором по направлениям.
+          </p>
+          <Link href="/gotovnost-k-5-klassu" className="btn-primary inline-block px-8 py-3">
+            Пройти тест →
+          </Link>
         </div>
       </div>
 

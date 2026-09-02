@@ -43,8 +43,12 @@ export default function OrientaciyaPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/orientaciya-v-prostranstve"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -89,10 +93,10 @@ export default function OrientaciyaPage() {
               </details>
             </div>
             <div className="p-4 bg-black/40 rounded">
-              <p className="mb-2">Ты стоишь лицом к доске. Где твоя правая рука — со стороны окна или со стороны двери, если окно у тебя справа?</p>
+              <p className="mb-2">Ты стоишь лицом к другу, и вы держитесь за руки — ты правой рукой, а он левой. Почему вы держитесь именно этими руками, а не одноимёнными?</p>
               <details className="mt-2">
                 <summary className="cursor-pointer text-orange font-bold select-none">Показать ответ</summary>
-                <p className="text-gray-300 mt-2">Со стороны окна — раз окно уже справа, значит, правая рука смотрит именно туда.</p>
+                <p className="text-gray-300 mt-2">Когда двое стоят лицом друг к другу, у них стороны «зеркальные»: то, что справа у одного, оказывается слева у другого. Поэтому правая рука одного встречается именно с левой рукой другого.</p>
               </details>
             </div>
           </div>

@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: '2 класс', url: '/2-klass' },
-  { name: 'Математика', url: '/2-klass/matematika' },
+  { name: 'Математика', url: '/2-klass' },
   { name: 'Деление', url: '/2-klass/matematika/delenie' },
 ]);
 
@@ -34,7 +34,7 @@ export default function DeleniePage() {
           <span className="text-gray-400">/</span>
           <Link href="/2-klass" className="text-orange hover:underline">2 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/2-klass/matematika" className="text-orange hover:underline">Математика</Link>
+          <Link href="/2-klass" className="text-orange hover:underline">Математика</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Деление</span>
         </div>
@@ -45,8 +45,7 @@ export default function DeleniePage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/delenie" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

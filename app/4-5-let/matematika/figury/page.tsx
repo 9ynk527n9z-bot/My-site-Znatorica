@@ -3,7 +3,7 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
 import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
-  title: 'Геометрические фигуры — теория и тренажёр для детей 4–5 лет',
+  title: 'Геометрические фигуры для детей 4–5 лет',
   description: 'Учим круг, квадрат, треугольник и прямоугольник в интерактивном тренажёре. Для детей 4-5 лет.',
   alternates: { canonical: '/4-5-let/matematika/figury' },
 };
@@ -11,7 +11,7 @@ export const metadata = {
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
   { name: 'Дошкольники 4–5', url: '/4-5-let' },
-  { name: 'Математика', url: '/4-5-let/matematika' },
+  { name: 'Математика', url: '/4-5-let' },
   { name: 'Фигуры', url: '/4-5-let/matematika/figury' },
 ]);
 
@@ -43,7 +43,7 @@ export default function FiguryPage() {
             Дошкольники 4–5
           </Link>
           <span className="text-gray-400">/</span>
-          <Link href="/4-5-let/matematika" className="text-orange hover:underline">
+          <Link href="/4-5-let" className="text-orange hover:underline">
             Математика
           </Link>
           <span className="text-gray-400">/</span>
@@ -58,12 +58,9 @@ export default function FiguryPage() {
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">
             📝 Теория
           </button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">
+          <Link href="/trenazher/shapes-colors" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">
             🎮 Тренажер
-          </button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">
-            📋 Шпаргалка
-          </button>
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -84,7 +81,7 @@ export default function FiguryPage() {
                 <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">⬜</div>
                   <h4 className="font-bold text-orange text-center">Квадрат</h4>
-                  <p className="text-gray-400 text-sm text-center">У него 4 стороны</p>
+                  <p className="text-gray-400 text-sm text-center">4 стороны, все одинаковой длины</p>
                 </div>
                 <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">▲</div>
@@ -94,7 +91,7 @@ export default function FiguryPage() {
                 <div className="bg-[#1E1035] p-6 rounded border border-[#2D2350]">
                   <div className="text-6xl text-center mb-4">▭</div>
                   <h4 className="font-bold text-orange text-center">Прямоугольник</h4>
-                  <p className="text-gray-400 text-sm text-center">Как окно</p>
+                  <p className="text-gray-400 text-sm text-center">4 стороны, как окно — две длиннее, две короче</p>
                 </div>
               </div>
             </div>

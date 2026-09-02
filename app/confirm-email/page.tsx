@@ -140,6 +140,14 @@ export default function ConfirmEmailPage() {
             Отправить заново
           </Link>
         </p>
+
+        <p className="text-center text-gray-500 text-xs mt-4">
+          Кстати, со{' '}
+          <Link href="/podpiska" className="hover:underline">
+            Знаторика PRO
+          </Link>{' '}
+          тренажёры и генераторы — без дневного лимита.
+        </p>
       </div>
     </div>
   );

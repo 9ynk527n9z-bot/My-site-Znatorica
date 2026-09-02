@@ -4,14 +4,28 @@ import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
+import GameShareBadge from '@/components/GameShareBadge';
 import { SHAPES, COLORS, SIZES, randItem, type ShapeKind } from '@/lib/shapes';
+import ShareButtons from '@/components/ShareButtons';
+import { praiseFor, shareTextFor } from '@/lib/praise';
 
-type Mode = 'shape' | 'color' | 'size';
+type Mode = 'shape' | 'color' | 'size' | 'category';
 
 const MODES: { value: Mode; label: string; hint: string }[] = [
   { value: 'shape', label: '🔺 По форме', hint: 'Три фигуры одной формы, одна — другой' },
   { value: 'color', label: '🎨 По цвету', hint: 'Три фигуры одного цвета, одна — другого' },
   { value: 'size', label: '📏 По размеру', hint: 'Три фигуры одного размера, одна — другого' },
+  { value: 'category', label: '🍎 По смыслу', hint: 'Три предмета одной группы, один — из другой' },
+];
+
+// Группы для режима "по смыслу" — как в теории (фрукты/транспорт/небо), а не форма/цвет.
+const CATEGORY_GROUPS: string[][] = [
+  ['🍎', '🍌', '🍊', '🍇', '🍓'],
+  ['🚗', '🚌', '🚲', '🚂', '🚁'],
+  ['☀️', '⭐', '🌙', '☁️', '🌈'],
+  ['🐶', '🐱', '🐰', '🐻', '🦁'],
+  ['🍕', '🍔', '🍟', '🌭', '🍩'],
+  ['👕', '👗', '🧦', '👖', '🧢'],
 ];
 
 interface Item {
@@ -19,10 +33,45 @@ interface Item {
   shape: ShapeKind;
   color: string;
   size: number;
+  emoji?: string;
   odd: boolean;
 }
 
+function pickCategoryItems(): { emoji: string; odd: boolean }[] {
+  const groupIndex = Math.floor(Math.random() * CATEGORY_GROUPS.length);
+  let oddGroupIndex = Math.floor(Math.random() * CATEGORY_GROUPS.length);
+  while (oddGroupIndex === groupIndex) {
+    oddGroupIndex = Math.floor(Math.random() * CATEGORY_GROUPS.length);
+  }
+  const group = [...CATEGORY_GROUPS[groupIndex]];
+  const same: string[] = [];
+  while (same.length < 3) {
+    const idx = Math.floor(Math.random() * group.length);
+    same.push(group.splice(idx, 1)[0]);
+  }
+  const oddGroup = CATEGORY_GROUPS[oddGroupIndex];
+  const odd = oddGroup[Math.floor(Math.random() * oddGroup.length)];
+  return [...same.map((emoji) => ({ emoji, odd: false })), { emoji: odd, odd: true }];
+}
+
 function makeRound(mode: Mode): Item[] {
+  if (mode === 'category') {
+    const picked = pickCategoryItems();
+    const items: Item[] = picked.map((p, i) => ({
+      id: i,
+      shape: 'circle' as ShapeKind,
+      color: '',
+      size: 1,
+      emoji: p.emoji,
+      odd: p.odd,
+    }));
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    return items;
+  }
+
   const baseShape = randItem(SHAPES);
   const baseColor = randItem(COLORS);
   const baseSize = randItem(SIZES);
@@ -151,7 +200,7 @@ export default function NaydiLishneeTrainerPage() {
               />
             </div>
 
-            <p className="text-xl font-bold text-[#3a1c6e] mb-6">Какая фигура лишняя?</p>
+            <p className="text-xl font-bold text-[#3a1c6e] mb-6">{mode === 'category' ? 'Что здесь лишнее?' : 'Какая фигура лишняя?'}</p>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
               {items.map((item) => {
@@ -170,7 +219,11 @@ export default function NaydiLishneeTrainerPage() {
                         : 'border-gray-200 bg-gray-50 hover:border-orange hover:scale-105'
                     }`}
                   >
-                    <ShapeSvg kind={item.shape} color={item.color} size={item.size} />
+                    {item.emoji ? (
+                      <span className="text-6xl">{item.emoji}</span>
+                    ) : (
+                      <ShapeSvg kind={item.shape} color={item.color} size={item.size} />
+                    )}
                   </button>
                 );
               })}
@@ -190,14 +243,26 @@ export default function NaydiLishneeTrainerPage() {
         {/* Итог */}
         {finished && (
           <div className="card bg-white text-center py-10">
-            <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Молодец!</p>
+            <p className="text-3xl font-black text-[#3a1c6e] mb-2">{praiseFor(score.correct, score.total).title}</p>
             <p className="text-gray-600 mb-1">Правильных ответов:</p>
             <p className="text-6xl font-black text-orange mb-6">{score.correct}</p>
-            <p className="text-gray-500 mb-8">из {score.total}</p>
+            <p className="text-gray-500 mb-6">из {score.total}</p>
+            {praiseFor(score.correct, score.total).master && (
+
+              <GameShareBadge gameTitle="Найди лишнее" statLine={`${score.correct} из ${score.total} правильных`} />
+
+            )}
             <div className="flex justify-center gap-3 flex-wrap">
               <button onClick={() => begin(mode)} className="btn-primary px-6 py-3">
                 🔁 Играть ещё
               </button>
+            </div>
+            <div className="mt-6 pt-5 border-t border-gray-200">
+              <ShareButtons
+                text={shareTextFor('Найди лишнее', score.correct, score.total)}
+                url="https://znatorica.ru/trenazher/naydi-lishnee"
+                trackKey="game:naydi-lishnee"
+              />
             </div>
           </div>
         )}

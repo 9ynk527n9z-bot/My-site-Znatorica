@@ -13,6 +13,8 @@ import * as B45 from './banks-4-5';
 import * as B67 from './banks-6-7';
 import * as B1 from './banks-1-klass';
 import * as B2 from './banks-2-klass';
+import * as B3 from './banks-3-klass';
+import * as B4 from './banks-4-klass';
 
 function fromBank(bank: QuizQuestion[]): QuestionSource {
   return () => bank;
@@ -61,13 +63,21 @@ const REGISTRY: Record<string, QuestionSource> = {
   '1-klass/logika/zagadki': fromBank(B1.ZAGADKI_1),
   '1-klass/matematika/slozhenie-5-10': () => genAddition(5, 10),
   '1-klass/matematika/vychitanie-5-10': () => genSubtraction(5, 10),
+  '1-klass/matematika/slozhenie-do-20': fromBank(B1.SLOZHENIE_DO_20_1),
   '1-klass/matematika/sostav-chisla': fromBank(B1.SOSTAV_CHISLA_1),
   '1-klass/matematika/zadachi': fromBank(B1.ZADACHI_1),
+  '1-klass/angliyskiy/zhivotnye': fromBank(B1.ZHIVOTNYE_ANGLIYSKIY_1),
+  '1-klass/angliyskiy/food': fromBank(B1.FOOD_ANGLIYSKIY_1),
+  '1-klass/angliyskiy/clothes': fromBank(B1.CLOTHES_ANGLIYSKIY_1),
+  '1-klass/angliyskiy/family': fromBank(B1.FAMILY_ANGLIYSKIY_1),
+  '1-klass/angliyskiy/weather': fromBank(B1.WEATHER_ANGLIYSKIY_1),
+  '1-klass/angliyskiy/school': fromBank(B1.SCHOOL_ANGLIYSKIY_1),
   '1-klass/okruzhayushchiy/pravila-bezopasnosti': fromBank(B1.PRAVILA_BEZOPASNOSTI_1),
   '1-klass/okruzhayushchiy/zhivaya-i-nezhivaya-priroda': fromBank(B1.ZHIVAYA_NEZHIVAYA_PRIRODA_1),
   '1-klass/russkiy/glasnye-i-soglasnye': fromBank(B1.GLASNYE_SOGLASNYE_1),
   '1-klass/russkiy/punktuaciya': fromBank(B1.PUNKTUACIYA_1),
   '1-klass/russkiy/udarenie': fromBank(B1.UDARENIE_1),
+  '1-klass/russkiy/zhi-shi-cha-scha': fromBank(B1.ZHI_SHI_CHA_SCHA_1),
 
   // 2 класс
   '2-klass/logika/logicheskie-zadachi': fromBank(B2.LOGICHESKIE_ZADACHI_2),
@@ -75,6 +85,7 @@ const REGISTRY: Record<string, QuestionSource> = {
   '2-klass/logika/zagadki': fromBank(B2.ZAGADKI_2),
   '2-klass/matematika/delenie': () => genDivision(),
   '2-klass/matematika/dvuznachnye': () => genTwoDigit(),
+  '2-klass/matematika/perimetr': fromBank(B2.PERIMETR_2),
   '2-klass/matematika/sravnenie-chisel': () => genComparison(99),
   '2-klass/matematika/umnozhenie': () => genMultiplication(),
   '2-klass/okruzhayushchiy/chelovek': fromBank(B2.CHELOVEK_2),
@@ -83,6 +94,37 @@ const REGISTRY: Record<string, QuestionSource> = {
   '2-klass/russkiy/chasti-rechi': fromBank(B2.CHASTI_RECHI_2),
   '2-klass/russkiy/koren-slova': fromBank(B2.KOREN_SLOVA_2),
   '2-klass/russkiy/predlozhenie': fromBank(B2.PREDLOZHENIE_2),
+  '2-klass/russkiy/sinonimy-antonimy': fromBank(B2.SINONIMY_ANTONIMY_2),
+
+  // 3 класс
+  '3-klass/matematika/delenie-s-ostatkom': fromBank(B3.DELENIE_OSTATOK_3),
+  '3-klass/matematika/doli': fromBank(B3.DOLI_3),
+  '3-klass/matematika/ploshchad-perimetr': fromBank(B3.PLOSHCHAD_PERIMETR_3),
+  '3-klass/matematika/slozhnie-primery': fromBank(B3.SLOZHNIE_PRIMERY_3),
+  '3-klass/matematika/trekhznachnye': fromBank(B3.TREKHZNACHNYE_3),
+  '3-klass/matematika/uravneniya': fromBank(B3.URAVNENIYA_3),
+  '3-klass/matematika/vnetablichnoe-umnozhenie': fromBank(B3.VNETABLICHNOE_3),
+  '3-klass/russkiy/razbor-slova-po-sostavu': fromBank(B3.RAZBOR_SOSTAVA_3),
+  '3-klass/russkiy/slozhnie-predlozheniya': fromBank(B3.SLOZHNYE_PREDLOZHENIYA_3),
+  '3-klass/russkiy/spryazhenie': fromBank(B3.SPRYAZHENIE_3),
+  '3-klass/logika/kombinatorika': fromBank(B3.KOMBINATORIKA_3),
+  '3-klass/logika/zadachi-na-vzveshivanie': fromBank(B3.VZVESHIVANIE_3),
+
+  // 4 класс
+  '4-klass/matematika/desyatichnie-drobi': fromBank(B4.DESYATICHNIE_DROBI_4),
+  '4-klass/matematika/geometriya': fromBank(B4.GEOMETRIYA_4),
+  '4-klass/matematika/poryadok-deystviy': fromBank(B4.PORYADOK_DEYSTVIY_4),
+  '4-klass/matematika/velikie-chisla': fromBank(B4.VELIKIE_CHISLA_4),
+  '4-klass/matematika/skorost-vremya-rasstoyanie': fromBank(B4.SKOROST_VREMYA_4),
+  '4-klass/matematika/edinitsy-izmereniya': fromBank(B4.EDINITSY_IZMERENIYA_4),
+  '4-klass/matematika/umnozhenie-delenie-stolbikom': fromBank(B4.STOLBIKOM_4),
+  '4-klass/russkiy/sintaksis': fromBank(B4.SINTAKSIS_4),
+  '4-klass/russkiy/sklonenie-suschestvitelnykh': fromBank(B4.SKLONENIE_4),
+  '4-klass/russkiy/stili-rechi': fromBank(B4.STILI_RECHI_4),
+  '4-klass/logika/logicheskie-tablitsy': fromBank(B4.LOGICHESKIE_TABLICY_4),
+  '4-klass/logika/zadachi-na-perelivanie': fromBank(B4.PERELIVANIE_4),
+  '4-klass/literatura/analiz-teksta': fromBank(B4.ANALIZ_TEKSTA_4),
+  '4-klass/literatura/klassika': fromBank(B4.KLASSIKA_4),
 };
 
 export function getQuizSource(topic: string): QuestionSource | null {

@@ -414,6 +414,7 @@
   /* ── PRINT STYLES ── */
   @media print {
     body { background: white !important; color: black !important; }
+    .no-print { display: none !important; }
     .header, .main > *:not(#worksheet) { display: none !important; }
     #worksheet { display: block !important; }
     .ws-header, .answer-toggle-btn, .back-btn, .print-btn { display: none !important; }
@@ -633,8 +634,9 @@
       ans = a * b;
       expr = `${a} × ${b} =`;
     } else if (op === '/') {
-      b = rand(2, Math.min(max, 12));
-      ans = rand(1, Math.min(max, 12));
+      const divBound = max <= 20 ? 12 : max <= 100 ? 20 : 30;
+      b = rand(2, divBound);
+      ans = rand(1, divBound);
       a = b * ans;
       expr = `${a} ÷ ${b} =`;
     }
@@ -683,14 +685,14 @@
     lastExamples.forEach((ex, i) => {
       exHtml += `
         <div class="example-item">
-          <span class="ex-num">${i+1}.</span>
+          <span class="ex-num no-print">${i+1}.</span>
           <span class="ex-expr">${ex.expr}</span>
           <span class="ex-answer ${showAns ? 'show' : ''}" data-ans="${ex.ans}">${ex.ans}</span>
         </div>`;
     });
 
     document.getElementById('sheetContent').innerHTML = `
-      <div class="sheet-top">
+      <div class="sheet-top no-print">
         <div class="sheet-info">
           <div class="sheet-subject">Математика · ${modeLabel}</div>
           <div class="sheet-meta">Числа до ${currentMax} · ${count} примеров · ${today}</div>
@@ -737,30 +739,23 @@
     document.getElementById('printModal').classList.remove('open');
   }
 
-  // Защита материалов: временная подпись на экспортируемом листе — убирается сразу
-  // после захвата/скачивания. Для подписчиков (проверка через /api/user/me по токену
-  // из localStorage — тот же токен, что использует остальной сайт) — только мелкое
-  // доменное имя без «юридической» формулировки, для остальных — полная подпись.
-  let znIsSubscriber = false;
-  (function checkSubscriber() {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-      fetch('/api/user/me', { headers: { Authorization: 'Bearer ' + token } })
-        .then((r) => (r.ok ? r.json() : null))
-        .then((d) => { znIsSubscriber = !!(d && d.subscription && d.subscription.isActive); })
-        .catch(() => {});
-    } catch (e) {}
-  })();
-
-  function addWatermark(el) {
-    const wm = document.createElement('div');
-    wm.textContent = znIsSubscriber ? 'znatorica.ru' : '© Знаторика · znatorica.ru — материал защищён авторским правом';
-    wm.style.cssText = znIsSubscriber
-      ? 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:9px;color:#ccc;text-align:center;font-family:Arial,sans-serif;'
-      : 'margin-top:16px;padding-top:8px;border-top:1px solid #ddd;font-size:10px;color:#999;text-align:center;font-family:Arial,sans-serif;';
-    el.appendChild(wm);
-    return wm;
+  // .sheet и текст внутри него (.example-item, .ex-expr и т.д.) окрашены под тёмную
+  // тему сайта (var(--card)/var(--text), почти белый текст). @media print уже
+  // перекрашивает всё в чёрное-на-белом при реальной печати, но html2canvas
+  // (PDF/PNG) печатный CSS не видит — снимает то, что реально на экране. Перед
+  // снимком временно форсируем чёрный текст на белом фоне через отдельный <style>,
+  // после снимка убираем — на самом экране пользователь по-прежнему видит тёмную тему.
+  function forceLightModeForCapture(el) {
+    const prevBg = el.style.background;
+    el.style.background = '#fff';
+    const style = document.createElement('style');
+    style.id = 'zn-capture-light-mode';
+    style.textContent = '#sheetContent, #sheetContent * { color: #000 !important; }';
+    document.head.appendChild(style);
+    return () => {
+      el.style.background = prevBg;
+      style.remove();
+    };
   }
 
   // Дневной лимит бесплатных генераций (5/день суммарно по всем генераторам,
@@ -816,8 +811,6 @@
   function doPrint() {
     closePrint();
     const el = document.getElementById('sheetContent');
-    const wm = addWatermark(el);
-    window.addEventListener('afterprint', () => wm.remove(), { once: true });
     setTimeout(() => window.print(), 100);
   }
 
@@ -825,10 +818,10 @@
     const btn = document.getElementById('pdfBtn');
     btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
     const el = document.getElementById('sheetContent');
-    const wm = addWatermark(el);
+    const restore = forceLightModeForCapture(el);
     try {
       const { jsPDF } = window.jspdf;
-      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false, ignoreElements: (node) => node.classList.contains('no-print') });
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
       const pW = 210, m = 10, aW = pW - m * 2, aH = 297 - m * 2;
       const r = canvas.width / canvas.height;
@@ -837,7 +830,7 @@
       pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pW - dW) / 2, m, dW, dH);
       pdf.save('примеры.pdf');
     } catch (e) { alert('Ошибка при создании PDF. Попробуйте ещё раз.'); }
-    wm.remove();
+    restore();
     btn.disabled = false; btn.textContent = label;
   }
 
@@ -845,9 +838,9 @@
     const btn = document.getElementById('pngBtn');
     btn.disabled = true; const label = btn.textContent; btn.textContent = '...';
     const el = document.getElementById('sheetContent');
-    const wm = addWatermark(el);
+    const restore = forceLightModeForCapture(el);
     try {
-      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false });
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#fff', logging: false, ignoreElements: (node) => node.classList.contains('no-print') });
       canvas.toBlob((blob) => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -855,17 +848,16 @@
         URL.revokeObjectURL(url);
       }, 'image/png');
     } catch (e) { alert('Ошибка при создании PNG. Попробуйте ещё раз.'); }
-    wm.remove();
+    restore();
     btn.disabled = false; btn.textContent = label;
   }
 
   function downloadWord() {
-    const el = document.getElementById('sheetContent');
-    const wm = addWatermark(el);
+    const el = document.getElementById('sheetContent').cloneNode(true);
+    el.querySelectorAll('.no-print').forEach(node => node.remove());
     const html = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
     <head><meta charset="utf-8"><title>Примеры</title></head>
     <body>${el.innerHTML}</body></html>`;
-    wm.remove();
     const blob = new Blob(['﻿', html], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

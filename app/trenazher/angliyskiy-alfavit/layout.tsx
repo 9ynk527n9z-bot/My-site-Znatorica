@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Английский алфавит — тренажёр с картинками и озвучкой',
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function EnglishAlphabetLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageJsonLd metadata={metadata} section="trenazher" />
+      {children}
+    </>
+  );
 }

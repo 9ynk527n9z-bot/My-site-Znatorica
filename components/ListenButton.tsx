@@ -2,29 +2,36 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-// Голоса, которые обычно звучат приятнее и естественнее стандартного системного.
-// Порядок — приоритет: сначала пробуем найти лучший, при отсутствии откатываемся дальше.
-const PREFERRED_VOICE_NAMES = [
-  'Google UK English Female',
-  'Kate',
-  'Serena',
-  'Google UK English Male',
-  'Daniel',
-  'Hazel',
+// Только женские британские голоса, которые обычно звучат приятнее и
+// естественнее стандартного системного — порядок и есть приоритет.
+const PREFERRED_FEMALE_VOICE_NAMES = [
   'Microsoft Libby Online (Natural) - English (United Kingdom)',
   'Microsoft Sonia Online (Natural) - English (United Kingdom)',
+  'Google UK English Female',
+  'Serena',
+  'Martha',
+  'Kate',
+  'Microsoft Hazel',
 ];
+
+// Известные мужские имена голосов — на случай, если в системе нет ни одного
+// из PREFERRED_FEMALE_VOICE_NAMES и приходится выбирать из общего пула en-GB,
+// такие голоса туда всё равно не должны попасть.
+const KNOWN_MALE_VOICE_NAMES = ['Male', 'Daniel', 'Arthur', 'Fred', 'George', 'Ryan', 'Oliver'];
 
 function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   const gb = voices.filter((v) => v.lang === 'en-GB' || v.lang === 'en_GB');
   const pool = gb.length > 0 ? gb : voices.filter((v) => v.lang.startsWith('en'));
 
-  for (const name of PREFERRED_VOICE_NAMES) {
+  for (const name of PREFERRED_FEMALE_VOICE_NAMES) {
     const match = pool.find((v) => v.name.includes(name));
     if (match) return match;
   }
 
-  return pool[0] ?? null;
+  const femalePool = pool.filter(
+    (v) => !KNOWN_MALE_VOICE_NAMES.some((male) => v.name.includes(male))
+  );
+  return femalePool[0] ?? pool[0] ?? null;
 }
 
 interface ListenButtonProps {
@@ -60,16 +67,22 @@ export default function ListenButton({ text, label = '🔊 Прослушать'
 
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-GB';
-    utterance.rate = 0.9;
-    if (voiceRef.current) utterance.voice = voiceRef.current;
+    // Известный баг Chrome/Chromium: speak() сразу после cancel() иногда
+    // озвучивает предыдущий текст, а не новый (гонка внутри самого браузера,
+    // не в нашем коде) — так и получилось "Juice" на экране, а слышно "Cheese".
+    // Небольшая пауза перед новым speak() — стандартный обход этого бага.
+    window.setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-GB';
+      utterance.rate = 0.9;
+      if (voiceRef.current) utterance.voice = voiceRef.current;
 
-    utterance.onstart = () => setPlaying(true);
-    utterance.onend = () => setPlaying(false);
-    utterance.onerror = () => setPlaying(false);
+      utterance.onstart = () => setPlaying(true);
+      utterance.onend = () => setPlaying(false);
+      utterance.onerror = () => setPlaying(false);
 
-    window.speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(utterance);
+    }, 50);
   };
 
   if (!supported) {
@@ -84,7 +97,7 @@ export default function ListenButton({ text, label = '🔊 Прослушать'
     <button
       onClick={speak}
       disabled={playing}
-      className="no-print inline-flex items-center gap-2 bg-violet/20 text-violet hover:bg-violet/30 font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-60"
+      className="no-print inline-flex items-center gap-2 bg-orange/20 text-orange hover:bg-orange/30 font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-60"
     >
       {playing ? '▶️ Звучит...' : label}
     </button>

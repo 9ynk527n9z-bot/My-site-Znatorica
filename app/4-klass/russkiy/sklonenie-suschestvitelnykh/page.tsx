@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
+import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Склонение существительных — русский язык для 4 класса',
-  description: 'Учимся определять падеж существительного по вопросу и понимать, зачем меняется окончание слова.',
+  description: 'Учимся определять падеж существительного по вопросу и различать три склонения по роду и окончанию.',
   alternates: { canonical: '/4-klass/russkiy/sklonenie-suschestvitelnykh' },
 };
 
@@ -51,8 +52,12 @@ export default function SklonenieSuschPage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link
+            href="/trenazher/sklonenie-4klass"
+            className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors"
+          >
+            🎮 Тренажер
+          </Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
@@ -92,6 +97,41 @@ export default function SklonenieSuschPage() {
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-6">Три склонения</h2>
+
+          <div className="space-y-6 text-lg">
+            <p className="text-gray-300">
+              Склонение — это группа существительных, которые изменяются по падежам одинаково. Определить
+              склонение можно по роду слова и по его окончанию в именительном падеже (то есть в начальной форме).
+            </p>
+
+            <div className="grid gap-3">
+              <div className="p-4 bg-black/40 rounded">
+                <p className="font-bold text-orange mb-1">1-е склонение</p>
+                <p className="text-gray-300 text-base">
+                  Существительные женского и мужского рода с окончанием <b>-а</b> или <b>-я</b>: школ<b>а</b>,
+                  земл<b>я</b>, дедушк<b>а</b> (хоть и про мальчика — мужской род на -а тоже 1-е склонение).
+                </p>
+              </div>
+              <div className="p-4 bg-black/40 rounded">
+                <p className="font-bold text-orange mb-1">2-е склонение</p>
+                <p className="text-gray-300 text-base">
+                  Существительные мужского рода с нулевым окончанием (стол, дом, конь, трамвай) и среднего
+                  рода с окончанием <b>-о</b> или <b>-е</b>: окн<b>о</b>, пол<b>е</b>.
+                </p>
+              </div>
+              <div className="p-4 bg-black/40 rounded">
+                <p className="font-bold text-orange mb-1">3-е склонение</p>
+                <p className="text-gray-300 text-base">
+                  Существительные женского рода с нулевым окончанием и мягким знаком на конце: мышь, ночь,
+                  дочь, тетрадь.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-bold mb-6">Попробуй сам</h2>
           <div className="space-y-4 text-lg">
             <div className="p-4 bg-black/40 rounded">
@@ -108,16 +148,29 @@ export default function SklonenieSuschPage() {
                 <p className="text-gray-300 mt-2">Творительный падеж — рисую (чем?) карандашом.</p>
               </details>
             </div>
+            <div className="p-4 bg-black/40 rounded">
+              <p className="mb-2">Определи склонение слова «дверь».</p>
+              <details className="mt-2">
+                <summary className="cursor-pointer text-orange font-bold select-none">Показать ответ</summary>
+                <p className="text-gray-300 mt-2">3-е склонение — женский род, нулевое окончание, мягкий знак на конце.</p>
+              </details>
+            </div>
           </div>
         </div>
 
         <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange rounded-lg p-8 text-center">
           <h3 className="text-2xl font-bold mb-4">Готов тренироваться?</h3>
           <p className="text-gray-300 mb-6">
-            Если сомневаешься между родительным и винительным падежом — попробуй заменить существительное на
-            слово «стена»: у неё винительный и именительный падежи звучат по-разному, и легче различить вопрос.
+            Если сомневаешься между именительным и винительным падежом — попробуй заменить существительное на
+            слово «стена»: у неё именительный («стена») и винительный («стену») падежи звучат по-разному, и легче различить вопрос.
           </p>
-          <button className="btn-primary text-lg px-8 py-4">🎮 Открыть тренажер</button>
+          <Link href="/trenazher/sklonenie-4klass" className="btn-primary text-lg px-8 py-4 inline-block">
+            🎮 Открыть тренажер
+          </Link>
+        </div>
+
+        <div className="mt-8">
+          <TopicQuiz topic="4-klass/russkiy/sklonenie-suschestvitelnykh" />
         </div>
       </div>
     </div>

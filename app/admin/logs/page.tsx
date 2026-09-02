@@ -20,6 +20,8 @@ const ACTION_LABELS: Record<string, string> = {
   'content.delete': '🗑️ удалён контент',
   'user.export': '📤 экспорт данных пользователя',
   'user.delete': '🗑️ удалён пользователь',
+  'feedback.approve': '✅ отзыв одобрен',
+  'feedback.reject': '⛔ отзыв отклонён',
 };
 
 export default function AdminLogsPage() {

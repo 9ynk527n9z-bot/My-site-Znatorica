@@ -28,6 +28,11 @@ export async function GET(request: NextRequest) {
       where: { userId: user.id },
     });
 
+    const tournamentDiplomas = await db.tournamentResult.findMany({
+      where: { userId: user.id, paid: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
     return NextResponse.json({
       user: {
         id: user.id,
@@ -43,6 +48,7 @@ export async function GET(request: NextRequest) {
             status: subscription.status,
             endDate: subscription.endDate,
             autoRenew: subscription.autoRenew,
+            willAutoCharge: !!subscription.paymentMethodId && subscription.autoRenew,
             isActive: subscription.status === 'active' && subscription.endDate > new Date(),
           }
         : null,
@@ -53,6 +59,14 @@ export async function GET(request: NextRequest) {
         createdAt: p.createdAt,
       })),
       generatorUsesCount,
+      tournamentDiplomas: tournamentDiplomas.map((d) => ({
+        id: d.id,
+        trackTitle: d.trackTitle,
+        childName: d.childName,
+        score: d.score,
+        total: d.total,
+        createdAt: d.createdAt,
+      })),
     });
   } catch (error) {
     console.error('User profile error:', error);

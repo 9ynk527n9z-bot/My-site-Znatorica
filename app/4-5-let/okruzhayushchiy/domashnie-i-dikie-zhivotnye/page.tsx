@@ -3,7 +3,7 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
 import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
-  title: 'Домашние и дикие животные — окружающий мир для детей 4–5 лет',
+  title: 'Домашние и дикие животные — 4–5 лет',
   description: 'Учимся различать домашних животных, которые живут рядом с человеком, и диких, которые живут в лесу.',
   alternates: { canonical: '/4-5-let/okruzhayushchiy/domashnie-i-dikie-zhivotnye' },
 };
@@ -43,8 +43,7 @@ export default function DomashnieDikieZhivotnyePage() {
 
         <div className="flex gap-4 mb-8 border-b border-[#2D2350] overflow-x-auto">
           <button className="px-6 py-3 border-b-2 border-orange font-bold text-white">📝 Теория</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</button>
-          <button className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">📋 Шпаргалка</button>
+          <Link href="/trenazher/domashnie-dikie" className="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">🎮 Тренажер</Link>
         </div>
 
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 mb-8">

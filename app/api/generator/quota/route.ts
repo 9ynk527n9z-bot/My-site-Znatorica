@@ -6,13 +6,12 @@ import { FREE_GENERATOR_LIMIT } from '@/lib/constants';
 const SESSION_COOKIE = 'znatorika_sid';
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Проверка дневного лимита бесплатных генераций и тренажёров (маркетинговое
-// обещание «N раз бесплатно в день, без лимита по подписке» раньше нигде
-// технически не проверялось для тренажёров — они были безлимитны для всех).
-// Лимит общий на пользователя/сессию по ВСЕМ генераторам и тренажёрам вместе
-// (не по N на каждый отдельный). Считаем GeneratorUse с type, начинающимся на
-// "generator:" или "trainer:", за последние 24 часа — та же личность
-// (userId/sessionId), что и в /api/track.
+// Проверка дневного лимита бесплатных генераций (только генераторы —
+// печатные материалы с осязаемым результатом на вынос; тренажёры доступны
+// бесплатно всем зарегистрированным, см. TrainerGate). Лимит общий на
+// пользователя/сессию по ВСЕМ генераторам вместе (не по N на каждый отдельный).
+// Считаем GeneratorUse с type, начинающимся на "generator:", за последние 24
+// часа — та же личность (userId/sessionId), что и в /api/track.
 export async function GET(request: NextRequest) {
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
@@ -36,7 +35,7 @@ export async function GET(request: NextRequest) {
           where: {
             ...identity,
             createdAt: { gte: since },
-            OR: [{ type: { startsWith: 'generator:' } }, { type: { startsWith: 'trainer:' } }],
+            type: { startsWith: 'generator:' },
           },
         })
       : 0;

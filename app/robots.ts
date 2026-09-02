@@ -28,7 +28,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/admin/', '/account', '/account/', '/api/', '/confirm-email'],
+        disallow: ['/admin', '/admin/', '/account', '/account/', '/api/', '/confirm-email', '/search', '/downloads/'],
       },
       ...AI_CRAWLERS.map((userAgent) => ({ userAgent, disallow: '/' })),
     ],

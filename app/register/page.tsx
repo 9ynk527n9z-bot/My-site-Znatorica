@@ -1,11 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { reachGoal } from '@/components/YandexMetrika';
 
 export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterForm />
+    </Suspense>
+  );
+}
+
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get('next');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
@@ -56,10 +67,15 @@ export default function RegisterPage() {
       // Сохранить токен
       localStorage.setItem('token', data.token);
       setSuccess(true);
+      reachGoal('registration');
 
-      // Перенаправить на страницу подтверждения email
+      // Если пришли с конкретной страницы (например, за именным дипломом турнира) —
+      // вернуть туда, а не на подтверждение почты (токен уже рабочий сразу после
+      // регистрации, подтверждение можно сделать позже). Разрешаем только
+      // относительные пути на своём сайте — иначе это открытый редирект.
+      const safeNext = next && next.startsWith('/') && !next.startsWith('//') ? next : null;
       setTimeout(() => {
-        router.push('/confirm-email');
+        router.push(safeNext || '/confirm-email');
       }, 2000);
     } catch (err) {
       setError('Ошибка подключения к серверу');
@@ -87,97 +103,84 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center py-12 px-6">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <Link href="/" className="font-black text-3xl text-white hover:text-orange transition-colors">
+      <div className="max-w-sm w-full">
+        <div className="text-center mb-5">
+          <Link href="/" className="font-black text-2xl text-white hover:text-orange transition-colors">
             🐿️ Знаторика
           </Link>
-          <h1 className="text-2xl font-bold mt-4">Регистрация</h1>
-          <p className="text-gray-400 text-sm mt-2">Создайте новый аккаунт</p>
         </div>
 
-        <form onSubmit={handleRegister} className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+        <form onSubmit={handleRegister} className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-5">
           {error && (
-            <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-4 mb-6">
+            <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-4">
               <p className="text-red-400 text-sm">{error}</p>
             </div>
           )}
 
           {/* Email */}
-          <div className="mb-6">
-            <label className="block text-sm font-bold mb-2">Email</label>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="you@mail.ru"
             />
           </div>
 
           {/* Password */}
-          <div className="mb-6">
-            <label className="block text-sm font-bold mb-2">Пароль</label>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-1">Пароль</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-[#1E1035] border border-[#2D2350] text-white focus:border-orange transition-colors"
               placeholder="Минимум 6 символов"
             />
           </div>
 
           {/* ✅ ФЗ-152: Явное согласие */}
-          <div className="mb-8">
-            <label className="flex items-start gap-3 cursor-pointer">
+          <div className="mb-5">
+            <label className="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={agreeToTerms}
                 onChange={(e) => setAgreeToTerms(e.target.checked)}
-                className="w-5 h-5 mt-1 cursor-pointer"
+                className="w-4 h-4 mt-1 cursor-pointer"
               />
               <span className="text-sm text-gray-300">
-                Мне есть 18 лет, я регистрируюсь как родитель или законный представитель ребёнка и
-                соглашаюсь с обработкой персональных данных согласно{' '}
-                <Link href="/privacy" className="text-orange hover:underline">
-                  Политике конфиденциальности
-                </Link>
-                , <Link href="/terms" className="text-orange hover:underline">Условиям использования</Link> и{' '}
-                <Link href="/oferta" className="text-orange hover:underline">Публичной оферте</Link>
+                Я родитель/законный представитель, мне есть 18 лет. Соглашаюсь с{' '}
+                <Link href="/privacy" target="_blank" className="text-orange underline font-semibold">обработкой данных</Link>
+                {', '}
+                <Link href="/terms" target="_blank" className="text-orange underline font-semibold">условиями</Link> и{' '}
+                <Link href="/oferta" target="_blank" className="text-orange underline font-semibold">офертой</Link>
               </span>
             </label>
-
-            {!agreeToTerms && (
-              <p className="text-red-400 text-xs mt-2">
-                ⚠️ Согласие обязательно для регистрации
-              </p>
-            )}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
             disabled={loading || !agreeToTerms}
-            className="w-full bg-orange text-white font-bold py-3 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
+            className="w-full bg-orange text-white font-bold py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
             {loading ? 'Регистрация...' : 'Зарегистрироваться'}
           </button>
 
           {/* Link to Login */}
-          <p className="text-center text-gray-400 text-sm mt-6">
+          <p className="text-center text-gray-400 text-sm mt-4">
             Уже есть аккаунт?{' '}
-            <Link href="/login" className="text-orange hover:underline">
+            <Link href={next ? `/login?next=${encodeURIComponent(next)}` : '/login'} className="text-orange hover:underline">
               Войти
             </Link>
           </p>
         </form>
 
-        {/* Legal Notice */}
-        <div className="mt-8 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <p className="text-blue-400 text-xs">
-            🔒 <span className="font-bold">Защита данных:</span> Ваши данные защищены согласно ФЗ-152 и ГОСТ Р 56860. После регистрации вам будет отправлено письмо для подтверждения email адреса.
-          </p>
-        </div>
+        <p className="mt-4 text-gray-300 text-sm text-center">
+          🔒 После регистрации придёт письмо для подтверждения почты
+        </p>
       </div>
     </div>
   );

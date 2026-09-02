@@ -3,6 +3,19 @@ export const SITE_NAME = 'Знаторика';
 export const SITE_DESCRIPTION =
   'Развивающая платформа для детей 4–11 лет: интерактивные тренажёры, генераторы заданий, шпаргалки и материалы для учителей.';
 
+// Короткие названия предметов — только для тега <title>. В заголовке страницы,
+// хлебных крошках и текстах остаётся полное название. Нужно потому, что к
+// каждому title сайт дописывает « — Знаторика», и с длинными предметами строка
+// переваливала за 60 знаков и обрезалась в выдаче поисковика.
+const SHORT_SUBJECT: Record<string, string> = {
+  'Литературное чтение': 'Литература',
+  'Английский язык': 'Английский',
+};
+
+export function shortSubject(title: string): string {
+  return SHORT_SUBJECT[title] ?? title;
+}
+
 interface BreadcrumbItem {
   name: string;
   url: string;
@@ -28,7 +41,16 @@ export function organizationJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/icon`,
-    sameAs: ['https://youtube.com', 'https://t.me'],
+    // sameAs должен содержать реальные профили организации. Раньше здесь были
+    // голые домены youtube.com и t.me — Google сверяет их с настоящими
+    // аккаунтами, и заглушки только снижают доверие к разметке.
+    sameAs: ['https://t.me/znatorica_bot'],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Москва',
+      addressCountry: 'RU',
+    },
+    areaServed: 'RU',
   };
 }
 

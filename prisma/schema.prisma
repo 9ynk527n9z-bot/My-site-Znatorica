@@ -23,12 +23,29 @@ model User {
 
   subscriptions Subscription[]
   payments      Payment[]
+  purchases     Purchase[]
+  tournamentResults TournamentResult[]
   generatorUses GeneratorUse[]
   consents      UserConsent[]
   verificationCodes EmailVerificationCode[]
   passwordResetCodes PasswordResetCode[]
+  decorations   UserDecoration[]
 
   @@map("users")
+}
+
+// Купленные украшения для «Домика Знатика» (геймификация) — за звёзды.
+// itemId ссылается на каталог в lib/decorations.ts (не отдельная таблица —
+// каталог редактируется в коде, а не через админку, менять его дёшево).
+model UserDecoration {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemId      String
+  purchasedAt DateTime @default(now())
+
+  @@unique([userId, itemId])
+  @@map("user_decorations")
 }
 
 model Subscription {
@@ -42,6 +59,8 @@ model Subscription {
   endDate       DateTime
   autoRenew     Boolean   @default(true)
   paymentId     String?
+  paymentMethodId String? // сохранённый способ оплаты ЮKassa (payment_method.id) для автосписания при продлении
+  renewalReminderSentAt DateTime? // когда отправили письмо-напоминание о скором окончании подписки
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -63,6 +82,44 @@ model Payment {
   updatedAt     DateTime  @updatedAt
 
   @@map("payments")
+}
+
+// Разовая покупка PDF-сборника (не подписка) — каталог продуктов задан статично
+// в lib/products.ts, тут только факт покупки для проверки доступа к скачиванию.
+model Purchase {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productSlug   String
+  paymentId     String
+
+  createdAt     DateTime  @default(now())
+
+  @@unique([userId, productSlug])
+  @@map("purchases")
+}
+
+// Результат прохождения «Турнира Знатоков» — участие всегда бесплатно, платный
+// только именной PDF-диплом с результатом (см. metadata.type: 'tournament' в
+// payments/create). До оплаты запись существует, но paid: false — диплом не выдаётся.
+model TournamentResult {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  trackId     String    // напр. "1-klass/matematika"
+  trackTitle  String    // денормализовано для диплома, напр. "1 класс · Математика"
+  childName   String
+  score       Int
+  total       Int
+
+  paid        Boolean   @default(false)
+  paymentId   String?
+
+  createdAt   DateTime  @default(now())
+
+  @@map("tournament_results")
 }
 
 model Segment {
@@ -144,11 +201,27 @@ model PageView {
   url       String
   userId    String?
   sessionId String?   // анонимный идентификатор из cookie znatorika_sid (без привязки к личности)
+  utmSource String?   // метка источника (?utm_source=... или yclid/gclid → yandex-direct/google-ads)
+  referrer  String?   // document.referrer при заходе — хост сайта-источника (yandex.ru, google.com...)
+  isBot     Boolean   @default(false) // похоже на бота/сканер по User-Agent — исключается из живой статистики
+  isOwner   Boolean   @default(false) // визит залогиненного администратора сайта — исключается из статистики
 
   createdAt DateTime  @default(now())
 
   @@index([createdAt])
   @@map("page_views")
+}
+
+model SearchQuery {
+  id            String    @id @default(cuid())
+  query         String
+  resultsCount  Int
+  sessionId     String?   // анонимный идентификатор из cookie znatorika_sid, если есть
+
+  createdAt     DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("search_queries")
 }
 
 model EmailVerificationCode {
@@ -236,6 +309,25 @@ model AdminLog {
 
   @@index([createdAt])
   @@map("admin_logs")
+}
+
+// Отзывы посетителей сайта — публикуются ТОЛЬКО после модерации админом
+// (status по умолчанию "pending"). Анонимно: name/email необязательны.
+model Feedback {
+  id          String    @id @default(cuid())
+  name        String?
+  email       String?
+  message     String
+  rating      Int?
+
+  status      String    @default("pending") // 'pending' | 'approved' | 'rejected'
+  moderatedAt DateTime?
+  moderatedBy String?   // email админа, принявшего решение
+
+  createdAt   DateTime  @default(now())
+
+  @@index([status, createdAt])
+  @@map("feedback")
 }
 
 model UserConsent {

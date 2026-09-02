@@ -15,7 +15,10 @@ export default function Grade3Page() {
         { slug: 'trekhznachnye', title: 'Трёхзначные числа', description: 'Числа от 100 до 1000' },
         { slug: 'slozhnie-primery', title: 'Сложные примеры', description: 'Примеры в столбик' },
         { slug: 'doli', title: 'Доли и дроби', description: 'Понимаем дроби' },
+        { slug: 'ploshchad-perimetr', title: 'Площадь и периметр', description: 'Формулы для прямоугольника и квадрата' },
+        { slug: 'uravneniya', title: 'Уравнения', description: 'Находим неизвестное число' },
         { slug: 'delenie-s-ostatkom', title: 'Деление с остатком', description: 'Когда числа не делятся нацело' },
+        { slug: 'vnetablichnoe-umnozhenie', title: 'Внетабличное умножение и деление', description: 'Умножаем двузначное число на однозначное и делим подбором' },
       ],
     },
     russkiy: {
@@ -63,7 +66,7 @@ export default function Grade3Page() {
 
       <div className="bg-[#1E1035] sticky top-0 z-10 border-b border-[#2D2350]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-4 overflow-x-auto">
+          <div className="flex gap-4 overflow-x-auto pr-6">
             {Object.entries(subjects).map(([key, subject]) => (
               <button
                 key={key}

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { pickShape, instructionLines, computePath, type DictationShape } from '@/lib/graphic-dictation';
 import { trackUsage } from '@/lib/track';
@@ -52,6 +53,9 @@ export default function GraficheskiyDiktantPage() {
   return (
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-3xl mx-auto">
+        <Link href="/generator" className="text-orange hover:underline text-sm">
+          ← Все генераторы
+        </Link>
         <h1 className="text-3xl font-bold mt-2 mb-2">✏️ Графический диктант</h1>
         <p className="text-white/75 mb-8">
           Ребёнок ставит карандаш в отмеченную точку и ведёт линию по инструкциям — если всё сделано
@@ -92,9 +96,9 @@ export default function GraficheskiyDiktantPage() {
               <ExportToolbar targetRef={printRef} filename="graficheskiy-diktant" />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-2">Графический диктант</h2>
+            <h2 className="no-print text-xl font-bold text-black mb-2">Графический диктант</h2>
             {!showAnswers && (
-              <p className="text-gray-500 text-sm mb-6">
+              <p className="no-print text-gray-500 text-sm mb-6">
                 Поставь карандаш в оранжевую точку и веди линию по инструкциям.
               </p>
             )}
@@ -104,14 +108,14 @@ export default function GraficheskiyDiktantPage() {
                 <div key={i} className="flex flex-col sm:flex-row gap-6 items-start">
                   <DictationGrid shape={shape} showAnswer={showAnswers} />
                   <div>
-                    <p className="font-bold text-black mb-2">
+                    <p className="no-print font-bold text-black mb-2">
                       {i + 1}. {showAnswers ? shape.title : 'Начни с точки и следуй инструкциям:'}
                     </p>
-                    <ol className="text-gray-700 text-sm space-y-1">
+                    <div className="text-gray-700 text-sm space-y-1">
                       {instructionLines(shape.moves).map((line, j) => (
-                        <li key={j}>{line}</li>
+                        <p key={j}>{line}</p>
                       ))}
-                    </ol>
+                    </div>
                   </div>
                 </div>
               ))}
