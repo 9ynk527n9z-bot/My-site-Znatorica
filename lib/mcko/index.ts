@@ -5,8 +5,11 @@ import okruzhayushchiyMir4 from './okruzhayushchiy-mir-4.json';
 import literaturnoeChtenie4 from './literaturnoe-chtenie-4.json';
 import matematika5 from './matematika-5';
 import russkiy5 from './russkiy-5';
+import geografiya5 from './geografiya-5';
+import biologiya5 from './biologiya-5';
 
 export type MckoFigure =
+  | { kind: 'image'; src: string; alt: string }
   | { kind: 'bars'; labels: string[]; values: number[]; unit: string }
   | { kind: 'grid'; width: number; height: number; cutWidth: number; cutHeight: number }
   | { kind: 'ray'; step: number; point: number; ticks: number }
@@ -65,6 +68,8 @@ const DATASETS: Record<string, MckoSubjectData> = {
   '4-klass/literaturnoe-chtenie': literaturnoeChtenie4 as MckoSubjectData,
   '5-klass/matematika': matematika5,
   '5-klass/russkiy': russkiy5,
+  '5-klass/geografiya': geografiya5,
+  '5-klass/biologiya': biologiya5,
 };
 
 export const MCKO_KLASSES = [{ slug: '4-klass', title: '4 класс' }, { slug: '5-klass', title: '5 класс' }] as const;

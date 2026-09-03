@@ -3,6 +3,18 @@ import type { MckoFigure as Figure } from '@/lib/mcko';
 /** Рисунки заданий: векторные, без скрытых ответов и внешних картинок. */
 export default function MckoFigure({ figure, id }: { figure: Figure; id: string }) {
   const titleId = `mcko-figure-${id}`;
+  if (figure.kind === 'image') {
+    return <figure className="my-4 rounded-lg bg-white p-3 text-black break-inside-avoid">
+      {/* SVG сохраняет чёткость схем при увеличении и печати. */}
+      <div className="overflow-x-auto">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={figure.src} alt={figure.alt} className="block w-full min-w-[560px] sm:min-w-0 print:min-w-0 h-auto" loading="eager" />
+      </div>
+      <figcaption className="no-print mt-2 text-sm">
+        <a href={figure.src} target="_blank" rel="noopener noreferrer" className="text-blue-800 underline">Открыть рисунок крупно ↗</a>
+      </figcaption>
+    </figure>;
+  }
   if (figure.kind === 'bars') {
     const max = Math.max(...figure.values);
     const step = max <= 30 ? 2 : max <= 60 ? 5 : 10;
