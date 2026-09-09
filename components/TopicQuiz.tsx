@@ -129,12 +129,16 @@ export default function TopicQuiz({ topic }: { topic: string }) {
             else if (i === picked) cls = 'bg-red-600/70 border-2 border-solid border-red-500 text-white';
             else cls = 'bg-transparent border-2 border-solid border-[#2D2350] text-gray-500';
           }
+          // Длинные варианты ответа (целые фразы/предложения) при крупном шрифте
+          // вылезали за границы кнопки — уменьшаем шрифт по длине текста, чтобы
+          // ответ помещался в 1-2 строки и оставался читаемым.
+          const fontSizeCls = opt.length > 60 ? 'text-base' : opt.length > 28 ? 'text-lg' : opt.length > 16 ? 'text-xl' : 'text-2xl';
           return (
             <button
               key={i}
               onClick={() => choose(i)}
               disabled={answered}
-              className={`px-4 py-4 rounded-lg font-bold text-2xl text-left transition-colors ${cls}`}
+              className={`px-4 py-4 rounded-lg font-bold ${fontSizeCls} text-left leading-snug break-words transition-colors ${cls}`}
             >
               {opt}
             </button>
