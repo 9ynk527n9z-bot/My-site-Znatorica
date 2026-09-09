@@ -6,6 +6,7 @@ import { Neucha } from 'next/font/google';
 import localFont from 'next/font/local';
 import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
+import PageAbout from '@/components/PageAbout';
 
 const neucha = Neucha({ weight: '400', subsets: ['cyrillic'], display: 'swap' });
 const russkopis = localFont({ src: '../../../public/fonts/russkopis/Russkopis-Normalny.otf', display: 'swap' });
@@ -280,6 +281,8 @@ export default function YarlychkiNaOdezhduPage() {
           </section>
         )}
       </div>
+
+      <PageAbout route="/generator/yarlychki-na-odezhdu" />
     </main>
   );
 }

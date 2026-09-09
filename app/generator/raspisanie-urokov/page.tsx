@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
+import PageAbout from '@/components/PageAbout';
 
 const DAYS_BASE = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'] as const;
 const DAY_SATURDAY = 'Суббота';
@@ -152,6 +153,8 @@ export default function RaspisanieUrokovPage() {
           </div>
         </div>
       </div>
+
+      <PageAbout route="/generator/raspisanie-urokov" />
     </div>
   );
 }

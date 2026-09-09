@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
+import PageAbout from '@/components/PageAbout';
 
 const WEEKDAYS = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 const MONTHS = [
@@ -264,6 +265,8 @@ export default function DnevnikPogodyPage() {
           </section>
         )}
       </div>
+
+      <PageAbout route="/generator/dnevnik-nablyudeniy-za-pogodoy" />
     </main>
   );
 }
