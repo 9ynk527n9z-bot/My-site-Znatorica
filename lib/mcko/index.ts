@@ -7,6 +7,9 @@ import matematika5 from './matematika-5';
 import russkiy5 from './russkiy-5';
 import geografiya5 from './geografiya-5';
 import biologiya5 from './biologiya-5';
+import angliyskiy5 from './angliyskiy-5';
+import literatura5 from './humanities5/literatura-5.json';
+import istoriya5 from './humanities5/istoriya-5.json';
 
 export type MckoFigure =
   | { kind: 'image'; src: string; alt: string }
@@ -31,8 +34,13 @@ export interface MckoTask {
   answer: string;
   solution?: string;
   reading?: string;
+  /** Проверенный источник текста для чтения. */
+  source?: { label: string; url: string };
   /** Текст для прослушивания (английский язык, аудирование) — озвучивается кнопкой */
   audio?: string;
+  /** Готовая запись; audio содержит расшифровку для самопроверки. */
+  audioFile?: string;
+  audioVoice?: string;
   points?: number;
   level?: 'Б' | 'П';
   parts?: MckoPart[];
@@ -70,6 +78,9 @@ const DATASETS: Record<string, MckoSubjectData> = {
   '5-klass/russkiy': russkiy5,
   '5-klass/geografiya': geografiya5,
   '5-klass/biologiya': biologiya5,
+  '5-klass/angliyskiy': angliyskiy5,
+  '5-klass/literatura': literatura5 as MckoSubjectData,
+  '5-klass/istoriya': istoriya5 as MckoSubjectData,
 };
 
 export const MCKO_KLASSES = [{ slug: '4-klass', title: '4 класс' }, { slug: '5-klass', title: '5 класс' }] as const;

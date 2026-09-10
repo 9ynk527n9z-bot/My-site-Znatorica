@@ -1,3 +1,4 @@
+import { pluralizeCount } from '@/lib/pluralize';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { breadcrumbJsonLd } from '@/lib/seo';
@@ -6,7 +7,7 @@ import { MCKO_KLASSES, getMckoData } from '@/lib/mcko';
 export const metadata: Metadata = {
   title: 'Подготовка к МЦКО, 4 и 5 классы — варианты с ответами',
   description:
-    'Авторские тренировочные варианты для подготовки к МЦКО: 4 класс и по 20 вариантов по русскому языку, математике, географии и биологии для 5 класса. Ответы, критерии и самопроверка.',
+    'Тренировочные варианты МЦКО для 4 и 5 класса по всем предметам — с ответами, критериями, аудио и самопроверкой.',
   alternates: { canonical: '/podgotovka-k-mcko' },
 };
 
@@ -23,11 +24,13 @@ const SUBJECTS = [
   { slug: 'literaturnoe-chtenie', title: 'Литературное чтение', icon: '📚' },
   { slug: 'geografiya', title: 'География', icon: '🗺️' },
   { slug: 'biologiya', title: 'Биология', icon: '🌱' },
+  { slug: 'literatura', title: 'Литература', icon: '📖' },
+  { slug: 'istoriya', title: 'История', icon: '🏛️' },
 ];
 
 export default function MckoHubPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -40,7 +43,7 @@ export default function MckoHubPage() {
           </Link>
           <h1 className="text-5xl font-bold mb-4">🏙️ Подготовка к МЦКО</h1>
           <p className="text-gray-400 text-lg max-w-3xl">
-            Авторские материалы для подготовки к диагностикам Московского центра качества
+            Тренировочные материалы для подготовки к диагностикам Московского центра качества
             образования. Выбери класс и предмет, открой отдельную страницу варианта и реши
             задания на бумаге или с самопроверкой на сайте. Это тренировочные, а не официальные работы МЦКО.
           </p>
@@ -53,7 +56,7 @@ export default function MckoHubPage() {
             <h2 className="text-3xl font-bold mb-2">{klass.title}</h2>
             <p className="text-gray-400 mb-6 max-w-3xl">
               {klass.slug === '5-klass'
-                ? 'Учебные варианты по моделям диагностики 2026 года. Русский язык: 5 крупных заданий, 24 балла. Математика: 11 заданий, 13 баллов. География: 17 заданий, 20 баллов. Биология: 19 заданий, 43 балла. По 20 авторских вариантов на предмет, с ответами, объяснениями и критериями.'
+                ? 'Учебные варианты по моделям диагностики 2026 года. Русский язык: 5 крупных заданий, 24 балла. Математика: 11 заданий, 13 баллов. География: 17 заданий, 20 баллов. Биология: 19 заданий, 43 балла. Английский язык: 4 крупных задания, 25 баллов, с британским женским аудио. Литература: 11 заданий, 17 баллов. История: 8 заданий, 16 баллов. По 20 тренировочных вариантов на предмет, с ответами, объяснениями и критериями.'
                 : 'Тренировочные материалы по пяти предметам. Выбери предмет и вариант, выполни задания, затем сравни свои ответы с пояснениями.'}
             </p>
 
@@ -72,7 +75,7 @@ export default function MckoHubPage() {
                       {subj.title}
                     </h3>
                     <p className="text-gray-400 mb-4">
-                      {data.variants.length} вариантов · {data.variants[0].tasks.length} заданий в каждом
+                      {data.variants.length} вариантов · {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} в каждом
                     </p>
                     <span className="text-orange font-bold">Открыть варианты →</span>
                   </Link>

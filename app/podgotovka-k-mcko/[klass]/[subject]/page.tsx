@@ -1,3 +1,4 @@
+import { pluralizeCount } from '@/lib/pluralize';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -17,7 +18,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!data) return {};
   return {
     title: `МЦКО${data.year ? ` ${data.year}` : ''}: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — ${data.variants.length} вариантов`,
-    description: `${data.variants.length} авторских вариантов МЦКО с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
+    description: `${data.variants.length} тренировочных вариантов МЦКО с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
     alternates: { canonical: `/podgotovka-k-mcko/${params.klass}/${params.subject}` },
   };
 }
@@ -35,7 +36,7 @@ export default function MckoSubjectPage({ params }: Props) {
   ]);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -57,7 +58,7 @@ export default function MckoSubjectPage({ params }: Props) {
         </h1>
         <p className="text-gray-400 mb-10 max-w-3xl">
           {data.variants.length} тренировочных вариантов{klassInfo ? ` (${klassInfo.title})` : ''}.
-          В каждом варианте {data.variants[0].tasks.length} заданий с ответами и пояснениями к сложным задачам.
+          В каждом варианте {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} с ответами и пояснениями к сложным задачам.
           {data.year && ` Формат ${data.year} года: ${data.durationMinutes} минут работы, ${data.breakMinutes} минут перерыва; максимум баллов: ${data.maxScore}.`}
         </p>
         {data.instructions && <p className="text-gray-300 mb-8 max-w-4xl leading-relaxed">{data.instructions}</p>}
@@ -73,7 +74,7 @@ export default function MckoSubjectPage({ params }: Props) {
               <div className="text-xl font-bold group-hover:text-orange transition-colors">
                 Вариант {v.id}
               </div>
-              <div className="text-gray-400 text-sm mt-1">{v.tasks.length} заданий</div>
+              <div className="text-gray-400 text-sm mt-1">{pluralizeCount(v.tasks.length, ['задание', 'задания', 'заданий'])}</div>
               {v.title && <div className="text-gray-300 text-sm mt-2">{v.title}</div>}
             </Link>
           ))}

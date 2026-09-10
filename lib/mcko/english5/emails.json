@@ -1,0 +1,462 @@
+[
+  {
+    "sender": "Emma",
+    "recipient": "Lucy",
+    "body": "You asked me about our garden club. We meet on (C) after school. I always take a (D) to write down the names of plants. My favourite vegetables are carrots. Last week, we planted some flowers near the gate. I like working with my classmates because we can help each other. Do you have a garden club at your school?",
+    "words": [
+      "Friday",
+      "notebook"
+    ],
+    "questions": [
+      [
+        "On which day does Emma's club meet?",
+        "Friday"
+      ],
+      [
+        "What does Emma take to write in?",
+        "notebook"
+      ],
+      [
+        "What are Emma's favourite vegetables?",
+        "carrots"
+      ]
+    ]
+  },
+  {
+    "sender": "Sophie",
+    "recipient": "Mia",
+    "body": "You asked me about my grandma's birthday. We had lunch at our (C), and Dad made vegetable soup. I made a chocolate (D) with Mum. Grandma brought some old photographs, and we looked at them after lunch. My little brother played the piano for her. It was a quiet family party, but everyone enjoyed it. How do you celebrate birthdays in your family?",
+    "words": [
+      "house",
+      "cake"
+    ],
+    "questions": [
+      [
+        "Where did Sophie have the birthday lunch?",
+        "house"
+      ],
+      [
+        "What sweet food did Sophie make?",
+        "cake"
+      ],
+      [
+        "Which instrument did Sophie's brother play?",
+        "piano"
+      ]
+    ]
+  },
+  {
+    "sender": "Grace",
+    "recipient": "Anna",
+    "body": "You asked me about my new club. I go (C) every Wednesday. Our coach is called Mrs Bell, and she helps us practise safely. I keep my towel in a green (D). After the lesson, I usually eat a banana. I feel tired, but I am always happy that I went. Next month, our group will try a new game in the water. Which sport would you like to learn?",
+    "words": [
+      "swimming",
+      "bag"
+    ],
+    "questions": [
+      [
+        "Which activity does Grace do on Wednesdays?",
+        "swimming"
+      ],
+      [
+        "Where does Grace keep her towel?",
+        "bag"
+      ],
+      [
+        "Which fruit does Grace eat after the lesson?",
+        "banana"
+      ]
+    ]
+  },
+  {
+    "sender": "Lily",
+    "recipient": "Kate",
+    "body": "You asked me about my favourite film. It is about a clever (C) that helps a lost child. I watched it with my dad on (D). We made sandwiches before the film and ate them in the sitting room. My favourite character is called Max. I liked the ending because everyone got home safely. I want to watch it again when my cousin visits. What kind of films do you enjoy?",
+    "words": [
+      "dog",
+      "Saturday"
+    ],
+    "questions": [
+      [
+        "Which animal helps a child in the film?",
+        "dog"
+      ],
+      [
+        "On which day did Lily watch the film?",
+        "Saturday"
+      ],
+      [
+        "What is the name of Lily's favourite character?",
+        "Max"
+      ]
+    ]
+  },
+  {
+    "sender": "Alice",
+    "recipient": "Ruby",
+    "body": "You asked me about our class play. I was a (C), and my friend was a customer. I wore a blue (D) that our teacher found in a box. The play took place in the hall. I was nervous at first, but I remembered all my words. After the show, our parents clapped and had tea together. I would like to be in another play next term. Do you enjoy acting?",
+    "words": [
+      "shopkeeper",
+      "hat"
+    ],
+    "questions": [
+      [
+        "Who did Alice play?",
+        "shopkeeper"
+      ],
+      [
+        "What blue thing did Alice wear?",
+        "hat"
+      ],
+      [
+        "Where did the play take place?",
+        "hall"
+      ]
+    ]
+  },
+  {
+    "sender": "Charlotte",
+    "recipient": "Ellie",
+    "body": "You asked me about Saturday. My family went for a bike ride beside the (C). We stopped near a bridge and ate (D) for lunch. My little sister found a beautiful feather on the grass, but she left it there. I took some photographs with my camera. We rode slowly so everyone could stay together. I would like to go again when the weather is dry. Where do you like cycling?",
+    "words": [
+      "river",
+      "sandwiches"
+    ],
+    "questions": [
+      [
+        "What did the family cycle beside?",
+        "river"
+      ],
+      [
+        "What did they eat for lunch?",
+        "sandwiches"
+      ],
+      [
+        "What did Charlotte's sister find?",
+        "feather"
+      ]
+    ]
+  },
+  {
+    "sender": "Hannah",
+    "recipient": "Olivia",
+    "body": "You asked me about my pet. I have a (C) called Snowy. He is grey and has a small white (D). I give him fresh water every morning. His favourite place to sit is beside the garden bench. He is quiet, but he runs quickly when he is excited. My dad built him a bigger house last month. I enjoy looking after him every day. Have you got a pet?",
+    "words": [
+      "rabbit",
+      "nose"
+    ],
+    "questions": [
+      [
+        "What kind of animal is Snowy?",
+        "rabbit"
+      ],
+      [
+        "Which part of Snowy's face is white?",
+        "nose"
+      ],
+      [
+        "What does Hannah give Snowy every morning?",
+        "water"
+      ]
+    ]
+  },
+  {
+    "sender": "Isabel",
+    "recipient": "Zoe",
+    "body": "You asked me about the book fair. I helped at a table in the (C). We had stories, information books and books of (D). My favourite book was about trains. A younger girl chose it, and I was pleased because she looked so excited. The music club played while people looked around. We finished at four and put the tables away together. Does your school ever have a book fair?",
+    "words": [
+      "hall",
+      "poems"
+    ],
+    "questions": [
+      [
+        "Where was Isabel's table?",
+        "hall"
+      ],
+      [
+        "At what time did Isabel finish? Write the number as a word.",
+        "four"
+      ],
+      [
+        "What was Isabel's favourite book about?",
+        "trains"
+      ]
+    ]
+  },
+  {
+    "sender": "Freya",
+    "recipient": "Ella",
+    "body": "You asked me about our picnic. We met in the (C) near my house. My brother brought cheese sandwiches, and I made a fruit (D). After lunch, we played a board game. My little cousin won, although it was his first time playing. We left before the rain started and walked home together. It was a simple afternoon, but we had lots of fun. What food would you bring to a picnic?",
+    "words": [
+      "park",
+      "salad"
+    ],
+    "questions": [
+      [
+        "Where did Freya have the picnic?",
+        "park"
+      ],
+      [
+        "What did Freya make with fruit?",
+        "salad"
+      ],
+      [
+        "Who won the board game?",
+        "cousin"
+      ]
+    ]
+  },
+  {
+    "sender": "Poppy",
+    "recipient": "Eva",
+    "body": "You asked me about my picture. I painted our town in (C), with snow on all the roofs. I used a small (D) for the windows and a big one for the sky. My picture is now in the library. I did not win a prize, but my teacher liked the colours. I enjoyed trying something new and want to paint another town scene. What do you usually draw or paint?",
+    "words": [
+      "winter",
+      "brush"
+    ],
+    "questions": [
+      [
+        "Which season did Poppy paint?",
+        "winter"
+      ],
+      [
+        "What small tool did Poppy use for the windows?",
+        "brush"
+      ],
+      [
+        "Where is Poppy's picture now?",
+        "library"
+      ]
+    ]
+  },
+  {
+    "sender": "Daisy",
+    "recipient": "Millie",
+    "body": "You asked me about our trip. We travelled to the museum by (C). In the morning, we visited a room about (D). After lunch, a guide showed us a model bridge. I liked seeing how the pieces fitted together. My friend bought a postcard, but I kept my money. We returned at four and told our parents about the day. I hope our next trip is just as interesting. Which museum would you like to visit?",
+    "words": [
+      "bus",
+      "space"
+    ],
+    "questions": [
+      [
+        "How did the class travel to the museum?",
+        "bus"
+      ],
+      [
+        "What was the museum room they visited in the morning about?",
+        "space"
+      ],
+      [
+        "What did Daisy's friend buy?",
+        "postcard"
+      ]
+    ]
+  },
+  {
+    "sender": "Amelie",
+    "recipient": "Rose",
+    "body": "You asked me about Dad's birthday breakfast. We made (C) with sliced bananas. Dad drank (D), and we all sat together in the kitchen. My brother washed the dishes afterwards. Dad said the best part was having time to talk to us. We gave him a card with a funny picture inside. I enjoyed preparing a surprise for him. What do you usually have for breakfast at the weekend?",
+    "words": [
+      "porridge",
+      "tea"
+    ],
+    "questions": [
+      [
+        "What food did Amelie serve with bananas?",
+        "porridge"
+      ],
+      [
+        "What did Dad drink?",
+        "tea"
+      ],
+      [
+        "Who washed the dishes?",
+        "brother"
+      ]
+    ]
+  },
+  {
+    "sender": "Florence",
+    "recipient": "Bella",
+    "body": "You asked me about the music group. I play the (C), but I also enjoy singing. We meet on (D) in the small music room. Our first concert is in December. We are learning two cheerful songs, and everyone has a part to practise. I was shy at the first meeting, but the other pupils were friendly. Now I look forward to every lesson. Would you like to learn an instrument?",
+    "words": [
+      "guitar",
+      "Mondays"
+    ],
+    "questions": [
+      [
+        "Which instrument does Florence play?",
+        "guitar"
+      ],
+      [
+        "On which days does the group meet?",
+        "Mondays"
+      ],
+      [
+        "In which month is the first concert?",
+        "December"
+      ]
+    ]
+  },
+  {
+    "sender": "Matilda",
+    "recipient": "Clara",
+    "body": "You asked me about our craft afternoon. Nina showed us how to make paper (C). We used blue and yellow (D), scissors and glue. Then we hung our models beside the window. My brother helped us count them, and there were seven altogether. Nina knows how to make flowers too, so we want another lesson soon. I like learning things from new friends. What would you like to make from paper?",
+    "words": [
+      "birds",
+      "paper"
+    ],
+    "questions": [
+      [
+        "What did the girls make?",
+        "birds"
+      ],
+      [
+        "Which material was blue and yellow?",
+        "paper"
+      ],
+      [
+        "How many models did they make?",
+        "seven"
+      ]
+    ]
+  },
+  {
+    "sender": "Beatrice",
+    "recipient": "Esme",
+    "body": "You asked me about sports day. I helped with a beanbag (C) for the younger pupils. I wore a yellow (D) so they could find me easily. A teacher chose the winners. Afterwards, the helpers had juice and fruit in the hall. I enjoyed explaining the rules and cheering for everyone. Some pupils asked to play again, which made me smile. What school event would you like to help with?",
+    "words": [
+      "game",
+      "shirt"
+    ],
+    "questions": [
+      [
+        "What beanbag activity did Beatrice help with?",
+        "game"
+      ],
+      [
+        "What yellow item did Beatrice wear?",
+        "shirt"
+      ],
+      [
+        "Who chose the winners?",
+        "teacher"
+      ]
+    ]
+  },
+  {
+    "sender": "Harriet",
+    "recipient": "Nora",
+    "body": "You asked me about our holiday. We stayed in a wooden house beside a (C). One day, we hired a (D) and watched birds from the water. I took lots of photographs. The next morning, we visited a market, where I bought a notebook. I wrote about our trip in it every evening. I liked the quiet mornings best, before the village became busy. Where would you like to spend your next holiday?",
+    "words": [
+      "lake",
+      "boat"
+    ],
+    "questions": [
+      [
+        "What was the house beside?",
+        "lake"
+      ],
+      [
+        "What did the family hire?",
+        "boat"
+      ],
+      [
+        "What did Harriet buy at the market?",
+        "notebook"
+      ]
+    ]
+  },
+  {
+    "sender": "Imogen",
+    "recipient": "Molly",
+    "body": "You asked me about our newspaper. I wrote a story about the school (C). Jack drew a (D) of the playground, and you wrote about the football match. The newspaper has six pages. We checked the words carefully before printing it. I gave a copy to my grandma, and she read it straight away. Now our class is collecting ideas for the next issue. What would you like to write about next time?",
+    "words": [
+      "cat",
+      "map"
+    ],
+    "questions": [
+      [
+        "Which school animal did Imogen write about?",
+        "cat"
+      ],
+      [
+        "What did Jack draw?",
+        "map"
+      ],
+      [
+        "How many pages are in the newspaper?",
+        "six"
+      ]
+    ]
+  },
+  {
+    "sender": "Eliza",
+    "recipient": "Ada",
+    "body": "You asked me about the farm. We watched the farmer feed the (C), and then we helped collect (D). I wore my old boots because the paths were muddy. My cousin came with us, and we ate lunch at a picnic table. The farmer answered all our questions patiently. I learnt that looking after animals takes work every day. I would like to visit again in spring. Have you ever visited a farm?",
+    "words": [
+      "goats",
+      "eggs"
+    ],
+    "questions": [
+      [
+        "Which animals did the farmer feed?",
+        "goats"
+      ],
+      [
+        "What did the visitors collect?",
+        "eggs"
+      ],
+      [
+        "What did Eliza wear on her feet?",
+        "boots"
+      ]
+    ]
+  },
+  {
+    "sender": "Phoebe",
+    "recipient": "Leah",
+    "body": "You asked me about the reading challenge. I need to read four (C) before the end of August. My first story was about a lost (D). Now I am reading about space. After each book, I tell the librarian something I liked. When I finish the challenge, I will receive a certificate and a bookmark. I enjoy choosing different kinds of stories and learning new things. What are you reading at the moment?",
+    "words": [
+      "books",
+      "puppy"
+    ],
+    "questions": [
+      [
+        "What must Phoebe read before the end of August?",
+        "books"
+      ],
+      [
+        "Which young animal was in the first story?",
+        "puppy"
+      ],
+      [
+        "What is Phoebe reading about now?",
+        "space"
+      ]
+    ]
+  },
+  {
+    "sender": "Evelyn",
+    "recipient": "Maisie",
+    "body": "You asked me about our photography walk. We met in the town (C) and photographed doors and windows. I used my phone because my (D) was at home. Afterwards, we chose our favourite pictures in the library. I liked a green door with two small windows above it. Our teacher said that simple things can make interesting photographs. There was no competition, so we just shared ideas. What would you like to photograph?",
+    "words": [
+      "square",
+      "camera"
+    ],
+    "questions": [
+      [
+        "Where in town did the club meet?",
+        "square"
+      ],
+      [
+        "What had Evelyn left at home?",
+        "camera"
+      ],
+      [
+        "What colour was Evelyn's favourite door?",
+        "green"
+      ]
+    ]
+  }
+]

@@ -10,9 +10,16 @@ export function group(n: number, text: string, parts: MckoPart[], extra: Partial
   return { n, text, points: parts.reduce((s, p) => s + p.points, 0), level: 'Б', parts,
     answer: parts.map(p => `${p.label}: ${p.answer}`).join('\n'), ...extra };
 }
+// Сдвиг берётся не напрямую из seed % длина (это давало цикличный период,
+// равный длине списка вариантов, и позицию правильного ответа можно было
+// угадать по номеру задания), а из заранее просчитанной несистемной
+// последовательности — так же, как исправляли похожий баг в английском МЦКО.
+const SHIFT_TABLE = [837,492,130,515,311,629,495,824,504,499,676,675,403,606,653,282,661,352,328,297,862,28,880,635,159,786,386,679,822,200];
+
 /** Детерминированная перестановка: первый элемент исходного списка — верный ответ. */
 export function choice(options: string[], seed: number) {
-  const shift = ((seed % options.length) + options.length) % options.length;
+  const idx = ((seed % SHIFT_TABLE.length) + SHIFT_TABLE.length) % SHIFT_TABLE.length;
+  const shift = SHIFT_TABLE[idx] % options.length;
   const ordered = options.map((text, index) => ({ text, correct: index === 0 }));
   const items = [...ordered.slice(shift), ...ordered.slice(0, shift)];
   return { text: items.map((p, i) => `${i + 1}) ${p.text}`).join('\n'), answer: String(items.findIndex(p => p.correct) + 1), correct: options[0] };

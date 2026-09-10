@@ -1,3 +1,4 @@
+import { pluralizeCount } from '@/lib/pluralize';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -8,6 +9,9 @@ import ListenButton from '@/components/ListenButton';
 import MarkVprComplete from '@/components/MarkVprComplete';
 import TrainerGate from '@/components/TrainerGate';
 import MckoFigure from '@/components/MckoFigure';
+import MckoRecordedAudio from '@/components/MckoRecordedAudio';
+import printStyles from './english-print.module.css';
+import humanitiesPrint from './humanities-print.module.css';
 
 interface Props {
   params: { klass: string; subject: string; variant: string };
@@ -30,7 +34,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!variant) return {};
   return {
     title: `МЦКО${data.year ? ` ${data.year}` : ''}: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — вариант ${id}`,
-    description: `Тренировочный вариант ${id} для подготовки к МЦКО по предмету «${data.subjectTitle}» для ${data.grade} класса: ${variant.tasks.length} заданий с ответами.`,
+    description: `Тренировочный вариант ${id} для подготовки к МЦКО по предмету «${data.subjectTitle}» для ${data.grade} класса: ${pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])} с ответами.`,
     alternates: { canonical: `/podgotovka-k-mcko/${params.klass}/${params.subject}/${params.variant}` },
   };
 }
@@ -42,6 +46,11 @@ export default function MckoVariantPage({ params }: Props) {
 
   const variant = getMckoVariant(params.klass, params.subject, id);
   if (!variant) notFound();
+  const humanities = data.grade === 5 && ['literatura', 'istoriya'].includes(data.subject);
+
+  const maxScore = variant.tasks.reduce((sum, t) => sum + (t.points || 1), 0);
+  const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://znatorica.ru'}/podgotovka-k-mcko/${params.klass}/${params.subject}/${params.variant}`;
+  const shareText = `Решили тренировочный вариант МЦКО по предмету «${data.subjectTitle}» (${data.grade} класс) — попробуйте тоже:`;
 
   const breadcrumbs = breadcrumbJsonLd([
     { name: 'Главная', url: '/' },
@@ -52,13 +61,13 @@ export default function MckoVariantPage({ params }: Props) {
 
   const learningResource = learningResourceJsonLd({
     name: `Подготовка к МЦКО — ${data.subjectTitle}, ${data.grade} класс, вариант ${id}`,
-    description: `Тренировочный вариант для подготовки к МЦКО с ответами (${variant.tasks.length} заданий)`,
+    description: `Тренировочный вариант для подготовки к МЦКО с ответами (${pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])})`,
     url: `/podgotovka-k-mcko/${params.klass}/${params.subject}/${params.variant}`,
     educationalLevel: `${data.grade} класс${data.grade <= 4 ? ' начальной школы' : ' основной школы'}`,
   });
 
   return (
-    <div className="bg-black min-h-screen print-page">
+    <div className={`bg-[#28134f] min-h-screen print-page ${data.grade === 5 && data.subject === 'angliyskiy' ? printStyles.english : ''} ${humanities ? humanitiesPrint.sheet : ''}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -82,7 +91,9 @@ export default function MckoVariantPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto py-12 px-6">
+      <div data-mcko-content className={`max-w-4xl mx-auto py-12 px-6 ${printStyles.content}`}>
+        {humanities && <p className="hidden print:block font-bold mb-4">{data.subjectTitle} · 5 класс · Тренировочный вариант {id}</p>}
+        <div data-mcko-intro className={printStyles.intro}>
         <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
           <h1 className="text-4xl font-bold">
             Подготовка к МЦКО · {data.subjectTitle} · {data.grade} класс · вариант {id}
@@ -90,7 +101,7 @@ export default function MckoVariantPage({ params }: Props) {
           <PrintButton />
         </div>
         <p className="text-gray-400 mb-10">
-          Вариант {id} · {variant.tasks.length} заданий
+          Вариант {id} · {pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])}
           {data.year && ` · формат ${data.year} года`}
           {data.maxScore && ` · максимум баллов: ${data.maxScore}`}
         </p>
@@ -99,10 +110,11 @@ export default function MckoVariantPage({ params }: Props) {
           <p className="font-bold text-white mb-2">{data.durationMinutes} минут работы + {data.breakMinutes} минут перерыва</p>
           <p className="leading-relaxed">{data.instructions}</p>
         </div>}
+        </div>
 
         <TrainerGate type={`vpr:mcko-${params.klass}:${params.subject}:${id}`}>
 
-        <ol className="space-y-6">
+        <ol data-mcko-tasks className={`space-y-6 ${printStyles.tasks}`}>
           {variant.tasks.map((task) => (
             <li
               key={task.n}
@@ -113,7 +125,8 @@ export default function MckoVariantPage({ params }: Props) {
                   {task.n}
                 </span>
                 <div className="flex-1 min-w-0 break-words">
-                  {task.audio && (
+                  {task.audio && task.audioFile && <MckoRecordedAudio src={task.audioFile} transcript={task.audio} voice={task.audioVoice} />}
+                  {task.audio && !task.audioFile && (
                     <div className="bg-black/40 border border-violet/40 rounded-lg p-4 mb-4">
                       <p className="text-gray-400 text-xs font-bold uppercase mb-3">Аудирование</p>
                       <ListenButton text={task.audio} />
@@ -171,7 +184,12 @@ export default function MckoVariantPage({ params }: Props) {
           ))}
         </ol>
 
-        <MarkVprComplete trackType={`mcko:${params.klass}:${params.subject}:${id}`} />
+        <MarkVprComplete
+          trackType={`mcko:${params.klass}:${params.subject}:${id}`}
+          maxScore={maxScore}
+          shareText={shareText}
+          shareUrl={shareUrl}
+        />
         </TrainerGate>
 
         <div className="no-print mt-12 flex items-center justify-between gap-4">

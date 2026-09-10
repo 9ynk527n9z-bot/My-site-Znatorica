@@ -1,0 +1,29 @@
+/* Scoped to English grade 5; the screen layout and other subjects are unchanged. */
+@media print {
+  .english .content {
+    max-width: none;
+    padding: 0;
+    font-size: 11pt;
+    line-height: 1.35;
+  }
+
+  .english .intro { display: none; }
+  .english .tasks { margin: 0; padding: 0; }
+  .english .tasks > li {
+    margin: 0 !important;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    break-before: page;
+  }
+  .english .tasks > li:first-child { break-before: auto; }
+  .english .tasks > li > div { gap: 8pt; }
+  .english .tasks p { font-size: 11pt; line-height: 1.35; }
+  .english .tasks section { margin-top: 9pt; padding-top: 7pt; }
+  .english .tasks h3 {
+    font-size: 12pt;
+    margin-bottom: 5pt;
+    break-after: avoid;
+  }
+  .english .tasks section > p { orphans: 3; widows: 3; }
+}

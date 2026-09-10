@@ -1,0 +1,18 @@
+@media print {
+  .sheet [data-mcko-content] { max-width: none; padding: 0; font-size: 11pt; line-height: 1.35; }
+  .sheet [data-mcko-intro] { display: none; }
+  .sheet [data-mcko-tasks] { margin: 0; padding: 0; }
+  .sheet [data-mcko-tasks] > li {
+    margin-top: 12pt !important;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    break-inside: avoid;
+  }
+  .sheet [data-mcko-tasks] > li > div { gap: 8pt; }
+  .sheet [data-mcko-tasks] p { font-size: 11pt; line-height: 1.35; orphans: 3; widows: 3; }
+  .sheet [data-mcko-tasks] section { margin-top: 9pt; padding-top: 7pt; }
+  .sheet [data-mcko-tasks] h3 { font-size: 12pt; break-after: avoid; }
+  .sheet [data-mcko-tasks] figure { break-inside: avoid; margin: 8pt 0; padding: 0; }
+  .sheet [data-mcko-tasks] figure img { max-height: 210pt; object-fit: contain; }
+}
