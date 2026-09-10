@@ -1,0 +1,191 @@
+{
+  "voice": "Martha",
+  "identifier": "com.apple.ttsbundle.siri_martha_en-GB_compact",
+  "locale": "en-GB",
+  "gender": "female",
+  "speechRate": 0.36,
+  "repeatCount": 2,
+  "pauseSeconds": 10,
+  "files": [
+    {
+      "variant": 1,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-1.m4a",
+      "passageSeconds": 14.241,
+      "totalSeconds": 39.982,
+      "bytes": 271047,
+      "peak": 19787,
+      "audioSha256": "76ea22ed25f40b36ba3de6187bfeeebc414c18e0b005998ce48ff08b84e15031"
+    },
+    {
+      "variant": 2,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-2.m4a",
+      "passageSeconds": 13.293,
+      "totalSeconds": 38.085,
+      "bytes": 254722,
+      "peak": 18973,
+      "audioSha256": "1704787b61205c7950fcbb4313730051f83ad6837af1bd0101fab5dc6c50e606"
+    },
+    {
+      "variant": 3,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-3.m4a",
+      "passageSeconds": 13.985,
+      "totalSeconds": 39.469,
+      "bytes": 266060,
+      "peak": 19471,
+      "audioSha256": "396bfaf91d3ecb3577ed9126ac03ce734ac93415636ac09129519a86e3060424"
+    },
+    {
+      "variant": 4,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-4.m4a",
+      "passageSeconds": 13.072,
+      "totalSeconds": 37.644,
+      "bytes": 250987,
+      "peak": 18424,
+      "audioSha256": "6032f03dd54781a7d2601c088c39d51f28b02c12151079955d1f9579d132250f"
+    },
+    {
+      "variant": 5,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-5.m4a",
+      "passageSeconds": 13.548,
+      "totalSeconds": 38.596,
+      "bytes": 257653,
+      "peak": 18640,
+      "audioSha256": "2bac7f0d067993f3ea59b95f28099b7b324506662b26a70b069bf9c35916390c"
+    },
+    {
+      "variant": 6,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-6.m4a",
+      "passageSeconds": 13.161,
+      "totalSeconds": 37.823,
+      "bytes": 251961,
+      "peak": 19705,
+      "audioSha256": "70a6a7930268d4829c5d63ee689ec73a4c8ed30826bacb6fb6cc8ae1a3f8256a"
+    },
+    {
+      "variant": 7,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-7.m4a",
+      "passageSeconds": 12.735,
+      "totalSeconds": 36.971,
+      "bytes": 244384,
+      "peak": 18100,
+      "audioSha256": "cef4c013b26c306f948b47ff349adc8bcdb6bc205a1521d06dcef4c33c7c4e3a"
+    },
+    {
+      "variant": 8,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-8.m4a",
+      "passageSeconds": 12.836,
+      "totalSeconds": 37.173,
+      "bytes": 247439,
+      "peak": 18282,
+      "audioSha256": "a6babe22515f298f0e954d0fcfbed04f0bb160907d66bed1d72663cb60fe59ae"
+    },
+    {
+      "variant": 9,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-9.m4a",
+      "passageSeconds": 14.558,
+      "totalSeconds": 40.616,
+      "bytes": 274824,
+      "peak": 19696,
+      "audioSha256": "b884de22a3eade6a231c65262f30c563c4f48fdd7cc72fed0a9471321752d826"
+    },
+    {
+      "variant": 10,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-10.m4a",
+      "passageSeconds": 13.73,
+      "totalSeconds": 38.961,
+      "bytes": 261486,
+      "peak": 17255,
+      "audioSha256": "5ca0cced23ba79c024c123feb90884920d78e4f6578ba241c211f831b2b228a8"
+    },
+    {
+      "variant": 11,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-11.m4a",
+      "passageSeconds": 15.081,
+      "totalSeconds": 41.661,
+      "bytes": 282562,
+      "peak": 18475,
+      "audioSha256": "1d503c07ccf7d2c8283a401a42aa808d6f3109c09be9c6369ca1e41abdbf53a9"
+    },
+    {
+      "variant": 12,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-12.m4a",
+      "passageSeconds": 14.938,
+      "totalSeconds": 41.376,
+      "bytes": 282069,
+      "peak": 19038,
+      "audioSha256": "ca4071df12dc447d730f66948516ef367aa0b3b37245ed8ec713c74fc8d44f1d"
+    },
+    {
+      "variant": 13,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-13.m4a",
+      "passageSeconds": 15.116,
+      "totalSeconds": 41.731,
+      "bytes": 284265,
+      "peak": 18338,
+      "audioSha256": "22cd2f8acae6df3f392aefb23e8c7a7f955834ffc2e112b7b9a42e53814f4f97"
+    },
+    {
+      "variant": 14,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-14.m4a",
+      "passageSeconds": 15.936,
+      "totalSeconds": 43.372,
+      "bytes": 296781,
+      "peak": 18650,
+      "audioSha256": "7f133490343da3670c9c1ca90fbb55412b57ac7f9449bca8aef2db968a28a7a9"
+    },
+    {
+      "variant": 15,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-15.m4a",
+      "passageSeconds": 13.92,
+      "totalSeconds": 39.339,
+      "bytes": 264626,
+      "peak": 18898,
+      "audioSha256": "c5824f93ea6fe1f4c42d06a8053fec169c2f87ac7366f860d0f989023cbf4c88"
+    },
+    {
+      "variant": 16,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-16.m4a",
+      "passageSeconds": 15.274,
+      "totalSeconds": 42.049,
+      "bytes": 285949,
+      "peak": 19937,
+      "audioSha256": "5ad78e5a481befc3e4d4263b873b0bb39d870ee039b50c1734d0eed56033d963"
+    },
+    {
+      "variant": 17,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-17.m4a",
+      "passageSeconds": 15.615,
+      "totalSeconds": 42.729,
+      "bytes": 294082,
+      "peak": 19172,
+      "audioSha256": "04d9229614a52d8e603a16af9e8a983184ae78ab5c9209f88232aada121b1efc"
+    },
+    {
+      "variant": 18,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-18.m4a",
+      "passageSeconds": 15.855,
+      "totalSeconds": 43.21,
+      "bytes": 297739,
+      "peak": 18384,
+      "audioSha256": "cdc72e9fa7965d6aad6f8477e6e7896f9b386e9954dfc32a6e6fae0054d66ad8"
+    },
+    {
+      "variant": 19,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-19.m4a",
+      "passageSeconds": 16.323,
+      "totalSeconds": 44.146,
+      "bytes": 304061,
+      "peak": 18977,
+      "audioSha256": "cf51ca552c4fb238e4910e170bb5f90fb745a60f94232324ffdc466d96b33a1e"
+    },
+    {
+      "variant": 20,
+      "src": "/audio/vpr/4-klass/angliyskiy/variant-20.m4a",
+      "passageSeconds": 14.973,
+      "totalSeconds": 41.445,
+      "bytes": 282904,
+      "peak": 18462,
+      "audioSha256": "99696254485dd5d04b5f2da054f11426d6acd6748d3d549a77925c009a3db5a9"
+    }
+  ]
+}

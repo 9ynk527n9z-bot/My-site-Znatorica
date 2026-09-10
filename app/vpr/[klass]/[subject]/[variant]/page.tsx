@@ -3,8 +3,10 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { breadcrumbJsonLd, learningResourceJsonLd, shortSubject } from '@/lib/seo';
 import { getVprData, getVprVariant, getAllVprParams } from '@/lib/vpr';
+import { pluralizeCount } from '@/lib/pluralize';
 import PrintButton from '@/components/PrintButton';
 import ListenButton from '@/components/ListenButton';
+import MckoRecordedAudio from '@/components/MckoRecordedAudio';
 import MarkVprComplete from '@/components/MarkVprComplete';
 import TrainerGate from '@/components/TrainerGate';
 
@@ -29,7 +31,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!variant) return {};
   return {
     title: `ВПР: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — вариант ${id}`,
-    description: `Тренировочный вариант ${id} для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса: ${variant.tasks.length} заданий с ответами и решениями.`,
+    description: `Тренировочный вариант ${id} для подготовки к ВПР по предмету «${data.subjectTitle}» для ${data.grade} класса: ${pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])} с ответами и решениями.`,
     alternates: { canonical: `/vpr/${params.klass}/${params.subject}/${params.variant}` },
   };
 }
@@ -49,15 +51,19 @@ export default function VprVariantPage({ params }: Props) {
     { name: `Вариант ${id}`, url: `/vpr/${params.klass}/${params.subject}/${params.variant}` },
   ]);
 
+  const maxScore = variant.tasks.reduce((sum, t) => sum + (t.points || 1), 0);
+  const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://znatorica.ru'}/vpr/${params.klass}/${params.subject}/${params.variant}`;
+  const shareText = `Решили тренировочный вариант ВПР по предмету «${data.subjectTitle}» (${data.grade} класс) — попробуйте тоже:`;
+
   const learningResource = learningResourceJsonLd({
     name: `Подготовка к ВПР — ${data.subjectTitle}, ${data.grade} класс, вариант ${id}`,
-    description: `Тренировочный вариант для подготовки к ВПР с ответами (${variant.tasks.length} заданий)`,
+    description: `Тренировочный вариант для подготовки к ВПР с ответами (${pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])})`,
     url: `/vpr/${params.klass}/${params.subject}/${params.variant}`,
     educationalLevel: `${data.grade} класс начальной школы`,
   });
 
   return (
-    <div className="bg-black min-h-screen print-page">
+    <div className="bg-[#28134f] min-h-screen print-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -89,7 +95,7 @@ export default function VprVariantPage({ params }: Props) {
           <PrintButton />
         </div>
         <p className="text-gray-400 mb-10">
-          Вариант {id} · {variant.tasks.length} заданий · на выполнение отводится{' '}
+          Вариант {id} · {pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])} · на выполнение отводится{' '}
           {params.klass === '5-klass' && params.subject === 'matematika' ? '90 минут (2 урока)' : '45 минут'}
         </p>
 
@@ -126,7 +132,14 @@ export default function VprVariantPage({ params }: Props) {
                       до {task.points} баллов
                     </span>
                   )}
-                  {task.audio && (
+                  {task.audio && params.subject === 'angliyskiy' && (
+                    <MckoRecordedAudio
+                      src={`/audio/vpr/${params.klass}/angliyskiy/variant-${id}.m4a`}
+                      transcript={task.audio}
+                      voice="Диктор — британский женский голос (Martha)."
+                    />
+                  )}
+                  {task.audio && params.subject !== 'angliyskiy' && (
                     <div className="bg-black/40 border border-violet/40 rounded-lg p-4 mb-4">
                       <p className="text-gray-400 text-xs font-bold uppercase mb-3">Аудирование</p>
                       <ListenButton text={task.audio} />
@@ -164,7 +177,12 @@ export default function VprVariantPage({ params }: Props) {
           ))}
         </ol>
 
-        <MarkVprComplete trackType={`vpr:${params.klass}:${params.subject}:${id}`} />
+        <MarkVprComplete
+          trackType={`vpr:${params.klass}:${params.subject}:${id}`}
+          maxScore={maxScore}
+          shareText={shareText}
+          shareUrl={shareUrl}
+        />
         </TrainerGate>
 
         {/* Навигация между вариантами */}
