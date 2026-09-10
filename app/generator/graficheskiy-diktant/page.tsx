@@ -24,7 +24,7 @@ function DictationGrid({ shape, showAnswer }: { shape: DictationShape; showAnswe
     : null;
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} className="border border-gray-300">
+    <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} className="h-auto max-w-full rounded-lg border-[3px] border-[#A78BFA]">
       <rect x="0" y="0" width={size} height={size} fill="#fff" />
       {lines}
       {pathPoints && <polyline points={pathPoints} fill="none" stroke="#F97316" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />}
@@ -96,29 +96,38 @@ export default function GraficheskiyDiktantPage() {
               <ExportToolbar targetRef={printRef} filename="graficheskiy-diktant" />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-2">Графический диктант</h2>
-            {!showAnswers && (
-              <p className="no-print text-gray-500 text-sm mb-6">
-                Поставь карандаш в оранжевую точку и веди линию по инструкциям.
-              </p>
-            )}
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-3 text-center text-2xl font-black text-[#8B5CF6]">Графический диктант</h2>
+              {!showAnswers && (
+                <p className="mb-7 text-center text-sm leading-relaxed text-gray-700">
+                  Поставь карандаш в оранжевую точку и веди линию по инструкциям.
+                </p>
+              )}
 
             <div className="space-y-10">
               {shapes.map((shape, i) => (
-                <div key={i} className="flex flex-col sm:flex-row gap-6 items-start">
-                  <DictationGrid shape={shape} showAnswer={showAnswers} />
+                <div key={i} className="flex flex-col gap-6">
                   <div>
-                    <p className="no-print font-bold text-black mb-2">
-                      {i + 1}. {showAnswers ? shape.title : 'Начни с точки и следуй инструкциям:'}
+                    <p className="mb-3 text-[22px] font-semibold leading-tight text-black">
+                      {showAnswers ? shape.title : 'Начни с точки и следуй инструкциям:'}
                     </p>
-                    <div className="text-gray-700 text-sm space-y-1">
-                      {instructionLines(shape.moves).map((line, j) => (
-                        <p key={j}>{line}</p>
-                      ))}
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[22px] leading-tight text-gray-700">
+                      {instructionLines(shape.moves).map((line, j) => {
+                        const match = line.match(/^(\d+\.)\s*(.*)$/);
+                        return (
+                          <p key={j}>
+                            {match ? <><span className="font-black">{match[1]}</span>{' '}{match[2]}</> : line}
+                          </p>
+                        );
+                      })}
                     </div>
+                  </div>
+                  <div className="flex justify-center">
+                    <DictationGrid shape={shape} showAnswer={showAnswers} />
                   </div>
                 </div>
               ))}
+            </div>
             </div>
 
             <div className="mt-6 no-print">

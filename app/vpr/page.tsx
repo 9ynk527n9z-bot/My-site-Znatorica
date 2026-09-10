@@ -2,11 +2,12 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { breadcrumbJsonLd } from '@/lib/seo';
 import { VPR_KLASSES, getVprData } from '@/lib/vpr';
+import { pluralizeCount } from '@/lib/pluralize';
 
 export const metadata: Metadata = {
   title: 'Подготовка к ВПР, 3–5 класс — варианты с ответами',
   description:
-    'Авторские тренировочные варианты для подготовки к ВПР по математике, русскому языку, окружающему миру и английскому языку: 10 вариантов для 3 класса, 20 для 4 класса и 20 для 5 класса, с ответами и решениями. Можно решать онлайн или распечатать.',
+    'Тренировочные варианты ВПР по математике, русскому, окружающему миру, литературе и английскому для 3–5 класса — с ответами. Решай онлайн или распечатай.',
   alternates: { canonical: '/vpr' },
 };
 
@@ -20,12 +21,12 @@ const SUBJECTS = [
   { slug: 'russkiy', title: 'Русский язык', icon: '📝', ready: true },
   { slug: 'okruzhayushchiy-mir', title: 'Окружающий мир', icon: '🌍', ready: true },
   { slug: 'angliyskiy', title: 'Английский язык', icon: '🇬🇧', ready: true },
-  { slug: 'literatura', title: 'Литература', icon: '📖', ready: true },
+  { slug: 'literaturnoe-chtenie', title: 'Литературное чтение', icon: '📖', ready: true },
 ];
 
 export default function VprPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -39,7 +40,7 @@ export default function VprPage() {
           </Link>
           <h1 className="text-5xl font-bold mb-4">📋 Подготовка к ВПР</h1>
           <p className="text-gray-400 text-lg max-w-3xl">
-            Авторские тренировочные варианты в формате Всероссийских проверочных работ.
+            Тренировочные варианты в формате Всероссийских проверочных работ.
             Каждый вариант можно решать онлайн (с самопроверкой по ответам) или распечатать
             и решать на бумаге — как на настоящей работе.
           </p>
@@ -56,34 +57,14 @@ export default function VprPage() {
           <section key={klass.slug}>
             <h2 className="text-3xl font-bold mb-2">
               {klass.title}
-              <span className="text-gray-400 text-lg font-normal ml-3">({klass.note})</span>
+              {klass.note && (
+                <span className="text-gray-400 text-lg font-normal ml-3">({klass.note})</span>
+              )}
             </h2>
             {klass.slug === '3-klass' && (
               <p className="text-gray-400 mb-6 max-w-3xl">
                 Официально ВПР пишут начиная с 4 класса — варианты для 3 класса помогают
                 привыкнуть к формату заранее и без стресса.
-              </p>
-            )}
-            {klass.slug === '4-klass' && (
-              <p className="text-gray-400 mb-6 max-w-3xl">
-                Структура повторяет демоверсии ВПР-2026 по каждому предмету: математика — 11 заданий
-                (вычисления, геометрия, задачи, логика), задания повышенной сложности № 3, 8, 10, 11
-                отмечены отдельно, как в настоящем оценивании; русский язык — 12 заданий, включая
-                диктант и текст для чтения; окружающий мир — 10 заданий по основным темам курса;
-                английский язык — 8 заданий (аудирование с настоящей озвучкой, чтение, грамматика,
-                анкета), как в реальной работе.
-              </p>
-            )}
-            {klass.slug === '5-klass' && (
-              <p className="text-gray-400 mb-6 max-w-3xl">
-                Формат ВПР-2026 для 5 класса: математика — 17 заданий в 2 частях (24 балла, 2 урока
-                по 45 минут); русский язык — новый короткий формат из 5 заданий (24 балла, 45 минут):
-                списывание текста с пропусками, три вида разбора, развёрнутый ответ по тексту,
-                лексическое значение слова и постановка ударения; литература — 4 задания по
-                стихотворению и прозаическому отрывку из школьной программы (20 баллов, 45 минут);
-                английский язык — аудирование, чтение, грамматика и письмо (25 баллов, 45 минут);
-                география — 17 заданий (20 баллов, 90 минут) с атласом и непрограммируемым калькулятором;
-                биология — 19 заданий (43 балла, 90 минут) без дополнительных материалов.
               </p>
             )}
 
@@ -102,7 +83,7 @@ export default function VprPage() {
                         {subj.title}
                       </h3>
                       <p className="text-gray-400 mb-4">
-                        {data.variants.length} вариантов · {data.variants[0].tasks.length} заданий в каждом
+                        {pluralizeCount(data.variants.length, ['вариант', 'варианта', 'вариантов'])} · {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} в каждом
                       </p>
                       <span className="text-orange font-bold">Открыть варианты →</span>
                     </Link>

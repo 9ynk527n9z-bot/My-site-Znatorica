@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import FloatingDecor from '@/components/FloatingDecor';
 import FloatingBackButton from '@/components/FloatingBackButton';
 import PageViewTracker from '@/components/PageViewTracker';
 import RegisterServiceWorker from '@/components/RegisterServiceWorker';
@@ -102,7 +101,6 @@ export default function RootLayout({
         <VkBridge />
         <TelegramBridge />
         <YandexMetrika />
-        <FloatingDecor />
         <FloatingBackButton />
         <Navbar />
         <main>{children}</main>

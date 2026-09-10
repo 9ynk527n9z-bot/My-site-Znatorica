@@ -256,10 +256,9 @@ export async function GET(request: NextRequest) {
     month: { visits: pageViews30.length, sections: sectionCounts(pageViews30) },
   };
 
-  // Топ генераторов / тренажёров / ВПР — из GeneratorUse.type вида "generator:slug"
+  // Топ генераторов / тренажёров — из GeneratorUse.type вида "generator:slug"
   const generatorCounts = new Map<string, number>();
   const trainerCounts = new Map<string, number>();
-  const vprEvents: { type: string }[] = [];
 
   for (const u of generatorUsesForPeriod) {
     const [category, ...rest] = u.type.split(':');
@@ -267,16 +266,33 @@ export async function GET(request: NextRequest) {
     if (category === 'generator') generatorCounts.set(slug, (generatorCounts.get(slug) ?? 0) + 1);
     else if (category === 'trainer') trainerCounts.set(slug, (trainerCounts.get(slug) ?? 0) + 1);
   }
-  // ВПР считаем всегда за полные 30 дней, не за выбранный период — так и подписано
-  // в totals.vprCompletions30 ("30 дн."), не хотим расходиться с собственной подписью.
-  for (const u of generatorUses30) {
-    if (u.type.startsWith('vpr:')) vprEvents.push(u);
-  }
 
   const topGenerators = topEntries(generatorCounts, 10);
   const topTrainers = topEntries(trainerCounts, 10);
 
-  const vprDistinctVariants = new Set(vprEvents.map((e) => e.type)).size;
+  // Реальные посетители ВПР/МЦКО в день — считаем по заходам на страницы
+  // конкретных вариантов (не каталог/списки), только не боты и не сама Оля
+  // (pageViews30 уже отфильтрован от isBot/isOwner выше), и усредняем число
+  // уникальных посетителей (userId или sessionId) — отдельно за сегодня и за
+  // последние 7 дней, целыми числами (не усреднённое дробное число за месяц:
+  // так нагляднее и без ложной точности при маленьких значениях).
+  function realVisitorsCount(urlPrefix: string, sinceDate: Date): number {
+    const visitors = new Set<string>();
+    for (const v of pageViews30) {
+      if (v.createdAt < sinceDate) continue;
+      if (!v.url.startsWith(urlPrefix) || !/\/variant-\d+/.test(v.url)) continue;
+      const visitor = v.userId ? `u:${v.userId}` : v.sessionId ? `s:${v.sessionId}` : null;
+      if (!visitor) continue;
+      visitors.add(visitor);
+    }
+    return visitors.size;
+  }
+
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const vprRealVisitorsToday = realVisitorsCount('/vpr/', todayStart);
+  const vprRealVisitorsWeek = realVisitorsCount('/vpr/', since7);
+  const mckoRealVisitorsToday = realVisitorsCount('/podgotovka-k-mcko/', todayStart);
+  const mckoRealVisitorsWeek = realVisitorsCount('/podgotovka-k-mcko/', since7);
 
   // Реальные сессии посетителей: группируем просмотры по userId/sessionId,
   // чтобы в админке было видно КТО заходил и КАКИЕ страницы смотрел —
@@ -453,10 +469,17 @@ export async function GET(request: NextRequest) {
     decorationsBought,
   };
 
-  const shareCounts = new Map<string, number>();
+  // Фиксированный порядок платформ — чтобы ВКонтакте/Telegram/MAX были видны
+  // в админке всегда, даже с нулём кликов, а не пропадали из списка молча.
+  const shareCounts = new Map<string, number>([
+    ['ВКонтакте', 0],
+    ['Telegram', 0],
+    ['MAX', 0],
+    ['Скопировать ссылку', 0],
+  ]);
   for (const u of generatorUses30) {
     if (!u.type.includes('share:')) continue;
-    const platform = u.type.includes(':vk') ? 'ВКонтакте' : u.type.includes(':telegram') ? 'Telegram' : u.type.includes(':copy') ? 'Скопировать ссылку' : 'Другое';
+    const platform = u.type.includes(':vk') ? 'ВКонтакте' : u.type.includes(':telegram') ? 'Telegram' : u.type.includes(':max') ? 'MAX' : u.type.includes(':copy') ? 'Скопировать ссылку' : 'Другое';
     shareCounts.set(platform, (shareCounts.get(platform) ?? 0) + 1);
   }
   const shareStats = Array.from(shareCounts.entries()).map(([key, count]) => ({ key, count }));
@@ -472,8 +495,10 @@ export async function GET(request: NextRequest) {
       dau,
       wau,
       mau,
-      vprCompletions30: vprEvents.length,
-      vprDistinctVariants30: vprDistinctVariants,
+      vprRealVisitorsToday,
+      vprRealVisitorsWeek,
+      mckoRealVisitorsToday,
+      mckoRealVisitorsWeek,
       botPageViews30,
       ownerPageViews30,
     },

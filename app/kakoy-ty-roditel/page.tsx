@@ -18,19 +18,33 @@ interface Result {
 }
 
 export default function ParentStyleQuizPage() {
+  return <ParentStyleQuiz />;
+}
+
+// useSearchParams() требует Suspense-границу в Next.js — но оборачивать в неё
+// весь компонент нельзя: тогда сервер отдаёт поисковику пустую оболочку без
+// H1 и вступительного текста (контент появляется только после гидратации).
+// Баннер «другу выпал такой-то стиль» — необязательное украшение, а не
+// основной контент, поэтому именно его выносим в отдельный компонент и
+// оборачиваем в Suspense точечно — H1 и вступление рендерятся на сервере сразу.
+function SharedStyleBanner() {
+  const searchParams = useSearchParams();
+  const sharedStyleParam = searchParams.get('r');
+  const sharedStyle: ParentStyle | null =
+    sharedStyleParam && sharedStyleParam in STYLES ? (sharedStyleParam as ParentStyle) : null;
+  if (!sharedStyle) return null;
   return (
-    <Suspense fallback={null}>
-      <ParentStyleQuiz />
-    </Suspense>
+    <div className="bg-orange/10 border border-orange/30 rounded-lg px-4 py-3 mb-6 text-left flex items-center gap-3">
+      <span className="text-3xl flex-shrink-0">{STYLES[sharedStyle].emoji}</span>
+      <p className="text-sm text-white/80">
+        Друг прошёл тест и получил стиль «{STYLES[sharedStyle].title}». Пройдите свой — увидите сразу.
+      </p>
+    </div>
   );
 }
 
 function ParentStyleQuiz() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const sharedStyleParam = searchParams.get('r');
-  const sharedStyle: ParentStyle | null =
-    sharedStyleParam && sharedStyleParam in STYLES ? (sharedStyleParam as ParentStyle) : null;
   const product = getProduct(PRODUCT_SLUG)!;
   const price = getEffectivePrice(product);
 
@@ -144,14 +158,9 @@ function ParentStyleQuiz() {
       <div className="max-w-2xl mx-auto">
         {stage === 'intro' && (
           <div className="card text-center py-10">
-            {sharedStyle && (
-              <div className="bg-orange/10 border border-orange/30 rounded-lg px-4 py-3 mb-6 text-left flex items-center gap-3">
-                <span className="text-3xl flex-shrink-0">{STYLES[sharedStyle].emoji}</span>
-                <p className="text-sm text-white/80">
-                  Друг прошёл тест и получил стиль «{STYLES[sharedStyle].title}». Пройдите свой — увидите сразу.
-                </p>
-              </div>
-            )}
+            <Suspense fallback={null}>
+              <SharedStyleBanner />
+            </Suspense>
             <p className="text-6xl mb-4">🧭</p>
             <h1 className="text-3xl font-bold mb-4">Какой ты родитель?</h1>
             <p className="text-white/70 mb-2">

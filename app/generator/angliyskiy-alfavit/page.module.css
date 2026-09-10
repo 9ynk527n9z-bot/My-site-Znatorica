@@ -1,0 +1,48 @@
+.sheet {
+  --alphabet-accent: #6d28d9;
+  --alphabet-soft: #f3e8ff;
+}
+
+.letterRow {
+  min-height: 43px;
+  break-inside: avoid;
+}
+
+.printed {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+}
+
+.handwritten {
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+@page alphabetSheet {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+@media print {
+  .result {
+    page: alphabetSheet;
+  }
+
+  .result > :not(.sheet) {
+    display: none !important;
+  }
+
+  .sheet {
+    width: 190mm !important;
+    min-height: 277mm !important;
+    margin: 0 !important;
+    padding: 8mm !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .letterRow {
+    min-height: 14mm;
+  }
+}

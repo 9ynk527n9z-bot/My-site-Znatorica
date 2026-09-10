@@ -149,7 +149,7 @@ export default function StihiTrainerPage() {
                           : 'border-gray-200 bg-gray-50 hover:border-orange hover:scale-105'
                       }`}
                     >
-                      <span className="text-xl font-bold text-[#3a1c6e]">{option}</span>
+                      <span className="text-base sm:text-xl font-bold text-[#3a1c6e] text-center break-words">{option}</span>
                     </button>
                   );
                 })}

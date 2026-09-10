@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import { pluralizeCount } from '@/lib/pluralize';
+import ShareButtons from '@/components/ShareButtons';
 
 type Size = 3 | 4;
 
@@ -191,10 +192,17 @@ export default function PyatnashkiTrainerPage() {
               <p className="text-3xl font-black text-[#3a1c6e] mb-4">
                 🎉 Собрано за {pluralizeCount(moves, ['ход', 'хода', 'ходов'])}, {pluralizeCount(seconds, ['секунду', 'секунды', 'секунд'])}!
               </p>
-              <div className="flex justify-center gap-3 flex-wrap">
+              <div className="flex justify-center gap-3 flex-wrap mb-6">
                 <button onClick={() => begin(size)} className="btn-primary px-6 py-3">
                   🔁 Играть ещё
                 </button>
+              </div>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text={`Собрали пятнашки за ${pluralizeCount(moves, ['ход', 'хода', 'ходов'])} — попробуйте тоже:`}
+                  url="https://znatorica.ru/trenazher/pyatnashki"
+                  trackKey="pyatnashki"
+                />
               </div>
             </div>
           )}

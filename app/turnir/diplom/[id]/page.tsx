@@ -89,7 +89,7 @@ export default function TournamentDiplomaPage({ params }: { params: { id: string
   const rank = percent === 100 ? 'Отличный результат!' : percent >= 80 ? 'Очень хороший результат!' : percent >= 50 ? 'Хороший результат!' : 'Результат участия';
 
   return (
-    <div className="bg-black min-h-screen py-12 px-6">
+    <div className="bg-[#28134f] min-h-screen py-12 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="no-print mb-6 flex items-center justify-between">
           <Link href="/turnir" className="text-orange hover:underline text-sm">← К турнирам</Link>

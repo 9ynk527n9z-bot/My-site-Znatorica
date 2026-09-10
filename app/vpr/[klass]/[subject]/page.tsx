@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { breadcrumbJsonLd, shortSubject } from '@/lib/seo';
 import { getVprData, getAllVprSubjectParams, VPR_KLASSES } from '@/lib/vpr';
+import { pluralizeCount } from '@/lib/pluralize';
 
 interface Props {
   params: { klass: string; subject: string };
@@ -17,7 +18,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!data) return {};
   return {
     title: `ВПР: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — ${data.variants.length} вариантов`,
-    description: `${data.variants.length} авторских вариантов ВПР с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
+    description: `${data.variants.length} тренировочных вариантов ВПР с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
     alternates: { canonical: `/vpr/${params.klass}/${params.subject}` },
   };
 }
@@ -35,7 +36,7 @@ export default function VprSubjectPage({ params }: Props) {
   ]);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
@@ -56,8 +57,8 @@ export default function VprSubjectPage({ params }: Props) {
           Подготовка к ВПР · {data.subjectTitle} · {data.grade} класс
         </h1>
         <p className="text-gray-400 mb-10 max-w-3xl">
-          {data.variants.length} тренировочных вариантов{klassInfo ? ` (${klassInfo.note})` : ''}.
-          В каждом варианте {data.variants[0].tasks.length} заданий с ответами и пояснениями к сложным задачам.
+          {data.variants.length} тренировочных вариантов{klassInfo?.note ? ` (${klassInfo.note})` : ''}.
+          В каждом варианте {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} с ответами и пояснениями к сложным задачам.
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -71,7 +72,7 @@ export default function VprSubjectPage({ params }: Props) {
               <div className="text-xl font-bold group-hover:text-orange transition-colors">
                 Вариант {v.id}
               </div>
-              <div className="text-gray-400 text-sm mt-1">{v.tasks.length} заданий</div>
+              <div className="text-gray-400 text-sm mt-1">{pluralizeCount(v.tasks.length, ['задание', 'задания', 'заданий'])}</div>
             </Link>
           ))}
         </div>

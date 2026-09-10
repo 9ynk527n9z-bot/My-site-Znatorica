@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Школьные принадлежности по-английски — интерактивный тренажёр для детей',
+  title: 'Школьные принадлежности по-английски',
   description:
     'Бесплатный интерактивный тренажёр английских слов на тему школьных принадлежностей: слово, транскрипция и озвучка британским произношением для детей 4–7 лет.',
   alternates: { canonical: '/trenazher/english-school' },

@@ -196,7 +196,7 @@ export default function SostavChislaTrainerPage() {
                           : `${palette[idx % palette.length]} hover:brightness-110 hover:scale-105`
                       }`}
                     >
-                      <span className="text-xl leading-none">{'⭐'.repeat(Math.max(0, Math.min(value, 12)))}</span>
+                      <span className="text-sm sm:text-base leading-tight text-center break-all px-2">{'⭐'.repeat(Math.max(0, Math.min(value, 12)))}</span>
                       <span className="text-5xl">{value}</span>
                     </button>
                   );

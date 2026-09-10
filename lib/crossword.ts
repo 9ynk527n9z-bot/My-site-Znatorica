@@ -1,8 +1,10 @@
 export type CrosswordTheme = 'food' | 'animals' | 'insects' | 'flowers' | 'clothes' | 'sport';
 
-interface WordClue {
+export interface WordClue {
   word: string;
   clue: string;
+  /** Только для "своих слов" — принудительное направление. Без него направление подбирается автоматически. */
+  direction?: 'across' | 'down';
 }
 
 // Слова — только заглавные русские буквы, без пробелов и дефисов (нужно для сетки кроссворда).
@@ -150,8 +152,15 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function generateCrossword(theme: CrosswordTheme, targetCount = 6): CrosswordResult {
+  return generateCrosswordFromWords(CROSSWORD_THEMES[theme].words, targetCount);
+}
+
+export function generateCrosswordFromWords(words: WordClue[], targetCount = 6): CrosswordResult {
   targetCount = Math.max(4, Math.min(8, targetCount));
-  const pool = shuffle(CROSSWORD_THEMES[theme].words.filter(w => w.word.length >= 3));
+  const pool = shuffle(words.filter(w => w.word.length >= 3));
+  if (pool.length === 0) {
+    return { grid: [], numbers: [], words: [], rows: 0, cols: 0 };
+  }
   const SIZE = 21; // рабочая сетка с запасом, потом обрезаем по границам слов
   const CENTER = Math.floor(SIZE / 2);
 
@@ -204,12 +213,17 @@ export function generateCrossword(theme: CrosswordTheme, targetCount = 6): Cross
     placed.push({ word, clue, row, col, direction: dir, number: 0 });
   }
 
-  // Первое (самое длинное) слово — горизонтально в центре
+  // Первое слово — в центре, по своему направлению (если задано) или горизонтально по умолчанию
   const first = pool[0];
-  place(first.word, first.clue, CENTER, CENTER - Math.floor(first.word.length / 2), 'across');
+  const firstDir = first.direction ?? 'across';
+  if (firstDir === 'across') {
+    place(first.word, first.clue, CENTER, CENTER - Math.floor(first.word.length / 2), 'across');
+  } else {
+    place(first.word, first.clue, CENTER - Math.floor(first.word.length / 2), CENTER, 'down');
+  }
 
   for (let idx = 1; idx < pool.length && placed.length < targetCount; idx++) {
-    const { word, clue } = pool[idx];
+    const { word, clue, direction: wantedDir } = pool[idx];
     if (placed.some((p) => p.word === word)) continue;
 
     let bestPlacement: { row: number; col: number; dir: 'across' | 'down' } | null = null;
@@ -219,7 +233,11 @@ export function generateCrossword(theme: CrosswordTheme, targetCount = 6): Cross
         for (let j = 0; j < p.word.length; j++) {
           if (word[i] !== p.word[j]) continue;
 
+          // Слово может пересекаться только перпендикулярно уже стоящему — направление
+          // пересечения задаётся автоматически, но если пользователь явно выбрал своё
+          // направление для этого слова, принимаем только совпадающие варианты.
           const crossDir: 'across' | 'down' = p.direction === 'across' ? 'down' : 'across';
+          if (wantedDir && crossDir !== wantedDir) continue;
           const pRow = crossDir === 'down' ? p.row - i : p.row + j;
           const pCol = crossDir === 'across' ? p.col - i : p.col + j;
 

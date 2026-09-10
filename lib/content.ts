@@ -110,7 +110,26 @@ export async function getAllArticleSlugs(): Promise<string[]> {
   return rows.map((r) => r.slug);
 }
 
+// Для sitemap — нужна ещё и реальная дата изменения (Google явно предупреждает:
+// если lastmod у всех страниц всегда "сегодня", он перестаёт доверять этому полю
+// по всему сайту, см. https://www.seroundtable.com/google-lastmod-date-seo-hack-39318.html).
+export async function getAllArticleSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
+  return db.contentPage.findMany({
+    where: { kind: 'article', published: true },
+    select: { slug: true, updatedAt: true },
+  });
+}
+
 // ── Новые темы (созданные через админку / seed) ───────────────────────
+
+// Для sitemap — та же логика, что и у getAllArticleSlugsWithDates выше:
+// нужна реальная дата, а не время генерации sitemap.
+export async function getPublishedTopicSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
+  return db.contentPage.findMany({
+    where: { kind: 'topic', published: true },
+    select: { slug: true, updatedAt: true },
+  });
+}
 
 export async function getPublishedTopics(): Promise<ContentTopic[]> {
   const rows = await db.contentPage.findMany({

@@ -4,7 +4,7 @@ import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Стихи — теория и тренажёр для 1 класса',
-  description: 'Поэтические произведения в программе литературного чтения 1 класса.',
+  description: 'Стихотворения для чтения, обсуждения и выразительного чтения в 1 классе.',
   alternates: { canonical: '/1-klass/chtenie/stihi' },
 };
 
@@ -24,7 +24,7 @@ const learningResource = learningResourceJsonLd({
 
 export default function StihiPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 

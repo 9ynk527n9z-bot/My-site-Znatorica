@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 const CATEGORIES: { name: string; emoji: string; words: string[] }[] = [
   {
@@ -171,7 +172,7 @@ export default function UgadaySlovoTrainerPage() {
               <p className="text-3xl font-black text-[#3a1c6e] mb-2">Отгадал! 🎉</p>
               <p className="text-gray-600 mb-1">Загаданное слово:</p>
               <p className="text-4xl font-black text-orange mb-8">{word}</p>
-              <div className="flex justify-center gap-3 flex-wrap">
+              <div className="flex justify-center gap-3 flex-wrap mb-6">
                 <button onClick={playAgain} className="btn-primary px-6 py-3">
                   🔁 Играть ещё
                 </button>
@@ -181,6 +182,13 @@ export default function UgadaySlovoTrainerPage() {
                 >
                   Сменить категорию
                 </button>
+              </div>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text="Отгадали слово в игре «Угадай слово» на Знаторике — попробуйте тоже:"
+                  url="https://znatorica.ru/trenazher/ugaday-slovo"
+                  trackKey="ugaday-slovo"
+                />
               </div>
             </div>
           )}

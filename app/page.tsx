@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import homeStyles from './home.module.css';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import EnglishMenu from '@/components/EnglishMenu';
@@ -25,25 +26,64 @@ const SECTIONS = [
   { href: '/trenazher', emoji: '🎮', title: 'Тренажеры', desc: 'Интерактивные игры для закрепления', from: '#DA77F2', to: '#9C36B5' },
   { href: '/igry', emoji: '🕹️', title: 'Игры', desc: 'Судоку, змейка, морской бой и другие', from: '#FFD43B', to: '#F59F00' },
   { href: '/plakaty', emoji: '📋', title: 'Плакаты', desc: 'Плакаты-подсказки по предметам', from: '#FFA94D', to: '#E8590C' },
-  { href: '/vpr', emoji: '📝', title: 'Подготовка к ВПР', desc: '3–5 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
-  { href: '/podgotovka-k-mcko', emoji: '🏙️', title: 'Подготовка к МЦКО', desc: 'Москва и МО — 4 класс', from: '#9775FA', to: '#7048E8' },
+  { href: '/vpr', emoji: '📝', title: 'ВПР', desc: '3–5 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
   { href: '#dlya-roditeley', emoji: '👪', title: 'Для родителей', desc: 'Статьи о школе, режиме и подготовке', from: '#3BC9DB', to: '#1098AD' },
 ];
+
+const OTHER_PAGE_LINKS = [
+  { href: '/plakaty', label: 'Плакаты' },
+  { href: '/pamyatki', label: 'Памятки' },
+  { href: '/sborniki', label: 'Сборники' },
+  { href: '/turnir', label: 'Турниры' },
+  { href: '/gotovnost', label: 'Готовность к школе' },
+  { href: '/kakoy-ty-roditel', label: 'Какой ты родитель?' },
+  { href: '/podpiska', label: 'Подписка' },
+  { href: '/otzyvy', label: 'Отзывы' },
+  { href: '/privacy', label: 'Политика конфиденциальности' },
+  { href: '/terms', label: 'Условия использования' },
+  { href: '/oferta', label: 'Публичная оферта' },
+];
+
+function PageCountMenu({ count, label, links }: {
+  count: number;
+  label: string;
+  links: { href: string; label: string }[];
+}) {
+  return (
+    <details className={homeStyles.countMenu}>
+      <summary>
+        <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent">{count}</span>
+        <span className="block text-white/60 text-xs">{label} ⌄</span>
+      </summary>
+      <nav className={homeStyles.countPanel} aria-label={label}>
+        {links.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
+      </nav>
+    </details>
+  );
+}
 
 export default async function Home() {
   const latestArticles = (await getPublishedArticles()).slice(0, 3);
   const { sections: pageCounts, other: otherPages, total: totalPages } = await getSectionPageCounts();
   return (
-    <div className="min-h-screen relative">
+    <div className={`${homeStyles.home} min-h-screen relative`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeBreadcrumbs) }}
       />
 
       {/* Категории — компактной строкой сверху */}
-      <section className="px-6 pt-4 pb-1">
+      <section className={`${homeStyles.navigation} px-6 pt-4 pb-1`}>
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2">
-          {SECTIONS.map((s) => (
+          {SECTIONS.map((s) => s.href === '/vpr' ? (
+            <details key={s.title} className={homeStyles.examMenu}>
+              <summary>📝 ВПР / МЦКО <span aria-hidden="true">⌄</span></summary>
+              <div className={homeStyles.examPanel}>
+                <Link href="/vpr">Подготовка к ВПР →</Link>
+                <Link href="/podgotovka-k-mcko">Подготовка к МЦКО →</Link>
+              </div>
+            </details>
+          ) : (
             <Link
               key={s.title}
               href={s.href}
@@ -58,7 +98,8 @@ export default async function Home() {
       </section>
 
       {/* Hero */}
-      <section className="pt-6 pb-6 px-6 relative overflow-hidden">
+      <section className={`${homeStyles.hero} pt-6 pb-6 px-6 relative`}>
+        <span className={homeStyles.starCenter} aria-hidden="true">★</span>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 items-center">
           <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-black mb-3 text-white leading-tight">
@@ -72,7 +113,9 @@ export default async function Home() {
               🏆 Турнир Знаторики →
             </Link>
           </div>
-          <div className="flex justify-center md:justify-end">
+          <div className={`${homeStyles.mascot} flex justify-center md:justify-end`}>
+            <span className={homeStyles.starLeft} aria-hidden="true">★</span>
+            <span className={homeStyles.starRight} aria-hidden="true">★</span>
             <Image
               src="/mascot-hero.png"
               alt="Белка Знаторика"
@@ -86,7 +129,7 @@ export default async function Home() {
       </section>
 
       {/* 3 основные плашки */}
-      <section className="px-6 pb-6">
+      <section className={`${homeStyles.actions} px-6 pb-6`}>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
           <div className="rounded-2xl p-5 bg-gradient-to-br from-[#7048E8] to-[#5f3dc4] flex flex-col gap-1">
             <span className="text-3xl">🎮</span>
@@ -107,7 +150,7 @@ export default async function Home() {
           <div className="rounded-2xl p-5 bg-gradient-to-br from-[#E8590C] to-[#c92a2a] flex flex-col gap-1">
             <span className="text-3xl">📋</span>
             <h2 className="font-bold text-white text-lg">Подготовиться к ВПР / МЦКО</h2>
-            <p className="text-white/75 text-sm mb-3">Авторские варианты с ответами</p>
+            <p className="text-white/75 text-sm mb-3">Варианты с ответами</p>
             <Link href="/vpr" className="btn-secondary text-sm text-center mt-auto">
               Выбрать класс →
             </Link>
@@ -116,7 +159,7 @@ export default async function Home() {
       </section>
 
       {/* Возраст/класс */}
-      <section className="px-6 pb-4">
+      <section className={`${homeStyles.ages} px-6 pb-4`}>
         <div className="max-w-4xl mx-auto grid grid-cols-3 md:grid-cols-6 gap-2">
           {[
             { href: '/4-5-let', label: '4–5 лет' },
@@ -134,11 +177,11 @@ export default async function Home() {
       </section>
 
       {/* Тесты */}
-      <section className="px-6 pb-8">
+      <section className={`${homeStyles.tests} px-6 pb-8`}>
         <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4">
           <Link
             href="/kakoy-ty-roditel"
-            className="card flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
+            className="border border-white/20 rounded-[16px] p-6 backdrop-blur-md bg-sky-400/15 flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
           >
             <span className="text-4xl flex-shrink-0">🧭</span>
             <span>
@@ -148,7 +191,7 @@ export default async function Home() {
           </Link>
           <Link
             href="/gotovnost"
-            className="card flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
+            className="border border-white/20 rounded-[16px] p-6 backdrop-blur-md bg-sky-400/15 flex items-center gap-4 hover:border-orange/60 hover:-translate-y-1 transition-all"
           >
             <span className="text-4xl flex-shrink-0">🎒</span>
             <span>
@@ -160,51 +203,25 @@ export default async function Home() {
       </section>
 
       {/* Страницы по разделам */}
-      <section className="px-6 pb-8">
+      <section className={`${homeStyles.counts} px-6 pb-8`}>
         <div className="max-w-5xl mx-auto border-t border-white/10 pt-5">
           <p className="text-white/50 text-xs mb-3">Страницы по разделам</p>
           <div className="flex flex-wrap gap-x-8 gap-y-3">
             {pageCounts.map((s) => (
-              <Link key={s.label} href={s.href} className="group">
+              <Link key={s.label} href={s.href} className={`group ${homeStyles.countLink}`}>
                 <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
                   {s.count}
                 </span>
                 <span className="block text-white/60 text-xs">{s.label}</span>
               </Link>
             ))}
-            <div>
-              <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent">
-                {otherPages}
-              </span>
-              <span className="block text-white/60 text-xs">Другие страницы</span>
-            </div>
-            <div>
-              <span className="block text-lg font-black bg-gradient-to-r from-orange to-[#FFD43B] bg-clip-text text-transparent">
-                {totalPages}
-              </span>
-              <span className="block text-white/60 text-xs">Всего</span>
-            </div>
+            <PageCountMenu count={otherPages} label="Другие страницы" links={OTHER_PAGE_LINKS} />
+            <PageCountMenu count={totalPages} label="Всего" links={[
+              ...pageCounts.map(({ href, label }) => ({ href, label })),
+              { href: '/podgotovka-k-mcko', label: 'Подготовка к МЦКО' },
+              ...OTHER_PAGE_LINKS,
+            ]} />
           </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="py-12 px-6 border-y border-white/15">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-6 text-center">
-          {[
-            { n: '710', l: 'страниц на сайте' },
-            { n: '98', l: 'темы по возрастам' },
-            { n: '121', l: 'тренажёров и генераторов' },
-            { n: '16', l: 'игр' },
-            { n: '340', l: 'авторских вариантов ВПР и МЦКО' },
-            { n: '105', l: 'статей для родителей' },
-            { n: '3', l: 'бесплатных генераций в день' },
-          ].map((s) => (
-            <div key={s.l}>
-              <p className="text-3xl md:text-4xl font-black text-[#FFD43B]">{s.n}</p>
-              <p className="text-white/70 text-sm">{s.l}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -273,7 +290,7 @@ export default async function Home() {
               { href: '/generator/krossvordy', title: '🔤 Кроссворды', desc: 'Еда, животные, насекомые, цветы, одежда, спорт' },
               { href: '/generator/propisi-ru', title: '✍️ Прописи (русский)', desc: 'Буквы русского алфавита для обводки и письма' },
               { href: '/generator/propisi-angliyskiy', title: '✏️ Прописи (английский)', desc: 'Английские буквы для тренировки почерка' },
-              { href: '/generator/math', title: '🧮 Примеры в столбик', desc: 'Вычитание и деление в столбик, как в тетради' },
+              { href: '/generator/primery', title: '🧮 Примеры в столбик', desc: 'Вычитание и деление в столбик, как в тетради' },
               { href: '/generator/diktanty', title: '🎤 Диктанты', desc: 'Тексты для диктанта по классам (1–4)' },
               { href: '/generator/slovarnye-slova', title: '📖 Словарные слова', desc: 'Непроверяемые слова по классам — списком или с пропуском буквы' },
               { href: '/generator/zadachi', title: '🧩 Задачи', desc: 'Текстовые задачи для 3–4 класса — с решением и ответом' },
@@ -300,7 +317,7 @@ export default async function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
               { href: '/trenazher/azbuky', emoji: '🔤', label: 'Азбука' },
-              { href: '/trenazher/multiplication', emoji: '✖️', label: 'Таблица умножения' },
+              { href: '/trenazher/tablitsa-umnozheniya', emoji: '✖️', label: 'Таблица умножения' },
               { href: '/trenazher/english-words', emoji: '🇬🇧', label: 'Английские слова' },
               { href: '/trenazher/russkiy-alfavit', emoji: '🔤', label: 'Русский алфавит' },
               { href: '/trenazher', emoji: '🎮', label: 'Все тренажёры' },
@@ -317,10 +334,10 @@ export default async function Home() {
       {/* Подписка */}
       <section className="py-20 px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Знаторика PRO</h2>
+          <h2 className={`${homeStyles.subscriptionTitle} text-3xl font-bold mb-4`}>Знаторика PRO</h2>
           <p className="text-white/75 mb-8">После регистрации — 20 занятий в день бесплатно. Знаторика PRO снимает все ограничения</p>
 
-          <div className="card border-orange mb-8">
+          <div className={`${homeStyles.subscriptionCard} card border-orange mb-8`}>
             <p className="text-5xl font-bold text-orange mb-2">2390 ₽</p>
             <p className="text-white/70 mb-6">за год (или <span className="text-orange font-semibold">399 ₽</span> помесячно)</p>
 

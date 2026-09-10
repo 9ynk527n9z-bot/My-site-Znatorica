@@ -3,7 +3,7 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
 import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
-  title: 'Сложение и вычитание в пределах 20 с переходом через десяток — 1 класс',
+  title: 'Сложение и вычитание до 20 — 1 класс',
   description: 'Приём «через десяток» для сложения и вычитания в пределах 20: теория с примерами и тренажёр для первоклассников.',
   alternates: { canonical: '/1-klass/matematika/slozhenie-do-20' },
 };
@@ -24,7 +24,7 @@ const learningResource = learningResourceJsonLd({
 
 export default function SlozhenieDo20Page() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 

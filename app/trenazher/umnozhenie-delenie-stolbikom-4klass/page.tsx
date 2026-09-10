@@ -141,7 +141,7 @@ export default function UmnozhenieDelenieStolbikomTrainerPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-amber-400 hover:underline text-sm">
           ← Все тренажеры

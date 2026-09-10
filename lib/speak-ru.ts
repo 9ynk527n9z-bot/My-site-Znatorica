@@ -5,10 +5,13 @@ const PREFERRED_VOICE_NAMES = [
   'Google русский',
   'Microsoft Svetlana Online (Natural) - Russian (Russia)',
   'Microsoft Svetlana',
-  'Yuri',
   'Microsoft Irina',
   'Google Русский',
 ];
+
+// Известные мужские имена голосов — на случай, если в системе нет ни одного
+// из PREFERRED_VOICE_NAMES и приходится выбирать из общего пула ru-RU.
+const KNOWN_MALE_VOICE_NAMES = ['Yuri', 'Pavel', 'Male'];
 
 function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   const ru = voices.filter((v) => v.lang.toLowerCase().startsWith('ru'));
@@ -17,7 +20,8 @@ function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | n
     const match = pool.find((v) => v.name.includes(name));
     if (match) return match;
   }
-  return pool[0] ?? null;
+  const femalePool = pool.filter((v) => !KNOWN_MALE_VOICE_NAMES.some((male) => v.name.includes(male)));
+  return femalePool[0] ?? pool[0] ?? null;
 }
 
 export function speakRu(text: string) {

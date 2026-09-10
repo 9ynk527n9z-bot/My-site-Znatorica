@@ -6,16 +6,30 @@ import { breadcrumbJsonLd, articleJsonLd } from '@/lib/seo';
 // Статья берётся из БД (правится через админку) — рендерим динамически.
 export const dynamic = 'force-dynamic';
 
+const SEO_TITLES: Record<string, string> = {
+  'dokumenty-k-1-sentyabrya-cheklist': 'Документы к 1 сентября: чек-лист для родителей',
+  'ekonomim-na-shkolnyh-pokupkah': 'Как сэкономить на школьных покупках',
+  'marshrut-do-shkoly-bezopasnost': 'Безопасный маршрут ребёнка до школы',
+  'novyy-uchitel-v-etom-godu': 'Новый учитель: как помочь ребёнку привыкнуть',
+  'oshibki-v-poslednyuyu-nedelyu-pered-shkoloy': 'Неделя перед школой: частые ошибки родителей',
+  'proshchanie-s-letom-ritual-semi': 'Прощание с летом: семейный ритуал перед школой',
+  'rabochee-mesto-shkolnika-obustroystvo': 'Рабочее место школьника: стол, свет и стул',
+  'raspisanie-urokov-i-prodlenka': 'Расписание уроков и продлёнка: что учесть',
+  'shkolnaya-forma-kak-vybrat': 'Как выбрать школьную форму и не переплатить',
+  'znakomstvo-s-odnoklassnikami-do-shkoly': 'Как помочь ребёнку познакомиться с одноклассниками',
+};
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const article = await getArticleBySlug(params.slug);
   if (!article) return {};
+  const seoTitle = SEO_TITLES[article.slug] ?? article.title;
   return {
-    title: article.title,
+    title: seoTitle,
     description: article.description,
     alternates: { canonical: `/dlya-roditeley/${article.slug}` },
     openGraph: {
       type: 'article',
-      title: article.title,
+      title: seoTitle,
       description: article.description,
       publishedTime: article.date,
       images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -50,7 +64,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   });
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}

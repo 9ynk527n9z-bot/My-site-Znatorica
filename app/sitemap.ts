@@ -3,7 +3,7 @@ import { SITE_URL } from '@/lib/seo';
 import { SEGMENTS } from '@/lib/constants';
 import { getAllVprParams, getAllVprSubjectParams } from '@/lib/vpr';
 import { getAllMckoParams, getAllMckoSubjectParams } from '@/lib/mcko';
-import { getAllArticleSlugs, getPublishedTopics } from '@/lib/content';
+import { getAllArticleSlugsWithDates, getPublishedTopicSlugsWithDates } from '@/lib/content';
 import { CODE_TOPIC_ROUTES } from '@/lib/code-topics';
 import { getTournamentTracks } from '@/lib/tournament';
 
@@ -119,6 +119,13 @@ export const TRAINER_ROUTES: string[] = [
   '/trenazher/english-clothes',
   '/trenazher/english-weather',
   '/trenazher/english-school',
+  '/trenazher/english-transport',
+  '/trenazher/verno-ili-neverno-matematika',
+  '/trenazher/udarnyy-slog',
+  '/trenazher/chasti-rechi-4klass',
+  '/trenazher/odushevlennye-neodushevlennye',
+  '/trenazher/mesyatsy-i-sezony',
+  '/trenazher/angliyskiy-artikli',
   // Игры-тренажёры, доступные через хаб /igry
   '/trenazher/krestiki-noliki',
   '/trenazher/ugaday-slovo',
@@ -141,7 +148,9 @@ export const STATIC_ROUTES: string[] = [
   '/generator',
   '/generator/primery',
   '/generator/propisi-angliyskiy',
+  '/generator/angliyskiy-alfavit',
   '/generator/propisi-ru',
+  '/generator/alfavit',
   '/generator/krossvordy',
   '/generator/filvordy',
   '/generator/anagrammy',
@@ -157,9 +166,24 @@ export const STATIC_ROUTES: string[] = [
   '/generator/labirinty',
   '/generator/sudoku',
   '/generator/raspisanie-urokov',
+  '/generator/chitatelskiy-dnevnik',
+  '/generator/nakleyki-na-tetradi',
+  '/generator/raspisanie-zvonkov',
+  '/generator/rezhim-dnya-shkolnika',
+  '/generator/spisok-v-shkolu',
+  '/generator/raspisanie-kruzhkov',
+  '/generator/grafik-dezhurstv',
+  '/generator/razdeli-na-gruppy',
   '/generator/fleshkarty',
   '/generator/spisyvanie',
   '/generator/chislovaya-piramida',
+  '/generator/primery-do-20',
+  '/generator/primery-po-klassam',
+  '/generator/propisi-1-klass',
+  '/generator/propisi-alfavit',
+  '/generator/propisi-dlya-doshkolnikov',
+  '/generator/propisi-glasnye',
+  '/generator/propisi-soglasnye',
   '/igry',
   '/plakaty',
   '/sborniki',
@@ -178,8 +202,6 @@ export const STATIC_ROUTES: string[] = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
   const segmentRoutes = SEGMENTS.map((segment) => `/${segment.id}`);
 
   // Раздел ВПР: хаб + страницы предметов + все варианты (генерируются из данных)
@@ -189,7 +211,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...getAllVprParams().map((p) => `/vpr/${p.klass}/${p.subject}/${p.variant}`),
   ];
 
-  const articleRoutes = (await getAllArticleSlugs()).map((slug) => `/dlya-roditeley/${slug}`);
+  // Статьи и темы из БД — тут есть настоящая дата изменения (updatedAt), её и
+  // используем ниже. У остального контента (статика, тренажёры/генераторы,
+  // варианты ВПР/МЦКО — всё захардкожено в коде, реальной даты правки нет)
+  // lastModified сознательно НЕ указываем: Google явно предупреждает, что
+  // sitemap, где lastmod у всех страниц всегда "сегодня" (как было раньше —
+  // здесь стояло `new Date()` на каждый запрос), считается недостоверным и
+  // игнорируется целиком по всему сайту, см.
+  // https://www.seroundtable.com/google-lastmod-date-seo-hack-39318.html
+  const articles = await getAllArticleSlugsWithDates();
+  const articleRoutes = articles.map((a) => ({ route: `/dlya-roditeley/${a.slug}`, lastModified: a.updatedAt }));
 
   const turnirRoutes = getTournamentTracks().map((t) => `/turnir/${t.id}`);
 
@@ -201,24 +232,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Новые темы из админки/БД живут под /tema/[slug]
-  const cmsTopicRoutes = (await getPublishedTopics()).map((t) => `/tema/${t.slug}`);
+  const cmsTopics = await getPublishedTopicSlugsWithDates();
+  const cmsTopicRoutes = cmsTopics.map((t) => ({ route: `/tema/${t.slug}`, lastModified: t.updatedAt }));
 
-  const allRoutes = [
+  const routesWithoutDate = [
     ...STATIC_ROUTES,
     ...segmentRoutes,
     ...TRAINER_ROUTES,
     ...TOPIC_ROUTES,
     ...vprRoutes,
     ...mckoRoutes,
-    ...articleRoutes,
-    ...cmsTopicRoutes,
     ...turnirRoutes,
   ];
 
-  return allRoutes.map((route) => ({
-    url: `${SITE_URL}${route}`,
-    lastModified: now,
-    changeFrequency: route === '/' ? 'daily' : 'weekly',
-    priority: route === '/' ? 1 : route.split('/').length <= 2 ? 0.8 : 0.6,
-  }));
+  return [
+    ...routesWithoutDate.map((route) => ({
+      url: `${SITE_URL}${route}`,
+      changeFrequency: route === '/' ? ('daily' as const) : ('weekly' as const),
+      priority: route === '/' ? 1 : route.split('/').length <= 2 ? 0.8 : 0.6,
+    })),
+    ...[...articleRoutes, ...cmsTopicRoutes].map(({ route, lastModified }) => ({
+      url: `${SITE_URL}${route}`,
+      lastModified,
+      changeFrequency: 'weekly' as const,
+      priority: route.split('/').length <= 2 ? 0.8 : 0.6,
+    })),
+  ];
 }

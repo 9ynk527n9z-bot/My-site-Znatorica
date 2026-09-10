@@ -4,7 +4,7 @@ import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Человек — теория и тренажёр для 2 класса',
-  description: 'Строение тела человека, органы чувств и забота о здоровье — программа окружающего мира для 2 класса.',
+  description: 'Тело человека, органы чувств и забота о здоровье: теория и задания для 2 класса.',
   alternates: { canonical: '/2-klass/okruzhayushchiy/chelovek' },
 };
 
@@ -24,7 +24,7 @@ const learningResource = learningResourceJsonLd({
 
 export default function ChelovekPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 

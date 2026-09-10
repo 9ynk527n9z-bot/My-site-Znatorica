@@ -97,7 +97,7 @@ export default function TsvetaTrainerPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between flex-wrap gap-4">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">
@@ -158,7 +158,7 @@ export default function TsvetaTrainerPage() {
                       key={option.name}
                       onClick={() => handlePick(option)}
                       disabled={!!feedback}
-                      className={`flex items-center justify-center py-6 rounded-2xl border-4 text-xl font-black transition-all ${
+                      className={`flex items-center justify-center text-center px-2 py-6 rounded-2xl border-4 text-base sm:text-xl font-black break-words transition-all ${
                         showState
                           ? isAnswer
                             ? 'border-green-500 bg-green-50 text-[#3a1c6e] pop-in'

@@ -31,16 +31,16 @@ export default function SegmentResourcesSection({ segmentId, gradeTitle }: Props
         <div className="bg-[#2A1B4D] border-t border-[#2D2350] py-12 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-8">✨ Тренажёры для {gradeTitle}</h2>
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-3 gap-4">
               {resources.trainers.map((trainer) => (
                 <Link
                   key={trainer.slug}
                   href={`/trenazher/${trainer.slug}`}
-                  className="block bg-[#1E1035] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
+                  className="block bg-teal-500/20 border border-[#2D2350] rounded-lg p-4 hover:border-orange transition-colors"
                 >
-                  <div className="text-5xl mb-4">{trainer.icon}</div>
-                  <h3 className="text-xl font-bold mb-2">{trainer.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{trainer.desc}</p>
+                  <div className="text-3xl mb-2">{trainer.icon}</div>
+                  <h3 className="text-lg font-bold mb-1">{trainer.title}</h3>
+                  <p className="text-gray-400 text-sm mb-2">{trainer.desc}</p>
                   <span className="text-orange font-bold">Играть →</span>
                 </Link>
               ))}
@@ -53,16 +53,16 @@ export default function SegmentResourcesSection({ segmentId, gradeTitle }: Props
         <div className="bg-black border-t border-[#2D2350] py-12 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-8">⚙️ Генераторы для {gradeTitle}</h2>
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 gap-4">
               {resources.generators.map((gen) => (
                 <Link
                   key={gen.slug}
                   href={`/generator/${gen.slug}`}
-                  className="block bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8 hover:border-orange transition-colors"
+                  className="block bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-4 hover:border-orange transition-colors"
                 >
-                  <div className="text-5xl mb-4">{gen.icon}</div>
-                  <h3 className="text-xl font-bold mb-2">{gen.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{gen.desc}</p>
+                  <div className="text-3xl mb-2">{gen.icon}</div>
+                  <h3 className="text-lg font-bold mb-1">{gen.title}</h3>
+                  <p className="text-gray-400 text-sm mb-2">{gen.desc}</p>
                   <span className="text-orange font-bold">Создать →</span>
                 </Link>
               ))}
@@ -76,7 +76,7 @@ export default function SegmentResourcesSection({ segmentId, gradeTitle }: Props
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-2">📋 Подготовка к ВПР для {gradeTitle}</h2>
             <p className="text-gray-400 mb-8">10 авторских вариантов по каждому предмету</p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {VPR_SUBJECTS.map((subj) => (
                 <Link
                   key={subj.slug}
@@ -97,7 +97,7 @@ export default function SegmentResourcesSection({ segmentId, gradeTitle }: Props
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-2">🏙️ Подготовка к МЦКО для {gradeTitle}</h2>
             <p className="text-gray-400 mb-8">Для Москвы и Московской области — формат отличается от ВПР, 20 вариантов по каждому предмету</p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {MCKO_SUBJECTS.map((subj) => (
                 <Link
                   key={subj.slug}

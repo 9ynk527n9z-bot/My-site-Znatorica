@@ -85,7 +85,7 @@ export default function AdminSettingsPage() {
 
   if (loading) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center text-gray-400">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center text-gray-400">
         Загрузка...
       </div>
     );
@@ -93,14 +93,14 @@ export default function AdminSettingsPage() {
 
   if (accessDenied) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center text-red-400">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center text-red-400">
         У вас нет доступа к админ-панели
       </div>
     );
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <Link href="/admin/dashboard" className="text-orange hover:underline">

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Большие числа — тренажёр по разрядам и классам для 4 класса',
+  title: 'Большие числа и разряды — тренажёр, 4 класс',
   description:
     'Тренажёр на многозначные числа: сколько тысяч в числе и сколько единиц в классе единиц — 10 раундов с выбором ответа из вариантов.',
   alternates: { canonical: '/trenazher/velikie-chisla' },

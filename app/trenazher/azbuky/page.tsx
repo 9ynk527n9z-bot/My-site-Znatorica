@@ -4,14 +4,14 @@ import PageJsonLd from '@/components/PageJsonLd';
 import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
-  title: 'Английский алфавит (игра) — интерактивный тренажёр A-Z',
+  title: 'Английский алфавит — тренажёр A–Z',
   description: 'Бесплатный интерактивный тренажёр английского алфавита A-Z: буква, слово, картинка и транскрипция в игровой форме для детей 4–7 лет.',
   alternates: { canonical: '/trenazher/azbuky' },
 };
 
 export default function AzbukyTrainerPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <PageJsonLd metadata={metadata} section="trenazher" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>

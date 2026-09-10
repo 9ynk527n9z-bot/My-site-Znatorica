@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Что изменилось? — тренажёр памяти и внимания для детей',
+  title: 'Что изменилось? — тренажёр памяти',
   description: 'Запомни расположение фигур и найди, что изменилось. Интерактивный тренажёр памяти и внимания для дошкольников.',
   alternates: { canonical: '/trenazher/chto-izmenilos' },
 };

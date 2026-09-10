@@ -4,7 +4,7 @@ import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
   title: 'Природа — теория и тренажёр для 2 класса',
-  description: 'Живая и неживая природа в программе окружающего мира для 2 класса.',
+  description: 'Живая и неживая природа: признаки, примеры и задания для 2 класса.',
   alternates: { canonical: '/2-klass/okruzhayushchiy/priroda' },
 };
 
@@ -24,7 +24,7 @@ const learningResource = learningResourceJsonLd({
 
 export default function PrirodaPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 

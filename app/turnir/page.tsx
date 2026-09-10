@@ -3,7 +3,7 @@ import { getTournamentTracks } from '@/lib/tournament';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata = {
-  title: 'Турнир Знаторики — бесплатная викторина с именным дипломом',
+  title: 'Турнир Знаторики — бесплатная викторина',
   description: 'Пройди турнир по своему классу и предмету бесплатно, а результат можно оформить в виде именного диплома.',
   alternates: { canonical: '/turnir' },
 };

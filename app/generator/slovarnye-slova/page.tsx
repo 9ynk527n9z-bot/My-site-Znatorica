@@ -138,14 +138,16 @@ export default function SlovarnyeSlovaGeneratorPage() {
               <ExportToolbar targetRef={printRef} filename={`slovarnye-slova-${grade}-klass`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-4">Вставь пропущенную букву</h2>
-            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside">
-              {exercise.map((item, i) => (
-                <li key={i} className="text-black text-lg">
-                  {item.display}
-                </li>
-              ))}
-            </ol>
+            <div className="rounded-2xl border-2 border-[#A78BFA] p-6 sm:p-8">
+              <h2 className="mb-6 text-center text-2xl font-bold text-[#3a1c6e]">Вставь пропущенную букву</h2>
+              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside marker:font-black marker:text-slate-700">
+                {exercise.map((item, i) => (
+                  <li key={i} className="text-black text-lg">
+                    {item.display}
+                  </li>
+                ))}
+              </ol>
+            </div>
 
             <div className="mt-6 no-print">
               <button onClick={() => setShowAnswers((v) => !v)} className="text-orange font-bold hover:underline">
@@ -173,14 +175,16 @@ export default function SlovarnyeSlovaGeneratorPage() {
               <ExportToolbar targetRef={printRef} filename={`slovarnye-slova-spisok-${grade}-klass`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-4">Словарные слова — {grade} класс</h2>
-            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside">
-              {list.map((word, i) => (
-                <li key={i} className="text-black text-lg">
-                  {word}
-                </li>
-              ))}
-            </ol>
+            <div className="rounded-2xl border-2 border-[#A78BFA] p-6 sm:p-8">
+              <h2 className="mb-6 text-center text-2xl font-bold text-[#3a1c6e]">Словарные слова — {grade} класс</h2>
+              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-decimal list-inside marker:font-black marker:text-slate-700">
+                {list.map((word, i) => (
+                  <li key={i} className="text-black text-lg">
+                    {word}
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ interface ExportToolbarProps {
 }
 
 import { worksheetPages } from '@/lib/worksheet-export';
+import { downloadBlob } from '@/lib/download-blob';
 
 // Единая панель экспорта для всех генераторов сайта: печать + PDF + Word + PNG.
 // Формат листа — А4 (решение пользователя). Работает с любым содержимым внутри
@@ -36,18 +37,6 @@ export default function ExportToolbar({ targetRef, filename }: ExportToolbarProp
       useCORS: true,
       ignoreElements: (el) => el.classList.contains('no-print'),
     });
-  }
-
-  function downloadBlob(blob: Blob, name: string) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    // Даём браузеру начать чтение файла до освобождения blob URL.
-    window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
   }
 
   async function handlePdf() {

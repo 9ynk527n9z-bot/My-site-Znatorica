@@ -1,4 +1,4 @@
-export type MathRange = 10 | 100 | 1000;
+export type MathRange = 10 | 20 | 100 | 1000;
 export type MathMode = 'plus' | 'minus' | 'plus_minus' | 'multiply' | 'divide' | 'multiply_divide';
 
 function randInt(min: number, max: number): number {
@@ -15,7 +15,7 @@ interface MathExample {
 // то, что в школе называют «сложение в пределах 100».
 
 function minOperandFor(range: MathRange): number {
-  if (range === 10) return 1;
+  if (range === 10 || range === 20) return 1;
   if (range === 100) return 10;
   return 100;
 }
@@ -104,16 +104,32 @@ export function generateMathExamples(params: {
   const drawMultiply = createPoolDrawer(buildMultiplyPool(range));
   const drawDivide = createPoolDrawer(buildDividePool(range));
 
+  // Сложение/вычитание не тянутся из заранее построенного пула (при range=1000
+  // он был бы огромным), поэтому повтор отсеиваем на лету: если сгенерированный
+  // пример уже есть на листе, пробуем ещё раз (до 20 попыток) — при маленьком
+  // range (например, "До 10") это и убирает те самые повторы вроде "3 + 5"
+  // дважды на одном листе; после исчерпания попыток берём что получилось,
+  // чтобы не зависнуть, если уникальных вариантов физически меньше, чем count.
+  const seen = new Set<string>();
+  function drawUnique(make: () => MathExample): MathExample {
+    let example = make();
+    for (let attempt = 0; attempt < 20 && seen.has(example.text); attempt++) {
+      example = make();
+    }
+    seen.add(example.text);
+    return example;
+  }
+
   for (let i = 0; i < count; i++) {
     switch (mode) {
       case 'plus':
-        examples.push(makePlus(range));
+        examples.push(drawUnique(() => makePlus(range)));
         break;
       case 'minus':
-        examples.push(makeMinus(range));
+        examples.push(drawUnique(() => makeMinus(range)));
         break;
       case 'plus_minus':
-        examples.push(Math.random() < 0.5 ? makePlus(range) : makeMinus(range));
+        examples.push(drawUnique(() => (Math.random() < 0.5 ? makePlus(range) : makeMinus(range))));
         break;
       case 'multiply':
         examples.push(drawMultiply());

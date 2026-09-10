@@ -9,10 +9,13 @@ const PREFERRED_VOICE_NAMES = [
   'Google русский',
   'Microsoft Svetlana Online (Natural) - Russian (Russia)',
   'Microsoft Svetlana',
-  'Yuri',
   'Microsoft Irina',
   'Google Русский',
 ];
+
+// Известные мужские имена голосов — на случай, если в системе нет ни одного
+// из PREFERRED_VOICE_NAMES и приходится выбирать из общего пула ru-RU.
+const KNOWN_MALE_VOICE_NAMES = ['Yuri', 'Pavel', 'Male'];
 
 function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   const ru = voices.filter((v) => v.lang.toLowerCase().startsWith('ru'));
@@ -23,7 +26,8 @@ function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | n
     if (match) return match;
   }
 
-  return pool[0] ?? null;
+  const femalePool = pool.filter((v) => !KNOWN_MALE_VOICE_NAMES.some((male) => v.name.includes(male)));
+  return femalePool[0] ?? pool[0] ?? null;
 }
 
 interface ListenButtonRuProps {
@@ -62,7 +66,10 @@ export default function ListenButtonRu({ text, label = '🔊 Прослушат�
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ru-RU';
     utterance.rate = 0.9;
-    if (voiceRef.current) utterance.voice = voiceRef.current;
+    // На случай, если 'voiceschanged' не сработал (баг Safari) и voiceRef
+    // остался пустым — пробуем выбрать голос ещё раз прямо в момент клика.
+    const voice = voiceRef.current ?? pickBestVoice(window.speechSynthesis.getVoices());
+    if (voice) utterance.voice = voice;
 
     utterance.onstart = () => setPlaying(true);
     utterance.onend = () => setPlaying(false);

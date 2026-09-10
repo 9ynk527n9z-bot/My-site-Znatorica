@@ -6,12 +6,19 @@ import crypto from 'crypto';
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, agreeToTerms } = await req.json();
+    const { email, password, agreeToPrivacy, agreeToTerms } = await req.json();
 
-    // ✅ ФЗ-152: Явное согласие обязательно
-    if (!agreeToTerms) {
+    // ✅ ФЗ-152: Согласие на обработку персональных данных — отдельно от условий использования
+    if (!agreeToPrivacy) {
       return NextResponse.json(
         { error: 'Вы должны согласиться с обработкой персональных данных' },
+        { status: 400 }
+      );
+    }
+
+    if (!agreeToTerms) {
+      return NextResponse.json(
+        { error: 'Вы должны принять условия использования и оферту' },
         { status: 400 }
       );
     }

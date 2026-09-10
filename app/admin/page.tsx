@@ -35,7 +35,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen py-12 px-6">
+    <div className="bg-[#28134f] min-h-screen py-12 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-3xl font-bold">Администраторская панель</h1>

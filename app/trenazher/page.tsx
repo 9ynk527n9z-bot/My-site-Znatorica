@@ -226,6 +226,27 @@ const CATEGORIES: Category[] = [
         icon: '⏱️',
         url: '/skorochtenie',
       },
+      {
+        id: 'udarnyy-slog',
+        name: 'Ударный слог',
+        description: 'Слово по слогам — нажми на слог, на который падает ударение — 2 класс',
+        icon: '📢',
+        url: '/udarnyy-slog',
+      },
+      {
+        id: 'chasti-rechi-4klass',
+        name: 'Части речи (4 класс)',
+        description: 'Существительное, наречие, местоимение, предлог и другие — определи часть речи',
+        icon: '📝',
+        url: '/chasti-rechi-4klass',
+      },
+      {
+        id: 'odushevlennye-neodushevlennye',
+        name: 'Одушевлённые и неодушевлённые',
+        description: 'КТО? или ЧТО? — определи, одушевлённое существительное или нет — 1-2 класс',
+        icon: '🧍',
+        url: '/odushevlennye-neodushevlennye',
+      },
     ],
   },
   {
@@ -435,6 +456,13 @@ const CATEGORIES: Category[] = [
         icon: '🧮',
         url: '/vnetablichnoe-umnozhenie-3klass',
       },
+      {
+        id: 'verno-ili-neverno-matematika',
+        name: 'Верно или неверно: математика',
+        description: 'Пример с ответом — определи, верное это равенство или нет — 2-3 класс',
+        icon: '✅',
+        url: '/verno-ili-neverno-matematika',
+      },
     ],
   },
   {
@@ -493,6 +521,8 @@ const CATEGORIES: Category[] = [
       { id: 'english-clothes', name: 'Одежда (английский)', description: 'T-shirt, dress, shoes и другая одежда с озвучкой', icon: '👕', url: '/english-clothes' },
       { id: 'english-weather', name: 'Погода (английский)', description: 'Sun, rain, snow и другая погода с озвучкой', icon: '☀️', url: '/english-weather' },
       { id: 'english-school', name: 'Школьные принадлежности (английский)', description: 'Book, pen, ruler и другие школьные вещи с озвучкой', icon: '🎒', url: '/english-school' },
+      { id: 'english-transport', name: 'Транспорт по-английски', description: 'Найди пару: слово и картинка — car, bus, plane и другой транспорт', icon: '🚗', url: '/english-transport' },
+      { id: 'angliyskiy-artikli', name: 'Артикли a/an и множественное число', description: 'Выбери верный артикль или правильную форму множественного числа — 2-4 класс', icon: '🔤', url: '/angliyskiy-artikli' },
     ],
   },
   {
@@ -526,6 +556,13 @@ const CATEGORIES: Category[] = [
         description: 'Угадай время года по картинке: зима, весна, лето или осень',
         icon: '🍂',
         url: '/vremena-goda',
+      },
+      {
+        id: 'mesyatsy-i-sezony',
+        name: 'Месяцы и времена года',
+        description: 'Название месяца с картинкой — определи, к какому времени года он относится',
+        icon: '📅',
+        url: '/mesyatsy-i-sezony',
       },
       {
         id: 'prirodnye-yavleniya-6-7let',
@@ -720,43 +757,74 @@ const CATEGORIES: Category[] = [
   },
 ];
 
+const CATEGORY_STYLES = [
+  { panel: 'from-sky-400/35 via-blue-400/20 to-indigo-300/10', card: 'from-sky-400/28 to-blue-400/16' },
+  { panel: 'from-emerald-400/30 via-teal-400/18 to-cyan-300/10', card: 'from-emerald-400/24 to-teal-400/15' },
+  { panel: 'from-rose-400/45 via-pink-400/32 to-orange-400/20', card: 'from-rose-400/34 to-orange-400/20' },
+  { panel: 'from-sky-400/35 via-blue-400/20 to-indigo-300/10', card: 'from-sky-400/28 to-blue-400/16' },
+  { panel: 'from-emerald-400/30 via-teal-400/18 to-cyan-300/10', card: 'from-emerald-400/24 to-teal-400/15' },
+  { panel: 'from-rose-400/45 via-pink-400/32 to-orange-400/20', card: 'from-rose-400/34 to-orange-400/20' },
+  { panel: 'from-emerald-400/30 via-teal-400/18 to-cyan-300/10', card: 'from-emerald-400/24 to-teal-400/15' },
+] as const;
+
 export default function TrainerIndexPage() {
   return (
-    <div className="min-h-screen">
-      <div className="border-b border-white/15 py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <Link href="/" className="text-orange hover:underline text-sm mb-4 inline-block">
-            ← Назад
-          </Link>
-          <h1 className="text-5xl font-bold mb-4">🎮 Тренажёры</h1>
+    <div className="trainer-catalog-page min-h-screen px-4 py-16 sm:px-6">
+      <div className="mx-auto max-w-6xl">
+        <Link href="/" className="text-orange hover:underline text-sm mb-4 inline-block">
+          ← Назад
+        </Link>
+        <div className="mx-auto mb-9 max-w-3xl text-center">
+          <div className="mb-3 text-4xl" aria-hidden="true">🎮</div>
+          <h1 className="text-[30px] font-bold sm:text-[42px]">Тренажёры</h1>
+          <p className="mt-3 text-base text-white/70 sm:text-lg">
+            Выбери предмет и закрепляй знания в игровой форме
+          </p>
         </div>
-      </div>
 
-      <div className="max-w-6xl mx-auto pt-8 px-6">
-        <TrainerQuotaBanner />
-      </div>
+        <div className="mx-auto mb-8 max-w-4xl">
+          <TrainerQuotaBanner />
+        </div>
 
-      <div className="max-w-6xl mx-auto pb-12 px-6 space-y-16">
-        {CATEGORIES.map((category) => (
-          <div key={category.title}>
-            <h2 className="text-3xl font-bold mb-8">
-              {category.emoji} {category.title}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {category.trainers.map((trainer) => (
-                <Link
-                  key={trainer.id}
-                  href={`/trenazher${trainer.url}`}
-                  className="group card hover:border-white/50 transition-all text-center !p-3"
-                >
-                  <div className="text-3xl mb-2">{trainer.icon}</div>
-                  <h3 className="text-sm font-bold mb-1 group-hover:text-orange leading-snug">{trainer.name}</h3>
-                  <p className="text-white/60 text-xs line-clamp-2">{trainer.description}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 items-start gap-4 pb-12 md:grid-cols-2">
+          {CATEGORIES.map((category, categoryIndex) => {
+            const style = CATEGORY_STYLES[categoryIndex];
+
+            return (
+              <details
+                key={category.title}
+                className={`group rounded-2xl border border-white/15 bg-gradient-to-br ${style.panel} p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] open:col-span-full sm:p-4`}
+              >
+                <summary className="flex min-h-[58px] cursor-pointer list-none items-center gap-3 px-1 marker:content-none sm:px-2 [&::-webkit-details-marker]:hidden">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#FFD4A8] bg-[#FFF1DC] text-xl shadow-[0_3px_10px_rgba(67,31,12,0.18),inset_0_1px_0_rgba(255,255,255,0.9)]" aria-hidden="true">
+                    {category.emoji}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-xl font-extrabold text-[#FF9F1C] drop-shadow-[0_1px_2px_rgba(45,15,75,0.9)] sm:text-2xl">
+                      {category.title}
+                    </h2>
+                    <p className="mt-1 text-[18px] font-medium leading-tight text-white/85">Выбрать тренажёр</p>
+                  </div>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/10 text-xl text-white/75 transition-transform group-open:rotate-180" aria-hidden="true">⌄</span>
+                </summary>
+
+                <div className="mt-3 grid grid-cols-1 gap-2 border-t border-white/10 pt-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {category.trainers.map((trainer) => (
+                    <Link
+                      key={trainer.id}
+                      href={`/trenazher${trainer.url}`}
+                      className={`group min-h-[112px] rounded-xl border border-white/20 bg-gradient-to-br ${style.card} p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:-translate-y-0.5 hover:border-white/50`}
+                    >
+                      <div className="mb-1 text-2xl">{trainer.icon}</div>
+                      <h3 className="text-sm font-bold leading-snug transition-colors group-hover:text-orange">{trainer.name}</h3>
+                      <p className="mt-1 line-clamp-2 text-xs leading-snug text-white/60">{trainer.description}</p>
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

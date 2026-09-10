@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 const GRID_SIZE = 6;
 const COLS = ['А', 'Б', 'В', 'Г', 'Д', 'Е'];
@@ -216,9 +217,16 @@ export default function MorskoyBoyTrainerPage() {
             <div className="card bg-white text-center py-10">
               <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Все корабли потоплены!</p>
               <p className="text-gray-600 mb-6">Выстрелов: {shotCount}</p>
-              <button onClick={newGame} className="btn-primary px-6 py-3">
+              <button onClick={newGame} className="btn-primary px-6 py-3 mb-6">
                 🔁 Играть ещё
               </button>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text={`Потопили весь флот в «Морском бое» за ${shotCount} выстрелов на Знаторике — попробуйте тоже:`}
+                  url="https://znatorica.ru/trenazher/morskoy-boy"
+                  trackKey="morskoy-boy"
+                />
+              </div>
             </div>
           )}
         </div>

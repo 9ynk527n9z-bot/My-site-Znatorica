@@ -11,9 +11,13 @@ const REFERRER_STORAGE_KEY = 'znatorika_referrer';
 // Админский раздел и сама админка из статистики исключены, чтобы не засорять данные.
 //
 // utm_source (метка "откуда пришёл", например ?utm_source=vk_ads) запоминается в
-// localStorage при первом заходе по такой ссылке и дальше прикладывается ко ВСЕМ
+// sessionStorage при первом заходе по такой ссылке и дальше прикладывается ко ВСЕМ
 // просмотрам в рамках визита — это "first-touch"-атрибуция: важно знать, с чего
-// начался визит, а не только на какой странице стоит метка.
+// начался визит, а не только на какой странице стоит метка. Именно sessionStorage,
+// а не localStorage: метка должна жить только текущий визит (до закрытия вкладки),
+// иначе человек, который один раз кликнул по рекламе, будет отмечаться "рекламой"
+// во ВСЕХ будущих визитах — даже если через месяц зайдёт напрямую через поиск
+// (баг был именно в этом, нашли и починили 2026-09-08).
 //
 // yclid/gclid — клик-метки, которые Яндекс.Директ и Google Ads сами добавляют в
 // ссылку объявления, даже если в самой рекламе не настроен ?utm_source=. Без этого
@@ -34,13 +38,13 @@ export default function PageViewTracker() {
         (searchParams.get('yclid') ? 'yandex-direct' : null) ||
         (searchParams.get('gclid') ? 'google-ads' : null);
       if (fromUrl) {
-        localStorage.setItem(UTM_STORAGE_KEY, fromUrl.slice(0, 100));
+        sessionStorage.setItem(UTM_STORAGE_KEY, fromUrl.slice(0, 100));
       }
-      utmSource = localStorage.getItem(UTM_STORAGE_KEY) || undefined;
+      utmSource = sessionStorage.getItem(UTM_STORAGE_KEY) || undefined;
 
       // Referrer — только с ПЕРВОЙ страницы визита: дальше document.referrer при
       // переходах внутри сайта станет самим сайтом и перезатрёт настоящий источник.
-      if (!localStorage.getItem(REFERRER_STORAGE_KEY)) {
+      if (!sessionStorage.getItem(REFERRER_STORAGE_KEY)) {
         let host = 'direct';
         if (document.referrer) {
           try {
@@ -49,9 +53,9 @@ export default function PageViewTracker() {
             host = 'direct';
           }
         }
-        localStorage.setItem(REFERRER_STORAGE_KEY, host.slice(0, 100));
+        sessionStorage.setItem(REFERRER_STORAGE_KEY, host.slice(0, 100));
       }
-      referrer = localStorage.getItem(REFERRER_STORAGE_KEY) || undefined;
+      referrer = sessionStorage.getItem(REFERRER_STORAGE_KEY) || undefined;
     } catch {
       // localStorage недоступен (приватный режим и т.п.) — просто не размечаем источник
     }

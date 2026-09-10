@@ -75,7 +75,13 @@ export default function ListenButton({ text, label = '🔊 Прослушать'
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-GB';
       utterance.rate = 0.9;
-      if (voiceRef.current) utterance.voice = voiceRef.current;
+      // На случай, если событие 'voiceschanged' не сработало (известный баг
+      // Safari) и voiceRef так и остался пустым с момента загрузки страницы —
+      // пробуем выбрать голос ещё раз прямо сейчас: к моменту клика голоса
+      // почти наверняка уже подгружены браузером, даже если не были готовы
+      // при первой попытке в useEffect.
+      const voice = voiceRef.current ?? pickBestVoice(window.speechSynthesis.getVoices());
+      if (voice) utterance.voice = voice;
 
       utterance.onstart = () => setPlaying(true);
       utterance.onend = () => setPlaying(false);

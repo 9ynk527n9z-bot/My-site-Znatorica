@@ -56,6 +56,10 @@ export async function computeProgressStats(userId: string): Promise<ProgressStat
     dailySeries.push({ date: d, count: dayCounts.get(d) ?? 0 });
   }
 
+  const recentTrainerTypes = Array.from(
+    new Set(uses.filter((u) => u.type.startsWith('trainer:')).map((u) => u.type)),
+  ).slice(0, 6);
+
   return {
     total,
     last7Days,
@@ -64,5 +68,6 @@ export async function computeProgressStats(userId: string): Promise<ProgressStat
     vprVariantsCompleted: vprVariantsSet.size,
     streak,
     dailySeries,
+    recentTrainerTypes,
   };
 }

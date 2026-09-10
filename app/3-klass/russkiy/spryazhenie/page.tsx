@@ -3,28 +3,28 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from '@/lib/seo';
 import TopicQuiz from '@/components/TopicQuiz';
 
 export const metadata = {
-  title: 'Спряжение — теория и тренажёр для 3 класса',
-  description: 'Глаголы и их формы: спряжение для третьеклассников.',
+  title: 'Спряжение глаголов — теория и тренажёр для 4 класса',
+  description: 'Как определять I и II спряжение глаголов: правило, исключения и задания для 4 класса.',
   alternates: { canonical: '/3-klass/russkiy/spryazhenie' },
 };
 
 const breadcrumbs = breadcrumbJsonLd([
   { name: 'Главная', url: '/' },
-  { name: '3 класс', url: '/3-klass' },
-  { name: 'Русский язык', url: '/3-klass' },
+  { name: '4 класс', url: '/4-klass' },
+  { name: 'Русский язык', url: '/4-klass' },
   { name: 'Спряжение', url: '/3-klass/russkiy/spryazhenie' },
 ]);
 
 const learningResource = learningResourceJsonLd({
   name: 'Спряжение',
-  description: 'Спряжение глаголов для 3 класса',
+  description: 'Спряжение глаголов для 4 класса',
   url: '/3-klass/russkiy/spryazhenie',
-  educationalLevel: '3 класс начальной школы',
+  educationalLevel: '4 класс начальной школы',
 });
 
 export default function SpryazheniePage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResource) }} />
 
@@ -32,9 +32,9 @@ export default function SpryazheniePage() {
         <div className="max-w-6xl mx-auto flex gap-2 text-sm">
           <Link href="/" className="text-orange hover:underline">Главная</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/3-klass" className="text-orange hover:underline">3 класс</Link>
+          <Link href="/4-klass" className="text-orange hover:underline">4 класс</Link>
           <span className="text-gray-400">/</span>
-          <Link href="/3-klass" className="text-orange hover:underline">Русский язык</Link>
+          <Link href="/4-klass" className="text-orange hover:underline">Русский язык</Link>
           <span className="text-gray-400">/</span>
           <span className="text-white">Спряжение</span>
         </div>
@@ -84,7 +84,7 @@ export default function SpryazheniePage() {
             <div>
               <h3 className="font-bold text-orange mb-2">Как определить спряжение</h3>
               <p className="text-gray-300 mb-4">
-                Поставь глагол в неопределённую форму (отвечает на вопрос «что делать?») и посмотри на окончание:
+                Если личное окончание безударное, поставь глагол в неопределённую форму («что делать?» или «что сделать?»), посмотри на гласную перед <b>-ть</b> и проверь исключения:
               </p>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="bg-violet/10 p-4 rounded">

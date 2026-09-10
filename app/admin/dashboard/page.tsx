@@ -67,7 +67,7 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center">
         <div className="text-white text-xl">Загрузка...</div>
       </div>
     );
@@ -75,14 +75,14 @@ export default function AdminDashboard() {
 
   if (error) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center">
         <div className="text-red-500 text-xl">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       {/* Header */}
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">

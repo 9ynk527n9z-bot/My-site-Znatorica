@@ -43,7 +43,7 @@ export default async function SearchPage({
   const groups = groupByType(results);
 
   return (
-    <div className="bg-black min-h-screen py-16 px-6">
+    <div className="bg-[#28134f] min-h-screen py-16 px-6">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">🔍 Результаты поиска</h1>
 

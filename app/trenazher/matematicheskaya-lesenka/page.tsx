@@ -12,6 +12,7 @@ import {
   genTwoDigit,
 } from '@/lib/quiz/math-generators';
 import type { QuizQuestion } from '@/lib/quiz/types';
+import ShareButtons from '@/components/ShareButtons';
 
 const TOTAL_STEPS = 10;
 // «Несгораемые» ступеньки: с них не скатываешься до самого начала при ошибке.
@@ -231,9 +232,16 @@ export default function MatematicheskayaLesenkaPage() {
                 Лесенка пройдена! Ты дошёл до самого верха!
               </p>
               <p className="text-gray-500 mb-8">Все {TOTAL_STEPS} ступенек позади — отличный результат!</p>
-              <button onClick={begin} className="btn-primary px-6 py-3">
+              <button onClick={begin} className="btn-primary px-6 py-3 mb-6">
                 🔁 Пройти снова
               </button>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text="Прошли математическую лесенку до самого верха на Знаторике — попробуйте тоже:"
+                  url="https://znatorica.ru/trenazher/matematicheskaya-lesenka"
+                  trackKey="matematicheskaya-lesenka"
+                />
+              </div>
             </div>
           )}
         </div>

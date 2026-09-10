@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Ориентация в пространстве — сверху, снизу, слева, справа',
+  title: 'Ориентация в пространстве — тренажёр',
   description:
     'Игра с картинками учит определять, где находится предмет: сверху, снизу, слева или справа от другого предмета. Развивает пространственное мышление у детей.',
   alternates: { canonical: '/trenazher/orientaciya-v-prostranstve' },

@@ -55,7 +55,7 @@ export default function AdminUsersPage() {
   }, [page, router]);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <Link href="/admin/dashboard" className="text-orange hover:underline">

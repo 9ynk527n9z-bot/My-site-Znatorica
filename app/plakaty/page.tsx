@@ -19,7 +19,7 @@ export default function PlakatyPage({
   const anchor = klass && VALID_KLASS.includes(klass) ? `#sec${klass}` : '';
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <TrackPageView type="plakaty" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>

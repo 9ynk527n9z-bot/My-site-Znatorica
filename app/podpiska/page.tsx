@@ -109,7 +109,7 @@ export default function SubscriptionPage() {
   const monthlyPerDay = Math.max(1, Math.round(pricing.monthlyPrice / 30));
 
   return (
-    <div className="min-h-screen bg-black py-20 px-6">
+    <div className="min-h-screen bg-[#28134f] py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-12">Знаторика PRO</h1>
 

@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Спряжение глаголов — тренажёр для 3 класса',
+  title: 'Спряжение глаголов — тренажёр для 4 класса',
   description:
-    'Тренажёр учит определять спряжение глаголов: прочитай глагол в неопределённой форме и выбери I или II спряжение. 10 раундов для 3 класса.',
+    'Тренажёр по I и II спряжению глаголов: 10 раундов с глаголами в неопределённой форме для 4 класса.',
   alternates: { canonical: '/trenazher/spryazhenie-3klass' },
 };
 

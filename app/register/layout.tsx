@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Регистрация',
   description: 'Создайте аккаунт в Знаторике, чтобы получить доступ к тренажёрам и генераторам заданий.',
   alternates: { canonical: '/register' },
+  robots: { index: false, follow: true },
 };
 
 export default function RegisterLayout({ children }: { children: React.ReactNode }) {

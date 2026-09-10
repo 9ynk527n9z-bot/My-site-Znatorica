@@ -107,16 +107,15 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    // Для продлеваемых подписок (помесячной и годовой), оплаченных картой, просим
-    // ЮKassa сохранить способ оплаты — только так возможно настоящее автопродление
-    // (см. cron /api/cron/subscription-autorenew). Согласие на сохранение карты берёт
-    // сама ЮKassa на своей странице оплаты — отдельного чекбокса на нашей стороне не
-    // требуется. Для СБП и разовых платежей (сборники, диплом, «Навсегда») сохранение
-    // не запрашивается: оно не поддерживается / не нужно.
-    const shouldSavePaymentMethod =
-      metadata.type === 'subscription' &&
-      (metadata.plan === 'monthly' || metadata.plan === 'yearly') &&
-      paymentMethod !== 'sbp';
+    // save_payment_method временно отключён: аккаунт ЮKassa не подключён к
+    // рекуррентным платежам ("This store can't make recurring payments. Contact
+    // your manager to learn more", код forbidden) — при true ЮKassa отклоняла
+    // ЛЮБУЮ оплату подписки картой ещё до открытия формы оплаты (обнаружено
+    // 2026-09-05: 0 успешных оплат картой за 30 дней при 20 попытках дойти до
+    // кассы). Включить обратно после того, как менеджер ЮKassa подтвердит
+    // разрешение на рекуррентные платежи для магазина — тогда заработает и
+    // /api/cron/subscription-autorenew.
+    const shouldSavePaymentMethod = false;
 
     // Create YuKassa payment - ТОЛЬКО разрешённые методы
     const paymentData = {
@@ -150,6 +149,7 @@ export async function POST(request: NextRequest) {
     const paymentResponse = await response.json() as any;
 
     if (!response.ok) {
+      console.error('YuKassa rejected payment creation:', response.status, JSON.stringify(paymentResponse));
       return NextResponse.json({ error: paymentResponse.description }, { status: 400 });
     }
 

@@ -51,7 +51,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#28134f] flex items-center justify-center px-6 py-12">
       <div className="card max-w-md w-full">
         <h1 className="text-3xl font-bold text-center mb-8">Вход</h1>
 

@@ -6,6 +6,7 @@ export interface ProgressStats {
   vprVariantsCompleted: number;
   streak: number;
   dailySeries: { date: string; count: number }[];
+  recentTrainerTypes?: string[];
 }
 
 export interface DiplomaDef {

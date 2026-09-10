@@ -5,6 +5,7 @@ import DomikScene, { DecorationArt } from '@/components/domik/DomikScene';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DECORATIONS, DECORATION_CATEGORIES, type DecorationCategory } from '@/lib/decorations';
+import ShareButtons from '@/components/ShareButtons';
 
 interface DiplomaStatus {
   slug: string;
@@ -123,12 +124,12 @@ export default function DomikPage() {
   }
 
   if (loading) {
-    return <div className="bg-black min-h-screen flex items-center justify-center text-gray-400">Загружаем домик...</div>;
+    return <div className="bg-[#28134f] min-h-screen flex items-center justify-center text-gray-400">Загружаем домик...</div>;
   }
 
   if (error && !status) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center">
         <div className="text-center p-6 space-y-4">
           <p className="text-red-400 text-lg" role="alert">{error}</p>
           <button className="btn-primary" onClick={() => {
@@ -148,7 +149,7 @@ export default function DomikPage() {
   const categoryItems = DECORATIONS.filter((d) => d.category === activeCategory);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div>
@@ -226,6 +227,20 @@ export default function DomikPage() {
         </div>
 
         <DomikScene ownedItems={status.ownedItems} happy={mood === 'happy'} />
+
+        {owned.size > 0 && (
+          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-4 text-center">
+            <p className="text-gray-300 text-sm mb-3">
+              Домик Знатика уже украшен — {owned.size}{' '}
+              {owned.size === 1 ? 'украшение куплено' : owned.size < 5 ? 'украшения куплено' : 'украшений куплено'}. Похвастайтесь!
+            </p>
+            <ShareButtons
+              text="Мы играем и копим звёзды на украшения для Домика Знатика — попробуйте тоже:"
+              url="https://znatorica.ru/domik"
+              trackKey="domik"
+            />
+          </div>
+        )}
 
         {/* Полка дипломов */}
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">

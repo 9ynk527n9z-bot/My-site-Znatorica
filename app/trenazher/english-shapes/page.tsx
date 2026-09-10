@@ -5,6 +5,7 @@ import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShapeSvg from '@/components/ShapeSvg';
 import { SHAPES, COLORS, randItem, shuffle, type ShapeKind } from '@/lib/shapes';
+import ShareButtons from '@/components/ShareButtons';
 
 const SHAPE_NAMES: Record<ShapeKind, string> = {
   circle: 'Circle',
@@ -115,7 +116,7 @@ export default function EnglishShapesTrainerPage() {
                     key={opt}
                     onClick={() => handlePick(opt)}
                     disabled={!!feedback}
-                    className={`py-4 rounded-xl font-black text-base transition-all border-4 ${
+                    className={`py-4 px-1 rounded-xl font-black text-sm sm:text-base break-words transition-all border-4 ${
                       showState
                         ? opt === current.shape
                           ? 'border-green-500 bg-green-50 text-green-700 pop-in'
@@ -156,6 +157,14 @@ export default function EnglishShapesTrainerPage() {
         )}
       </div>
       </TrainerGate>
+
+      <div className="max-w-6xl mx-auto px-6 pb-10 text-center">
+        <ShareButtons
+          text="Формы на английском учим с озвучкой на Знаторике — попробуйте тоже:"
+          url="https://znatorica.ru/trenazher/english-shapes"
+          trackKey="english-shapes"
+        />
+      </div>
     </div>
   );
 }

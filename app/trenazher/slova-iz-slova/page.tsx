@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 const PUZZLES: { big: string; answers: string[] }[] = [
   { big: 'ТЕЛЕФОН', answers: ['ТЕЛО', 'ЛЕТО', 'ФЕН', 'ТОН', 'НЕТ', 'ЛОТ', 'ЕЛЕ', 'ФЛОТ'] },
@@ -213,10 +214,17 @@ export default function SlovaIzSlovaTrainerPage() {
                   </span>
                 ))}
               </div>
-              <div className="flex justify-center gap-3 flex-wrap">
+              <div className="flex justify-center gap-3 flex-wrap mb-6">
                 <button onClick={newPuzzle} className="btn-primary px-6 py-3">
                   🔁 Другое слово
                 </button>
+              </div>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text={`Нашли все слова в слове «${puzzle.big}» на Знаторике — попробуйте тоже:`}
+                  url="https://znatorica.ru/trenazher/slova-iz-slova"
+                  trackKey="slova-iz-slova"
+                />
               </div>
             </div>
           )}

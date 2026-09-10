@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageJsonLd from '@/components/PageJsonLd';
 
 export const metadata: Metadata = {
-  title: 'Графический диктант по клеточкам — генератор для распечатки',
+  title: 'Графический диктант по клеточкам — генератор',
   description: 'Создавайте графические диктанты по клеточкам: ребёнок ведёт линию по инструкциям и получает рисунок. Печать, PDF, Word, PNG.',
   alternates: { canonical: '/generator/graficheskiy-diktant' },
 };

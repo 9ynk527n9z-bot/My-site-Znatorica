@@ -79,8 +79,10 @@ export default function DiktantyGeneratorPage() {
               <ExportToolbar targetRef={printRef} filename={`diktant-${grade}-klass`} />
             </div>
 
-            <h2 className="text-xl font-bold text-black mb-4">{result.title}</h2>
-            <p className="text-black text-lg leading-relaxed">{result.text}</p>
+            <div className="rounded-2xl border-2 border-[#A78BFA] p-6 sm:p-8">
+              <h2 className="text-center text-2xl font-bold text-[#3a1c6e] mb-5">{result.title}</h2>
+              <p className="text-black text-lg leading-relaxed">{result.text}</p>
+            </div>
 
             <p className="no-print text-gray-500 text-sm mt-6">
               Взрослый читает текст вслух по предложениям, ребёнок записывает под диктовку.

@@ -100,21 +100,16 @@ export default function SbornikPage() {
           <p className="text-white/75 mb-6">{product.description}</p>
           <p className="text-white/50 text-sm mb-6">{product.pages} страниц · PDF, для печати</p>
 
-          <div className="bg-black/30 border border-white/10 rounded-lg p-5 mb-8">
-            <p className="font-bold text-white mb-3">📖 Что внутри:</p>
-            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-white/70 text-sm">
-              <li>✏️ Прописи букв и цифр</li>
-              <li>🔢 Примеры на счёт и состав числа</li>
-              <li>🧩 6 кроссвордов и 6 филвордов</li>
-              <li>⚖️ Сравнение чисел с картинками</li>
-              <li>🕐 Задания на определение времени</li>
-              <li>🌀 Лабиринты и штриховка</li>
-              <li>🔤 Анаграммы и словарные слова</li>
-              <li>✍️ Графический диктант</li>
-              <li>✅ Страница ответов для проверки взрослым</li>
-              <li>🏆 Диплом за прохождение сборника</li>
-            </ul>
-          </div>
+          {product.contents && product.contents.length > 0 && (
+            <div className="bg-black/30 border border-white/10 rounded-lg p-5 mb-8">
+              <p className="font-bold text-white mb-3">📖 Что внутри:</p>
+              <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-white/70 text-sm">
+                {product.contents.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {!checked ? (
             <p className="text-white/50">Загрузка…</p>

@@ -6,6 +6,7 @@ import okrMir3 from './okruzhayushchiy-mir-3.json';
 import okrMir4 from './okruzhayushchiy-mir-4.json';
 import angliyskiy3 from './angliyskiy-3.json';
 import angliyskiy4 from './angliyskiy-4.json';
+import literaturnoeChtenie4 from './literaturnoe-chtenie-4.json';
 import math5 from './math-5.json';
 import russkiy5 from './russkiy-5.json';
 import literatura5 from './literatura-5.json';
@@ -50,6 +51,7 @@ const DATASETS: Record<string, VprSubjectData> = {
   '4-klass/okruzhayushchiy-mir': okrMir4 as VprSubjectData,
   '3-klass/angliyskiy': angliyskiy3 as VprSubjectData,
   '4-klass/angliyskiy': angliyskiy4 as VprSubjectData,
+  '4-klass/literaturnoe-chtenie': literaturnoeChtenie4 as VprSubjectData,
   '5-klass/matematika': math5 as VprSubjectData,
   '5-klass/russkiy': russkiy5 as VprSubjectData,
   '5-klass/literatura': literatura5 as VprSubjectData,
@@ -60,8 +62,8 @@ const DATASETS: Record<string, VprSubjectData> = {
 
 export const VPR_KLASSES = [
   { slug: '3-klass', title: '3 класс', note: 'подготовительные варианты' },
-  { slug: '4-klass', title: '4 класс', note: 'формат настоящей ВПР' },
-  { slug: '5-klass', title: '5 класс', note: 'формат настоящей ВПР' },
+  { slug: '4-klass', title: '4 класс', note: '' },
+  { slug: '5-klass', title: '5 класс', note: '' },
 ] as const;
 
 export function getVprData(klass: string, subject: string): VprSubjectData | null {

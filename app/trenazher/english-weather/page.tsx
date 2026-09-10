@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { ENGLISH_WEATHER } from '@/lib/english-weather';
 import ListenButton from '@/components/ListenButton';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 export default function EnglishWeatherTrainerPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -37,6 +38,14 @@ export default function EnglishWeatherTrainerPage() {
           </div>
         </div>
       </TrainerGate>
+
+      <div className="max-w-6xl mx-auto px-6 pb-10 text-center">
+        <ShareButtons
+          text="Погоду по-английски учим с озвучкой на Знаторике — попробуйте тоже:"
+          url="https://znatorica.ru/trenazher/english-weather"
+          trackKey="english-weather"
+        />
+      </div>
     </div>
   );
 }

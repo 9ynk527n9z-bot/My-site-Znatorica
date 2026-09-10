@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DIPLOMAS, type ProgressStats } from '@/lib/diplomas';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import DailyTaskPreview from '@/components/account/DailyTaskPreview';
 
 function shortDate(d: string) {
   const [, m, day] = d.split('-');
@@ -261,7 +262,7 @@ export default function AccountPage() {
 
   if (loading) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center">
         <div className="text-white text-xl">Загрузка...</div>
       </div>
     );
@@ -269,7 +270,7 @@ export default function AccountPage() {
 
   if (error || !profile) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center">
         <div className="text-red-500 text-xl">{error || 'Что-то пошло не так'}</div>
       </div>
     );
@@ -278,52 +279,69 @@ export default function AccountPage() {
   const { user, subscription, payments } = profile;
   const totalStars = (progress?.total || 0) + user.starsBalance;
 
+  // Ближайшие незаоткрытые достижения — три с самым высоким процентом выполнения,
+  // чтобы показать, до чего осталось меньше всего (не дублирует полный список ниже).
+  const upcomingDiplomas = progress
+    ? DIPLOMAS.map((d) => ({ ...d, value: d.getValue(progress), pct: Math.min(100, Math.round((d.getValue(progress) / d.target) * 100)) }))
+      .filter((d) => d.value < d.target)
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 3)
+    : [];
+
   return (
-    <div className="bg-black min-h-screen">
-      {/* Header */}
-      <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">👤 Личный кабинет</h1>
-            <p className="text-gray-400 text-sm mt-1">{user.email}</p>
+    <div className="bg-[#28134f] min-h-screen px-4 py-10 sm:px-6">
+      <div className="mx-auto max-w-5xl">
+        {/* Профиль */}
+        <section className="mb-5 overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-br from-white/20 via-[#B8D7DF]/16 to-[#D7C6DC]/14 p-5 shadow-[0_12px_30px_rgba(20,16,45,0.18)] backdrop-blur-sm sm:p-7">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FFD4A8] bg-[#FFF1DC] text-2xl shadow-sm">👤</div>
+              <div>
+                <p className="text-sm text-white/60">Ваш профиль</p>
+                <h1 className="text-[20px] font-extrabold sm:text-[24px]">Личный кабинет</h1>
+                <p className="mt-1 text-sm text-white/60">{user.email}</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-stretch gap-2 sm:items-end">
+              <button onClick={handleLogout} className="self-end text-sm text-white/60 hover:text-white transition-colors">
+                Выйти
+              </button>
+              <Link href="/domik" className="inline-flex items-center justify-center gap-3 rounded-2xl border border-orange/40 bg-orange/20 px-6 py-4 font-bold text-orange shadow-sm transition-colors hover:bg-orange/30">
+                <span className="text-3xl" aria-hidden="true">🐿️</span>
+                <span className="text-base text-orange/90">Игровой домик Знатика</span>
+                <span className="whitespace-nowrap">⭐ {totalStars} →</span>
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/domik"
-              className="bg-orange/20 border border-orange/40 rounded-full px-4 py-2 flex items-center gap-2 hover:bg-orange/30 transition-colors"
-            >
-              <span className="text-2xl">⭐</span>
-              <span className="font-bold text-orange text-lg">{totalStars}</span>
-              <span className="text-xs text-orange/80 ml-1">🏡 Домик →</span>
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Выйти
-            </button>
-          </div>
-        </div>
-      </div>
+        </section>
 
-      <div className="max-w-4xl mx-auto py-12 px-6 space-y-8">
-        {/* Email confirmation warning */}
-        {!user.emailConfirmed && (
-          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 flex items-center justify-between gap-4">
-            <p className="text-yellow-400 text-sm">
-              ⚠️ Email не подтверждён. Подтвердите его, чтобы активировать согласие на обработку данных.
-            </p>
-            <Link
-              href="/confirm-email"
-              className="text-yellow-400 font-bold text-sm whitespace-nowrap hover:underline"
-            >
-              Подтвердить →
-            </Link>
+        {/* Быстрая статистика — кликабельна, ведёт к подробному блоку «Прогресс» ниже, чтобы не дублировать те же числа отдельным текстом там */}
+        <Link href="#progress" className="mb-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-[#FFB0AD]/40 bg-gradient-to-br from-[#E76F73]/38 via-[#F28482]/28 to-[#F6BD9A]/20 p-5 shadow-[0_8px_20px_rgba(70,25,55,0.18)] backdrop-blur-sm transition-transform hover:-translate-y-0.5">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-base text-white/75">Всего занятий</span>
+              <span className="text-2xl">📚</span>
+            </div>
+            <p className="text-3xl font-extrabold text-orange">{progress?.total ?? 0}</p>
           </div>
-        )}
+          <div className="rounded-2xl border border-[#FFB0AD]/40 bg-gradient-to-br from-[#E76F73]/38 via-[#F28482]/28 to-[#F6BD9A]/20 p-5 shadow-[0_8px_20px_rgba(70,25,55,0.18)] backdrop-blur-sm transition-transform hover:-translate-y-0.5">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-base text-white/75">За неделю</span>
+              <span className="text-2xl">📈</span>
+            </div>
+            <p className="text-3xl font-extrabold text-orange">{progress?.last7Days ?? 0}</p>
+          </div>
+          <div className="rounded-2xl border border-[#FFB0AD]/40 bg-gradient-to-br from-[#E76F73]/38 via-[#F28482]/28 to-[#F6BD9A]/20 p-5 shadow-[0_8px_20px_rgba(70,25,55,0.18)] backdrop-blur-sm transition-transform hover:-translate-y-0.5">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-base text-white/75">Дней подряд</span>
+              <span className="text-2xl">🔥</span>
+            </div>
+            <p className="text-3xl font-extrabold text-orange">{progress?.streak ?? 0}</p>
+          </div>
+        </Link>
 
-        {/* Subscription Card */}
-        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+        {/* Подписка */}
+        <section id="subscription" className="mb-5 rounded-3xl border border-white/30 bg-white/14 p-6 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-8">
           <h2 className="text-2xl font-bold mb-6">💳 Подписка</h2>
 
           {subscription?.isActive ? (
@@ -373,59 +391,95 @@ export default function AccountPage() {
               </Link>
             </div>
           )}
+        </section>
+
+        {/* Основная сетка: задание дня + ближайшие достижения слева, подарок + быстрые разделы справа */}
+        <div className="mb-5 grid items-start gap-5 lg:grid-cols-[1.35fr_0.65fr]">
+          <div className="space-y-5">
+            <DailyTaskPreview recentTrainerTypes={progress?.recentTrainerTypes} />
+
+            {upcomingDiplomas.length > 0 && (
+              <section className="rounded-3xl border border-white/30 bg-gradient-to-br from-white/18 via-[#B8D7DF]/14 to-[#D7C6DC]/12 p-5 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-6">
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <div>
+                    <h2 className="text-xl font-extrabold text-[#FF9F1C]">Ближайшие достижения</h2>
+                    <p className="mt-1 text-sm text-white/60">Ещё немного — и появятся новые дипломы</p>
+                  </div>
+                  <a href="#diplomas" className="text-sm font-bold text-orange">Все →</a>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {upcomingDiplomas.map((d) => (
+                    <div key={d.slug} className="rounded-2xl border border-white/25 bg-white/10 p-4">
+                      <div className="mb-2 text-4xl">{d.icon}</div>
+                      <h3 className="min-h-10 text-base font-bold leading-snug">{d.title}</h3>
+                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/35">
+                        <div className="h-full rounded-full bg-gradient-to-r from-orange to-pink-400" style={{ width: `${d.pct}%` }} />
+                      </div>
+                      <p className="mt-2 text-xs text-white/55">{d.value} из {d.target}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <section className="rounded-3xl border border-white/30 bg-gradient-to-br from-white/18 via-[#B8D7DF]/14 to-[#D7C6DC]/12 p-5 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FFD4A8] bg-[#FFF1DC] text-2xl">🎁</div>
+                <h2 className="text-lg font-extrabold">Подарок дня</h2>
+              </div>
+              {gift ? (
+                gift.alreadyClaimedToday ? (
+                  <div>
+                    <p className="mb-1 text-base font-bold text-green-400">✅ Подарок на сегодня уже забран!</p>
+                    <p className="text-sm text-white/60">Серия дней подряд: {gift.dailyGiftStreak} 🔥 — заходи завтра.</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="mb-4 text-base text-white/75">
+                      Заберите сегодня <span className="font-bold text-orange">+{gift.nextReward} ⭐</span>
+                      {gift.dailyGiftStreak > 0 && <> (серия: {gift.dailyGiftStreak + 1} {gift.dailyGiftStreak + 1 === 1 ? 'день' : 'дней'})</>}
+                    </p>
+                    <button onClick={handleClaimGift} disabled={giftClaiming} className="btn-primary w-full disabled:opacity-50">
+                      {giftClaiming ? 'Забираем...' : '🎁 Забрать подарок'}
+                    </button>
+                    {giftResult && <p className="mt-3 font-bold text-orange">{giftResult}</p>}
+                  </div>
+                )
+              ) : (
+                <p className="text-sm text-white/60">Загрузка...</p>
+              )}
+            </section>
+
+            <section className="rounded-3xl border border-white/30 bg-white/14 p-5 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm">
+              <h2 className="mb-4 text-lg font-extrabold">Быстрые разделы</h2>
+              <div className="space-y-2">
+                {[
+                  ['📊', 'Весь прогресс', '#progress'],
+                  ['🏆', 'Кубки и дипломы', '#diplomas'],
+                  ['💳', 'Подписка и платежи', '#subscription'],
+                  ['🔐', 'Персональные данные', '/account/data'],
+                ].map(([icon, label, href]) => (
+                  <Link key={label} href={href} className="flex w-full items-center justify-between rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-left text-base font-semibold transition-colors hover:border-white/40">
+                    <span>{icon} {label}</span><span className="text-white/45">→</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
 
-        {/* Daily Gift */}
-        <div className="bg-gradient-to-r from-orange/20 to-violet/20 border border-orange/40 rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-4">🎁 Ежедневный подарок</h2>
-          {gift ? (
-            gift.alreadyClaimedToday ? (
-              <div>
-                <p className="text-green-400 font-bold mb-1">✅ Подарок на сегодня уже забран!</p>
-                <p className="text-gray-400 text-sm">
-                  Серия дней подряд: {gift.dailyGiftStreak} 🔥 — заходи завтра за новым подарком.
-                </p>
-              </div>
-            ) : (
-              <div>
-                <p className="text-gray-300 mb-4">
-                  Забери сегодняшний подарок — <span className="font-bold text-orange">+{gift.nextReward} ⭐</span>
-                  {gift.dailyGiftStreak > 0 && <> (серия продолжится: {gift.dailyGiftStreak + 1} {gift.dailyGiftStreak + 1 === 1 ? 'день' : 'дней'} подряд)</>}
-                </p>
-                <button onClick={handleClaimGift} disabled={giftClaiming} className="btn-primary disabled:opacity-50">
-                  {giftClaiming ? 'Забираем...' : '🎁 Забрать подарок'}
-                </button>
-                {giftResult && <p className="text-orange font-bold mt-3">{giftResult}</p>}
-              </div>
-            )
-          ) : (
-            <p className="text-gray-400 text-sm">Загрузка...</p>
-          )}
-        </div>
-
-        {/* Progress Dashboard */}
-        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+        {/* Прогресс */}
+        <section id="progress" className="mb-5 rounded-3xl border border-white/30 bg-white/14 p-6 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-8">
           <h2 className="text-2xl font-bold mb-6">📊 Прогресс</h2>
 
           {progress ? (
             <>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">Всего занятий</p>
-                  <p className="text-3xl font-bold text-orange">{progress.total}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">За 7 дней</p>
-                  <p className="text-3xl font-bold text-orange">{progress.last7Days}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">За 30 дней</p>
-                  <p className="text-3xl font-bold text-orange">{progress.last30Days}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">Дней подряд</p>
-                  <p className="text-3xl font-bold text-orange">🔥 {progress.streak}</p>
-                </div>
+              {/* Всего/за неделю/дней подряд уже показаны в карточках выше — здесь только то, чего там нет. */}
+              <div className="mb-8">
+                <p className="text-gray-400 text-sm mb-1">За 30 дней</p>
+                <p className="text-3xl font-bold text-orange">{progress.last30Days}</p>
               </div>
 
               {Object.keys(progress.byCategory).length > 0 && (
@@ -479,11 +533,11 @@ export default function AccountPage() {
           <p className="text-gray-500 text-sm mt-6">
             Аккаунт создан {new Date(user.createdAt).toLocaleDateString('ru-RU')}
           </p>
-        </div>
+        </section>
 
-        {/* Recommendations */}
+        {/* Рекомендации */}
         {progress && (
-          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+          <section className="mb-5 rounded-3xl border border-white/30 bg-white/14 p-6 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-8">
             <h2 className="text-2xl font-bold mb-6">💡 Рекомендации</h2>
             <ul className="space-y-3">
               {getRecommendations(progress).map((rec, i) => (
@@ -500,11 +554,11 @@ export default function AccountPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         )}
 
-        {/* Diplomas */}
-        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+        {/* Дипломы */}
+        <section id="diplomas" className="mb-5 rounded-3xl border border-white/30 bg-white/14 p-6 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-8">
           <h2 className="text-2xl font-bold mb-2">🏆 Кубки и достижения</h2>
           <p className="text-gray-500 text-sm mb-6">Копи звёзды и открывай новые достижения — каждое можно распечатать как диплом</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -548,11 +602,11 @@ export default function AccountPage() {
               );
             })}
           </div>
-        </div>
+        </section>
 
-        {/* Tournament diplomas */}
+        {/* Дипломы турнира */}
         {profile.tournamentDiplomas.length > 0 && (
-          <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-8">
+          <section className="mb-5 rounded-3xl border border-white/30 bg-white/14 p-6 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm sm:p-8">
             <h2 className="text-2xl font-bold mb-2">🏆 Дипломы «Турнира Знаторики»</h2>
             <p className="text-gray-500 text-sm mb-6">Именные дипломы за участие в турнире — можно открыть и распечатать снова в любой момент</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -569,11 +623,11 @@ export default function AccountPage() {
                 </Link>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Payment History */}
-        <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg overflow-hidden">
+        {/* История платежей */}
+        <section className="mb-5 overflow-hidden rounded-3xl border border-white/30 bg-white/14 shadow-[0_10px_24px_rgba(20,16,45,0.14)] backdrop-blur-sm">
           <div className="px-8 py-6 border-b border-[#2D2350]">
             <h2 className="text-2xl font-bold">🧾 История платежей</h2>
           </div>
@@ -620,13 +674,13 @@ export default function AccountPage() {
           ) : (
             <div className="px-8 py-12 text-center text-gray-400">Платежей пока нет</div>
           )}
-        </div>
+        </section>
 
-        {/* Quick Links */}
+        {/* Быстрые ссылки */}
         <div className="grid md:grid-cols-2 gap-6">
           <Link
             href="/account/data"
-            className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+            className="rounded-3xl border border-white/30 bg-white/14 p-6 backdrop-blur-sm transition-colors hover:border-orange"
           >
             <h3 className="text-xl font-bold mb-2">🔐 Персональные данные</h3>
             <p className="text-gray-400 text-sm">Экспорт или удаление данных (ФЗ-152)</p>
@@ -635,7 +689,7 @@ export default function AccountPage() {
           {user.role === 'admin' && (
             <Link
               href="/admin/dashboard"
-              className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6 hover:border-orange transition-colors"
+              className="rounded-3xl border border-white/30 bg-white/14 p-6 backdrop-blur-sm transition-colors hover:border-orange"
             >
               <h3 className="text-xl font-bold mb-2">⚙️ Админ-панель</h3>
               <p className="text-gray-400 text-sm">Управление платформой</p>

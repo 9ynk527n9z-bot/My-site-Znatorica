@@ -42,7 +42,7 @@ export const REBUSY_2KLASS: Rebus[] = [
   {
     // сорок + оножка = сороконожка
     id: 'sorokonozhka',
-    display: '40НОЖКА',
+    display: '40ОНОЖКА',
     answer: 'Сороконожка',
     options: ['Сороконожка', 'Паук', 'Гусеница', 'Жук'],
   },

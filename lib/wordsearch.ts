@@ -1,4 +1,4 @@
-import { CROSSWORD_THEMES, type CrosswordTheme } from './crossword';
+import { CROSSWORD_THEMES, type CrosswordTheme, type WordClue } from './crossword';
 
 export interface PlacedSearchWord {
   word: string;
@@ -33,7 +33,14 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function generateWordSearch(theme: CrosswordTheme, wordCount = 8): WordSearchResult {
-  const pool = shuffle(CROSSWORD_THEMES[theme].words).slice(0, wordCount);
+  return generateWordSearchFromWords(CROSSWORD_THEMES[theme].words, wordCount);
+}
+
+export function generateWordSearchFromWords(words: WordClue[], wordCount = 8): WordSearchResult {
+  const pool = shuffle(words).slice(0, wordCount);
+  if (pool.length === 0) {
+    return { grid: [], words: [], size: 0 };
+  }
   const maxLen = Math.max(...pool.map((w) => w.word.length));
   const size = Math.max(10, maxLen + 2);
 

@@ -118,7 +118,7 @@ export default function Priroda1klassTrainerPage() {
                 <button
                   onClick={() => handlePick('zhivaya')}
                   disabled={!!feedback}
-                  className={`px-4 py-5 rounded-2xl border-4 font-bold text-lg transition-all ${
+                  className={`px-4 py-5 rounded-2xl border-4 font-bold text-base sm:text-lg break-words transition-all ${
                     feedback && pickedKind === 'zhivaya'
                       ? current.kind === 'zhivaya'
                         ? 'border-green-500 bg-green-50 text-green-700'
@@ -131,7 +131,7 @@ export default function Priroda1klassTrainerPage() {
                 <button
                   onClick={() => handlePick('nezhivaya')}
                   disabled={!!feedback}
-                  className={`px-4 py-5 rounded-2xl border-4 font-bold text-lg transition-all ${
+                  className={`px-4 py-5 rounded-2xl border-4 font-bold text-base sm:text-lg break-words transition-all ${
                     feedback && pickedKind === 'nezhivaya'
                       ? current.kind === 'nezhivaya'
                         ? 'border-green-500 bg-green-50 text-green-700'

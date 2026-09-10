@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 type Speed = 'slow' | 'fast';
@@ -95,7 +96,7 @@ export default function ZmeykaSChislamiTrainerPage() {
   useEffect(() => {
     if (!started || gameOver || win) return;
 
-    const intervalMs = speed === 'fast' ? 250 : 450;
+    const intervalMs = speed === 'fast' ? 650 : 1100;
     const id = setInterval(() => {
       const snake = snakeRef.current;
       const head = snake[0];
@@ -200,57 +201,58 @@ export default function ZmeykaSChislamiTrainerPage() {
 
       <TrainerGate type="trainer:zmeyka-s-chislami">
         <div className="max-w-2xl mx-auto py-8 px-6">
-          {/* Настройки */}
-          <div className="card mb-8">
-            <label className="block text-sm font-medium mb-3 text-white/90">Скорость змейки</label>
-            <div className="flex gap-3 mb-5">
-              <button
-                onClick={() => setSpeed('slow')}
-                className={`flex-1 px-5 py-3 rounded-xl font-bold transition-all ${
-                  speed === 'slow'
-                    ? 'text-white'
-                    : 'bg-white/10 border border-white/25 text-white/80 hover:bg-white/15'
-                }`}
-                style={speed === 'slow' ? { background: 'linear-gradient(135deg, #7C3AED, #f72585)' } : undefined}
-              >
-                🐢 Медленно
-              </button>
-              <button
-                onClick={() => setSpeed('fast')}
-                className={`flex-1 px-5 py-3 rounded-xl font-bold transition-all ${
-                  speed === 'fast'
-                    ? 'text-white'
-                    : 'bg-white/10 border border-white/25 text-white/80 hover:bg-white/15'
-                }`}
-                style={speed === 'fast' ? { background: 'linear-gradient(135deg, #7C3AED, #f72585)' } : undefined}
-              >
-                🐇 Быстро
-              </button>
-            </div>
-            <p className="text-white/60 text-sm mb-4">
-              Веди змейку по полю и собирай числа от 1 до 10 по порядку. Управляй стрелками на клавиатуре
-              или кнопками ниже поля.
-            </p>
-            {!started && (
+          {/* Настройки — показаны только до начала игры и после неё, чтобы во время игры
+              поле и D-pad помещались на экране без прокрутки. */}
+          {(!started || gameOver || win) && (
+            <div className="card mb-8">
+              <label className="block text-sm font-medium mb-3 text-white/90">Скорость змейки</label>
+              <div className="flex gap-3 mb-5">
+                <button
+                  onClick={() => setSpeed('slow')}
+                  className={`flex-1 px-5 py-3 rounded-xl font-bold transition-all ${
+                    speed === 'slow'
+                      ? 'text-white'
+                      : 'bg-white/10 border border-white/25 text-white/80 hover:bg-white/15'
+                  }`}
+                  style={speed === 'slow' ? { background: 'linear-gradient(135deg, #7C3AED, #f72585)' } : undefined}
+                >
+                  🐢 Медленно
+                </button>
+                <button
+                  onClick={() => setSpeed('fast')}
+                  className={`flex-1 px-5 py-3 rounded-xl font-bold transition-all ${
+                    speed === 'fast'
+                      ? 'text-white'
+                      : 'bg-white/10 border border-white/25 text-white/80 hover:bg-white/15'
+                  }`}
+                  style={speed === 'fast' ? { background: 'linear-gradient(135deg, #7C3AED, #f72585)' } : undefined}
+                >
+                  🐇 Быстро
+                </button>
+              </div>
+              <p className="text-white/60 text-sm mb-4">
+                Веди змейку по полю и собирай числа от 1 до 10 по порядку. Управляй стрелками на клавиатуре
+                или кнопками ниже поля.
+              </p>
               <button onClick={resetGame} className="btn-primary w-full py-3">
                 ▶️ Начать игру
               </button>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Игровое поле */}
           {started && !gameOver && !win && (
-            <div className="card text-center">
-              <p className="text-lg font-bold text-white mb-4">
-                Следующее число: <span className="text-orange text-2xl">{nextTarget}</span>
+            <div className="card text-center py-4">
+              <p className="text-base font-bold text-white mb-2">
+                Следующее число: <span className="text-orange text-xl">{nextTarget}</span>
               </p>
 
-              <div className="grid grid-cols-10 gap-[2px] max-w-md mx-auto bg-black/20 rounded-xl p-2 mb-6">
+              <div className="grid grid-cols-10 gap-[2px] max-w-xs mx-auto bg-black/20 rounded-xl p-2 mb-3">
                 {cells}
               </div>
 
               {/* D-pad для мобильных/сенсорных устройств */}
-              <div className="inline-grid grid-cols-3 grid-rows-3 gap-2 w-40 mx-auto">
+              <div className="inline-grid grid-cols-3 grid-rows-3 gap-1.5 w-32 mx-auto">
                 <div />
                 <button
                   onClick={() => setDirection('UP')}
@@ -306,9 +308,16 @@ export default function ZmeykaSChislamiTrainerPage() {
               <p className="text-3xl font-black text-[#3a1c6e] mb-6">
                 🎉 Ты собрал все числа по порядку!
               </p>
-              <button onClick={resetGame} className="btn-primary px-6 py-3">
+              <button onClick={resetGame} className="btn-primary px-6 py-3 mb-6">
                 🔁 Играть ещё
               </button>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text="Собрали все числа в игре «Змейка с числами» на Знаторике — попробуйте тоже:"
+                  url="https://znatorica.ru/trenazher/zmeyka-s-chislami"
+                  trackKey="zmeyka-s-chislami"
+                />
+              </div>
             </div>
           )}
         </div>

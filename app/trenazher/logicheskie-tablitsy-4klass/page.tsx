@@ -113,7 +113,7 @@ export default function LogicheskieTablitsy4KlassTrainerPage() {
                       key={opt}
                       onClick={() => handlePick(idx)}
                       disabled={!!feedback}
-                      className={`flex items-center justify-center py-4 px-3 rounded-2xl border-4 font-black text-lg transition-all ${
+                      className={`flex items-center justify-center text-center py-4 px-3 rounded-2xl border-4 font-black text-sm sm:text-lg break-words transition-all ${
                         showState
                           ? isRight
                             ? 'border-green-500 bg-green-50 text-green-600 pop-in'

@@ -19,6 +19,7 @@ function RegisterForm() {
   const next = searchParams.get('next');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agreeToPrivacy, setAgreeToPrivacy] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,9 +29,15 @@ function RegisterForm() {
     e.preventDefault();
     setError(null);
 
-    // ✅ ФЗ-152: Проверить явное согласие
-    if (!agreeToTerms) {
+    // ✅ ФЗ-152: Проверить явное согласие на обработку персональных данных
+    if (!agreeToPrivacy) {
       setError('Вы должны согласиться с обработкой персональных данных');
+      return;
+    }
+
+    // Отдельное согласие с условиями использования и офертой
+    if (!agreeToTerms) {
+      setError('Вы должны принять условия использования и оферту');
       return;
     }
 
@@ -53,7 +60,8 @@ function RegisterForm() {
         body: JSON.stringify({
           email,
           password,
-          agreeToTerms, // ✅ Отправляем согласие
+          agreeToPrivacy, // ✅ Согласие на обработку персональных данных
+          agreeToTerms, // ✅ Принятие условий использования и оферты
         }),
       });
 
@@ -87,7 +95,7 @@ function RegisterForm() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#28134f] flex items-center justify-center px-6">
         <div className="bg-[#2A1B4D] border border-green-500/30 rounded-lg p-8 max-w-md text-center">
           <p className="text-green-400 text-lg font-bold mb-4">✅ Регистрация успешна!</p>
           <p className="text-gray-400 mb-6">
@@ -102,7 +110,7 @@ function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-6">
+    <div className="min-h-screen bg-[#28134f] flex items-center justify-center py-12 px-6">
       <div className="max-w-sm w-full">
         <div className="text-center mb-5">
           <Link href="/" className="font-black text-2xl text-white hover:text-orange transition-colors">
@@ -141,7 +149,23 @@ function RegisterForm() {
             />
           </div>
 
-          {/* ✅ ФЗ-152: Явное согласие */}
+          {/* ✅ ФЗ-152: Явное согласие на обработку персональных данных — отдельным чекбоксом */}
+          <div className="mb-3">
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreeToPrivacy}
+                onChange={(e) => setAgreeToPrivacy(e.target.checked)}
+                className="w-4 h-4 mt-1 cursor-pointer"
+              />
+              <span className="text-sm text-gray-300">
+                Я родитель/законный представитель, мне есть 18 лет. Даю согласие на{' '}
+                <Link href="/privacy" target="_blank" className="text-orange underline font-semibold">обработку персональных данных</Link>
+              </span>
+            </label>
+          </div>
+
+          {/* Отдельное согласие с условиями использования и офертой */}
           <div className="mb-5">
             <label className="flex items-start gap-2 cursor-pointer">
               <input
@@ -151,11 +175,9 @@ function RegisterForm() {
                 className="w-4 h-4 mt-1 cursor-pointer"
               />
               <span className="text-sm text-gray-300">
-                Я родитель/законный представитель, мне есть 18 лет. Соглашаюсь с{' '}
-                <Link href="/privacy" target="_blank" className="text-orange underline font-semibold">обработкой данных</Link>
-                {', '}
-                <Link href="/terms" target="_blank" className="text-orange underline font-semibold">условиями</Link> и{' '}
-                <Link href="/oferta" target="_blank" className="text-orange underline font-semibold">офертой</Link>
+                Принимаю{' '}
+                <Link href="/terms" target="_blank" className="text-orange underline font-semibold">условия использования</Link> и{' '}
+                <Link href="/oferta" target="_blank" className="text-orange underline font-semibold">оферту</Link>
               </span>
             </label>
           </div>
@@ -163,7 +185,7 @@ function RegisterForm() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading || !agreeToTerms}
+            disabled={loading || !agreeToPrivacy || !agreeToTerms}
             className="w-full bg-orange text-white font-bold py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
             {loading ? 'Регистрация...' : 'Зарегистрироваться'}

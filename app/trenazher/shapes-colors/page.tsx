@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function ShapesColorsTrainerPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <PageJsonLd metadata={metadata} section="trenazher" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>

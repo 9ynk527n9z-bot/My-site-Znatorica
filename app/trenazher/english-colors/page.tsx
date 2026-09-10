@@ -2,6 +2,7 @@ import Link from 'next/link';
 import TrainerGate from '@/components/TrainerGate';
 import PageJsonLd from '@/components/PageJsonLd';
 import PageAbout from '@/components/PageAbout';
+import ShareButtons from '@/components/ShareButtons';
 
 export const metadata = {
   title: 'Цвета по-английски — интерактивный тренажёр',
@@ -11,7 +12,7 @@ export const metadata = {
 
 export default function EnglishColorsTrainerPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <PageJsonLd metadata={metadata} section="trenazher" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
         <div>
@@ -32,6 +33,14 @@ export default function EnglishColorsTrainerPage() {
           />
         </div>
       </TrainerGate>
+
+      <div className="max-w-6xl mx-auto px-6 pb-10 text-center">
+        <ShareButtons
+          text="Цвета на английском учим с озвучкой на Знаторике — попробуйте тоже:"
+          url="https://znatorica.ru/trenazher/english-colors"
+          trackKey="english-colors"
+        />
+      </div>
 
       <PageAbout route="/trenazher/english-colors" />
     </div>

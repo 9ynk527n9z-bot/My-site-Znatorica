@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 interface Difficulty {
   min: number;
@@ -182,10 +183,17 @@ export default function UgadayChisloTrainerPage() {
               <p className="text-gray-600 mb-1">Число было</p>
               <p className="text-6xl font-black text-orange mb-6">{secret}</p>
               <p className="text-gray-500 mb-8">Попыток: {attempts}</p>
-              <div className="flex justify-center gap-3 flex-wrap">
+              <div className="flex justify-center gap-3 flex-wrap mb-6">
                 <button onClick={backToDifficulty} className="btn-primary px-6 py-3">
                   🔁 Играть ещё
                 </button>
+              </div>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text={`Угадали число за ${attempts} ${attempts === 1 ? 'попытку' : 'попыток'} на Знаторике — попробуйте тоже:`}
+                  url="https://znatorica.ru/trenazher/ugaday-chislo"
+                  trackKey="ugaday-chislo"
+                />
               </div>
             </div>
           )}

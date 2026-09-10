@@ -123,19 +123,21 @@ export default function KotoryyChasPage() {
               <ExportToolbar targetRef={printRef} filename={`kotoryy-chas-${mode}`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-6">Который час показывают часы?</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-8">
-              {tasks.map((t, i) => (
-                <div key={i} className="text-center">
-                  <span className="text-gray-400 font-bold text-sm block mb-1">{i + 1}.</span>
-                  <ClockFace hour={t.hour} minute={t.minute} size={140} />
-                  <div className="mt-3 mx-auto w-28 h-10 border-b-2 border-gray-400 flex items-center justify-center">
-                    <span className="text-lg font-bold text-black">
-                      {showAnswers ? formatTime(t.hour, t.minute) : ''}
-                    </span>
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-6 text-center text-2xl font-black text-[#8B5CF6]">Который час?</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-8">
+                {tasks.map((t, i) => (
+                  <div key={i} className="text-center">
+                    <span className="mb-1 block text-base font-black text-gray-500">{i + 1}.</span>
+                    <ClockFace hour={t.hour} minute={t.minute} size={140} />
+                    <div className="mt-3 mx-auto w-28 h-10 border-b-2 border-gray-400 flex items-center justify-center">
+                      <span className="text-lg font-bold text-black">
+                        {showAnswers ? formatTime(t.hour, t.minute) : ''}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="mt-6 no-print">

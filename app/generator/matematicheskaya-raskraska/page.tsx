@@ -67,7 +67,7 @@ function ColoringGrid({ result, showAnswer }: { result: ColoringResult; showAnsw
 }
 
 export default function MatematicheskayaRaskraskaPage() {
-  const [pictureId, setPictureId] = useState<ColoringPictureId>('star');
+  const [pictureId, setPictureId] = useState<ColoringPictureId>('rocket');
   const [level, setLevel] = useState<ColoringLevel>(10);
   const [result, setResult] = useState<ColoringResult | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -151,31 +151,27 @@ export default function MatematicheskayaRaskraskaPage() {
               <ExportToolbar targetRef={printRef} filename={`matematicheskaya-raskraska-${pictureId}-do-${level}`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-2">
-              Реши пример — узнай цвет
-            </h2>
-            {!showAnswer && (
-              <p className="no-print text-gray-500 text-sm mb-4">
-                Реши пример в каждой клетке и закрась её цветом по легенде ниже.
-              </p>
-            )}
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-2 text-center text-2xl font-black text-[#8B5CF6]">
+                Математическая раскраска
+              </h2>
+              <div className="mt-4 flex flex-wrap justify-center gap-3 mb-6">
+                {result.bands.map((band) => (
+                  <div key={band.key} className="flex items-center gap-2 text-sm text-black">
+                    <span
+                      className="coloring-legend-swatch inline-block w-5 h-5 rounded border border-gray-400"
+                      style={{ backgroundColor: band.swatch, '--swatch': band.swatch } as React.CSSProperties}
+                    />
+                    <span>
+                      Ответ {band.min}–{band.max} → {band.label.toLowerCase()}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="flex flex-wrap gap-3 mb-6">
-              {result.bands.map((band) => (
-                <div key={band.key} className="flex items-center gap-2 text-sm text-black">
-                  <span
-                    className="coloring-legend-swatch inline-block w-5 h-5 rounded border border-gray-400"
-                    style={{ backgroundColor: band.swatch, '--swatch': band.swatch } as React.CSSProperties}
-                  />
-                  <span>
-                    Ответ {band.min}–{band.max} → {band.label.toLowerCase()}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex justify-center">
-              <ColoringGrid result={result} showAnswer={showAnswer} />
+              <div className="flex justify-center">
+                <ColoringGrid result={result} showAnswer={showAnswer} />
+              </div>
             </div>
 
             <div className="mt-6 no-print">

@@ -106,26 +106,32 @@ export default function ChislovayaPiramidaPage() {
               <ExportToolbar targetRef={printRef} filename={`chislovaya-piramida-${base}`} />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {pyramids.map((pyramid, pIndex) => (
-                <div key={pIndex} className="flex flex-col items-center gap-2 py-4">
-                  {[...pyramid.rows].reverse().map((row, rIndex) => {
-                    const isBottomRow = rIndex === pyramid.rows.length - 1;
-                    return (
-                      <div key={rIndex} className="flex gap-2 justify-center">
-                        {row.map((value, cIndex) => (
-                          <div
-                            key={cIndex}
-                            className="w-12 h-12 border-2 border-gray-400 rounded-lg flex items-center justify-center text-lg font-bold text-black bg-gray-50"
-                          >
-                            {isBottomRow || showAnswers ? value : ''}
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-5 text-center text-2xl font-black text-[#8B5CF6]">
+                Числовая пирамида
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {pyramids.map((pyramid, pIndex) => (
+                  <div key={pIndex} className="flex flex-col items-center gap-2 py-4">
+                    {[...pyramid.rows].reverse().map((row, rIndex) => {
+                      const isBottomRow = rIndex === pyramid.rows.length - 1;
+                      return (
+                        <div key={rIndex} className="flex gap-2 justify-center">
+                          {row.map((value, cIndex) => (
+                            <div
+                              key={cIndex}
+                              className="w-12 h-12 border-2 border-gray-400 rounded-lg flex items-center justify-center text-lg font-bold text-black bg-gray-50"
+                            >
+                              {isBottomRow || showAnswers ? value : ''}
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

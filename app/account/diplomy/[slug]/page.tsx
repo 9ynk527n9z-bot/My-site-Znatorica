@@ -28,7 +28,7 @@ export default function DiplomaPage({ params }: { params: { slug: string } }) {
 
   if (!diploma) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center text-red-400">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center text-red-400">
         Такого диплома не существует
       </div>
     );
@@ -36,7 +36,7 @@ export default function DiplomaPage({ params }: { params: { slug: string } }) {
 
   if (loading) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center text-gray-400">
+      <div className="bg-[#28134f] min-h-screen flex items-center justify-center text-gray-400">
         Загрузка...
       </div>
     );
@@ -47,7 +47,7 @@ export default function DiplomaPage({ params }: { params: { slug: string } }) {
 
   if (!unlocked) {
     return (
-      <div className="bg-black min-h-screen flex flex-col items-center justify-center gap-4 text-center px-6">
+      <div className="bg-[#28134f] min-h-screen flex flex-col items-center justify-center gap-4 text-center px-6">
         <p className="text-gray-400">
           Этот диплом ещё не открыт: {value} из {diploma.target}
         </p>
@@ -59,7 +59,7 @@ export default function DiplomaPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="bg-black min-h-screen py-12 px-6">
+    <div className="bg-[#28134f] min-h-screen py-12 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="no-print mb-6 flex items-center justify-between">
           <Link href="/account" className="text-orange hover:underline text-sm">

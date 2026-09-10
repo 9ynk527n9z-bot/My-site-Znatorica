@@ -24,8 +24,10 @@ interface Totals {
   dau: number;
   wau: number;
   mau: number;
-  vprCompletions30: number;
-  vprDistinctVariants30: number;
+  vprRealVisitorsToday: number;
+  vprRealVisitorsWeek: number;
+  mckoRealVisitorsToday: number;
+  mckoRealVisitorsWeek: number;
   botPageViews30: number;
   ownerPageViews30: number;
 }
@@ -80,11 +82,12 @@ function shortDate(d: string) {
   return `${day}.${m}`;
 }
 
-function StatCard({ label, value, accent }: { label: string; value: string | number; accent?: string }) {
+function StatCard({ label, value, accent, hint }: { label: string; value: string | number; accent?: string; hint?: string }) {
   return (
     <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-5">
       <p className="text-gray-400 text-sm mb-1">{label}</p>
       <p className={`text-3xl font-bold ${accent ?? 'text-white'}`}>{value}</p>
+      {hint && <p className="text-gray-500 text-xs mt-1">{hint}</p>}
     </div>
   );
 }
@@ -401,7 +404,7 @@ export default function AdminAnalyticsPage() {
   }, [router, period]);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-6">
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <Link href="/admin/dashboard" className="text-orange hover:underline">
@@ -437,8 +440,30 @@ export default function AdminAnalyticsPage() {
               <StatCard label="Активных подписок" value={data.totals.subscribers} />
               <StatCard label="Выручка за 30 дней" value={`${data.totals.revenue30.toLocaleString('ru-RU')} ₽`} accent="text-green-400" />
               <StatCard label="— из неё разовые покупки" value={`${data.totals.oneTimeRevenue30.toLocaleString('ru-RU')} ₽`} />
-              <StatCard label="Решено вариантов ВПР (30 дн.)" value={data.totals.vprCompletions30} />
-              <StatCard label="Разных вариантов ВПР" value={data.totals.vprDistinctVariants30} />
+              <StatCard
+                label="ВПР — реальных людей сегодня"
+                value={data.totals.vprRealVisitorsToday}
+                accent="text-orange"
+                hint="Без ботов и без визитов с админ-аккаунта"
+              />
+              <StatCard
+                label="ВПР — реальных людей за неделю"
+                value={data.totals.vprRealVisitorsWeek}
+                accent="text-orange"
+                hint="Без ботов и без визитов с админ-аккаунта"
+              />
+              <StatCard
+                label="МЦКО — реальных людей сегодня"
+                value={data.totals.mckoRealVisitorsToday}
+                accent="text-orange"
+                hint="Без ботов и без визитов с админ-аккаунта"
+              />
+              <StatCard
+                label="МЦКО — реальных людей за неделю"
+                value={data.totals.mckoRealVisitorsWeek}
+                accent="text-orange"
+                hint="Без ботов и без визитов с админ-аккаунта"
+              />
             </div>
 
             <div className="grid lg:grid-cols-2 gap-6 mb-6">

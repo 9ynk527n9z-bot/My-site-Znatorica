@@ -129,14 +129,16 @@ export default function ZadachiGeneratorPage() {
               <ExportToolbar targetRef={printRef} filename={`zadachi-${grade}-klass`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-4">Задачи — {grade} класс</h2>
-            <ol className="space-y-4 list-decimal list-inside">
-              {problems.map((p, i) => (
-                <li key={i} className="text-black text-lg">
-                  {p.text}
-                </li>
-              ))}
-            </ol>
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-6 text-center text-2xl font-black text-[#8B5CF6]">
+                Задачи по математике
+              </h2>
+              <ol className="list-inside list-decimal space-y-5 text-xl font-medium leading-relaxed text-black marker:text-2xl marker:font-black marker:text-[#8B5CF6]">
+                {problems.map((p, i) => (
+                  <li key={i}>{p.text}</li>
+                ))}
+              </ol>
+            </div>
 
             <div className="mt-6 no-print">
               <button onClick={() => setShowAnswers((v) => !v)} className="text-orange font-bold hover:underline">

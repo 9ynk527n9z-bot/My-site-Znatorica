@@ -96,7 +96,7 @@ export default function RusskiyAlfavitTrainerPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between flex-wrap gap-4">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">

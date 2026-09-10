@@ -46,11 +46,11 @@ const FUNCTION_QUESTIONS: FunctionQuestion[] = [
   { id: 'vidim', prompt: 'Каким органом мы видим?', answer: { id: 'glaz', emoji: '👁️', name: 'Глаз' }, distractorIds: ['ukho', 'nos', 'rot'] },
   { id: 'slyshim', prompt: 'Каким органом мы слышим музыку?', answer: { id: 'ukho', emoji: '👂', name: 'Ухо' }, distractorIds: ['glaz', 'nos', 'rot'] },
   { id: 'nyukhaem', prompt: 'Каким органом мы чувствуем запах?', answer: { id: 'nos', emoji: '👃', name: 'Нос' }, distractorIds: ['glaz', 'ukho', 'rot'] },
-  { id: 'probuem', prompt: 'Каким органом мы чувствуем вкус еды?', answer: { id: 'rot', emoji: '👄', name: 'Рот' }, distractorIds: ['glaz', 'ukho', 'nos'] },
+  { id: 'probuem', prompt: 'Каким органом мы чувствуем вкус еды?', answer: { id: 'yazyk', emoji: '👅', name: 'Язык' }, distractorIds: ['glaz', 'ukho', 'nos'] },
   { id: 'kachaet-krov', prompt: 'Какой орган качает кровь по всему телу?', answer: HEART, distractorIds: ['legkie', 'zhivot', 'golova'] },
   { id: 'dyshim', prompt: 'Каким органом мы дышим?', answer: LUNGS, distractorIds: ['serdce', 'zhivot', 'nos'] },
-  { id: 'moem-ruki', prompt: 'Что нужно помыть перед едой, чтобы не занести микробы в рот?', answer: { id: 'ruka', emoji: '💪', name: 'Рука' }, distractorIds: ['noga', 'stupnya', 'golova'] },
-  { id: 'chistim', prompt: 'Что нужно чистить утром и вечером, чтобы не было дырок от кариеса?', answer: { id: 'zub', emoji: '🦷', name: 'Зуб' }, distractorIds: ['rot', 'nos', 'palec'] },
+  { id: 'molk', prompt: 'Что нужно мыть перед едой, чтобы не занести микробы в рот?', answer: { id: 'ruki', emoji: '🧼', name: 'Руки' }, distractorIds: ['noga', 'stupnya', 'golova'] },
+  { id: 'chistim', prompt: 'Что нужно чистить утром и вечером, чтобы зубы оставались здоровыми?', answer: { id: 'zuby', emoji: '🦷', name: 'Зубы' }, distractorIds: ['rot', 'nos', 'palec'] },
 ];
 
 const BUTTON_COLORS = [
@@ -149,7 +149,7 @@ export default function TeloChelovekaTrainerPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры

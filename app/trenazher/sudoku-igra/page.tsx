@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 type Mode = 'easy' | 'medium';
 
@@ -391,9 +392,16 @@ export default function SudokuIgraTrainerPage() {
           {finished && (
             <div className="card bg-white text-center py-10">
               <p className="text-3xl font-black text-[#3a1c6e] mb-6">🎉 Отлично! Судоку решено!</p>
-              <button onClick={() => begin(mode)} className="btn-primary px-6 py-3">
+              <button onClick={() => begin(mode)} className="btn-primary px-6 py-3 mb-6">
                 🔁 Новая игра
               </button>
+              <div className="pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text="Решили судоку на Знаторике — попробуйте тоже:"
+                  url="https://znatorica.ru/trenazher/sudoku-igra"
+                  trackKey="sudoku-igra"
+                />
+              </div>
             </div>
           )}
         </div>

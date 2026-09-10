@@ -31,30 +31,39 @@ export default function GeneratorPrimeryPage() {
   const [count, setCount] = useState(20);
   const [examples, setExamples] = useState<{ text: string; answer: number }[]>([]);
   const [showAnswers, setShowAnswers] = useState(false);
+  const [sheetSettings, setSheetSettings] = useState<{ range: MathRange; mode: MathMode } | null>(null);
   const printRef = useRef<HTMLCanvasElement>(null);
   const quota = useGeneratorQuota();
   useEffect(() => {
-    if (printRef.current && examples.length) drawMathSheet(printRef.current, examples, showAnswers);
-  }, [examples, showAnswers]);
+    if (!printRef.current || !examples.length || !sheetSettings) return;
+    const modeInfo = MODES.find((item) => item.value === sheetSettings.mode) ?? MODES[0];
+    const rangeInfo = RANGES.find((item) => item.value === sheetSettings.range) ?? RANGES[0];
+    drawMathSheet(printRef.current, examples, showAnswers, {
+      title: 'Примеры по математике',
+      subtitle: `${modeInfo.label} · числа ${rangeInfo.label.toLowerCase()}`,
+      symbol: modeInfo.icon.trim(),
+    });
+  }, [examples, showAnswers, sheetSettings]);
 
   function handleGenerate() {
     if (!quota.guard()) return;
     const result = generateMathExamples({ range, mode, count });
     setExamples(result);
+    setSheetSettings({ range, mode });
     setShowAnswers(false);
     trackUsage('generator:primery');
     quota.consume();
   }
 
   return (
-    <div className="bg-black min-h-screen py-12 px-6">
+    <div className="bg-[#28134f] min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">
         <Link href="/generator" className="text-orange hover:underline text-sm">
           ← Все генераторы
         </Link>
         <h1 className="text-3xl font-bold mt-2 mb-2">Генератор примеров</h1>
         <p className="text-gray-400 mb-8">
-          Выбери диапазон и действие — примеры и правильные ответы посчитаются автоматически.
+          Выбери диапазон и действие.
         </p>
 
         <div className="card mb-8 no-print">

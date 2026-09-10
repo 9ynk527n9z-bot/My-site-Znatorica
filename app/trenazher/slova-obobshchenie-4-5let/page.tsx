@@ -82,7 +82,7 @@ export default function SlovaObobshchenieTrainerPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -162,7 +162,7 @@ export default function SlovaObobshchenieTrainerPage() {
                       key={option}
                       onClick={() => handlePick(option)}
                       disabled={!!feedback}
-                      className={`rounded-3xl border-4 py-6 px-3 text-xl font-black transition-all ${
+                      className={`rounded-3xl border-4 py-6 px-3 text-base sm:text-xl font-black text-center break-words transition-all ${
                         showState
                           ? isAnswer
                             ? 'border-green-500 bg-green-50 text-[#3a1c6e] pop-in'

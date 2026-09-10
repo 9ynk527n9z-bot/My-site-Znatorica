@@ -5,12 +5,13 @@ import { useState } from 'react';
 import { ENGLISH_ALPHABET } from '@/lib/english-alphabet';
 import ListenButton from '@/components/ListenButton';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 export default function EnglishAlphabetTrainerPage() {
   const [caseMode, setCaseMode] = useState<'upper' | 'lower'>('upper');
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between flex-wrap gap-4">
         <div>
           <Link href="/trenazher" className="text-orange hover:underline text-sm">
@@ -65,6 +66,14 @@ export default function EnglishAlphabetTrainerPage() {
           </div>
         </div>
       </TrainerGate>
+
+      <div className="max-w-6xl mx-auto px-6 pb-10 text-center">
+        <ShareButtons
+          text="Английский алфавит учим с озвучкой на Знаторике — попробуйте тоже:"
+          url="https://znatorica.ru/trenazher/angliyskiy-alfavit"
+          trackKey="angliyskiy-alfavit"
+        />
+      </div>
     </div>
   );
 }

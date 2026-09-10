@@ -124,13 +124,15 @@ export default function LabirintyPage() {
               <ExportToolbar targetRef={printRef} filename={`labirint-${size}`} />
             </div>
 
-            <h2 className="no-print text-xl font-bold text-black mb-2">Лабиринт</h2>
-            <p className="no-print text-gray-500 text-sm mb-6">
-              От зелёной точки до красной — только один верный путь.
-            </p>
+            <div className="rounded-2xl border-[3px] border-[#A78BFA] p-5 md:p-7">
+              <h2 className="mb-2 text-center text-2xl font-black text-[#8B5CF6]">Лабиринт</h2>
+              <p className="mb-6 text-center text-sm text-gray-600">
+                От зелёной точки до красной — только один верный путь.
+              </p>
 
-            <div className="overflow-x-auto flex justify-center">
-              <MazeSvg maze={maze} showSolution={showSolution} />
+              <div className="overflow-x-auto flex justify-center">
+                <MazeSvg maze={maze} showSolution={showSolution} />
+              </div>
             </div>
 
             <div className="mt-6 no-print">

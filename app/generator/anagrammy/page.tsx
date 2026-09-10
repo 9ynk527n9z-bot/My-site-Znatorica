@@ -28,7 +28,7 @@ export default function AnagramGeneratorPage() {
   }
 
   return (
-    <div className="bg-black min-h-screen py-12 px-6">
+    <div className="bg-[#28134f] min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">
         <Link href="/generator" className="text-orange hover:underline text-sm">
           ← Все генераторы
@@ -92,18 +92,29 @@ export default function AnagramGeneratorPage() {
               </button>
             </div>
 
-            <div className="space-y-4">
-              {anagrams.map((a, i) => (
-                <div key={i} className="p-4 bg-gray-50 border border-gray-300 rounded-lg flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p className="text-2xl font-mono font-bold tracking-widest mb-1 text-black">{a.scrambled}</p>
-                    <p className="text-gray-600 text-sm">{a.clue}</p>
+            <div className="rounded-2xl border-2 border-[#A78BFA] p-5 sm:p-7">
+              <h2 className="mb-6 text-center text-2xl font-bold text-[#3a1c6e]">Разгадай анаграммы</h2>
+              <div className="grid grid-cols-2 gap-3">
+                {anagrams.map((a, i) => (
+                  <div key={i} className="min-w-0 rounded-xl border-2 border-[#C4B5FD] bg-white p-4">
+                    <div className="flex items-stretch gap-3">
+                      <span className="flex w-7 shrink-0 items-center justify-center self-stretch text-lg font-black text-slate-600">{i + 1}</span>
+                      <div className="min-w-0 flex-1">
+                        <p
+                          className="mb-1 break-words text-xl font-black tracking-[0.12em] text-[#32145f] sm:text-2xl"
+                          style={{ fontFamily: 'Arial Rounded MT Bold, Trebuchet MS, sans-serif' }}
+                        >
+                          {a.scrambled}
+                        </p>
+                        <p className="text-sm leading-snug text-gray-600">{a.clue}</p>
+                        {showAnswers && (
+                          <p className="mt-2 text-lg font-bold text-orange">{a.word}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  {showAnswers && (
-                    <p className="text-orange font-bold text-xl">{a.word}</p>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="no-print mt-8">

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Готов ли ребёнок к школе? — бесплатные тесты по классам',
+  title: 'Готовность к школе — бесплатные тесты',
   description:
     'Бесплатные тесты готовности к школе и к переходу в следующий класс — с заданиями для ребёнка и вопросами для родителя. От поступления в 1 класс до перехода в 5-й.',
   alternates: { canonical: '/gotovnost' },
@@ -24,7 +24,7 @@ const TESTS = [
 
 export default function GotovnostHubPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}

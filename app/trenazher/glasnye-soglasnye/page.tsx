@@ -75,7 +75,7 @@ export default function GlasnyeSoglasnyeTrainerPage() {
   const truth: Answer | null = letter ? (isVowel(letter) ? 'vowel' : 'consonant') : null;
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4">
         <Link href="/trenazher" className="text-orange hover:underline text-sm">
           ← Все тренажеры
@@ -143,7 +143,7 @@ export default function GlasnyeSoglasnyeTrainerPage() {
                 <button
                   onClick={() => handlePick('vowel')}
                   disabled={!!feedback}
-                  className={`py-8 rounded-2xl text-2xl sm:text-3xl font-black text-white transition-all ${
+                  className={`py-8 px-2 rounded-2xl text-xl sm:text-3xl font-black text-white break-words transition-all ${
                     feedback && picked === 'vowel'
                       ? truth === 'vowel'
                         ? 'bg-red-500 ring-8 ring-green-300 pop-in'
@@ -156,7 +156,7 @@ export default function GlasnyeSoglasnyeTrainerPage() {
                 <button
                   onClick={() => handlePick('consonant')}
                   disabled={!!feedback}
-                  className={`py-8 rounded-2xl text-2xl sm:text-3xl font-black text-white transition-all ${
+                  className={`py-8 px-2 rounded-2xl text-xl sm:text-3xl font-black text-white break-words transition-all ${
                     feedback && picked === 'consonant'
                       ? truth === 'consonant'
                         ? 'bg-blue-500 ring-8 ring-green-300 pop-in'

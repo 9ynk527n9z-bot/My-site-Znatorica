@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 type Cell = 'X' | 'O' | null;
 type BoardT = Cell[];
@@ -188,6 +189,16 @@ export default function KrestikiNolikiTrainerPage() {
                 <button onClick={resetBoard} className="btn-primary px-6 py-3">
                   🔁 Играть снова
                 </button>
+              </div>
+            )}
+
+            {score.wins > 0 && (
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <ShareButtons
+                  text={`Играем в крестики-нолики против компьютера — уже ${score.wins} ${score.wins === 1 ? 'победа' : 'побед'}! Попробуйте тоже:`}
+                  url="https://znatorica.ru/trenazher/krestiki-noliki"
+                  trackKey="krestiki-noliki"
+                />
               </div>
             )}
           </div>

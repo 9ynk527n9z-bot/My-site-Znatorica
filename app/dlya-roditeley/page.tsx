@@ -77,6 +77,9 @@ export default async function DlyaRoditeleyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       <div className="max-w-5xl mx-auto">
+        <Link href="/" className="text-orange hover:underline text-sm mb-4 inline-block">
+          ← Назад
+        </Link>
         <h1 className="text-4xl font-bold text-center mb-4">👪 Для родителей</h1>
         <p className="text-center text-white/75 mb-16">
           Практические статьи о школе, режиме и подготовке — актуальные на 2026 год

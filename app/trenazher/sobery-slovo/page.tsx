@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
+import ShareButtons from '@/components/ShareButtons';
 
 const CATEGORIES: { name: string; emoji: string; words: string[] }[] = [
   { name: 'Животные', emoji: '🐾', words: ['КОШКА', 'СОБАКА', 'СЛОН', 'ЖИРАФ', 'ЗАЯЦ', 'МЕДВЕДЬ', 'ЛИСА', 'ВОЛК', 'БЕЛКА', 'ТИГР'] },
@@ -261,6 +262,16 @@ export default function SoberySlovoTrainerPage() {
                   💡 Подсказка
                 </button>
               </div>
+
+              {score > 0 && (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <ShareButtons
+                    text={`Собираем слова из букв на Знаторике — уже ${score} ${score === 1 ? 'слово' : 'слов'}! Попробуйте тоже:`}
+                    url="https://znatorica.ru/trenazher/sobery-slovo"
+                    trackKey="sobery-slovo"
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>

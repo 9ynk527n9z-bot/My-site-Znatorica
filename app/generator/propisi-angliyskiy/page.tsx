@@ -5,13 +5,14 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Генератор прописей — английский язык',
-  description: 'Создавайте прописи английских букв для улучшения почерка.',
+  description:
+    'Создавайте прописи английских букв A–Z для обводки и самостоятельного письма — заглавные и строчные. Печать и скачивание PDF.',
   alternates: { canonical: '/generator/propisi-angliyskiy' },
 };
 
 export default function PropisiGeneratorPage() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-[#28134f] min-h-screen">
       <PageJsonLd metadata={metadata} section="generator" />
       <TrackPageView type="generator:propisi" />
       <div className="bg-[#1E1035] border-b border-[#2D2350] px-6 py-4 flex items-center justify-between">
