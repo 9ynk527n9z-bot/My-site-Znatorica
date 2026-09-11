@@ -6,7 +6,7 @@ import ShareButtons from '@/components/ShareButtons';
 
 export const metadata = {
   title: 'Английские слова — интерактивный тренажёр',
-  description: 'Бесплатный интерактивный тренажёр английских слов по темам для детей.',
+  description: 'Английские слова по темам для детей: карточки с озвучкой, фразы с пропусками, быстрый тест и идиомы с переводом и объяснением.',
   alternates: { canonical: '/trenazher/english-words' },
 };
 

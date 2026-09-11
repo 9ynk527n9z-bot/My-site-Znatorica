@@ -12,6 +12,7 @@ import MckoFigure from '@/components/MckoFigure';
 import MckoRecordedAudio from '@/components/MckoRecordedAudio';
 import printStyles from './english-print.module.css';
 import humanitiesPrint from './humanities-print.module.css';
+import AssessmentSeoIntro from '@/components/AssessmentSeoIntro';
 
 interface Props {
   params: { klass: string; subject: string; variant: string };
@@ -110,6 +111,14 @@ export default function MckoVariantPage({ params }: Props) {
           <p className="font-bold text-white mb-2">{data.durationMinutes} минут работы + {data.breakMinutes} минут перерыва</p>
           <p className="leading-relaxed">{data.instructions}</p>
         </div>}
+        <AssessmentSeoIntro
+          kind="МЦКО"
+          subject={params.subject}
+          subjectTitle={data.subjectTitle}
+          grade={data.grade}
+          variantId={id}
+          taskCount={variant.tasks.length}
+        />
         </div>
 
         <TrainerGate type={`vpr:mcko-${params.klass}:${params.subject}:${id}`}>

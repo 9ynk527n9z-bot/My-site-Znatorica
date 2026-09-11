@@ -4,7 +4,7 @@ import PageJsonLd from '@/components/PageJsonLd';
 export const metadata: Metadata = {
   title: 'Счёт по-английски до 20 — тренажёр',
   description:
-    'Интерактивный тренажёр английских числительных от 1 до 20: число, транскрипция и озвучка британским произношением для каждого числа.',
+    'Интерактивный тренажёр английских числительных от 1 до 20: число, написание, транскрипция и английская озвучка.',
   alternates: { canonical: '/trenazher/angliyskiy-schet' },
 };
 

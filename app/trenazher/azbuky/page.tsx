@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Английский алфавит — тренажёр A–Z',
-  description: 'Бесплатный интерактивный тренажёр английского алфавита A-Z: буква, слово, картинка и транскрипция в игровой форме для детей 4–7 лет.',
+  description: 'Тренажёр английского алфавита A–Z для детей 4–7 лет: буквы, слова, картинки и транскрипция в игровой форме.',
   alternates: { canonical: '/trenazher/azbuky' },
 };
 

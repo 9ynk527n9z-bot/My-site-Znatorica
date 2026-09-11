@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Приставки — тренажёр по русскому языку для 3-4 класса',
-  description: 'Бесплатный интерактивный тренажёр по приставкам русского языка.',
+  description: 'Тренажёр по приставкам русского языка: неизменяемые приставки, написание на з/с и выбор при-/пре- с правилами, примерами и проверкой.',
   alternates: { canonical: '/trenazher/pristavki' },
 };
 

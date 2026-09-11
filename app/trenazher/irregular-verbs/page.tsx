@@ -6,7 +6,7 @@ import ShareButtons from '@/components/ShareButtons';
 
 export const metadata = {
   title: 'Неправильные глаголы английского — тренажёр',
-  description: 'Бесплатный интерактивный тренажёр неправильных глаголов английского языка.',
+  description: 'Тренажёр 62 неправильных глаголов английского языка: три формы, перевод, транскрипция, озвучка, таблица и карточки для повторения.',
   alternates: { canonical: '/trenazher/irregular-verbs' },
 };
 

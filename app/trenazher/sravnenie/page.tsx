@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Сравнение чисел — тренажёр для 2 класса',
-  description: 'Бесплатный интерактивный тренажёр на сравнение чисел: выбери знак больше, меньше или равно. Для 1–2 класса.',
+  description: 'Сравнение чисел для 1–2 класса: выбери знак «больше», «меньше» или «равно» и сразу проверь ответ.',
   alternates: { canonical: '/trenazher/sravnenie' },
 };
 

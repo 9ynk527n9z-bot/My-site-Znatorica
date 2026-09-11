@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Поговорки и пословицы — тренажёр',
-  description: 'Бесплатный интерактивный тренажёр русских поговорок и пословиц для детей.',
+  description: 'Тренажёр русских пословиц и поговорок для детей: изучай смысл, соединяй части выражений, угадывай пословицу и проходи викторину.',
   alternates: { canonical: '/trenazher/pogovorki' },
 };
 

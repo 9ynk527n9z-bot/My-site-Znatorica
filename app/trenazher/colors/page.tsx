@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Цвета по-английски — тренажёр с транскрипцией',
-  description: 'Бесплатный тренажёр английских названий цветов: слово, перевод и транскрипция. Red, blue, green и другие цвета для детей 4–8 лет.',
+  description: 'Тренажёр названий цветов по-английски для детей 4–8 лет: английское слово, перевод, транскрипция и наглядный цвет.',
   alternates: { canonical: '/trenazher/colors' },
 };
 

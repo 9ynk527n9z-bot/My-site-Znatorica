@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import TrainerSeoSummary from '@/components/TrainerSeoSummary';
 
 interface ConsumeResult {
   allowed: boolean;
@@ -48,10 +49,14 @@ export default function TrainerGate({ type, children }: { type: string; children
       );
   }, [type]);
 
-  if (!result) return null;
+  const seoSummary = <TrainerSeoSummary type={type} />;
+
+  if (!result) return seoSummary;
 
   if (!result.allowed) {
     return (
+      <>
+      {seoSummary}
       <div className="min-h-[60vh] flex items-center justify-center px-6">
         <div className="max-w-md w-full bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-8 text-center">
           <p className="text-yellow-400 font-bold text-lg mb-2">
@@ -96,8 +101,9 @@ export default function TrainerGate({ type, children }: { type: string; children
           )}
         </div>
       </div>
+      </>
     );
   }
 
-  return <>{children}</>;
+  return <>{seoSummary}{children}</>;
 }

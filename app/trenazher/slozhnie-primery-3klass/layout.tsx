@@ -4,7 +4,7 @@ import PageJsonLd from '@/components/PageJsonLd';
 export const metadata: Metadata = {
   title: 'Примеры в два действия — тренажёр, 3 класс',
   description:
-    'Реши 10 примеров в два действия с числами в пределах 100: сложение, вычитание, умножение и деление по порядку слева направо.',
+    'Реши 10 примеров в два действия с числами в пределах 100: сложение, вычитание, умножение и деление. Закрепи порядок вычислений.',
   alternates: { canonical: '/trenazher/slozhnie-primery-3klass' },
 };
 

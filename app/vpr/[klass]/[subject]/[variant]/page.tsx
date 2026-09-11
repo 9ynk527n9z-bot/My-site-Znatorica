@@ -9,6 +9,7 @@ import ListenButton from '@/components/ListenButton';
 import MckoRecordedAudio from '@/components/MckoRecordedAudio';
 import MarkVprComplete from '@/components/MarkVprComplete';
 import TrainerGate from '@/components/TrainerGate';
+import AssessmentSeoIntro from '@/components/AssessmentSeoIntro';
 
 interface Props {
   params: { klass: string; subject: string; variant: string };
@@ -98,6 +99,15 @@ export default function VprVariantPage({ params }: Props) {
           Вариант {id} · {pluralizeCount(variant.tasks.length, ['задание', 'задания', 'заданий'])} · на выполнение отводится{' '}
           {params.klass === '5-klass' && params.subject === 'matematika' ? '90 минут (2 урока)' : '45 минут'}
         </p>
+
+        <AssessmentSeoIntro
+          kind="ВПР"
+          subject={params.subject}
+          subjectTitle={data.subjectTitle}
+          grade={data.grade}
+          variantId={id}
+          taskCount={variant.tasks.length}
+        />
 
         <TrainerGate type={`vpr:${params.klass}:${params.subject}:${id}`}>
 

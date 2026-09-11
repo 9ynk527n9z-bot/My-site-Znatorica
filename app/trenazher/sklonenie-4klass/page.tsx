@@ -76,6 +76,57 @@ export default function SklonenieTrainerPage() {
         <h1 className="text-2xl font-bold mt-2">🔤 Склонение существительных</h1>
       </div>
 
+      <section className="max-w-3xl mx-auto px-6 pt-8" aria-labelledby="sklonenie-guide-title">
+        <div className="rounded-2xl border border-violet-400/40 bg-white/5 p-6 sm:p-8">
+          <h2 id="sklonenie-guide-title" className="text-2xl font-black text-white mb-4">
+            Как определить склонение существительного
+          </h2>
+          <p className="text-gray-300 leading-relaxed mb-5">
+            Склонение — это группа существительных с одинаковыми падежными окончаниями. Чтобы определить
+            склонение, поставь слово в начальную форму: именительный падеж единственного числа. Затем определи
+            род и посмотри на окончание слова.
+          </p>
+
+          <div className="grid gap-3 sm:grid-cols-3 mb-6">
+            <div className="rounded-xl bg-white/5 p-4">
+              <h3 className="font-black text-orange mb-2">1-е склонение</h3>
+              <p className="text-sm leading-relaxed text-gray-300">
+                Мужской, женский или общий род с окончаниями <b>-а</b>, <b>-я</b>: мама, земля, дядя.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/5 p-4">
+              <h3 className="font-black text-orange mb-2">2-е склонение</h3>
+              <p className="text-sm leading-relaxed text-gray-300">
+                Мужской род с нулевым окончанием, на <b>-й</b>, <b>-ь</b>, а также средний род на <b>-о</b>, <b>-е</b>:
+                стол, герой, конь, окно, море.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/5 p-4">
+              <h3 className="font-black text-orange mb-2">3-е склонение</h3>
+              <p className="text-sm leading-relaxed text-gray-300">
+                Женский род с нулевым окончанием и мягким знаком на конце: ночь, мышь, тетрадь.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-xl bg-black/20 p-5 mb-5">
+            <h3 className="font-bold text-white mb-3">Проверь себя перед началом</h3>
+            <ol className="grid gap-2 text-gray-300 sm:grid-cols-3">
+              <li><b className="text-white">1.</b> Какое склонение у слова «бабушка»?</li>
+              <li><b className="text-white">2.</b> Какое склонение у слова «корабль»?</li>
+              <li><b className="text-white">3.</b> Какое склонение у слова «радость»?</li>
+            </ol>
+            <p className="text-sm text-gray-400 mt-3">Ответы здесь не показаны — проверь решение в тренажёре.</p>
+          </div>
+
+          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Материалы по теме склонения">
+            <Link href="/4-klass/russkiy/sklonenie-suschestvitelnykh" className="font-bold text-orange hover:underline">
+              Полная теория о падежах и склонениях →
+            </Link>
+          </nav>
+        </div>
+      </section>
+
       <TrainerGate type="trainer:sklonenie-4klass">
         <div className="max-w-2xl mx-auto py-8 px-6">
           {!started && (

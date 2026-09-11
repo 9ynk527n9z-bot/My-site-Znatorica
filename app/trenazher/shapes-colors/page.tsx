@@ -5,7 +5,7 @@ import PageAbout from '@/components/PageAbout';
 
 export const metadata = {
   title: 'Формы и цвета — интерактивный тренажёр',
-  description: 'Бесплатный интерактивный тренажёр форм и цветов для дошкольников.',
+  description: 'Тренажёр форм и цветов для дошкольников: выбери название цвета или фигуры и найди пару. Крупные наглядные задания в трёх режимах.',
   alternates: { canonical: '/trenazher/shapes-colors' },
 };
 

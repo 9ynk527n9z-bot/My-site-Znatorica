@@ -166,7 +166,7 @@ export default function SlozhniePrimery3klassTrainerPage() {
             <div className="card mb-8 text-center">
               <p className="text-lg text-white/90 mb-4">
                 Реши 10 примеров в два действия с числами в пределах 100: сложение, вычитание,
-                умножение и деление. Считай по порядку — слева направо!
+                умножение и деление. Соблюдай порядок действий.
               </p>
               <button onClick={begin} className="btn-primary px-8 py-4 text-lg">
                 ▶️ Начать
