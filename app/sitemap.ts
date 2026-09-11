@@ -184,6 +184,8 @@ export const STATIC_ROUTES: string[] = [
   '/generator/propisi-dlya-doshkolnikov',
   '/generator/propisi-glasnye',
   '/generator/propisi-soglasnye',
+  '/generator/yarlychki-na-odezhdu',
+  '/generator/dnevnik-nablyudeniy-za-pogodoy',
   '/igry',
   '/plakaty',
   '/sborniki',
