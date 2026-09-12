@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import ExportToolbar from '@/components/ExportToolbar';
+import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 
 const CASES = [
   { short: 'И. п.', name: 'Именительный', questions: 'кто? что?', prepositions: '—', example: 'книга', color: '#be123c', pale: '#fff1f2', border: '#fb7185' },
@@ -14,6 +15,7 @@ const CASES = [
 ];
 
 export default function CasesTablePage() {
+  const quota = useGeneratorQuota();
   const [monochrome, setMonochrome] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -97,6 +99,7 @@ export default function CasesTablePage() {
                 <b className="text-slate-800">Кот увидел мышь:</b> кот — И. п. (<i>кто увидел?</i>), мышь — В. п. (<i>увидел кого?</i>).
               </p>
             </section>
+            {!quota.isSubscriber && <p className="mt-4 text-center text-[10px] font-semibold tracking-wide text-slate-400">Знаторика · znatorica.ru</p>}
           </div>
         </section>
 

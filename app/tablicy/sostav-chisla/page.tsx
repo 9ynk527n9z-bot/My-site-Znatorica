@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import ExportToolbar from '@/components/ExportToolbar';
+import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 
 type Range = 10 | 20;
 
@@ -24,6 +25,7 @@ function pairsFor(number: number) {
 }
 
 export default function NumberCompositionPage() {
+  const quota = useGeneratorQuota();
   const [range, setRange] = useState<Range>(10);
   const [monochrome, setMonochrome] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
@@ -117,6 +119,7 @@ export default function NumberCompositionPage() {
                 <span className={`ml-2 whitespace-nowrap font-black ${monochrome ? 'text-slate-900' : 'text-violet-700'}`}>3 + 5 = 5 + 3 = 8</span>
               </p>
             </footer>
+            {!quota.isSubscriber && <p className="mt-4 text-center text-[10px] font-semibold tracking-wide text-slate-400">Знаторика · znatorica.ru</p>}
           </div>
         </section>
 

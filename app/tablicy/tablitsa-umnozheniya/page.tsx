@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import ExportToolbar from '@/components/ExportToolbar';
+import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 
 const MULTIPLIERS = [2, 3, 4, 5, 6, 7, 8, 9];
 const ACCENTS = [
@@ -17,6 +18,7 @@ const ACCENTS = [
 ];
 
 export default function MultiplicationTablePage() {
+  const quota = useGeneratorQuota();
   const [monochrome, setMonochrome] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -117,6 +119,7 @@ export default function MultiplicationTablePage() {
                 <span className={`ml-2 whitespace-nowrap font-black ${monochrome ? 'text-slate-900' : 'text-violet-700'}`}>3 × 7 = 7 × 3 = 21</span>
               </p>
             </footer>
+            {!quota.isSubscriber && <p className="mt-4 text-center text-[10px] font-semibold tracking-wide text-slate-400">Знаторика · znatorica.ru</p>}
           </div>
         </section>
 

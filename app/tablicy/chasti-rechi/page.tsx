@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import ExportToolbar from '@/components/ExportToolbar';
+import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 
 const PARTS = [
   { name: 'Имя существительное', meaning: 'называет предмет', questions: 'кто? что?', examples: 'ученик, книга', color: '#be123c', pale: '#fff1f2', border: '#fb7185' },
@@ -15,6 +16,7 @@ const PARTS = [
 ];
 
 export default function PartsOfSpeechTablePage() {
+  const quota = useGeneratorQuota();
   const [monochrome, setMonochrome] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -100,6 +102,7 @@ export default function PartsOfSpeechTablePage() {
                 </div>
               </div>
             </section>
+            {!quota.isSubscriber && <p className="mt-4 text-center text-[10px] font-semibold tracking-wide text-slate-400">Знаторика · znatorica.ru</p>}
           </div>
         </section>
 

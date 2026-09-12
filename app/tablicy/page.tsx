@@ -44,7 +44,7 @@ export default function TablesPage() {
             </section>
           ))}
         </div>
-        <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-white/60">Все таблицы можно посмотреть на экране, распечатать или сохранить в PDF, Word и PNG. Материалы подходят для занятий дома и в классе.</p>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-white/60">Все таблицы можно посмотреть на экране, распечатать или сохранить в PDF, Word и PNG. В бесплатной версии сохраняется небольшая подпись Знаторики, по подписке материалы скачиваются без неё.</p>
       </div>
     </main>
   );
