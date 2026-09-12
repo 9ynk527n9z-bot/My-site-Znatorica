@@ -210,6 +210,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/chleny-predlozheniya',
   '/tablicy/razbor-slova-po-sostavu',
   '/tablicy/glasnye-i-soglasnye-zvuki',
+  '/tablicy/sinonimy-i-antonimy',
   '/tablicy/nepravilnye-glagoly',
   '/tablicy/anglijskie-chislitelnye',
   '/tablicy/dni-nedeli-po-anglijski',

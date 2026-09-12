@@ -33,6 +33,7 @@ const groups: TableGroup[] = [
       { href: '/tablicy/chleny-predlozheniya', icon: '📐', title: 'Члены предложения', desc: 'Вопросы и условное подчёркивание' },
       { href: '/tablicy/razbor-slova-po-sostavu', icon: '🧩', title: 'Разбор слова по составу', desc: 'Приставка, корень, суффикс, окончание' },
       { href: '/tablicy/glasnye-i-soglasnye-zvuki', icon: '🔤', title: 'Гласные и согласные звуки', desc: '10 гласных, пары звонких и глухих' },
+      { href: '/tablicy/sinonimy-i-antonimy', icon: '🤝', title: 'Синонимы и антонимы', desc: '20 пар слов — близких и противоположных по значению' },
     ],
   },
   {
