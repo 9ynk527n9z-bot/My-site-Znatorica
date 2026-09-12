@@ -44,6 +44,7 @@ const groups = [
       { href: '/tablicy/krugovorot-vody', icon: '💧', title: 'Круговорот воды', desc: 'Наглядная схема и четыре этапа' },
       { href: '/tablicy/stroenie-rasteniya', icon: '🌱', title: 'Строение растения', desc: 'Корень, стебель, лист, цветок, плод и семя' },
       { href: '/tablicy/tsep-pitaniya', icon: '🌿', title: 'Цепь питания', desc: 'Солнце, трава, кузнечик, лягушка и аист' },
+      { href: '/tablicy/zhivaya-nezhivaya-priroda', icon: '🌍', title: 'Живая и неживая природа', desc: 'Примеры природных объектов в двух группах' },
     ],
   },
 ];

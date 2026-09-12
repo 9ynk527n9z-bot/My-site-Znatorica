@@ -194,6 +194,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/krugovorot-vody',
   '/tablicy/stroenie-rasteniya',
   '/tablicy/tsep-pitaniya',
+  '/tablicy/zhivaya-nezhivaya-priroda',
   '/tablicy/kvadraty-chisel',
   '/tablicy/rimskie-cifry',
   '/tablicy/doli-i-drobi',
