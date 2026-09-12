@@ -202,6 +202,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/razbor-slova-po-sostavu',
   '/tablicy/nepravilnye-glagoly',
   '/tablicy/anglijskie-chislitelnye',
+  '/tablicy/mesyatsy-i-vremena-goda',
   '/igry',
   '/plakaty',
   '/sborniki',

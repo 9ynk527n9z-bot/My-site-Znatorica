@@ -31,6 +31,12 @@ const groups = [
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
     ],
   },
+  {
+    title: 'Окружающий мир', icon: '🌍', accent: 'from-emerald-400/30 to-cyan-300/15',
+    items: [
+      { href: '/tablicy/mesyatsy-i-vremena-goda', icon: '🌍', title: 'Месяцы и времена года', desc: '12 месяцев по сезонам' },
+    ],
+  },
 ];
 
 export default function TablesPage() {
