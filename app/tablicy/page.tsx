@@ -39,7 +39,8 @@ const groups = [
       { href: '/tablicy/semya-po-anglijski', icon: '👪', title: 'Family', desc: '10 членов семьи с транскрипцией и переводом' },
       { href: '/tablicy/chasti-tela-po-anglijski', icon: '🙌', title: 'Body Parts', desc: '11 частей тела с транскрипцией и переводом' },
       { href: '/tablicy/alfavit-po-anglijski', icon: '🔤', title: 'English Alphabet', desc: '26 букв с произношением и словом-примером' },
-      { href: '/tablicy/eda-po-anglijski', icon: '🍎', title: 'Food', desc: '14 продуктов и блюд с транскрипцией и переводом' },
+      { href: '/tablicy/eda-po-anglijski', icon: '🍎', title: 'Food', desc: '20 продуктов и блюд с транскрипцией и переводом' },
+      { href: '/tablicy/odezhda-po-anglijski', icon: '👕', title: 'Clothes', desc: '20 предметов одежды и аксессуаров' },
     ],
   },
   {

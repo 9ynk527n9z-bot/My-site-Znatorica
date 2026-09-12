@@ -13,4 +13,12 @@ export const ENGLISH_CLOTHES: EnglishWord[] = [
   { word: 'Jacket', translation: 'куртка', transcription: '/ˈdʒækɪt/', emoji: '🧥' },
   { word: 'Gloves', translation: 'перчатки', transcription: '/glʌvz/', emoji: '🧤' },
   { word: 'Scarf', translation: 'шарф', transcription: '/skɑːf/', emoji: '🧣' },
+  { word: 'Sandals', translation: 'сандалии', transcription: '/ˈsændlz/', emoji: '👡' },
+  { word: 'Swimsuit', translation: 'купальник', transcription: '/ˈswɪmsuːt/', emoji: '🩱' },
+  { word: 'Umbrella', translation: 'зонт', transcription: '/ˈʌmbrələ/', emoji: '☂️' },
+  { word: 'Sunglasses', translation: 'солнечные очки', transcription: '/ˈsʌŋɡlɑːsɪz/', emoji: '🕶️' },
+  { word: 'Backpack', translation: 'рюкзак', transcription: '/ˈbækpæk/', emoji: '🎒' },
+  { word: 'Bag', translation: 'сумка', transcription: '/bæg/', emoji: '👜' },
+  { word: 'Watch', translation: 'часы', transcription: '/wɒtʃ/', emoji: '⌚' },
+  { word: 'Ring', translation: 'кольцо', transcription: '/rɪŋ/', emoji: '💍' },
 ];
