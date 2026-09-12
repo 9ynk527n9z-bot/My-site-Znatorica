@@ -35,6 +35,9 @@ const groups = [
       { href: '/tablicy/dni-nedeli-po-anglijski', icon: '📅', title: 'Days of the Week', desc: '7 дней недели с переводом и транскрипцией' },
       { href: '/tablicy/zhivotnye-po-anglijski', icon: '🐾', title: 'Domestic and Wild Animals', desc: '20 животных с транскрипцией и переводом' },
       { href: '/tablicy/mesyatsy-i-vremena-goda-po-anglijski', icon: '🌍', title: 'Months and Seasons', desc: '12 месяцев с транскрипцией и переводом' },
+      { href: '/tablicy/tsveta-po-anglijski', icon: '🎨', title: 'Colours', desc: '11 цветов с транскрипцией и цветным образцом' },
+      { href: '/tablicy/semya-po-anglijski', icon: '👪', title: 'Family', desc: '10 членов семьи с транскрипцией и переводом' },
+      { href: '/tablicy/chasti-tela-po-anglijski', icon: '🙌', title: 'Body Parts', desc: '11 частей тела с транскрипцией и переводом' },
     ],
   },
   {
