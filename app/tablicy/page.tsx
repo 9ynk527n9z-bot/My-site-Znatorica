@@ -17,6 +17,7 @@ const groups = [
     title: 'Русский язык', icon: '📝', accent: 'from-cyan-400/30 to-violet-300/15',
     items: [
       { href: '/tablicy/padezhi-russkogo-yazyka', icon: '📚', title: 'Падежи русского языка', desc: 'Вопросы, предлоги и примеры' },
+      { href: '/tablicy/sklonenie-suschestvitelnykh', icon: '📖', title: 'Склонение существительных', desc: '1, 2 и 3 склонение с окончаниями по падежам' },
       { href: '/tablicy/chasti-rechi', icon: '🔤', title: 'Части речи', desc: 'Значение, вопросы и примеры' },
       { href: '/tablicy/spryazhenie-glagolov', icon: '📝', title: 'Спряжение глаголов', desc: 'Окончания I и II спряжения, исключения' },
       { href: '/tablicy/pristavki', icon: '✂️', title: 'Приставки', desc: 'Неизменяемые, при-/пре-, на з/с' },
