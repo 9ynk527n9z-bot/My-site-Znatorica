@@ -43,6 +43,12 @@ const groups = [
       { href: '/tablicy/dni-nedeli', icon: '📅', title: 'Дни недели', desc: '7 дней по порядку, будни и выходные' },
     ],
   },
+  {
+    title: 'Окружающий мир', icon: '🌍', accent: 'from-emerald-400/30 to-sky-300/15',
+    items: [
+      { href: '/tablicy/krugovorot-vody', icon: '💧', title: 'Круговорот воды', desc: 'Наглядная схема и четыре этапа' },
+    ],
+  },
 ];
 
 export default function TablesPage() {
