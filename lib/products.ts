@@ -14,6 +14,7 @@ export interface Product {
   pages?: number;
   fileName?: string; // имя файла в /private-content/products/ — только для PDF-сборников
   contents?: string[]; // список "что внутри" для карточки товара (с эмодзи) — свой на каждый PDF-сборник
+  coverImage?: string; // обложка сборника для каталога и страницы товара
   previewImage?: string; // путь к превью в /public/ — показывается на карточке товара "наполовину видно"
 }
 
@@ -49,6 +50,7 @@ export const PRODUCTS: Product[] = [
     price: 199,
     pages: 15,
     fileName: 'angliyskiy-yazyk-sbornik.pdf',
+    coverImage: '/products/angliyskiy-yazyk-sbornik-cover.png',
     previewImage: '/products/angliyskiy-yazyk-sbornik-preview.jpg',
     contents: [
       '🔤 English Alphabet — 26 букв',
@@ -63,6 +65,28 @@ export const PRODUCTS: Product[] = [
       '🌍 Months — месяцы',
       '🐾 Domestic and Wild Animals — 20 животных',
       '📖 Irregular Verbs — 62 неправильных глагола',
+    ],
+  },
+  {
+    slug: 'russkiy-yazyk-sbornik',
+    title: 'Сборник таблиц «Русский язык»',
+    description:
+      'Все 9 таблиц по русскому языку Знаторики в одном PDF: падежи, склонение существительных, части речи, спряжение глаголов, приставки, члены предложения, разбор слова по составу, гласные и согласные звуки, синонимы и антонимы. Готово для печати.',
+    price: 149,
+    pages: 11,
+    fileName: 'russkiy-yazyk-sbornik.pdf',
+    coverImage: '/products/russkiy-yazyk-sbornik-cover.png',
+    previewImage: '/products/russkiy-yazyk-sbornik-preview.jpg',
+    contents: [
+      '📚 Падежи русского языка',
+      '📖 Склонение существительных',
+      '🔤 Части речи',
+      '📝 Спряжение глаголов',
+      '✂️ Приставки',
+      '📐 Члены предложения',
+      '🧩 Разбор слова по составу',
+      '🔤 Гласные и согласные звуки',
+      '🤝 Синонимы и антонимы',
     ],
   },
   {

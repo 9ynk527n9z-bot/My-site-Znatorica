@@ -26,6 +26,13 @@ export default function SbornikiPage() {
                     🔥 Только сегодня
                   </span>
                 )}
+                {p.coverImage && (
+                  <img
+                    src={p.coverImage}
+                    alt={`Обложка: ${p.title}`}
+                    className="mb-4 aspect-[2/3] w-full rounded-lg object-cover"
+                  />
+                )}
                 <h2 className="text-xl font-bold mb-2">{p.title}</h2>
                 <p className="text-white/70 text-sm mb-4">{p.description}</p>
                 <div className="flex items-center justify-between">

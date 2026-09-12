@@ -24,6 +24,7 @@ const groups: TableGroup[] = [
   },
   {
     title: 'Русский язык', icon: '📝', accent: 'from-cyan-400/30 to-violet-300/15',
+    bundle: { href: '/sborniki/russkiy-yazyk-sbornik', label: 'Все 9 таблиц одним PDF — 149 ₽', title: 'Сборник «Русский язык»' },
     items: [
       { href: '/tablicy/padezhi-russkogo-yazyka', icon: '📚', title: 'Падежи русского языка', desc: 'Вопросы, предлоги и примеры' },
       { href: '/tablicy/sklonenie-suschestvitelnykh', icon: '📖', title: 'Склонение существительных', desc: '1, 2 и 3 склонение с окончаниями по падежам' },
