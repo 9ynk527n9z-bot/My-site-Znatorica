@@ -17,6 +17,7 @@ const groups = [
       { href: '/tablicy/chasti-rechi', icon: '🔤', title: 'Части речи', desc: 'Значение, вопросы и примеры' },
       { href: '/tablicy/spryazhenie-glagolov', icon: '📝', title: 'Спряжение глаголов', desc: 'Окончания I и II спряжения, исключения' },
       { href: '/tablicy/pristavki', icon: '✂️', title: 'Приставки', desc: 'Неизменяемые, при-/пре-, на з/с' },
+      { href: '/tablicy/chleny-predlozheniya', icon: '📐', title: 'Члены предложения', desc: 'Вопросы и условное подчёркивание' },
     ],
   },
   {
