@@ -8,6 +8,7 @@ const groups = [
       { href: '/tablicy/sostav-chisla', icon: '🏠', title: 'Состав числа', desc: 'Состав чисел до 10 и до 20' },
       { href: '/tablicy/edinitsy-izmereniya', icon: '📏', title: 'Единицы измерения', desc: 'Длина, масса, время и площадь' },
       { href: '/tablicy/matematicheskie-znaki', icon: '🧮', title: 'Математические знаки', desc: 'Действия, сравнение и порядок вычислений' },
+      { href: '/tablicy/kvadraty-chisel', icon: '🔢', title: 'Квадраты чисел', desc: 'От 1 до 20 с примером вычисления' },
     ],
   },
   {
