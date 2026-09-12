@@ -197,6 +197,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/zhivaya-nezhivaya-priroda',
   '/tablicy/organy-chuvstv',
   '/tablicy/prirodnye-zony-rossii',
+  '/tablicy/solnechnaya-sistema',
   '/tablicy/kvadraty-chisel',
   '/tablicy/rimskie-cifry',
   '/tablicy/doli-i-drobi',
