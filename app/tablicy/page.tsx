@@ -47,6 +47,7 @@ const groups = [
       { href: '/tablicy/stroenie-rasteniya', icon: '🌱', title: 'Строение растения', desc: 'Корень, стебель, лист, цветок, плод и семя' },
       { href: '/tablicy/tsep-pitaniya', icon: '🌿', title: 'Цепь питания', desc: 'Солнце, трава, кузнечик, лягушка и аист' },
       { href: '/tablicy/zhivaya-nezhivaya-priroda', icon: '🌍', title: 'Живая и неживая природа', desc: 'Примеры природных объектов в двух группах' },
+      { href: '/tablicy/organy-chuvstv', icon: '👁️', title: 'Органы чувств человека', desc: 'Глаза, уши, нос, язык и кожа' },
     ],
   },
 ];
