@@ -9,6 +9,7 @@ const groups = [
       { href: '/tablicy/edinitsy-izmereniya', icon: '📏', title: 'Единицы измерения', desc: 'Длина, масса, время и площадь' },
       { href: '/tablicy/matematicheskie-znaki', icon: '🧮', title: 'Математические знаки', desc: 'Действия, сравнение и порядок вычислений' },
       { href: '/tablicy/kvadraty-chisel', icon: '🔢', title: 'Квадраты чисел', desc: 'От 1 до 20 с примером вычисления' },
+      { href: '/tablicy/rimskie-cifry', icon: '🏛️', title: 'Римские цифры', desc: 'Обозначения и числа от 1 до 20' },
     ],
   },
   {
