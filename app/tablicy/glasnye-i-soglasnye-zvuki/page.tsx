@@ -11,9 +11,6 @@ const PAIRS = [
   ['Б', 'П'], ['В', 'Ф'], ['Г', 'К'], ['Д', 'Т'], ['Ж', 'Ш'], ['З', 'С'],
 ];
 
-const ALWAYS_VOICED = ['Й', 'Л', 'М', 'Н', 'Р'];
-const ALWAYS_VOICELESS = ['Х', 'Ц', 'Ч', 'Щ'];
-
 export default function VowelsConsonantsTablePage() {
   const quota = useGeneratorQuota();
   const [monochrome, setMonochrome] = useState(false);
