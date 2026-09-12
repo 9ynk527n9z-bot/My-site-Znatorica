@@ -19,6 +19,12 @@ const groups = [
       { href: '/tablicy/pristavki', icon: '✂️', title: 'Приставки', desc: 'Неизменяемые, при-/пре-, на з/с' },
     ],
   },
+  {
+    title: 'Английский язык', icon: '🇬🇧', accent: 'from-sky-400/30 to-violet-300/15',
+    items: [
+      { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
+    ],
+  },
 ];
 
 export default function TablesPage() {
