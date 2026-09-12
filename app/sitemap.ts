@@ -198,6 +198,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/kvadraty-chisel',
   '/tablicy/rimskie-cifry',
   '/tablicy/doli-i-drobi',
+  '/tablicy/formuly-perimetra-i-ploshchadi',
   '/tablicy/padezhi-russkogo-yazyka',
   '/tablicy/sklonenie-suschestvitelnykh',
   '/tablicy/chasti-rechi',
