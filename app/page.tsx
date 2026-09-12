@@ -20,15 +20,18 @@ export const metadata: Metadata = {
 const homeBreadcrumbs = breadcrumbJsonLd([{ name: 'Главная', url: '/' }]);
 
 // Главные разделы сайта
-const SECTIONS = [
-  { href: '#ucheba', emoji: '📚', title: 'Учеба', desc: 'Темы по возрастам: 4–5 лет … 4 класс', from: '#4DABF7', to: '#4263EB' },
-  { href: '/generator', emoji: '⚙️', title: 'Генераторы', desc: 'Примеры, прописи, кроссворды — каждый раз новые', from: '#69DB7C', to: '#2F9E44' },
-  { href: '/tablicy', emoji: '📋', title: 'Учебные таблицы', desc: 'Падежи, части речи, состав числа и умножение', from: '#5C7CFA', to: '#7048E8' },
-  { href: '/plakaty', emoji: '🖼️', title: 'Плакаты', desc: 'Наглядные материалы по школьным предметам', from: '#FFA94D', to: '#E8590C' },
-  { href: '/trenazher', emoji: '🎮', title: 'Тренажеры', desc: 'Интерактивные игры для закрепления', from: '#DA77F2', to: '#9C36B5' },
-  { href: '/igry', emoji: '🕹️', title: 'Игры', desc: 'Судоку, змейка, морской бой и другие', from: '#FFD43B', to: '#F59F00' },
-  { href: '/vpr', emoji: '📝', title: 'ВПР', desc: '3–5 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
-  { href: '#dlya-roditeley', emoji: '👪', title: 'Для родителей', desc: 'Статьи о школе, режиме и подготовке', from: '#3BC9DB', to: '#1098AD' },
+const SECTIONS_ROW1 = [
+  { href: '#ucheba', emoji: '📚', title: 'Учеба' },
+  { href: '/generator', emoji: '⚙️', title: 'Генераторы' },
+  { href: '/tablicy', emoji: '📋', title: 'Таблицы' },
+  { href: '/plakaty', emoji: '🖼️', title: 'Плакаты' },
+  { href: '/igry', emoji: '🕹️', title: 'Игры' },
+];
+
+const SECTIONS_ROW2 = [
+  { href: '/trenazher', emoji: '🎮', title: 'Тренажеры' },
+  { href: '/vpr', emoji: '📝', title: 'ВПР' },
+  { href: '#dlya-roditeley', emoji: '👪', title: 'Для родителей' },
 ];
 
 const OTHER_PAGE_LINKS = [
@@ -73,23 +76,27 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeBreadcrumbs) }}
       />
 
-      {/* Категории — компактной строкой сверху */}
+      {/* Категории — 2 ряда компактных плашек сверху */}
       <section className={`${homeStyles.navigation} px-6 pt-4 pb-1`}>
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2">
-          {SECTIONS.map((s) => s.href === '/vpr' ? (
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2.5">
+          {SECTIONS_ROW1.map((s) => (
+            <Link key={s.title} href={s.href} className="flex items-center gap-1.5 whitespace-nowrap font-semibold text-white">
+              <span>{s.emoji}</span>
+              {s.title}
+            </Link>
+          ))}
+        </div>
+        <div className="max-w-6xl mx-auto mt-2.5 flex flex-wrap items-center justify-center gap-2.5">
+          {SECTIONS_ROW2.map((s) => s.href === '/vpr' ? (
             <details key={s.title} className={homeStyles.examMenu}>
-              <summary>📝 ВПР / МЦКО <span aria-hidden="true">⌄</span></summary>
+              <summary className="flex items-center gap-1.5 whitespace-nowrap font-semibold text-white">📝 ВПР / МЦКО <span aria-hidden="true">⌄</span></summary>
               <div className={homeStyles.examPanel}>
                 <Link href="/vpr">Подготовка к ВПР →</Link>
                 <Link href="/podgotovka-k-mcko">Подготовка к МЦКО →</Link>
               </div>
             </details>
           ) : (
-            <Link
-              key={s.title}
-              href={s.href}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 hover:border-white/40 hover:bg-white/15 transition-all text-sm font-semibold text-white whitespace-nowrap"
-            >
+            <Link key={s.title} href={s.href} className="flex items-center gap-1.5 whitespace-nowrap font-semibold text-white">
               <span>{s.emoji}</span>
               {s.title}
             </Link>
