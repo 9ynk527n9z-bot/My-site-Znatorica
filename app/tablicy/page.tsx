@@ -54,6 +54,7 @@ const groups = [
       { href: '/tablicy/tsep-pitaniya', icon: '🌿', title: 'Цепь питания', desc: 'Солнце, трава, кузнечик, лягушка и аист' },
       { href: '/tablicy/zhivaya-nezhivaya-priroda', icon: '🌍', title: 'Живая и неживая природа', desc: 'Примеры природных объектов в двух группах' },
       { href: '/tablicy/organy-chuvstv', icon: '👁️', title: 'Органы чувств человека', desc: 'Глаза, уши, нос, язык и кожа' },
+      { href: '/tablicy/prirodnye-zony-rossii', icon: '🗺️', title: 'Природные зоны России', desc: 'Климат, растения и животные — с севера на юг' },
     ],
   },
 ];
