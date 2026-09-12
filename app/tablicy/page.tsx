@@ -30,6 +30,7 @@ const groups = [
       { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
       { href: '/tablicy/dni-nedeli-po-anglijski', icon: '📅', title: 'Days of the Week', desc: '7 дней недели с переводом и транскрипцией' },
+      { href: '/tablicy/zhivotnye-po-anglijski', icon: '🐾', title: 'Domestic and Wild Animals', desc: '20 животных с транскрипцией и переводом' },
     ],
   },
   {
