@@ -117,9 +117,14 @@ export default async function Home() {
               Тренажёры, задания и подготовка к ВПР — для детей от 4 до 11 лет
             </p>
             <p className="font-bold text-white mb-2">С чего начнём?</p>
-            <Link href="/turnir" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
-              🏆 Турнир Знаторики →
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
+              <Link href="/turnir" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
+                🏆 Турнир Знаторики →
+              </Link>
+              <Link href="/sborniki" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
+                🖨️ Красивые таблицы по всем предметам (купить) →
+              </Link>
+            </div>
           </div>
           <div className={`${homeStyles.mascot} flex justify-center md:justify-end`}>
             <span className={homeStyles.starLeft} aria-hidden="true">★</span>
