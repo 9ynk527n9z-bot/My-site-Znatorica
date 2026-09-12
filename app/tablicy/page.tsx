@@ -35,6 +35,7 @@ const groups = [
     title: 'Окружающий мир', icon: '🌍', accent: 'from-emerald-400/30 to-cyan-300/15',
     items: [
       { href: '/tablicy/mesyatsy-i-vremena-goda', icon: '🌍', title: 'Месяцы и времена года', desc: '12 месяцев по сезонам' },
+      { href: '/tablicy/domashnie-i-dikie-zhivotnye', icon: '🐾', title: 'Домашние и дикие животные', desc: '20 животных в двух колонках' },
     ],
   },
 ];
