@@ -24,6 +24,7 @@ const groups = [
       { href: '/tablicy/pristavki', icon: '✂️', title: 'Приставки', desc: 'Неизменяемые, при-/пре-, на з/с' },
       { href: '/tablicy/chleny-predlozheniya', icon: '📐', title: 'Члены предложения', desc: 'Вопросы и условное подчёркивание' },
       { href: '/tablicy/razbor-slova-po-sostavu', icon: '🧩', title: 'Разбор слова по составу', desc: 'Приставка, корень, суффикс, окончание' },
+      { href: '/tablicy/glasnye-i-soglasnye-zvuki', icon: '🔤', title: 'Гласные и согласные звуки', desc: '10 гласных, пары звонких и глухих' },
     ],
   },
   {
