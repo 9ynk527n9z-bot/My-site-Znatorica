@@ -15,4 +15,10 @@ export const ENGLISH_FOOD: EnglishWord[] = [
   { word: 'Soup', translation: 'суп', transcription: '/suːp/', emoji: '🍲' },
   { word: 'Carrot', translation: 'морковь', transcription: '/ˈkærət/', emoji: '🥕' },
   { word: 'Orange', translation: 'апельсин', transcription: '/ˈɒrɪndʒ/', emoji: '🍊' },
+  { word: 'Fish', translation: 'рыба', transcription: '/fɪʃ/', emoji: '🐟' },
+  { word: 'Chicken', translation: 'курица', transcription: '/ˈtʃɪkɪn/', emoji: '🍗' },
+  { word: 'Rice', translation: 'рис', transcription: '/raɪs/', emoji: '🍚' },
+  { word: 'Potato', translation: 'картофель', transcription: '/pəˈteɪtəʊ/', emoji: '🥔' },
+  { word: 'Tomato', translation: 'помидор', transcription: '/təˈmɑːtəʊ/', emoji: '🍅' },
+  { word: 'Tea', translation: 'чай', transcription: '/tiː/', emoji: '🍵' },
 ];
