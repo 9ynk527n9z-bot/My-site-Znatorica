@@ -31,6 +31,7 @@ const groups = [
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
       { href: '/tablicy/dni-nedeli-po-anglijski', icon: '📅', title: 'Days of the Week', desc: '7 дней недели с переводом и транскрипцией' },
       { href: '/tablicy/zhivotnye-po-anglijski', icon: '🐾', title: 'Domestic and Wild Animals', desc: '20 животных с транскрипцией и переводом' },
+      { href: '/tablicy/mesyatsy-i-vremena-goda-po-anglijski', icon: '🌍', title: 'Months and Seasons', desc: '12 месяцев с транскрипцией и переводом' },
     ],
   },
   {

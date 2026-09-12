@@ -204,6 +204,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/anglijskie-chislitelnye',
   '/tablicy/dni-nedeli-po-anglijski',
   '/tablicy/zhivotnye-po-anglijski',
+  '/tablicy/mesyatsy-i-vremena-goda-po-anglijski',
   '/tablicy/mesyatsy-i-vremena-goda',
   '/tablicy/domashnie-i-dikie-zhivotnye',
   '/tablicy/dni-nedeli',
