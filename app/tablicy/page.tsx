@@ -41,6 +41,7 @@ const groups = [
       { href: '/tablicy/alfavit-po-anglijski', icon: '🔤', title: 'English Alphabet', desc: '26 букв с произношением и словом-примером' },
       { href: '/tablicy/eda-po-anglijski', icon: '🍎', title: 'Food', desc: '20 продуктов и блюд с транскрипцией и переводом' },
       { href: '/tablicy/odezhda-po-anglijski', icon: '👕', title: 'Clothes', desc: '20 предметов одежды и аксессуаров' },
+      { href: '/tablicy/shkolnye-prinadlezhnosti-po-anglijski', icon: '🎒', title: 'School Things', desc: '20 школьных принадлежностей с транскрипцией' },
     ],
   },
   {

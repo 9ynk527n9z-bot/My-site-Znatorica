@@ -14,4 +14,11 @@ export const ENGLISH_SCHOOL: EnglishWord[] = [
   { word: 'Globe', translation: 'глобус', transcription: '/gləʊb/', emoji: '🌍' },
   { word: 'Clock', translation: 'часы', transcription: '/klɒk/', emoji: '🕐' },
   { word: 'Computer', translation: 'компьютер', transcription: '/kəmˈpjuːtə/', emoji: '💻' },
+  { word: 'Teacher', translation: 'учитель', transcription: '/ˈtiːtʃə/', emoji: '🧑‍🏫' },
+  { word: 'Student', translation: 'ученик', transcription: '/ˈstjuːdənt/', emoji: '🧑‍🎓' },
+  { word: 'Textbook', translation: 'учебник', transcription: '/ˈtekstbʊk/', emoji: '📚' },
+  { word: 'Diary', translation: 'дневник', transcription: '/ˈdaɪəri/', emoji: '📔' },
+  { word: 'Map', translation: 'карта', transcription: '/mæp/', emoji: '🗺️' },
+  { word: 'Calculator', translation: 'калькулятор', transcription: '/ˈkælkjʊleɪtə/', emoji: '🔢' },
+  { word: 'Lunchbox', translation: 'ланч-бокс', transcription: '/ˈlʌntʃbɒks/', emoji: '🍱' },
 ];

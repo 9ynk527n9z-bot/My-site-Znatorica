@@ -221,6 +221,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/alfavit-po-anglijski',
   '/tablicy/eda-po-anglijski',
   '/tablicy/odezhda-po-anglijski',
+  '/tablicy/shkolnye-prinadlezhnosti-po-anglijski',
   '/tablicy/mesyatsy-i-vremena-goda',
   '/tablicy/domashnie-i-dikie-zhivotnye',
   '/tablicy/dni-nedeli',
