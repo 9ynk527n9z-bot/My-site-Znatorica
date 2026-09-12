@@ -193,6 +193,7 @@ export const STATIC_ROUTES: string[] = [
   '/tablicy/matematicheskie-znaki',
   '/tablicy/krugovorot-vody',
   '/tablicy/stroenie-rasteniya',
+  '/tablicy/tsep-pitaniya',
   '/tablicy/kvadraty-chisel',
   '/tablicy/rimskie-cifry',
   '/tablicy/doli-i-drobi',

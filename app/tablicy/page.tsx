@@ -43,6 +43,7 @@ const groups = [
       { href: '/tablicy/dni-nedeli', icon: '📅', title: 'Дни недели', desc: '7 дней по порядку, будни и выходные' },
       { href: '/tablicy/krugovorot-vody', icon: '💧', title: 'Круговорот воды', desc: 'Наглядная схема и четыре этапа' },
       { href: '/tablicy/stroenie-rasteniya', icon: '🌱', title: 'Строение растения', desc: 'Корень, стебель, лист, цветок, плод и семя' },
+      { href: '/tablicy/tsep-pitaniya', icon: '🌿', title: 'Цепь питания', desc: 'Солнце, трава, кузнечик, лягушка и аист' },
     ],
   },
 ];
