@@ -28,6 +28,7 @@ const groups = [
     title: 'Английский язык', icon: '🇬🇧', accent: 'from-sky-400/30 to-violet-300/15',
     items: [
       { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
+      { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
     ],
   },
 ];
