@@ -27,7 +27,7 @@ function FractionCircle({ num, den, color, monochrome }: { num: number; den: num
   }
   return (
     <div
-      className="mx-auto h-20 w-20 rounded-full border-2"
+      className="mx-auto h-16 w-16 rounded-full border-2"
       style={{
         background: `conic-gradient(${stops.join(', ')})`,
         borderColor: monochrome ? '#64748b' : '#cbd5e1',
@@ -96,16 +96,23 @@ export default function FractionsTablePage() {
               <h2 className="mt-1 text-3xl font-black text-slate-900">Доли и дроби</h2>
             </header>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
               {FRACTIONS.map((f) => (
                 <div
                   key={`${f.num}/${f.den}`}
-                  className="rounded-2xl border-2 p-4 text-center"
+                  className="rounded-2xl border-2 p-3 text-center"
                   style={{ backgroundColor: monochrome ? '#fff' : f.pale, borderColor: monochrome ? '#64748b' : f.border }}
                 >
                   <FractionCircle num={f.num} den={f.den} color={f.color} monochrome={monochrome} />
-                  <p className="mt-3 font-mono text-xl font-black" style={{ color: monochrome ? '#0f172a' : f.color }}>{f.num}/{f.den}</p>
-                  <p className="mt-1 text-xs font-bold text-slate-600">{f.name}</p>
+                  <div
+                    className="mx-auto mt-2 inline-flex flex-col items-center font-mono text-lg font-black leading-none"
+                    style={{ color: monochrome ? '#0f172a' : f.color }}
+                  >
+                    <span>{f.num}</span>
+                    <span className="my-0.5 h-[2px] w-6 bg-current" />
+                    <span>{f.den}</span>
+                  </div>
+                  <p className="mt-2 text-xs font-bold text-slate-600">{f.name}</p>
                 </div>
               ))}
             </div>
