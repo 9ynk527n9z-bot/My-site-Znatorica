@@ -14,6 +14,7 @@ export interface Product {
   pages?: number;
   fileName?: string; // имя файла в /private-content/products/ — только для PDF-сборников
   contents?: string[]; // список "что внутри" для карточки товара (с эмодзи) — свой на каждый PDF-сборник
+  previewImage?: string; // путь к превью в /public/ — показывается на карточке товара "наполовину видно"
 }
 
 export const PRODUCTS: Product[] = [
@@ -38,6 +39,30 @@ export const PRODUCTS: Product[] = [
       '✍️ Графический диктант',
       '✅ Страница ответов для проверки взрослым',
       '🏆 Диплом за прохождение сборника',
+    ],
+  },
+  {
+    slug: 'angliyskiy-yazyk-sbornik',
+    title: 'Сборник таблиц «Английский язык»',
+    description:
+      'Все 13 английских таблиц Знаторики в одном PDF: алфавит, цвета, семья, части тела, еда, одежда, школьные принадлежности, числительные, дни недели, месяцы, домашние и дикие животные, неправильные глаголы — 239 слов с транскрипцией и переводом. С красивой обложкой и содержанием, готово для печати.',
+    price: 199,
+    pages: 15,
+    fileName: 'angliyskiy-yazyk-sbornik.pdf',
+    previewImage: '/products/angliyskiy-yazyk-sbornik-preview.jpg',
+    contents: [
+      '🔤 English Alphabet — 26 букв',
+      '🎨 Colours — 11 цветов',
+      '👪 Family — 10 членов семьи',
+      '🙌 Body Parts — 11 частей тела',
+      '🍎 Food — 20 продуктов',
+      '👕 Clothes — 20 предметов одежды',
+      '🎒 School Things — 20 принадлежностей',
+      '🔢 Numbers — числительные 1–20',
+      '📅 Days of the Week — дни недели',
+      '🌍 Months — месяцы',
+      '🐾 Domestic and Wild Animals — 20 животных',
+      '📖 Irregular Verbs — 62 неправильных глагола',
     ],
   },
   {

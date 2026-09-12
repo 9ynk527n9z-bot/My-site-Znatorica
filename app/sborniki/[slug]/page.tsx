@@ -100,6 +100,22 @@ export default function SbornikPage() {
           <p className="text-white/75 mb-6">{product.description}</p>
           <p className="text-white/50 text-sm mb-6">{product.pages} страниц · PDF, для печати</p>
 
+          {product.previewImage && !owned && (
+            <div className="relative mb-8 overflow-hidden rounded-lg border border-white/10">
+              <div className="relative h-[420px] overflow-hidden">
+                <img
+                  src={product.previewImage}
+                  alt={`Превью: ${product.title}`}
+                  className="w-full"
+                />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#1a0f30] via-[#1a0f30]/90 to-transparent" />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 pb-5 text-center">
+                <p className="text-white font-bold text-sm">👀 Показали только половину — остальное после покупки</p>
+              </div>
+            </div>
+          )}
+
           {product.contents && product.contents.length > 0 && (
             <div className="bg-black/30 border border-white/10 rounded-lg p-5 mb-8">
               <p className="font-bold text-white mb-3">📖 Что внутри:</p>
@@ -129,11 +145,11 @@ export default function SbornikPage() {
                   </span>
                   <p>
                     <span className="text-white/40 text-2xl line-through mr-3">{product.price} ₽</span>
-                    <span className="text-5xl font-bold text-orange">{product.salePrice} ₽</span>
+                    <span className="text-3xl font-bold text-orange">{product.salePrice} ₽</span>
                   </p>
                 </div>
               ) : (
-                <p className="text-5xl font-bold text-orange mb-6 text-center">{product.price} ₽</p>
+                <p className="text-3xl font-bold text-orange mb-6 text-center">{product.price} ₽</p>
               )}
               <div className="mb-6">
                 <PaymentMethods onSelect={setSelectedPaymentMethod} loading={loading} />

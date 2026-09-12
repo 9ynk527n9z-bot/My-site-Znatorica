@@ -1,6 +1,14 @@
 import Link from 'next/link';
 
-const groups = [
+interface TableGroup {
+  title: string;
+  icon: string;
+  accent: string;
+  bundle?: { href: string; label: string; title: string };
+  items: { href: string; icon: string; title: string; desc: string }[];
+}
+
+const groups: TableGroup[] = [
   {
     title: 'Математика', icon: '🔢', accent: 'from-rose-400/35 to-orange-300/15',
     items: [
@@ -29,6 +37,7 @@ const groups = [
   },
   {
     title: 'Английский язык', icon: '🇬🇧', accent: 'from-sky-400/30 to-violet-300/15',
+    bundle: { href: '/sborniki/angliyskiy-yazyk-sbornik', label: 'Все 13 таблиц одним PDF — 199 ₽', title: 'Сборник «Английский язык»' },
     items: [
       { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
@@ -85,6 +94,18 @@ export default function TablesPage() {
                   </Link>
                 ))}
               </div>
+              {group.bundle && (
+                <Link
+                  href={group.bundle.href}
+                  className="mt-4 flex items-center justify-between gap-3 rounded-2xl border-2 border-orange bg-[#2a1454] p-4 transition hover:bg-[#341a68]"
+                >
+                  <div>
+                    <p className="text-base font-black text-white">💎 {group.bundle.title}</p>
+                    <p className="mt-0.5 text-sm text-white/80">{group.bundle.label}</p>
+                  </div>
+                  <span className="shrink-0 text-base font-bold text-white">Купить →</span>
+                </Link>
+              )}
             </section>
           ))}
         </div>
