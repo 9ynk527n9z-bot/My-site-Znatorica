@@ -23,9 +23,10 @@ const homeBreadcrumbs = breadcrumbJsonLd([{ name: 'Главная', url: '/' }])
 const SECTIONS = [
   { href: '#ucheba', emoji: '📚', title: 'Учеба', desc: 'Темы по возрастам: 4–5 лет … 4 класс', from: '#4DABF7', to: '#4263EB' },
   { href: '/generator', emoji: '⚙️', title: 'Генераторы', desc: 'Примеры, прописи, кроссворды — каждый раз новые', from: '#69DB7C', to: '#2F9E44' },
+  { href: '/tablicy', emoji: '📋', title: 'Учебные таблицы', desc: 'Падежи, части речи, состав числа и умножение', from: '#5C7CFA', to: '#7048E8' },
+  { href: '/plakaty', emoji: '🖼️', title: 'Плакаты', desc: 'Наглядные материалы по школьным предметам', from: '#FFA94D', to: '#E8590C' },
   { href: '/trenazher', emoji: '🎮', title: 'Тренажеры', desc: 'Интерактивные игры для закрепления', from: '#DA77F2', to: '#9C36B5' },
   { href: '/igry', emoji: '🕹️', title: 'Игры', desc: 'Судоку, змейка, морской бой и другие', from: '#FFD43B', to: '#F59F00' },
-  { href: '/plakaty', emoji: '📋', title: 'Плакаты', desc: 'Плакаты-подсказки по предметам', from: '#FFA94D', to: '#E8590C' },
   { href: '/vpr', emoji: '📝', title: 'ВПР', desc: '3–5 класс — тренировочные варианты', from: '#FF8787', to: '#E03131' },
   { href: '#dlya-roditeley', emoji: '👪', title: 'Для родителей', desc: 'Статьи о школе, режиме и подготовке', from: '#3BC9DB', to: '#1098AD' },
 ];

@@ -11,6 +11,7 @@ export type SearchResultType =
   | 'ВПР'
   | 'МЦКО'
   | 'Плакат'
+  | 'Таблица'
   | 'Раздел';
 
 export interface SearchEntry {
@@ -288,6 +289,14 @@ const GENERATOR_ENTRIES: SearchEntry[] = withType('Генератор', [
   { title: 'Числовая пирамида (генератор)', url: '/generator/chislovaya-piramida', category: 'Генератор' },
 ]);
 
+const TABLE_ENTRIES: SearchEntry[] = withType('Таблица', [
+  { title: 'Учебные таблицы для начальной школы', url: '/tablicy', category: 'Раздел' },
+  { title: 'Таблица умножения от 2 до 9', url: '/tablicy/tablitsa-umnozheniya', category: 'Математика' },
+  { title: 'Состав числа до 10 и 20', url: '/tablicy/sostav-chisla', category: 'Математика' },
+  { title: 'Падежи русского языка', url: '/tablicy/padezhi-russkogo-yazyka', category: 'Русский язык' },
+  { title: 'Части речи', url: '/tablicy/chasti-rechi', category: 'Русский язык' },
+]);
+
 const VPR_ENTRIES: SearchEntry[] = withType('ВПР', [
   { title: 'Подготовка к ВПР — Математика', url: '/vpr/3-klass/matematika', category: 'ВПР · 3 класс' },
   { title: 'Подготовка к ВПР — Русский язык', url: '/vpr/3-klass/russkiy', category: 'ВПР · 3 класс' },
@@ -368,6 +377,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   ...TOPIC_ENTRIES,
   ...TRAINER_ENTRIES,
   ...GENERATOR_ENTRIES,
+  ...TABLE_ENTRIES,
   ...VPR_ENTRIES,
   ...MCKO_ENTRIES,
   ...PLAKATY_ENTRIES,
