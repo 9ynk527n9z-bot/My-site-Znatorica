@@ -29,6 +29,7 @@ const groups = [
     items: [
       { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },
+      { href: '/tablicy/dni-nedeli-po-anglijski', icon: '📅', title: 'Days of the Week', desc: '7 дней недели с переводом и транскрипцией' },
     ],
   },
   {
@@ -36,6 +37,7 @@ const groups = [
     items: [
       { href: '/tablicy/mesyatsy-i-vremena-goda', icon: '🌍', title: 'Месяцы и времена года', desc: '12 месяцев по сезонам' },
       { href: '/tablicy/domashnie-i-dikie-zhivotnye', icon: '🐾', title: 'Домашние и дикие животные', desc: '20 животных в двух колонках' },
+      { href: '/tablicy/dni-nedeli', icon: '📅', title: 'Дни недели', desc: '7 дней по порядку, будни и выходные' },
     ],
   },
 ];
