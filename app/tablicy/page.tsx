@@ -18,6 +18,7 @@ const groups = [
       { href: '/tablicy/spryazhenie-glagolov', icon: '📝', title: 'Спряжение глаголов', desc: 'Окончания I и II спряжения, исключения' },
       { href: '/tablicy/pristavki', icon: '✂️', title: 'Приставки', desc: 'Неизменяемые, при-/пре-, на з/с' },
       { href: '/tablicy/chleny-predlozheniya', icon: '📐', title: 'Члены предложения', desc: 'Вопросы и условное подчёркивание' },
+      { href: '/tablicy/razbor-slova-po-sostavu', icon: '🧩', title: 'Разбор слова по составу', desc: 'Приставка, корень, суффикс, окончание' },
     ],
   },
   {
