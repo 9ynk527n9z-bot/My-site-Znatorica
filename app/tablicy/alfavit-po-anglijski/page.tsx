@@ -91,7 +91,7 @@ export default function EnglishAlphabetTablePage() {
           </div>
           <h1 className="text-2xl font-black leading-tight sm:text-3xl">English Alphabet</h1>
           <p className="mt-3 text-xl text-white/70 leading-relaxed">
-            26 букв английского алфавита с произношением, словом-примером и переводом — в два столбика.
+            26 букв английского алфавита с транскрипцией, словом-примером и переводом — в два столбика.
           </p>
         </header>
 
