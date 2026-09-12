@@ -6,6 +6,8 @@ const groups = [
     items: [
       { href: '/tablicy/tablitsa-umnozheniya', icon: '✖️', title: 'Таблица умножения', desc: 'От 2 до 9 — цветной и чёрно-белый варианты' },
       { href: '/tablicy/sostav-chisla', icon: '🏠', title: 'Состав числа', desc: 'Состав чисел до 10 и до 20' },
+      { href: '/tablicy/edinitsy-izmereniya', icon: '📏', title: 'Единицы измерения', desc: 'Длина, масса, время и площадь' },
+      { href: '/tablicy/matematicheskie-znaki', icon: '🧮', title: 'Математические знаки', desc: 'Действия, сравнение и порядок вычислений' },
     ],
   },
   {
@@ -13,6 +15,7 @@ const groups = [
     items: [
       { href: '/tablicy/padezhi-russkogo-yazyka', icon: '📚', title: 'Падежи русского языка', desc: 'Вопросы, предлоги и примеры' },
       { href: '/tablicy/chasti-rechi', icon: '🔤', title: 'Части речи', desc: 'Значение, вопросы и примеры' },
+      { href: '/tablicy/spryazhenie-glagolov', icon: '📝', title: 'Спряжение глаголов', desc: 'Окончания I и II спряжения, исключения' },
     ],
   },
 ];
