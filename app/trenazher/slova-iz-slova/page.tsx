@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShareButtons from '@/components/ShareButtons';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const PUZZLES: { big: string; answers: string[] }[] = [
   { big: 'ТЕЛЕФОН', answers: ['ТЕЛО', 'ЛЕТО', 'ФЕН', 'ТОН', 'НЕТ', 'ЛОТ', 'ЕЛЕ', 'ФЛОТ'] },
@@ -202,7 +203,7 @@ export default function SlovaIzSlovaTrainerPage() {
             <div className="card bg-white text-center py-10">
               <p className="text-3xl font-black text-[#3a1c6e] mb-2">🎉 Все слова найдены!</p>
               <p className="text-gray-600 mb-6">
-                В слове «{puzzle.big}» ты нашёл {found.length} слов
+                В слове «{puzzle.big}» ты нашёл {pluralizeCount(found.length, ['слово', 'слова', 'слов'])}
               </p>
               <div className="flex flex-wrap gap-2 justify-center mb-8">
                 {found.map((word) => (

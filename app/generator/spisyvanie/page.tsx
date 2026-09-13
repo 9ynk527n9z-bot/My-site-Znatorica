@@ -7,6 +7,7 @@ import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const GRADES: DictationGrade[] = [1, 2, 3, 4];
 const RULED_LINES = 6;
@@ -75,7 +76,7 @@ export default function SpisyvanieGeneratorPage() {
           <div ref={printRef} className="card print-page bg-white">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
               <span className="text-sm text-gray-500">
-                {grade} класс · «{result.title}» · {wordCount(result.text)} слов
+                {grade} класс · «{result.title}» · {pluralizeCount(wordCount(result.text), ['слово', 'слова', 'слов'])}
               </span>
               <ExportToolbar targetRef={printRef} filename={`spisyvanie-${grade}-klass`} />
             </div>

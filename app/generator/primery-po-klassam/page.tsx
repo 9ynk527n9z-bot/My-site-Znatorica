@@ -9,6 +9,7 @@ import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
 import PageAbout from '@/components/PageAbout';
+import { pluralizeCount } from '@/lib/pluralize';
 
 type Klass = 1 | 2 | 3 | 4;
 
@@ -172,7 +173,7 @@ export default function GeneratorPrimeryPoKlassamPage() {
         {examples.length > 0 && (
           <div className="examples-result card print-page bg-white">
             <div className="flex items-center justify-between mb-4 no-print">
-              <h2 className="text-xl font-bold text-black">Результат ({examples.length} примеров)</h2>
+              <h2 className="text-xl font-bold text-black">Результат ({pluralizeCount(examples.length, ['пример', 'примера', 'примеров'])})</h2>
               <button
                 onClick={() => setShowAnswers((v) => !v)}
                 className="text-orange text-sm font-bold hover:underline"

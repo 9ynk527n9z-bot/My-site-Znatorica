@@ -7,6 +7,7 @@ import { getTournamentTrack, getTournamentQuestionPool } from '@/lib/tournament'
 import type { QuizQuestion } from '@/lib/quiz/types';
 import { TOURNAMENT_DIPLOMA_PRICE, TOURNAMENT_DIPLOMA_FREE } from '@/lib/constants';
 import { trackUsage } from '@/lib/track';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const ROUND_SIZE = 8;
 const PENDING_KEY = 'znatorika_pending_diploma';
@@ -204,7 +205,7 @@ export default function TournamentTrackPage({ params }: { params: { grade: strin
             <p className="text-6xl mb-4">🏆</p>
             <p className="text-xl font-bold mb-2">Готов к турниру?</p>
             <p className="text-gray-400 mb-6">
-              {roundSize} вопросов по теме «{track.subjectLabel}» ({track.gradeLabel}). Участие бесплатно.
+              {pluralizeCount(roundSize, ['вопрос', 'вопроса', 'вопросов'])} по теме «{track.subjectLabel}» ({track.gradeLabel}). Участие бесплатно.
             </p>
             <button onClick={start} className="btn-primary px-8 py-4 text-lg">▶️ Начать турнир</button>
           </div>

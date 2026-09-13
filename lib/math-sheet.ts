@@ -1,3 +1,4 @@
+import { pluralizeCount } from '@/lib/pluralize';
 interface MathSheetOptions {
   title: string;
   subtitle: string;
@@ -139,7 +140,7 @@ export function drawMathSheet(
     context.font = '13px Arial, sans-serif';
     context.textAlign = 'left';
     context.textBaseline = 'alphabetic';
-    context.fillText(`${examples.length} примеров`, 62, 1080);
+    context.fillText(pluralizeCount(examples.length, ['пример', 'примера', 'примеров']), 62, 1080);
     context.textAlign = 'right';
     context.fillStyle = '#7C3AED';
     context.font = '700 13px Arial, sans-serif';

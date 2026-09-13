@@ -17,6 +17,7 @@ import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
 import CrosswordInteractiveGrid from '@/components/CrosswordInteractiveGrid';
 import { downloadBlob } from '@/lib/download-blob';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const THEME_LIST = Object.entries(CROSSWORD_THEMES) as [CrosswordTheme, typeof CROSSWORD_THEMES[CrosswordTheme]][];
 const MIN_CUSTOM_WORDS = 4;
@@ -48,7 +49,7 @@ export default function CrosswordGeneratorPage() {
         printRef.current,
         result,
         showAnswers,
-        `${resultTitle} — ${result.words.length} слов`,
+        `${resultTitle} — ${pluralizeCount(result.words.length, ['слово', 'слова', 'слов'])}`,
       );
     }
   }, [result, resultTitle, showAnswers, view]);
@@ -57,7 +58,7 @@ export default function CrosswordGeneratorPage() {
   const validCustomWords = customWords.filter((w) => w.word && w.clue);
   const customError = useMemo(() => {
     if (mode !== 'custom') return null;
-    if (validCustomWords.length < MIN_CUSTOM_WORDS) return `Заполни минимум ${MIN_CUSTOM_WORDS} слова с подсказками`;
+    if (validCustomWords.length < MIN_CUSTOM_WORDS) return `Заполни минимум ${pluralizeCount(MIN_CUSTOM_WORDS, ['слово', 'слова', 'слов'])} с подсказками`;
     const withoutClue = customWords.some((w) => w.word && !w.clue);
     if (withoutClue) return 'У каждого слова должна быть подсказка';
     const tooShort = validCustomWords.some((w) => w.word.length < 3);
@@ -265,7 +266,7 @@ export default function CrosswordGeneratorPage() {
             <div className={`flex items-center mb-6 no-print flex-wrap gap-3 ${view === 'play' ? 'justify-between' : 'justify-end'}`}>
               {view === 'play' && (
                 <h2 className="text-xl font-bold text-black">
-                  {resultTitle} — {result.words.length} слов
+                  {resultTitle} — {pluralizeCount(result.words.length, ['слово', 'слова', 'слов'])}
                 </h2>
               )}
               <div className="flex items-center gap-4">

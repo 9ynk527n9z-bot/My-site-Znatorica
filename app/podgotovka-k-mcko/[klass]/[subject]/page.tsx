@@ -17,8 +17,8 @@ export function generateMetadata({ params }: Props): Metadata {
   const data = getMckoData(params.klass, params.subject);
   if (!data) return {};
   return {
-    title: `МЦКО${data.year ? ` ${data.year}` : ''}: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — ${data.variants.length} вариантов`,
-    description: `${data.variants.length} тренировочных вариантов МЦКО с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
+    title: `МЦКО${data.year ? ` ${data.year}` : ''}: ${shortSubject(data.subjectTitle)}, ${data.grade} класс — ${pluralizeCount(data.variants.length, ['вариант', 'варианта', 'вариантов'])}`,
+    description: `${pluralizeCount(data.variants.length, ['тренировочный вариант', 'тренировочных варианта', 'тренировочных вариантов'])} МЦКО с ответами по предмету «${data.subjectTitle}» для ${data.grade} класса. Решай онлайн с самопроверкой или распечатай на бумаге.`,
     alternates: { canonical: `/podgotovka-k-mcko/${params.klass}/${params.subject}` },
   };
 }

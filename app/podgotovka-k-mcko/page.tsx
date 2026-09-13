@@ -75,7 +75,7 @@ export default function MckoHubPage() {
                       {subj.title}
                     </h3>
                     <p className="text-gray-400 mb-4">
-                      {data.variants.length} вариантов · {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} в каждом
+                      {pluralizeCount(data.variants.length, ['вариант', 'варианта', 'вариантов'])} · {pluralizeCount(data.variants[0].tasks.length, ['задание', 'задания', 'заданий'])} в каждом
                     </p>
                     <span className="text-orange font-bold">Открыть варианты →</span>
                   </Link>

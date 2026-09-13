@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { getProduct, getEffectivePrice } from '@/lib/products';
 import { trackUsage } from '@/lib/track';
 import type { ReadinessConfig } from '@/lib/readiness/types';
+import { pluralizeCount } from '@/lib/pluralize';
 
 type Stage = 'intro' | 'child' | 'parent' | 'result';
 
@@ -173,8 +174,8 @@ export default function ReadinessTest({ config }: { config: ReadinessConfig }) {
             <p className="text-6xl mb-4">{config.emoji}</p>
             <h1 className="text-3xl font-bold mb-4">{config.title}</h1>
             <p className="text-white/70 mb-2">
-              {allQuestions.length} заданий для ребёнка {config.introChildLine} и {config.parentQuestions.length}{' '}
-              вопросов для вас — про {config.parentDomainLabel.toLowerCase()}.
+              {pluralizeCount(allQuestions.length, ['задание', 'задания', 'заданий'])} для ребёнка {config.introChildLine} и{' '}
+              {pluralizeCount(config.parentQuestions.length, ['вопрос', 'вопроса', 'вопросов'])} для вас — про {config.parentDomainLabel.toLowerCase()}.
             </p>
             <p className="text-white/50 text-sm mb-8">
               Это наша авторская оценка для ориентира, не медицинская или психологическая диагностика. Общий

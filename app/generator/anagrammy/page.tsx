@@ -8,6 +8,7 @@ import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const THEME_LIST = Object.entries(CROSSWORD_THEMES) as [CrosswordTheme, typeof CROSSWORD_THEMES[CrosswordTheme]][];
 
@@ -82,7 +83,7 @@ export default function AnagramGeneratorPage() {
           <div ref={printRef} className="card print-page bg-white">
             <div className="flex items-center justify-between mb-6 no-print">
               <h2 className="text-xl font-bold text-black">
-                {CROSSWORD_THEMES[theme].icon} {CROSSWORD_THEMES[theme].title} — {anagrams.length} слов
+                {CROSSWORD_THEMES[theme].icon} {CROSSWORD_THEMES[theme].title} — {pluralizeCount(anagrams.length, ['слово', 'слова', 'слов'])}
               </h2>
               <button
                 onClick={() => setShowAnswers((v) => !v)}

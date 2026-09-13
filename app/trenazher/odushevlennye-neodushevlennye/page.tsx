@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import TrainerGate from '@/components/TrainerGate';
 import ShareButtons from '@/components/ShareButtons';
+import { pluralizeCount } from '@/lib/pluralize';
 
 interface WordItem {
   word: string;
@@ -187,7 +188,7 @@ export default function OdushevlennyeNeodushevlennyeTrainerPage() {
               </div>
               <div className="pt-6 border-t border-gray-100">
                 <ShareButtons
-                  text={`Угадали ${score} из ${round.length} слов в тренажёре «Одушевлённые и неодушевлённые» на Знаторике — попробуйте тоже:`}
+                  text={`Угадали ${score} из ${pluralizeCount(round.length, ['слова', 'слов', 'слов'])} в тренажёре «Одушевлённые и неодушевлённые» на Знаторике — попробуйте тоже:`}
                   url="https://znatorica.ru/trenazher/odushevlennye-neodushevlennye"
                   trackKey="odushevlennye-neodushevlennye"
                 />

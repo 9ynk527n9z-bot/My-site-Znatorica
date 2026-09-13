@@ -1,3 +1,5 @@
+import { pluralizeCount } from '@/lib/pluralize';
+
 const SUBJECT_SKILLS: Record<string, string> = {
   matematika: 'вычислительные навыки, решение задач, работу с величинами и геометрическим материалом',
   russkiy: 'орфографию, грамматику, языковой анализ и понимание текста',
@@ -34,7 +36,7 @@ export default function AssessmentSeoIntro({
       <h2 className="text-lg font-bold text-white mb-2">Что проверяет тренировочный вариант</h2>
       <p className="text-gray-300 leading-relaxed">
         Тренировочный вариант {kind} № {variantId} по предмету «{subjectTitle}» для {grade} класса
-        включает {taskCount} заданий и помогает проверить {skills}. Сначала выполни задания самостоятельно,
+        включает {pluralizeCount(taskCount, ['задание', 'задания', 'заданий'])} и помогает проверить {skills}. Сначала выполни задания самостоятельно,
         а затем открой ответы и разборы, чтобы найти и исправить ошибки.
       </p>
     </section>

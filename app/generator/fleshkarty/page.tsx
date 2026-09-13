@@ -11,6 +11,7 @@ import { trackUsage } from '@/lib/track';
 import ExportToolbar from '@/components/ExportToolbar';
 import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
+import { pluralizeCount } from '@/lib/pluralize';
 
 type SetKey = 'ru-alphabet' | 'en-alphabet' | 'ru-numbers' | 'en-numbers' | 'vocab';
 
@@ -202,7 +203,7 @@ export default function FleshkartyPage() {
         {cards && (
           <div ref={printRef} className="print-page bg-white p-4 rounded-xl">
             <div className="no-print mb-4 flex justify-between items-center flex-wrap gap-3">
-              <span className="text-sm text-gray-500">{cards.length} карточек</span>
+              <span className="text-sm text-gray-500">{pluralizeCount(cards.length, ['карточка', 'карточки', 'карточек'])}</span>
               <ExportToolbar targetRef={printRef} filename={filename} />
             </div>
 

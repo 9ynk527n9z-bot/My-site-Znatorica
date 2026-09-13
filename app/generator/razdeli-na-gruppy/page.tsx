@@ -15,6 +15,7 @@ import { useGeneratorQuota } from '@/lib/useGeneratorQuota';
 import GeneratorQuotaBanner from '@/components/GeneratorQuotaBanner';
 import SortGroupsInteractive from '@/components/SortGroupsInteractive';
 import { downloadBlob } from '@/lib/download-blob';
+import { pluralizeCount } from '@/lib/pluralize';
 
 const THEME_LIST = Object.entries(SORT_THEMES) as [SortThemeKey, typeof SORT_THEMES[SortThemeKey]][];
 const MIN_CUSTOM_ITEMS = 10;
@@ -48,7 +49,7 @@ export default function SortGroupsGeneratorPage() {
   const customError = useMemo(() => {
     if (mode !== 'custom') return null;
     if (!labelA.trim() || !labelB.trim()) return 'Впиши название для обоих столбиков';
-    if (validCustomItems.length < MIN_CUSTOM_ITEMS) return `Заполни минимум ${MIN_CUSTOM_ITEMS} карточек`;
+    if (validCustomItems.length < MIN_CUSTOM_ITEMS) return `Заполни минимум ${pluralizeCount(MIN_CUSTOM_ITEMS, ['карточка', 'карточки', 'карточек'])}`;
     const hasA = validCustomItems.some((i) => i.group === 'a');
     const hasB = validCustomItems.some((i) => i.group === 'b');
     if (!hasA || !hasB) return 'Нужны карточки в обоих столбиках';
@@ -256,7 +257,7 @@ export default function SortGroupsGeneratorPage() {
           <div ref={printRef} className="card print-page bg-white">
             <div className="flex items-center justify-between mb-6 no-print flex-wrap gap-3">
               <h2 className="text-xl font-bold text-black">
-                {resultTitle} — {result.items.length} карточек
+                {resultTitle} — {pluralizeCount(result.items.length, ['карточка', 'карточки', 'карточек'])}
               </h2>
               <button onClick={handleDownloadHtml} className="btn-secondary text-sm px-4 py-2">
                 💾 Скачать как приложение
