@@ -20,6 +20,7 @@ const GENERATORS = [
   { url: '/propisi-dlya-doshkolnikov', emoji: '🎈', title: 'Прописи для дошкольников', desc: 'Печатные буквы, 4–6 лет', category: 'preschool' },
   { url: '/propisi-1-klass', emoji: '📏', title: 'Прописи для 1 класса', desc: 'Письменные буквы, как в школе', category: 'words' },
   { url: '/propisi-alfavit', emoji: '🔠', title: 'Прописи: весь алфавит', desc: 'Все буквы по порядку', category: 'words' },
+  { url: '/propisi-cifr', emoji: '🔢', title: 'Прописи цифр', desc: 'Цифры от 0 до 9 с обводкой', category: 'math' },
   { url: '/propisi-angliyskiy', emoji: '✏️', title: 'Прописи (англ.)', desc: 'Английские буквы', category: 'words' },
   { url: '/angliyskiy-alfavit', emoji: '🇬🇧', title: 'Английский алфавит', desc: 'Печатные и письменные буквы A–Z', category: 'words' },
   { url: '/diktanty', emoji: '🎤', title: 'Диктанты', desc: '1–4 класс', category: 'words' },

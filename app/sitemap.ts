@@ -181,6 +181,7 @@ export const STATIC_ROUTES: string[] = [
   '/generator/primery-po-klassam',
   '/generator/propisi-1-klass',
   '/generator/propisi-alfavit',
+  '/generator/propisi-cifr',
   '/generator/propisi-dlya-doshkolnikov',
   '/generator/propisi-glasnye',
   '/generator/propisi-soglasnye',

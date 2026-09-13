@@ -16,16 +16,20 @@ export default function SbornikiPage() {
           Разовая покупка, без подписки. Скачал один раз — распечатывай сколько нужно.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {PRODUCTS.filter((p) => p.fileName).map((p) => {
             const onSale = isSaleActive(p);
             return (
-              <Link key={p.slug} href={`/sborniki/${p.slug}`} className="card flex gap-4 !p-4 hover:border-white/50 transition-colors">
+              <Link
+                key={p.slug}
+                href={`/sborniki/${p.slug}`}
+                className="card flex flex-col gap-2 !p-3 hover:border-white/50 transition-colors sm:flex-row sm:gap-4 sm:!p-4"
+              >
                 {p.coverImage && (
                   <img
                     src={p.coverImage}
                     alt={`Обложка: ${p.title}`}
-                    className="h-28 w-20 shrink-0 rounded-md object-cover"
+                    className="h-24 w-full shrink-0 rounded-md object-cover sm:h-28 sm:w-20"
                   />
                 )}
                 <div className="min-w-0 flex-1">
@@ -34,7 +38,7 @@ export default function SbornikiPage() {
                       🔥 Только сегодня
                     </span>
                   )}
-                  <h2 className="text-base font-bold leading-tight mb-1">{p.title}</h2>
+                  <h2 className="text-sm sm:text-base font-bold leading-tight mb-1">{p.title}</h2>
                   <p className="text-white/60 text-xs mb-2 line-clamp-2">{p.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-white/50 text-xs">{p.pages} стр.</span>

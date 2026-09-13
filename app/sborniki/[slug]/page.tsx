@@ -104,20 +104,24 @@ export default function SbornikPage() {
             <img
               src={product.coverImage}
               alt={`Обложка: ${product.title}`}
-              className="mx-auto mb-8 w-full max-w-sm rounded-lg border border-white/10"
+              className="mx-auto mb-8 h-auto w-auto max-w-full rounded-lg border border-white/10 sm:max-w-sm"
             />
           )}
 
           {product.previewImage && !owned && (
             <div className="relative mb-8 overflow-hidden rounded-lg border border-white/10">
               <p className="border-b border-white/10 bg-black/30 px-4 py-2 text-center text-xs font-bold text-white/70">
-                👀 Содержание и несколько таблиц — остальное после покупки
+                {product.slug === 'podgotovka-k-1-klassu'
+                  ? '👀 Пролистай несколько заданий — остальные страницы после покупки'
+                  : '👀 Пролистай содержание и несколько таблиц — остальное после покупки'}
               </p>
-              <img
-                src={product.previewImage}
-                alt={`Превью: ${product.title}`}
-                className="w-full"
-              />
+              <div className="overflow-y-auto" style={{ maxHeight: '66vh' }}>
+                <img
+                  src={product.previewImage}
+                  alt={`Превью: ${product.title}`}
+                  className="w-full"
+                />
+              </div>
             </div>
           )}
 

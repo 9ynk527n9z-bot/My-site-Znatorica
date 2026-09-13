@@ -247,6 +247,16 @@ export async function GET(request: NextRequest) {
   for (const v of pageViewsForPeriod) pageCounts.set(v.url, (pageCounts.get(v.url) ?? 0) + 1);
   const topPages = topEntries(pageCounts, 10);
 
+  // То же самое, но только по визитам, классифицированным как органический поиск —
+  // отдельно от общего топа страниц, чтобы видеть, на что реально приходят из
+  // Яндекса/Google, а не смешивать с рекламой и прямыми заходами.
+  const organicPageCounts = new Map<string, number>();
+  for (const v of pageViewsForPeriod) {
+    if (classifyTraffic(v) !== '🔍 Поиск (органика)') continue;
+    organicPageCounts.set(v.url, (organicPageCounts.get(v.url) ?? 0) + 1);
+  }
+  const topPagesOrganic = topEntries(organicPageCounts, 10);
+
   // Что смотрели и сколько посещений по разделам сайта — отдельно за день/неделю/месяц.
   const pageViewsDay = pageViews30.filter((v) => v.createdAt >= since1);
   const pageViewsWeek = pageViews30.filter((v) => v.createdAt >= since7);
@@ -511,6 +521,7 @@ export async function GET(request: NextRequest) {
     trafficTypeSeries,
     trafficSources,
     topPages,
+    topPagesOrganic,
     topGenerators,
     topTrainers,
     recentSessions,

@@ -44,6 +44,7 @@ interface Analytics {
   trafficTypeSeries: { date: string; ads: number; organic: number; direct: number }[];
   referrerSources: { key: string; count: number }[];
   topPages: { key: string; count: number }[];
+  topPagesOrganic: { key: string; count: number }[];
   topGenerators: { key: string; count: number }[];
   topTrainers: { key: string; count: number }[];
   recentSessions: {
@@ -583,6 +584,7 @@ export default function AdminAnalyticsPage() {
             <div className="grid lg:grid-cols-3 gap-6 mb-6">
               <BarList title="📣 Источники трафика, ?utm_source=... (уникальных посетителей)" items={data.trafficSources} emptyHint="Пока нет визитов с меткой ?utm_source=... в ссылке." />
               <BarList title="🔝 Топ страниц (просмотров, не посетителей)" items={data.topPages} emptyHint="Пока нет данных за этот период." />
+              <BarList title="🔍 Топ страниц из органики (просмотров)" items={data.topPagesOrganic} emptyHint="Пока нет визитов из органического поиска за этот период." />
               <BarList title="⚙️ Топ генераторов (использований)" items={data.topGenerators} emptyHint="Пока нет использований." />
               <BarList title="🎮 Топ тренажёров (использований)" items={data.topTrainers} emptyHint="Пока нет использований." />
             </div>

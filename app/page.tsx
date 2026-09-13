@@ -117,12 +117,26 @@ export default async function Home() {
               Тренажёры, задания и подготовка к ВПР — для детей от 4 до 11 лет
             </p>
             <p className="font-bold text-white mb-2">С чего начнём?</p>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
-              <Link href="/turnir" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
-                🏆 Турнир Знаторики →
+            <div className="grid sm:grid-cols-2 gap-3 max-w-md mx-auto md:mx-0">
+              <Link
+                href="/turnir"
+                className="rounded-2xl p-4 border border-pink-300/40 backdrop-blur-md bg-pink-300/25 flex items-center gap-3 hover:border-pink-300/70 hover:-translate-y-1 transition-all"
+              >
+                <span className="text-3xl flex-shrink-0">🏆</span>
+                <span>
+                  <span className="block font-bold text-white leading-tight">Турнир Знаторики</span>
+                  <span className="block text-white/70 text-xs mt-0.5">Участвовать →</span>
+                </span>
               </Link>
-              <Link href="/sborniki" className="inline-flex items-center gap-2 text-orange font-bold hover:underline">
-                🖨️ Красивые таблицы по всем предметам (купить) →
+              <Link
+                href="/sborniki"
+                className="rounded-2xl p-4 border border-pink-300/40 backdrop-blur-md bg-pink-300/25 flex items-center gap-3 hover:border-pink-300/70 hover:-translate-y-1 transition-all"
+              >
+                <span className="text-3xl flex-shrink-0">🖨️</span>
+                <span>
+                  <span className="block font-bold text-white leading-tight">Красивые таблицы по всем предметам</span>
+                  <span className="block text-white/70 text-xs mt-0.5">Купить →</span>
+                </span>
               </Link>
             </div>
           </div>

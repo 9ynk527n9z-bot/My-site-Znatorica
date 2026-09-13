@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTournamentTracks } from '@/lib/tournament';
 import { breadcrumbJsonLd } from '@/lib/seo';
+import { TOURNAMENT_DIPLOMA_FREE, TOURNAMENT_DIPLOMA_PRICE } from '@/lib/constants';
 
 export const metadata = {
   title: 'Турнир Знаторики — бесплатная викторина',
@@ -30,7 +31,9 @@ export default function TournamentPage() {
           Пройди викторину по своему классу и предмету — бесплатно, без ограничений
         </p>
         <p className="text-center text-white/50 text-sm mb-12">
-          По желанию можно получить именной диплом с результатом — бесплатно
+          {TOURNAMENT_DIPLOMA_FREE
+            ? 'По желанию можно получить именной диплом с результатом — бесплатно'
+            : `По желанию можно получить именной диплом с результатом — ${TOURNAMENT_DIPLOMA_PRICE} ₽`}
         </p>
 
         <div className="space-y-10">

@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { getUserFromToken } from '@/lib/auth';
 import { getTournamentTrack, getTournamentQuestionPool } from '@/lib/tournament';
 
-const ROUND_SIZE = 15;
+const ROUND_SIZE = 8; // должно совпадать с ROUND_SIZE во фронтенде (app/turnir/[grade]/[subject]/page.tsx)
 
 // Сохраняет результат прохождения турнира сразу после ответа на вопросы (пока
 // без оплаты) — нужно, чтобы дальше создать платёж именно за диплом с этим

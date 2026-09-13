@@ -39,7 +39,7 @@ const groups: TableGroup[] = [
   },
   {
     title: 'Английский язык', icon: '🇬🇧', accent: 'from-sky-400/30 to-violet-300/15',
-    bundle: { href: '/sborniki/angliyskiy-yazyk-sbornik', label: 'Все 13 таблиц одним PDF — 199 ₽', title: 'Сборник «Английский язык»' },
+    bundle: { href: '/sborniki/angliyskiy-yazyk-sbornik', label: 'Все 12 таблиц одним PDF — 199 ₽', title: 'Сборник «Английский язык»' },
     items: [
       { href: '/tablicy/nepravilnye-glagoly', icon: '📖', title: 'Неправильные глаголы', desc: '62 глагола: три формы и перевод' },
       { href: '/tablicy/anglijskie-chislitelnye', icon: '🔢', title: 'Числительные по-английски', desc: 'От 1 до 20 с транскрипцией' },

@@ -67,3 +67,9 @@ ios/App/App/public/
 *.jks
 *.p12
 *.mobileprovision
+
+# Рабочие папки сборки материалов: промежуточные PDF, снимки страниц, черновики.
+# В репозиторий не нужны — исходники лежат в scripts/, результат в private-content/.
+/tmp/
+/output/
+/scratch/
