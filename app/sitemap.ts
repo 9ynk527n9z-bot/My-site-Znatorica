@@ -234,7 +234,6 @@ export const STATIC_ROUTES: string[] = [
   '/sborniki/tablicy-nachalnaya-shkola',
   '/sborniki/angliyskiy-yazyk-sbornik',
   '/sborniki/russkiy-yazyk-sbornik',
-  '/sborniki/shpargalki-4-klass',
   '/pamyatki',
   '/dlya-roditeley',
   '/otzyvy',
