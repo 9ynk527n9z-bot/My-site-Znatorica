@@ -16,35 +16,37 @@ export default function SbornikiPage() {
           Разовая покупка, без подписки. Скачал один раз — распечатывай сколько нужно.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4">
           {PRODUCTS.filter((p) => p.fileName).map((p) => {
             const onSale = isSaleActive(p);
             return (
-              <Link key={p.slug} href={`/sborniki/${p.slug}`} className="card hover:border-white/50 transition-colors">
-                {onSale && (
-                  <span className="inline-block bg-orange text-white text-xs font-bold px-2 py-1 rounded mb-2">
-                    🔥 Только сегодня
-                  </span>
-                )}
+              <Link key={p.slug} href={`/sborniki/${p.slug}`} className="card flex gap-4 !p-4 hover:border-white/50 transition-colors">
                 {p.coverImage && (
                   <img
                     src={p.coverImage}
                     alt={`Обложка: ${p.title}`}
-                    className="mb-4 aspect-[2/3] w-full rounded-lg object-cover"
+                    className="h-28 w-20 shrink-0 rounded-md object-cover"
                   />
                 )}
-                <h2 className="text-xl font-bold mb-2">{p.title}</h2>
-                <p className="text-white/70 text-sm mb-4">{p.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-white/50 text-sm">{p.pages} стр.</span>
-                  {onSale ? (
-                    <span className="flex items-center gap-2">
-                      <span className="text-white/40 text-sm line-through">{p.price} ₽</span>
-                      <span className="text-orange text-2xl font-bold">{p.salePrice} ₽</span>
+                <div className="min-w-0 flex-1">
+                  {onSale && (
+                    <span className="inline-block bg-orange text-white text-[10px] font-bold px-2 py-0.5 rounded mb-1">
+                      🔥 Только сегодня
                     </span>
-                  ) : (
-                    <span className="text-orange text-2xl font-bold">{p.price} ₽</span>
                   )}
+                  <h2 className="text-base font-bold leading-tight mb-1">{p.title}</h2>
+                  <p className="text-white/60 text-xs mb-2 line-clamp-2">{p.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/50 text-xs">{p.pages} стр.</span>
+                    {onSale ? (
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-white/40 text-xs line-through">{p.price} ₽</span>
+                        <span className="text-orange text-lg font-bold">{p.salePrice} ₽</span>
+                      </span>
+                    ) : (
+                      <span className="text-orange text-lg font-bold">{p.price} ₽</span>
+                    )}
+                  </div>
                 </div>
               </Link>
             );
