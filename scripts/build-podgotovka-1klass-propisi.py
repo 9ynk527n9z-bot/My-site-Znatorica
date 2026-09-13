@@ -332,7 +332,36 @@ def build_filword_combo_pdf(orig, page_indices):
     return doc
 
 
-COVER_BG = (0.2274509996175766, 0.10980399698019028, 0.4313730001449585)  # низ градиента обложки
+
+
+def jpeg_bytes(image_path, max_width=1240, quality=85):
+    """Полностраничная картинка в JPEG: исходные PNG обложки и диплома весят по 3 МБ."""
+    from PIL import Image as PILImage
+
+    image = PILImage.open(image_path).convert('RGB')
+    if image.width > max_width:
+        image = image.resize((max_width, round(image.height * max_width / image.width)),
+                             PILImage.LANCZOS)
+    buffer = io.BytesIO()
+    image.save(buffer, format='JPEG', quality=quality, optimize=True, progressive=True)
+    return buffer.getvalue()
+
+
+def full_page_image_pdf(image_source):
+    """Лист A4 целиком занятый картинкой, положенной как JPEG.
+
+    Через PyMuPDF не получается: insert_image перекодирует поток обратно в PNG,
+    и одна обложка весит 2,7 МБ. Reportlab кладёт JPEG как есть.
+    """
+    from reportlab.lib.utils import ImageReader
+
+    stream = io.BytesIO()
+    c = canvas.Canvas(stream, pagesize=A4)
+    c.drawImage(ImageReader(io.BytesIO(jpeg_bytes(image_source))), 0, 0, width=PAGE_W, height=PAGE_H)
+    c.showPage()
+    c.save()
+    stream.seek(0)
+    return fitz.open('pdf', stream.read())
 
 
 def build_contents_pdf(doc):
@@ -393,17 +422,19 @@ def restamp_footers(doc):
     footer_font = fitz.Font(fontfile=ARIAL_TTF)
     footer_band = fitz.Rect(0, 798, PAGE_W, PAGE_H)
     for i, page in enumerate(doc):
-        is_cover = i == 0
+        # Обложка и диплом — цельные картинки, своего колонтитула у них нет. Их нельзя
+        # чистить редактированием: оно перерисовывает страницу и раздувает JPEG обратно
+        # в PNG, из-за чего файл вырастал вчетверо.
+        if i == 0 or i == total - 1:
+            continue
         # Реально вырезать старый футер через redaction (не просто закрасить поверх) —
         # иначе старый текст "N / 34" остаётся в контенте страницы под новым.
-        fill = COVER_BG if is_cover else (1, 1, 1)
-        page.add_redact_annot(footer_band, fill=fill)
+        page.add_redact_annot(footer_band, fill=(1, 1, 1))
         page.apply_redactions()
         text = f'Знаторика · znatorica.ru · {i + 1} / {total}'
         width = footer_font.text_length(text, fontsize=8)
         x = (PAGE_W - width) / 2
-        color = (0.75, 0.72, 0.85) if is_cover else GRAY
-        page.insert_text((x, 812), text, fontname='Arial', fontfile=ARIAL_TTF, fontsize=8, color=color)
+        page.insert_text((x, 812), text, fontname='Arial', fontfile=ARIAL_TTF, fontsize=8, color=GRAY)
 
 
 # Новые числа для второго листа "домиков" — своя подборка, отличная от исходной.
@@ -472,8 +503,7 @@ def main():
     print('new letters pages:', len(letters_doc), 'new digits pages:', len(digits_doc))
 
     new_doc = fitz.open()
-    cover = new_doc.new_page(width=PAGE_W, height=PAGE_H)  # обложка из картинки, во весь лист
-    cover.insert_image(fitz.Rect(0, 0, PAGE_W, PAGE_H), filename=COVER_IMAGE)
+    new_doc.insert_pdf(full_page_image_pdf(COVER_IMAGE))     # обложка во весь лист
     new_doc.insert_pdf(letters_doc)                         # прописи: алфавит (было 1-3)
     new_doc.insert_pdf(orig, from_page=4, to_page=7)        # примеры, счёт, словарные слова
     new_doc.insert_pdf(digits_doc)                           # прописи: числа до 20 (было 8)
@@ -488,7 +518,15 @@ def main():
     new_doc.insert_pdf(filword_doc)                           # 3 филворда на одной странице (было 6 отдельных, 25-30)
     new_doc.insert_pdf(orig, from_page=31, to_page=31)       # ответы (кроссвордные записи вырезаны)
     # orig[32] — ответы по кроссвордам, не нужны: самих кроссвордов в сборнике больше нет
-    new_doc.insert_pdf(orig, from_page=33, to_page=33)       # диплом — последняя страница
+    # Диплом — последняя страница. Пересобирается из растра в JPEG: в оригинале это
+    # PNG на 2,9 МБ, то есть десятая часть веса всего сборника ради одной страницы.
+    # Старый колонтитул «34 / 34» вырезается до растеризации: на готовой странице его
+    # уже не убрать, там будет картинка.
+    diploma_src = orig[33]
+    diploma_src.add_redact_annot(fitz.Rect(0, 798, PAGE_W, PAGE_H), fill=(1, 1, 1))
+    diploma_src.apply_redactions()
+    diploma_png = diploma_src.get_pixmap(dpi=150).tobytes('png')
+    new_doc.insert_pdf(full_page_image_pdf(io.BytesIO(diploma_png)))
 
     # Содержание строится по готовой сборке и встаёт сразу после обложки.
     new_doc.insert_pdf(build_contents_pdf(new_doc), start_at=1)
@@ -501,7 +539,12 @@ def main():
     restamp_footers(new_doc)
 
     out_path = SRC
-    new_doc.save(out_path + '.tmp')
+    # Без этого файл выходит под 26 МБ — неудобно скачивать с телефона. Шрифты
+    # встраиваются целиком (Arial — 750 КБ на начертание), поэтому урезаются до
+    # использованных букв. deflate_images не включаем: он перекодирует JPEG обложки
+    # и диплома обратно в несжатый вид и раздувает файл вместо экономии.
+    new_doc.subset_fonts()
+    new_doc.save(out_path + '.tmp', garbage=4, deflate=True)
     new_doc.close()
     orig.close()
     import os
