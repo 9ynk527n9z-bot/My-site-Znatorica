@@ -18,6 +18,9 @@ from reportlab.pdfbase.ttfonts import TTFont
 import io
 
 SRC = 'private-content/products/podgotovka-k-1-klassu.pdf'
+# Обложка берётся из картинки, а не из первой страницы исходника: у старой версии
+# обложка была другая, розово-фиолетовая, без названия крупным планом.
+COVER_IMAGE = 'output/covers/podgotovka-k-1-klassu-cover-cropped.png'
 
 # Base14 Helvetica has no Cyrillic glyphs — register the system Arial (same family the
 # original PDF already used) so buttons/буквы actually render instead of blank boxes.
@@ -332,6 +335,59 @@ def build_filword_combo_pdf(orig, page_indices):
 COVER_BG = (0.2274509996175766, 0.10980399698019028, 0.4313730001449585)  # низ градиента обложки
 
 
+def build_contents_pdf(doc):
+    """Страница «Содержание» по уже собранному сборнику.
+
+    Заголовки берутся из самих страниц, а не из списка в коде: так содержание не
+    разъедется, если состав сборника поменяется. Номера считаются с поправкой на то,
+    что сама эта страница встанет второй и сдвинет всё дальше на одну.
+    """
+    sections = []
+    for index in range(1, len(doc)):
+        lines = [line.strip() for line in doc[index].get_text().split('\n') if line.strip()]
+        title = lines[0] if lines else ''
+        if not title or (sections and sections[-1][0] == title):
+            continue
+        sections.append((title, index + 2))  # +1 за нумерацию с единицы, +1 за содержание
+
+    stream = io.BytesIO()
+    c = canvas.Canvas(stream, pagesize=A4)
+
+    c.setFont('Arial-Bold', 24)
+    c.setFillColorRGB(*ORANGE)
+    c.drawCentredString(PAGE_W / 2, y_bu(96), 'Содержание')
+
+    c.setFont('Arial', 11)
+    c.setFillColorRGB(*GRAY)
+    c.drawCentredString(PAGE_W / 2, y_bu(116), f'{len(sections)} разделов с заданиями')
+
+    row_h = min(34, (720 - 150) / max(len(sections), 1))
+    for i, (title, page_no) in enumerate(sections):
+        top = 160 + row_h * i
+        c.setStrokeColorRGB(0.88, 0.88, 0.92)
+        c.setLineWidth(1)
+        c.roundRect(LEFT_X, y_bu(top + row_h - 8), RIGHT_X - LEFT_X, row_h - 10, 7, stroke=1, fill=0)
+
+        c.setFillColorRGB(*ORANGE)
+        c.circle(LEFT_X + 18, y_bu(top + row_h / 2 - 4), 9, stroke=0, fill=1)
+        c.setFont('Arial-Bold', 9)
+        c.setFillColorRGB(1, 1, 1)
+        c.drawCentredString(LEFT_X + 18, y_bu(top + row_h / 2 - 1), str(i + 1))
+
+        c.setFont('Arial-Bold', 12)
+        c.setFillColorRGB(*NAVY)
+        c.drawString(LEFT_X + 36, y_bu(top + row_h / 2 - 1), title)
+
+        c.setFont('Arial', 10)
+        c.setFillColorRGB(*GRAY)
+        c.drawRightString(RIGHT_X - 12, y_bu(top + row_h / 2 - 1), f'стр. {page_no}')
+
+    c.showPage()
+    c.save()
+    stream.seek(0)
+    return fitz.open('pdf', stream.read())
+
+
 def restamp_footers(doc):
     total = len(doc)
     footer_font = fitz.Font(fontfile=ARIAL_TTF)
@@ -416,7 +472,8 @@ def main():
     print('new letters pages:', len(letters_doc), 'new digits pages:', len(digits_doc))
 
     new_doc = fitz.open()
-    new_doc.insert_pdf(orig, from_page=0, to_page=0)       # обложка
+    cover = new_doc.new_page(width=PAGE_W, height=PAGE_H)  # обложка из картинки, во весь лист
+    cover.insert_image(fitz.Rect(0, 0, PAGE_W, PAGE_H), filename=COVER_IMAGE)
     new_doc.insert_pdf(letters_doc)                         # прописи: алфавит (было 1-3)
     new_doc.insert_pdf(orig, from_page=4, to_page=7)        # примеры, счёт, словарные слова
     new_doc.insert_pdf(digits_doc)                           # прописи: числа до 20 (было 8)
@@ -430,11 +487,15 @@ def main():
     # кроссворды (было 19-24) удалены целиком
     new_doc.insert_pdf(filword_doc)                           # 3 филворда на одной странице (было 6 отдельных, 25-30)
     new_doc.insert_pdf(orig, from_page=31, to_page=31)       # ответы (кроссвордные записи вырезаны)
-    # orig[32] (ответы по кроссвордам) и orig[33] (диплом) не переносятся
+    # orig[32] — ответы по кроссвордам, не нужны: самих кроссвордов в сборнике больше нет
+    new_doc.insert_pdf(orig, from_page=33, to_page=33)       # диплом — последняя страница
 
-    # Сиреневая рамка теперь на каждой содержательной странице, а не только на
-    # прописях — единая обложка стиля по всему сборнику (кроме самой обложки).
-    for page in new_doc[1:]:
+    # Содержание строится по готовой сборке и встаёт сразу после обложки.
+    new_doc.insert_pdf(build_contents_pdf(new_doc), start_at=1)
+
+    # Сиреневая рамка на содержательных страницах — сборник смотрится единой серией.
+    # Обложка и диплом остаются без рамки: у них свой полностраничный дизайн.
+    for page in new_doc[1:-1]:
         add_frame_fitz(page)
 
     restamp_footers(new_doc)
