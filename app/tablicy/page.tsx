@@ -82,6 +82,19 @@ export default function TablesPage() {
           <h1 className="text-3xl font-black sm:text-5xl">Учебные таблицы</h1>
           <p className="mt-4 text-base text-white/75 sm:text-lg">Наглядные материалы для 1–4 класса: откройте, скачайте или распечатайте.</p>
         </header>
+        <Link
+          href="/sborniki/tablicy-nachalnaya-shkola"
+          className="mb-8 flex flex-col gap-3 rounded-3xl border-2 border-orange bg-[#2a1454] p-5 transition hover:bg-[#341a68] sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <p className="text-lg font-black text-white">💎 Сборник таблиц для начальной школы</p>
+            <p className="mt-1 text-sm text-white/80">
+              Все 39 таблиц одним PDF: математика, русский, окружающий мир и английский — 399 ₽
+            </p>
+          </div>
+          <span className="shrink-0 text-base font-bold text-white">Купить →</span>
+        </Link>
+
         <div className="grid gap-5 md:grid-cols-2">
           {groups.map((group) => (
             <section key={group.title} className={`rounded-3xl border border-white/20 bg-gradient-to-br ${group.accent} p-4 sm:p-5`}>
