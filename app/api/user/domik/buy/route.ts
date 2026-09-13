@@ -49,12 +49,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, starsAvailable: result.available, itemId });
   } catch (error) {
     if (error instanceof Error && error.message === 'ALREADY_OWNED') {
-      return NextResponse.json({ error: 'Это украшение уже куплено' }, { status: 400 });
+      return NextResponse.json({ error: 'Это украшение уже получено' }, { status: 400 });
     }
     if (error instanceof Error && error.message === 'NOT_ENOUGH_STARS') {
       return NextResponse.json({ error: 'Недостаточно звёзд' }, { status: 400 });
     }
     console.error('Domik buy error:', error);
-    return NextResponse.json({ error: 'Не удалось купить украшение' }, { status: 500 });
+    return NextResponse.json({ error: 'Не удалось получить украшение' }, { status: 500 });
   }
 }

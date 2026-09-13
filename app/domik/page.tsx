@@ -77,7 +77,7 @@ export default function DomikPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Не удалось купить украшение');
+        setError(data.error || 'Не удалось получить украшение');
         setTimeout(() => setError(''), 2500);
         return;
       }
@@ -91,7 +91,7 @@ export default function DomikPage() {
       setTimeout(() => setMood('idle'), 1500);
       await load(token);
     } catch {
-      setError('Не удалось подтвердить покупку. Обнови домик, чтобы проверить её статус.');
+      setError('Не удалось подтвердить получение. Обнови домик, чтобы проверить его статус.');
     } finally {
       setBuying(null);
     }
@@ -186,7 +186,7 @@ export default function DomikPage() {
                 {status.hint.type === 'decoration' ? (
                   <>
                     Ещё{' '}
-                    <span className="text-orange font-bold">{status.hint.missing} ⭐</span> — и купим «
+                    <span className="text-orange font-bold">{status.hint.missing} ⭐</span> — и получим «
                     {status.hint.title}»!
                   </>
                 ) : (
@@ -197,7 +197,7 @@ export default function DomikPage() {
                 )}
               </p>
             ) : (
-              <p className="text-white">Ты купил(а) уже всё! Ты просто молодец 🌟</p>
+              <p className="text-white">Ты получил(а) уже всё! Ты просто молодец 🌟</p>
             )}
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function DomikPage() {
           <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-4 text-center">
             <p className="text-gray-300 text-sm mb-3">
               Домик Знатика уже украшен — {owned.size}{' '}
-              {owned.size === 1 ? 'украшение куплено' : owned.size < 5 ? 'украшения куплено' : 'украшений куплено'}. Похвастайтесь!
+              {owned.size === 1 ? 'украшение получено' : owned.size < 5 ? 'украшения получено' : 'украшений получено'}. Похвастайтесь!
             </p>
             <ShareButtons
               text="Мы играем и копим звёзды на украшения для Домика Знатика — попробуйте тоже:"
@@ -261,9 +261,9 @@ export default function DomikPage() {
           </div>
         </div>
 
-        {/* Магазин */}
+        {/* Украшения */}
         <div className="bg-[#2A1B4D] border border-[#2D2350] rounded-lg p-6">
-          <h2 className="text-xl font-bold mb-4">🛍️ Магазин украшений</h2>
+          <h2 className="text-xl font-bold mb-4">🎁 Украшения за звёзды</h2>
           <div className="flex gap-2 mb-6 overflow-x-auto">
             {DECORATION_CATEGORIES.map((cat) => (
               <button
@@ -295,14 +295,14 @@ export default function DomikPage() {
                   <p className="font-bold text-sm mb-2">{item.title}</p>
                   <p className="text-xs text-gray-400 mb-3">{item.category === 'mebel' ? (item.floor === 2 ? 'Для спальни' : 'Для гостиной') : item.category === 'dvor' ? 'Для двора' : item.category === 'steny' ? 'Для украшения дома' : 'Для праздника'}</p>
                   {isOwned ? (
-                    <p className="text-green-400 text-xs font-bold">✓ Куплено</p>
+                    <p className="text-green-400 text-xs font-bold">✓ Получено</p>
                   ) : (
                     <button
                       onClick={() => handleBuy(item.id)}
                       disabled={!canAfford || buying !== null}
                       className="w-full bg-orange text-white text-xs font-bold py-2 rounded-lg hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
                     >
-                      {buying === item.id ? '...' : `${item.cost} ⭐`}
+                      {buying === item.id ? '...' : `Получить за ${item.cost} ⭐`}
                     </button>
                   )}
                 </div>

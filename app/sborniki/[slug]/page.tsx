@@ -111,11 +111,11 @@ export default function SbornikPage() {
           {product.previewImage && !owned && (
             <div className="relative mb-8 overflow-hidden rounded-lg border border-white/10">
               <p className="border-b border-white/10 bg-black/30 px-4 py-2 text-center text-xs font-bold text-white/70">
-                📖 Содержание сборника — целиком, остальные страницы после покупки
+                👀 Содержание и несколько таблиц — остальное после покупки
               </p>
               <img
                 src={product.previewImage}
-                alt={`Содержание: ${product.title}`}
+                alt={`Превью: ${product.title}`}
                 className="w-full"
               />
             </div>

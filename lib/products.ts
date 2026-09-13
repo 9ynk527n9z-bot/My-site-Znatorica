@@ -48,9 +48,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Все 13 английских таблиц Знаторики в одном PDF: алфавит, цвета, семья, части тела, еда, одежда, школьные принадлежности, числительные, дни недели, месяцы, домашние и дикие животные, неправильные глаголы — 239 слов с транскрипцией и переводом. С красивой обложкой и содержанием, готово для печати.',
     price: 199,
-    pages: 15,
+    pages: 14,
     fileName: 'angliyskiy-yazyk-sbornik.pdf',
-    coverImage: '/products/angliyskiy-yazyk-sbornik-cover.png',
+    coverImage: '/products/angliyskiy-yazyk-sbornik-cover.jpg',
     previewImage: '/products/angliyskiy-yazyk-sbornik-preview.jpg',
     contents: [
       '🔤 English Alphabet — 26 букв',
@@ -73,9 +73,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Все 9 таблиц по русскому языку Знаторики в одном PDF: падежи, склонение существительных, части речи, спряжение глаголов, приставки, члены предложения, разбор слова по составу, гласные и согласные звуки, синонимы и антонимы. Готово для печати.',
     price: 149,
-    pages: 11,
+    pages: 10,
     fileName: 'russkiy-yazyk-sbornik.pdf',
-    coverImage: '/products/russkiy-yazyk-sbornik-cover.png',
+    coverImage: '/products/russkiy-yazyk-sbornik-cover.jpg',
     previewImage: '/products/russkiy-yazyk-sbornik-preview.jpg',
     contents: [
       '📚 Падежи русского языка',
